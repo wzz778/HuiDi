@@ -1,0 +1,49 @@
+{
+  "name": "picture-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/night-star1/picture-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "axios": "^0.27.2",
+    "body": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-art-template": "^1.0.1",
+    "express-session": "^1.17.3",
+    "form-data": "^4.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
+    "multiparty": "^4.2.3",
+    "path": "^0.12.7",
+    "pkg": "^5.8.0"
+  },
+  "bin": {
+    "credit-recognition-system": "server.js"
+  },
+  "pkg": {
+    "scripts": [
+      "./static/js/*.js"
+    ],
+    "targets": [
+      "node14-win-x64",
+      "node14-linux-x64"
+    ],
+    "assets": [
+      "./static",
+      "./views"
+    ]
+  }
+}

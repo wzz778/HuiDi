@@ -25,6 +25,10 @@ app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
 app.use(cors())
 app.set("views", "views");
 // 引入路由
+const liRouter=require('./router/liRouter')
+
+// 配置路由
+app.use(liRouter)
 
 // 启动服务器
 app.listen(8080, () => {

@@ -1,0 +1,162 @@
+.middle {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.middleTop {
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    padding: 18px;
+}
+
+.categoryAll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-right: 15px;
+}
+
+.categoryAllItemContent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-right: 1px solid #e0e0e0;
+}
+
+.categoryAllItemContent>a {
+    color: #444;
+    padding: 5px;
+}
+
+.categoryAllItemContent>a:hover {
+    background-color: #F5F5F5;
+}
+
+.categoryAll>div:last-child>div:last-child {
+    border: none;
+}
+
+.categoryAllItemTop {
+    text-align: left;
+    margin-left: 25px;
+    color: #b8b8b8;
+}
+
+.middleTagNav {
+    margin-top: 15px;
+}
+
+.middleTagNav>span:nth-child(1) {
+    color: #777;
+    font-size: 14px;
+}
+
+.middleTagNav>a {
+    color: #ff7e7e;
+    font-size: 14px;
+}
+
+.showFilter {
+    padding: 5px 10px;
+    border: 1px solid #FF7E7E;
+    color: #ff7e7e;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.middleContent {
+    width: 1000px;
+    columns: 4;
+    column-gap: 20px;
+}
+
+.middleContentItem {
+    /* width: 235px;
+    display: inline-block; */
+    border: 1px solid #e0e0e0;
+    border-bottom: none;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.middleContentItem>a {
+    display: inline-block;
+    /* width: 235px; */
+    /* min-height: 100px; */
+    position: relative;
+    overflow: hidden;
+}
+
+.middleContentItem>a>img {
+    /* max-width: 235px; */
+    width: 100%;
+    height: 100%;
+}
+
+.operator {
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .4);
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px;
+    color: white;
+    display: none;
+}
+
+.operator>span {
+    margin-right: 20px;
+    font-size: 10px;
+    padding: 3px 0px;
+    border-radius: 50px;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.operator>span:hover {
+    background-color: white;
+    color: black;
+}
+
+.middleContentItem:hover .operator {
+    display: grid;
+}
+
+.userInfo {
+    margin-top: 10px;
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: 24px auto;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.textInfo {
+    padding: 5px;
+    font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.likeInfo {
+    margin: 15px 5px;
+    color: #A0A0A0;
+    font-size: 14px;
+}
+
+.userInfo>a>img {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.userInfo>span {
+    margin-left: 10px;
+}
+
+.userInfo>span>span {
+    margin-top: 3px;
+    display: block;
+    margin-bottom: 5px;
+}

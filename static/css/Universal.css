@@ -1,0 +1,63 @@
+/* 清除默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+    /* padding-left: 15px; */
+    padding: 5px 0px 5px 15px;
+    border: 1px solid #DDDDDD;
+    margin-left: 10px;
+    color: #999999;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    padding: 7px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    list-style: none;
+}
+
+select {
+    outline: none;
+    margin-left: 10px;
+    padding: 5px;
+    width: 200px;
+    border: 1px solid #DDDDDD;
+    color: #999999;
+}
+
+textarea {
+    color: #999999;
+}
+
+/* 浮动 */
+.clearFloat::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatLeft {
+    float: left;
+}

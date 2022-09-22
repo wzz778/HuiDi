@@ -26,6 +26,11 @@ app.use(cors())
 app.set("views", "views");
 // 引入路由
 const userRouter = require('./router/userRouter')
+const liRouter=require('./router/liRouter')
+const zllRouter = require('./router/zllRouter');
+// 配置路由
+app.use(liRouter)
+app.use(zllRouter);
 app.use(userRouter);
 // 启动服务器
 app.listen(8080, () => {

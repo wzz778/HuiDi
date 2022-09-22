@@ -1,0 +1,381 @@
+.flexedBox {
+    position: fixed;
+    bottom: 100px;
+    right: 150px;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #e0e0e0;
+    color: #FF7E7E;
+    text-align: center;
+    line-height: 46px;
+}
+
+.middle {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.carouselLeft {
+    width: 760px;
+    height: 380px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+}
+
+.carousel {
+    display: flex;
+    position: absolute;
+}
+
+.carouselItem {
+    /* margin: 10px; */
+    position: relative;
+}
+
+.carouselItem>a>img {
+    width: 760px;
+    height: 380px;
+}
+
+.carouselPoints {
+    position: absolute;
+    bottom: 20px;
+    left: 43%;
+    display: inline-block;
+}
+
+.defaultPoints {
+    cursor: pointer;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(0,0,0,.2);
+    border: 2px solid rgba(255,255,255,.8);
+}
+
+.clickCarouselPoints {
+    width: 12px;
+    height: 12px;
+    background-color: #FF7E7E;
+    border: none;
+}
+
+/* 箭头 */
+.carouselLeftArrow {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+}
+
+.carouselArrow {
+    display: none;
+}
+
+.carouselRightArrow {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+}
+
+.carouselArrow>span {
+    cursor: pointer;
+    display: inline-block;
+    width: 30px;
+    height: 50px;
+    background-color: #4E4F52;
+    opacity: .5;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+}
+
+/* 鼠标移入箭头显示 */
+.carouselLeft:hover .carouselArrow {
+    display: block;
+}
+
+/* 轮播图右边 */
+.carouselRight {
+    border: 1px solid #e0e0e0;
+    width: 238px;
+}
+
+.carouselRightItem {
+    margin-top: 5px;
+    margin-left: 15px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+.topSty {
+    padding-bottom: 14px;
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.carouselRightAll {
+    padding-right: 30px;
+    margin-top: 10px;
+}
+
+.carouselRightAll>a {
+    text-align: center;
+    margin-bottom: 12px;
+    margin-right: 10px;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 28px;
+    border: 1px solid #cdcdcd;
+    color: #777;
+}
+
+.carouselRightAll>a:hover {
+    background-color: #FFF5F5;
+    color: #FF7E7E;
+}
+
+.carouselRightFeatured {
+    border-bottom: 1px dashed #e0e0e0;
+    border-top: 1px dashed #e0e0e0;
+    margin: 0px 0px 20px 15px;
+}
+
+.carouselRightFeaturedItem {
+    padding: 20px 0px;
+}
+
+.carouselRightFeaturedItem {
+    font-size: 14px;
+}
+
+.carouselRightFeaturedItem>a>span:nth-child(1) {
+    border-radius: 28px 0px 0px 28px;
+    background-color: #ff7e7e;
+    border: 1px solid #ff7e7e;
+    padding: 4px 12px;
+    color: white;
+}
+
+.carouselRightFeaturedItem>a>span:nth-child(2) {
+    border-radius: 0px 28px 28px 0px;
+    border: 1px solid #e0e0e0;
+    padding: 4px 12px;
+    position: relative;
+    left: -4px;
+}
+
+.logoItem>a {
+    display: inline-block;
+    width: 110px;
+    height: 86px;
+}
+
+.logoItem>a>img {
+    width: 100%;
+    height: 100%;
+}
+
+.logoItemText {
+    text-align: center;
+    font-size: 14px;
+    display: grid;
+    grid-template-rows: repeat(3,1fr);
+}
+
+.logoItemText>span {
+    margin-top: 5px;
+}
+
+.logoItemText>span>a:hover {
+    color: #FF7E7E;
+}
+
+.middleContent {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 160px 600px 238px;
+}
+
+.centerLeftItem {
+    display: grid;
+}
+
+.centerLeftItem>span {
+    color: #666666;
+    text-align: center;
+    padding: 18px 23px;
+    cursor: pointer;
+}
+
+.centerLeftItem>span>span {
+    padding-left: 10px;
+}
+
+.navChoiceSty {
+    background-color: #FAEDED;
+    color: #FF7E7E !important;
+}
+
+.navTextChoiceSty {
+    border-left: 3px solid #FF7E7E;
+}
+
+.centerMiddleItem {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.userInfo {
+    display: grid;
+    grid-template-columns: 50px auto;
+}
+
+.userInfo>a>img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.userName {
+    display: grid;
+    margin-left: 10px;
+}
+
+.userName>a>span {
+    color: #444;
+    font-size: 18px;
+}
+
+.userName>span {
+    font-size: 16px;
+    color: #aaa;
+}
+
+.userPostContent {
+    margin-top: 10px;
+}
+
+.userPostContentAllimg {
+    width: 360px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.userPostContentAllimg>img {
+    width: 114px;
+    height: 114px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.userWorkOperate {
+    margin-top: 15px;
+    padding-top: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    border-top: 1px solid #e0e0e0;
+}
+
+.userWorkOperate>span {
+    border-right: 2px solid #e0e0e0;
+    cursor: pointer;
+}
+
+.userWorkOperate>span:hover>span{
+    color: #FF7E7E;
+}
+
+.userWorkOperate>span:nth-child(3) {
+    border: none;
+}
+
+.centerRight {
+    margin-left: 20px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+}
+
+.centerRightTop {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.centerRightTop>span {
+    font-size: 12px;
+    line-height: 25px;
+    color: #FF7E7E;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.recommendedBloggersItem {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.recommendedBloggersItem>a>img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.userNameInfoItem>a {
+   width: 100px; 
+   font-size: 12px;
+   overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #444;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.userNameInfoItem>p {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+    color: #777;
+}
+
+.recommendedBloggers {
+    margin-top: 10px;
+}
+
+/* 关注的统一样式 */
+.focusOnAllSty {
+    display: inline-block;
+    font-size: 12px;
+    width: 40px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    margin-top: 11px;
+    cursor: pointer;
+}
+
+.focusSty {
+    background-color: #FF7E7E;
+    color: white;
+}
+
+.cancelFocusSty {
+    background-color: #fff5f5;
+    color: #ff7e7e;
+}
+
+.watchMore {
+    margin-top: 10px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.watchMore>a {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #ff7e7e;
+}

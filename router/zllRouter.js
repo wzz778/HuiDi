@@ -4,5 +4,14 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 router.get('/homepage',(req,res)=>{
-    res.sender('hompage.html');
+    res.render('homepage.html');
 })
+
+router.get('/backstage',(req,res)=>{
+    res.render('backstage.html');
+})
+
+
+
+
+module.exports = router;

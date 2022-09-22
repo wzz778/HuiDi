@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-size: 14px;
+    color: rgb(135 135 135);
+    background-color: rgb(245 245 245);
+}
+.header{
+    background: #f96332;
+    position: fixed;
+    width: 100%;
+    min-height: 55px;
+    z-index: 999;
+}
+.pull-left{
+    float: left;
+}
+.logo{
+    background: rgb(249 99 50);
+    display: inline-block;
+    padding: 0;
+    line-height: 50px;
+    text-align: center;
+    width: 250px;
+    transition: width 300ms ease-in-out;
+}
+.hamburger{
+    display: inline-block;
+    left: 10px;
+    position: relative;
+    top: 7px;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+    width: 37px;
+    z-index: 999;
+    cursor: pointer;
+}

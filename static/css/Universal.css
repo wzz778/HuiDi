@@ -61,3 +61,44 @@ textarea {
 .floatLeft {
     float: left;
 }
+
+/* 动画样式 */
+.pulse-container {
+    width: 120px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pulse-bubble {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FF7E7E;
+}
+
+.pulse-bubble-1 {
+    /* 动画名称 单词动画持续时间 动画速度曲线 动画时延 动画往返交替播放 */
+    animation: pulse .4s ease 0s infinite alternate;
+}
+
+.pulse-bubble-2 {
+    animation: pulse .4s ease .2s infinite alternate;
+}
+
+.pulse-bubble-3 {
+    animation: pulse .4s ease .4s infinite alternate;
+}
+
+/* 动画 */
+@keyframes pulse {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: .25;
+        transform: scale(.75);
+    }
+}

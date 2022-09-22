@@ -7,5 +7,9 @@ const axios=require('axios')
 router.get('/',(req,res)=>{
     res.render('index.html')
 })
+// 图片分类显示
+router.get('/Classification',(req,res)=>{
+    res.render('Classification.html')
+})
 
 module.exports = router

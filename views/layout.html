@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{block 'title'}}{{/block}}</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="public/css/layout.css">
+    {{block 'head'}}{{/block}}
+</head>
+<body>
+    {{block 'bodytop'}}{{/block}}
+    <div id="header">
+        <div class="wrap header_max">
+            <a href="" style="display: block;width: 80px;height: 40px;"><img src="public/img/duitanglogo.png" alt=""></a>
+            <div class="header_button">
+                分类  <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="header_class" style="display: none;"></div>
+            <div class="header_search">
+                <input type="text" placeholder="请输入您要搜索的内容...">   
+                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+            <a href="javascript:;" class="publish_button"><i class="fa fa-plus" aria-hidden="true" style="margin-right:3px;"></i>发布</a>
+            <a href="javascript:;" class="message_button">消息</a>
+            <a href="javascript:;" id="toland" class="message_button">登录/注册</a>
+            <div id="header_headdiv">
+                <img src="public/img/duitanglogo.png" alt="">
+                <a href="javascript:;">用户昵称1111111111</a>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" onclick="Topfun()" id="totop">
+        <i class="fa fa-caret-up" aria-hidden="true"></i>
+    </a>
+
+    {{block 'body'}}
+        <div style="height: 1000px;" id="begin-main"></div>
+    {{/block}}
+</body>
+<script src="public/js/layout.js"></script>
+{{block 'bottom'}}{{/block}}
+</html>

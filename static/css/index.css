@@ -1,3 +1,15 @@
+.flexedBox {
+    position: fixed;
+    bottom: 100px;
+    right: 150px;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #e0e0e0;
+    color: #FF7E7E;
+    text-align: center;
+    line-height: 46px;
+}
+
 .middle {
     width: 1000px;
     margin: 0 auto;
@@ -178,4 +190,192 @@
 
 .logoItemText>span>a:hover {
     color: #FF7E7E;
+}
+
+.middleContent {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 160px 600px 238px;
+}
+
+.centerLeftItem {
+    display: grid;
+}
+
+.centerLeftItem>span {
+    color: #666666;
+    text-align: center;
+    padding: 18px 23px;
+    cursor: pointer;
+}
+
+.centerLeftItem>span>span {
+    padding-left: 10px;
+}
+
+.navChoiceSty {
+    background-color: #FAEDED;
+    color: #FF7E7E !important;
+}
+
+.navTextChoiceSty {
+    border-left: 3px solid #FF7E7E;
+}
+
+.centerMiddleItem {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.userInfo {
+    display: grid;
+    grid-template-columns: 50px auto;
+}
+
+.userInfo>a>img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.userName {
+    display: grid;
+    margin-left: 10px;
+}
+
+.userName>a>span {
+    color: #444;
+    font-size: 18px;
+}
+
+.userName>span {
+    font-size: 16px;
+    color: #aaa;
+}
+
+.userPostContent {
+    margin-top: 10px;
+}
+
+.userPostContentAllimg {
+    width: 360px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.userPostContentAllimg>img {
+    width: 114px;
+    height: 114px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.userWorkOperate {
+    margin-top: 15px;
+    padding-top: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    border-top: 1px solid #e0e0e0;
+}
+
+.userWorkOperate>span {
+    border-right: 2px solid #e0e0e0;
+    cursor: pointer;
+}
+
+.userWorkOperate>span:hover>span{
+    color: #FF7E7E;
+}
+
+.userWorkOperate>span:nth-child(3) {
+    border: none;
+}
+
+.centerRight {
+    margin-left: 20px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+}
+
+.centerRightTop {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.centerRightTop>span {
+    font-size: 12px;
+    line-height: 25px;
+    color: #FF7E7E;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.recommendedBloggersItem {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.recommendedBloggersItem>a>img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.userNameInfoItem>a {
+   width: 100px; 
+   font-size: 12px;
+   overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #444;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.userNameInfoItem>p {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+    color: #777;
+}
+
+.recommendedBloggers {
+    margin-top: 10px;
+}
+
+/* 关注的统一样式 */
+.focusOnAllSty {
+    display: inline-block;
+    font-size: 12px;
+    width: 40px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    margin-top: 11px;
+    cursor: pointer;
+}
+
+.focusSty {
+    background-color: #FF7E7E;
+    color: white;
+}
+
+.cancelFocusSty {
+    background-color: #fff5f5;
+    color: #ff7e7e;
+}
+
+.watchMore {
+    margin-top: 10px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.watchMore>a {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #ff7e7e;
 }

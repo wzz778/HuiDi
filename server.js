@@ -25,19 +25,12 @@ app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
 app.use(cors())
 app.set("views", "views");
 // 引入路由
-<<<<<<< HEAD
 const liRouter=require('./router/liRouter')
-
+const zllRouter = require('./router/zllRouter');
 // 配置路由
 app.use(liRouter)
-=======
-const zllRouter = require('./router/zllRouter');
-
-
-//配置路由
 app.use(zllRouter);
 
->>>>>>> origin/zll
 
 // 启动服务器
 app.listen(8080, () => {

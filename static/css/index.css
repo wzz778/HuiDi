@@ -19,6 +19,10 @@
     margin: 0 auto;
 }
 
+.bodySty {
+    margin-top: 80px;
+}
+
 .carouselLeft {
     width: 760px;
     height: 380px;

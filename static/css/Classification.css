@@ -19,6 +19,10 @@
     margin: 0 auto;
 }
 
+.bodySty {
+    margin-top: 80px;
+}
+
 .middleTop {
     text-align: center;
     border: 1px solid #e0e0e0;

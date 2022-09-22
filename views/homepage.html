@@ -1,2 +1,33 @@
 {{extend './backstage.html'}}
 {{block 'title'}}首页{{/block}}
+{{block 'header'}}
+<link rel="stylesheet" href="public/css/hompage.css">
+{{/block}}
+{{block 'body'}}
+<div class="card-header">
+    
+</div>
+<div class="card-body">
+    <ul class="card-body-list">
+        <li class="card-list-number">序号</li>
+        <li class="card-list-name">昵称</li>
+        <li class="card-list-sex">性别</li>
+        <li class="card-list-status">状态</li>
+        <li class="card-list-mail">邮箱</li>
+        <li class="card-list-other">其他操作</li>
+    </ul>
+    <ul class="card-body-list">
+        <li class="card-list-number">1</li>
+        <li class="card-list-name">李宁</li>
+        <li class="card-list-sex">女</li>
+        <li class="card-list-status">封号</li>
+        <li class="card-list-mail">3400164864@qq.com</li>
+        <li class="card-list-other">
+            <div class="forbiding">
+                <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                禁言
+            </div>
+        </li>
+    </ul>
+</div>
+{{/block}}

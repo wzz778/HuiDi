@@ -4,17 +4,78 @@
     <meta charset="UTF-8">
     <title>{{block 'title'}}{{/block}}</title>
     <link rel="stylesheet" href="public/css/backstage.css">
-    {{block 'head'}}{{/block}}
+    {{block 'header'}}{{/block}}
 </head>
 <body>
 <div >
     <div class="header">
         <div class="pull-left">
             <div class="logo">
-
+                <a href="homepage.html">
+                    <img src="public/img/be42c240.jpg" alt="">
+                </a>
             </div>
             <div class="hamburger">
+                <span class="menu"></span>
+            </div>
+        </div>
+        <div class="pull-right">
+            <ul>
+                <li class="header-icon dib">
+                    <img src="public/img/11.png" alt="" class="manage-img">
+                    <span class="manage-name">
+                        WOlf
+                        <i><img src="public/iconfont/arrow1.png" alt="" class="arrow"></i>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="siderbar">
+        <div class="scrollbar">
+            <div class="none-content">
+                <ul>
+                    <li class="label">后台管理</li>
+                    <li class="change">
+                        <a href="" class="changes active-sign">
+                            <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
+                            用户管理
+                            
+                        </a>
+                        <div class="signing">
 
+                        </div>
+                    </li>
+                    <li class="change">
+                        <a href="" class="changes">
+                            <i><img src="public/iconfont/album.png" alt="" class="sign"></i>
+                            专辑管理
+                        </a>
+                    </li>
+                    <li class="change">
+                        <a href="" class="changes">
+                            <i><img src="public/iconfont/report.png" alt="" class="sign"></i>
+                            举报管理
+                        </a>
+                    </li>
+                    <li class="change">
+                        <a href="" class="changes">
+                            <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
+                            内容管理
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container">
+                <div class="important">
+                    <div class="card">
+                        {{block 'body'}}{{/block}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

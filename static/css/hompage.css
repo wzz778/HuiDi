@@ -1,0 +1,47 @@
+.card-header{
+
+}
+.card-body{
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+.card-body-list{
+    border-bottom: 1px solid rgb(231 231 231);
+}
+.card-body-list li{
+    display: inline-block;
+    /* width: 20%; */
+    line-height: 32px;
+    vertical-align: top;
+    padding: 8px;
+}
+.card-list-number{
+    width: 80px;
+}
+.card-list-name{
+    width: 160px;
+}
+.card-list-sex{
+    width: 160px;
+}
+.card-list-mail{
+    width: 250px;
+}
+.card-list-other{
+    width: 250px;
+}
+.card-list-status{
+    width: 160px;
+}
+.forbiding{
+    display: inline-block;
+    cursor: pointer;
+}
+.forbid{
+    width: 15px;
+    height: 15px;
+    object-fit: cover;
+    vertical-align: -2px;
+}

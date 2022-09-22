@@ -22,19 +22,191 @@ body{
     background: rgb(249 99 50);
     display: inline-block;
     padding: 0;
-    line-height: 50px;
+    line-height: 20px;
     text-align: center;
     width: 250px;
     transition: width 300ms ease-in-out;
+}
+.logo img{
+    height: 45px;
+    margin-right: 10px;
 }
 .hamburger{
     display: inline-block;
     left: 10px;
     position: relative;
-    top: 7px;
+    top: 2px;
     -webkit-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s;
-    width: 37px;
+    width: 28px;
     z-index: 999;
     cursor: pointer;
+    height: 28px;
+}
+.menu{
+    display: block;
+    height: 4px;
+    color: white;
+    width: 26px;
+    background-color: white;
+}
+.hamburger::before{
+    content: '';
+    position: absolute;
+    top: 10px;
+    width: 26px;
+    height: 4px;
+    background-color: white;
+}
+.hamburger::after{
+    content: '';
+    position: absolute;
+    top: 21px;
+    width: 26px;
+    height: 4px;
+    background-color: white;
+}
+.pull-right{
+    float: right;
+    padding-right: 15px;
+}
+.header-icon{
+    font-size: 18px;
+    padding: 12px 15px;
+    color: rgb(255 255 255);
+    position: relative;
+    transition: all 0.4s ease-in-out;
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+    cursor: pointer;
+}
+.dib{
+    display: inline-block;
+}
+.manage-img{
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.manage-name{
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: 7px;
+}
+.arrow{
+    width: 10px;
+    height: 10px;
+    object-fit: cover;
+
+}
+.siderbar{
+    position: fixed;
+    top: 55px;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    background: #fff;
+    font-size: 14px;
+    z-index: 100;
+    overflow: auto;
+    transform: translateZ(0);
+    transition: left 300ms ease-in-out, width 300ms ease-in-out;
+}
+.scrollbar{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.none-content{
+    position: absolute;
+    overflow: scroll;
+    overflow-x: hidden;
+    top: 0;
+    right: -12px;
+    bottom: 0;
+    left: 0;
+}
+.label{
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 0.9em;
+    height: 30px;
+    line-height: 40px;
+    color: rgb(249 99 50);
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    text-transform: uppercase;
+    font-weight: normal;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.change{
+    position: relative;
+}
+.changes{
+    display: block;
+    cursor: pointer;
+    color: rgb(135 135 135);
+    padding: 10px;
+    line-height: 20px;
+    border-bottom: none;
+    background: none;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    padding-left: 20px;
+    padding-right: 20px;
+    outline: none !important;
+    text-decoration: none !important;
+}
+.sign{
+    width: 15px;
+    height: 15px;
+    object-fit: cover;
+    vertical-align: -2px;
+}
+.active-sign{
+    color: rgb(249 99 50);
+}
+.change:hover .changes{
+    color: rgb(249 99 50);
+}
+.signing{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    background-color: rgb(249 99 50);
+}
+.content-wrap{
+    margin-left: 250px;
+    padding-top: 55px;
+    transition: margin-left 300ms ease-in-out;
+}
+.container{
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.important{
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.card{
+    background: rgb(255 255 255);
+    margin: 15px 0px 15px 0px;
+    padding: 20px;
+    border: 0px;
+    border-radius: 0px;
+    box-shadow: 0 0 10px 5px rgb(231 231 231);
 }

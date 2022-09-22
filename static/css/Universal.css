@@ -61,6 +61,37 @@ textarea {
     float: left;
 }
 
+/* 错误信息 */
+.wrong {
+    z-index: 100000;
+    position: fixed;
+    top: 50%;
+    left: 42%;
+    background-color: #FF0000;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 50px auto;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+    display: none;
+}
+
+.animatedSty {
+    animation: hint 1s ease .4s alternate;
+}
+
+.wrong>span {
+    display: grid;
+    text-align: center;
+}
+
+.wrongText {
+    text-align: center;
+    display: inline-block;
+}
+
 /* 动画样式 */
 .pulse-container {
     width: 120px;
@@ -99,5 +130,14 @@ textarea {
     to {
         opacity: .25;
         transform: scale(.75);
+    }
+}
+
+@keyframes hint {
+    from {
+        top: 10px;
+    }
+    to {
+        top: 50%;
     }
 }

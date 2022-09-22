@@ -61,3 +61,17 @@ function rightArrow() {
     }
     carouselPoints[carouselIndex].classList.add('clickCarouselPoints')
 }
+
+// 首页左边导航栏
+let centerMiddle = document.getElementsByClassName('centerMiddle')
+let navOperatorChoice=document.getElementsByClassName('navOperatorChoice')
+function navFn(show,close) {
+    centerMiddle[close].style.display='none'
+    centerMiddle[show].style.display='block'
+    // 为其添加样式
+    navOperatorChoice[show].classList.add('navChoiceSty')
+    navOperatorChoice[show].firstElementChild.classList.add('navTextChoiceSty')
+    // 移除样式
+    navOperatorChoice[close].classList.remove('navChoiceSty')
+    navOperatorChoice[close].firstElementChild.classList.remove('navTextChoiceSty')
+}

@@ -100,10 +100,10 @@
         <div class="middleContent">
             <div class="centerLeft">
                 <div class="centerLeftItem">
-                    <span class="navChoiceSty">
+                    <span class="navOperatorChoice navChoiceSty" onclick="navFn(0,1)">
                         <span class="navTextChoiceSty">每日精选</span>
                     </span>
-                    <span class="">
+                    <span class="navOperatorChoice" onclick="navFn(1,0)">
                         <span>关注动态</span>
                     </span>
                 </div>
@@ -191,11 +191,50 @@
                         </div>
                     </div>
                 </div>
-                <div class="centerMiddle">
+                <div class="centerMiddle" style="display: none;">
                     <!-- 关注的动态 -->
+                    <div class="centerMiddleItem">
+                        <div class="centerMiddleItemUser">
+                            <div class="userInfo">
+                                <a href="javascript:;">
+                                    <img src="/public/img/01.jpg" alt="">
+                                </a>
+                                <div class="userName">
+                                    <!-- 用户名 -->
+                                    <a href="javascript:;">
+                                        <span>阿泽爱干饭</span>
+                                    </a>
+                                    <span>1天前</span>
+                                </div>
+                            </div>
+                            <div class="userPostContent">
+                                <p>蜡笔小新锁屏+壁纸套图</p>
+                                <div class="userPostContentAllimg">
+                                    <img src="/public/img/img1.jpeg" alt="">
+                                    <img src="/public/img/img2.jpeg" alt="">
+                                    <img src="/public/img/img3.jpeg" alt="">
+                                    <img src="/public/img/img.png" alt="">
+                                </div>
+                                <div class="userWorkOperate">
+                                    <span>
+                                        <i class="iconfont">&#xec7f;</i>
+                                        <span>152</span>
+                                    </span>
+                                    <span>
+                                        <i class="iconfont">&#xebae;</i>
+                                        <span>476</span>
+                                    </span>
+                                    <span>
+                                        <i class="iconfont">&#xe69b;</i>
+                                        <span>举报</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- 推荐关注 -->
+            <!-- 右边 -->
             <div class="">
                 <div class="centerRight">
                     <div class="centerRightTop clearFloat">
@@ -239,6 +278,7 @@
                                 <i class="iconfont:;">&#xe65f;</i>
                             </a>
                         </div>
+                        
                     </div>
                 </div>
             </div>

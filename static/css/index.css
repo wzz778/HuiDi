@@ -10,9 +10,17 @@
     line-height: 46px;
 }
 
+.flexedBox>a>i {
+    color: #FF7E7E;
+}
+
 .middle {
     width: 1000px;
     margin: 0 auto;
+}
+
+.bodySty {
+    margin-top: 80px;
 }
 
 .carouselLeft {
@@ -378,4 +386,8 @@
     text-align: center;
     font-size: 12px;
     color: #ff7e7e;
+}
+
+.pulse-container {
+    margin: 10px 25%;
 }

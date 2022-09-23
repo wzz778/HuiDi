@@ -7,7 +7,6 @@
 input {
     outline: none;
     /* padding-left: 15px; */
-    padding: 5px 0px 5px 15px;
     border: 1px solid #DDDDDD;
     margin-left: 10px;
     color: #999999;
@@ -60,4 +59,96 @@ textarea {
 
 .floatLeft {
     float: left;
+}
+
+/* 错误信息 */
+.hintSty {
+    z-index: 100000;
+    position: fixed;
+    top: 50%;
+    left: 42%;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 50px auto;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+    display: none;
+}
+
+.wrong {
+    background-color: #FF0000;
+}
+
+.success {
+    background-color: #27AE60;
+}
+
+.warning {
+    background-color: #F39C12;
+}
+
+.animatedSty {
+    animation: hint 1s ease .4s alternate;
+}
+
+.wrong>span {
+    display: grid;
+    text-align: center;
+}
+
+.wrongText {
+    text-align: center;
+    display: inline-block;
+}
+
+/* 动画样式 */
+.pulse-container {
+    width: 120px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pulse-bubble {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FF7E7E;
+}
+
+.pulse-bubble-1 {
+    /* 动画名称 单词动画持续时间 动画速度曲线 动画时延 动画往返交替播放 */
+    animation: pulse .4s ease 0s infinite alternate;
+}
+
+.pulse-bubble-2 {
+    animation: pulse .4s ease .2s infinite alternate;
+}
+
+.pulse-bubble-3 {
+    animation: pulse .4s ease .4s infinite alternate;
+}
+
+/* 动画 */
+@keyframes pulse {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: .25;
+        transform: scale(.75);
+    }
+}
+
+@keyframes hint {
+    from {
+        top: 10px;
+    }
+    to {
+        top: 50%;
+    }
 }

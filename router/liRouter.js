@@ -11,5 +11,9 @@ router.get('/',(req,res)=>{
 router.get('/Classification',(req,res)=>{
     res.render('Classification.html')
 })
+// 专辑图片
+router.get('/album',(req,res)=>{
+    res.render('album.html')
+})
 
 module.exports = router

@@ -104,6 +104,10 @@ textarea {
 }
 
 /* 动画样式 */
+.middleAnimation {
+    width: 600px;
+}
+
 .pulse-container {
     width: 120px;
     margin: 10px auto;

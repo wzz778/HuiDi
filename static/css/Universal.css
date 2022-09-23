@@ -62,12 +62,11 @@ textarea {
 }
 
 /* 错误信息 */
-.wrong {
+.hintSty {
     z-index: 100000;
     position: fixed;
     top: 50%;
     left: 42%;
-    background-color: #FF0000;
     text-align: center;
     display: grid;
     grid-template-rows: 50px auto;
@@ -76,6 +75,18 @@ textarea {
     padding: 10px 20px;
     color: white;
     display: none;
+}
+
+.wrong {
+    background-color: #FF0000;
+}
+
+.success {
+    background-color: #27AE60;
+}
+
+.warning {
+    background-color: #F39C12;
 }
 
 .animatedSty {

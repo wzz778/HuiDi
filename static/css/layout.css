@@ -30,6 +30,7 @@ a{
     color: #666;
     margin-bottom: 40px;
     box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
+    background-color: white;
 }
 .wrap{
     width: 1000px;

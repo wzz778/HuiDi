@@ -1,0 +1,34 @@
+#body{
+    margin-top: 70px;
+}
+.rebody{
+    height: 1000px;
+    background-color: wheat;
+}
+.mymessage{
+    width: 1000px;
+    height: 400px;
+    background-color: aliceblue;
+    position: relative;
+    /* text-align: center; */
+}
+.mymessage .mymessageback{
+    width: 1000px;
+    height: 200px;
+    /* background-color: aliceblue; */
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    background-image: url(http://127.0.0.1:8080/public/img/duitanglogo.png);
+}
+.mymessage img{
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
+    border: 2px solid white;
+    position: absolute;
+    background-color: white;
+    top: 160px;
+    right: 450px;
+}

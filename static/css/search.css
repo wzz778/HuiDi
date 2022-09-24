@@ -3,6 +3,15 @@
     margin: 0 auto;
 }
 
+.divide {
+    display: grid;
+    grid-template-columns: 785px 180px;
+}
+
+.content {
+    margin-top: 80px;
+}
+
 .top {
     margin-top: 80px;
 }
@@ -36,7 +45,7 @@
 }
 
 .topContent>span:hover {
-    color: #FF7E7E;
+    color: #C71D23;
 }
 
 .searchHistory {
@@ -94,6 +103,116 @@
 }
 
 .searchHortContent>a:hover {
-    color: #FF7E7E;
-    border-bottom: 1px solid #FF7E7E;
+    color: #C71D23;
+}
+
+.searchResult {
+    width: 785px;
+    columns: 3;
+    column-gap: 10px;
+}
+
+.middleContentItem {
+    /* width: 235px;
+    display: inline-block; */
+    border: 1px solid #e0e0e0;
+    /* border-bottom: none; */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.middleContentItem:hover {
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, .2);
+}
+
+.middleContentItem>a {
+    display: inline-block;
+    /* width: 235px; */
+    /* min-height: 100px; */
+    position: relative;
+    overflow: hidden;
+}
+
+.middleContentItem>a>img {
+    /* max-width: 235px; */
+    width: 100%;
+    height: 100%;
+}
+
+.operator {
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .4);
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px;
+    color: white;
+    display: none;
+}
+
+.operator>span {
+    margin-right: 20px;
+    font-size: 10px;
+    padding: 3px 0px;
+    border-radius: 50px;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.operator>span:hover {
+    background-color: white;
+    color: black;
+}
+
+.middleContentItem:hover .operator {
+    display: grid;
+}
+
+.userInfo {
+    margin-top: 10px;
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: 24px auto;
+    padding: 10px;
+}
+
+.textInfo {
+    padding: 10px;
+    font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.likeInfo {
+    margin: 15px 10px;
+    color: #A0A0A0;
+    font-size: 14px;
+}
+
+.likeInfo>span {
+    margin-left: 5px;
+}
+
+.userInfo>a>img {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.userInfo>span {
+    margin-left: 10px;
+}
+
+.userInfo>span>span {
+    margin-top: 3px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.searchResult {
+    margin-top: 90px;
 }

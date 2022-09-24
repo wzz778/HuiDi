@@ -5,13 +5,13 @@
     width: 46px;
     height: 46px;
     border: 1px solid #e0e0e0;
-    color: #FF7E7E;
+    color: #0DCAB7;
     text-align: center;
     line-height: 46px;
 }
 
 .flexedBox>a>i {
-    color: #FF7E7E;
+    color: #0DCAB7;
 }
 
 .middle {
@@ -67,7 +67,7 @@
 .clickCarouselPoints {
     width: 12px;
     height: 12px;
-    background-color: #FF7E7E;
+    background-color: #0DCAB7;
     border: none;
 }
 
@@ -140,8 +140,8 @@
 }
 
 .carouselRightAll>a:hover {
-    background-color: #FFF5F5;
-    color: #FF7E7E;
+    background-color: #0DCAB7;
+    color: white;
 }
 
 .carouselRightFeatured {
@@ -197,7 +197,7 @@
 }
 
 .logoItemText>span>a:hover {
-    color: #FF7E7E;
+    color: #0DCAB7;
 }
 
 .middleContent {
@@ -222,12 +222,12 @@
 }
 
 .navChoiceSty {
-    background-color: #FAEDED;
-    color: #FF7E7E !important;
+    background-color: #0EB3A2;
+    color: white !important;
 }
 
 .navTextChoiceSty {
-    border-left: 3px solid #FF7E7E;
+    border-left: 3px solid white;
 }
 
 .centerMiddleItem {
@@ -293,7 +293,7 @@
 }
 
 .userWorkOperate>span:hover>span{
-    color: #FF7E7E;
+    color: red;
 }
 
 .userWorkOperate>span:nth-child(3) {
@@ -313,7 +313,7 @@
 .centerRightTop>span {
     font-size: 12px;
     line-height: 25px;
-    color: #FF7E7E;
+    color: red;
     cursor: pointer;
     margin-bottom: 10px;
 }
@@ -366,13 +366,13 @@
 }
 
 .focusSty {
-    background-color: #FF7E7E;
+    background-color: #0DCAB7;
     color: white;
 }
 
 .cancelFocusSty {
-    background-color: #fff5f5;
-    color: #ff7e7e;
+    background-color: #0DCAB7;
+    color: white;
 }
 
 .watchMore {

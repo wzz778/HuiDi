@@ -19,5 +19,9 @@ router.get('/album',(req,res)=>{
 router.get('/dynamicDetails',(req,res)=>{
     res.render('dynamicDetails.html')
 })
+// 搜索详情页
+router.get('/search',(req,res)=>{
+    res.render('search.html')
+})
 
 module.exports = router

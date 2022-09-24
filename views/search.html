@@ -1,0 +1,46 @@
+{{extend './layout.html'}}
+{{block 'title'}}搜索详情页{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/Universal.css">
+<link rel="stylesheet" href="/public/css/search.css">
+{{/block}}
+{{block 'bodytop'}}
+
+{{/block}}
+{{block 'body'}}
+<div class="middle">
+    <div class="top clearFloat">
+        <div class="topContent floatLeft">
+            <span>图片</span>
+            <span>专辑</span>
+            <span>文章</span>
+            <span>达人</span>
+        </div>
+        <!-- 搜索历史 -->
+        <div class="searchHistory floatLeft">
+            <div class="searchHistoryItem">
+                <div class="searchHistoryTop">历史记录</div>
+                <!-- 存放历史记录 -->
+                <div class="searchHistoryContent">
+                    暂无记录
+                </div>
+            </div>
+            <!-- 热门搜索 -->
+            <div class="hortSearch">
+                <div class="searchHistoryTop">热门搜索</div>
+                <!-- 存放历史记录 -->
+                <div class="searchHortContent">
+                    <a href="javascript:;">欧美情头</a>
+                    <a href="javascript:;">拼贴壁纸</a>
+                    <a href="javascript:;">高级感背</a>
+                    <a href="javascript:;">赵露思</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/block}}
+{{block 'bottom'}}
+<script src="/public/js/search.js"></script>
+{{/block}}

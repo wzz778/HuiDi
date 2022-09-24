@@ -1,0 +1,99 @@
+.middle {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.top {
+    margin-top: 80px;
+}
+
+.topContent {
+    width: 785px;
+    margin-top: 20px;
+    border: 1px solid #e0e0e0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    padding: 15px 0px;
+}
+
+.topContent>span {
+    cursor: pointer;
+}
+
+.topContent>span:nth-child(3) {
+    position: relative;
+}
+
+.topContent>span:nth-child(3)::before {
+    content: 'new';
+    display: inline-block;
+    position: absolute;
+    top: 1px;
+    right: 52px;
+    font-size: 14px;
+    color: #FF7E7E;
+}
+
+.topContent>span:hover {
+    color: #FF7E7E;
+}
+
+.searchHistory {
+    width: 180px;
+    margin: 20px 0px 10px 15px;
+}
+
+.searchHistoryItem {
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+}
+
+.searchHistoryTop {
+    font-size: 16px;
+    font-weight: 600;
+    color: #444;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 5px;
+    padding-bottom: 10px;
+}
+
+.searchHistoryContent {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+}
+
+.hortSearch {
+    margin-top: 20px;
+    padding: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+.searchHistoryContent {
+    min-height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.searchHortContent {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding: 10px;
+}
+
+.searchHortContent>a {
+    display: inline-block !important;
+    max-width: 70px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #777;
+}
+
+.searchHortContent>a:hover {
+    color: #FF7E7E;
+    border-bottom: 1px solid #FF7E7E;
+}

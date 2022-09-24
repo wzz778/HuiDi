@@ -1,13 +1,13 @@
 {{extend './backstage.html'}}
-{{block 'title'}}举报管理{{/block}}
+{{block 'title'}}审核{{/block}}
 {{block 'header'}}
 <link rel="stylesheet" href="public/css/hompage.css">
-<link rel="stylesheet" href="public/css/mangereport.css">
+<link rel="stylesheet" href="public/css/audit.css">
 {{/block}}
-{{block 'mangereport'}}
-<a href="mangereport" class="changes active-sign">
-    <i><img src="public/iconfont/report.png" alt="" class="sign"></i>
-    举报管理
+{{block 'audit'}}
+<a href="audit" class="changes active-sign">
+    <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
+    内容审核
 </a>
 <div class="signing active-signing">
 
@@ -38,32 +38,41 @@
 </div>
 {{/block}}
 {{block 'body'}}
-<div class="report-header">
-
+<div class="card-header">
+    
 </div>
 <div class="card-body">
     <ul class="card-body-list">
         <li class="card-list-number">序号</li>
-        <li class="card-list-name">被举报</li>
+        <li class="card-list-name">昵称</li>
         <li class="card-list-sex">性别</li>
-        <li class="card-list-status">理由</li>
-        <li class="card-list-mail">邮箱</li>
+        <li class="card-list-status">状态</li>
+        <li class="card-list-mail">内容</li>
         <li class="card-list-other">其他操作</li>
     </ul>
     <ul class="card-body-list">
-        <li class="card-list-number">1</li>
-        <li class="card-list-name">李宁</li>
-        <li class="card-list-sex">女</li>
-        <li class="card-list-status">传播不良信息,信息过于假</li>
-        <li class="card-list-mail">3400164864@qq.com</li>
-        <li class="card-list-other">
-            <button class="btn forbiding">
-                <img src="public/iconfont/warn.png" alt="" class="forbid">
-                警告
-            </button>
+        <li class="card-list-number audit-change">1</li>
+        <li class="card-list-name audit-change">李宁</li>
+        <li class="card-list-sex audit-change">女</li>
+        <li class="card-list-status audit-change">封号</li>
+        <li class="card-list-mail ">
+            <div>
+                <span class="content-main">今天天气真好</span>
+                <img src="public/img/02.jpg" alt="" class="content-img">
+            </div>
+        </li>
+        <li class="card-list-other audit-change">
             <button class="btn detail">
                 <img src="public/iconfont/detail1.png" alt="" class="forbid">
                 详情
+            </button>
+            <button class="btn pass">
+                <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                通过
+            </button>
+            <button class="btn reject">
+                <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                驳回
             </button>
         </li>
     </ul>
@@ -92,5 +101,4 @@
 {{/block}}
 {{block 'footer'}}
 <script src="public/js/homepage.js"></script>
-<script src="public/js/mangereport.js"></script>
 {{/block}}

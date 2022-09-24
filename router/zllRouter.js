@@ -11,6 +11,17 @@ router.get('/mangereport',(req,res)=>{
     res.render('mangereport.html');
 })
 
+router.get('/detail',(req,res)=>{
+    res.render('detail.html');
+})
+
+router.get('/audit',(req,res)=>{
+    res.render('audit.html');
+})
+router.get('/classify',(req,res)=>{
+    res.render('classify.html');
+})
+
 
 
 

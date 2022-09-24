@@ -1,0 +1,40 @@
+.content-main{
+    display: block;
+}
+.content-img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+
+}
+.audit-change{
+    height: 160px;
+    line-height: 160px;
+}
+.detail{
+    display: inline-block;
+    cursor: pointer;
+    height: 30px;
+    width: 71px;
+    line-height: 32px;
+    background-color: rgb(135 222 117);   
+    font-size: 10px;
+}
+.pass{
+    display: inline-block;
+    cursor: pointer;
+    height: 30px;
+    width: 71px;
+    line-height: 32px;
+    background-color: rgb(3,169,244);
+    font-size: 10px;
+}
+.reject{
+    display: inline-block;
+    cursor: pointer;
+    height: 30px;
+    width: 71px;
+    line-height: 32px;
+    background-color: rgb(231,76,60);
+    font-size: 10px;
+}

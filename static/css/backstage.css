@@ -9,7 +9,7 @@ body{
     background-color: rgb(245 245 245);
 }
 .header{
-    background: #f96332;
+    background: rgb(13,202,183);
     position: fixed;
     width: 100%;
     min-height: 55px;
@@ -19,7 +19,7 @@ body{
     float: left;
 }
 .logo{
-    background: rgb(249 99 50);
+    background: rgb(13,202,183);
     display: inline-block;
     padding: 0;
     line-height: 20px;
@@ -136,7 +136,7 @@ body{
     font-size: 0.9em;
     height: 30px;
     line-height: 40px;
-    color: rgb(249 99 50);
+    color: rgb(13,202,183);
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
@@ -171,10 +171,10 @@ body{
     vertical-align: -2px;
 }
 .active-sign{
-    color: rgb(249 99 50);
+    color: rgb(13,202,183);
 }
 .change:hover .changes{
-    color: rgb(249 99 50);
+    color: rgb(13,202,183);
 }
 .signing{
     height: 100%;
@@ -184,7 +184,7 @@ body{
     width: 3px;
 }
 .active-signing{
-    background-color: rgb(249 99 50);
+    background-color: rgb(13,202,183);
 }
 .content-wrap{
     margin-left: 250px;

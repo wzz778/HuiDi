@@ -7,8 +7,8 @@ router.get('/homepage',(req,res)=>{
     res.render('homepage.html');
 })
 
-router.get('/backstage',(req,res)=>{
-    res.render('backstage.html');
+router.get('/mangereport',(req,res)=>{
+    res.render('mangereport.html');
 })
 
 

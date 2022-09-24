@@ -6,11 +6,310 @@
 {{/block}}
 
 {{block 'bodytop'}}
-
+<!-- 收集弹窗 -->
+<div class="collectHint" style="display: none;">
+    <div class="collectHintContent">
+        <div class="collectHintContentTop clearFloat">
+            <span class="floatLeft">收集</span>
+            <button class="floatRight" onclick="cancelShow(this)">
+                <i class="iconfont">&#xe643;</i>
+            </button>
+        </div>
+        <div class="hintContents clearFloat">
+            <div class="hintContentsLeft floatLeft">
+                <img src="/public/img/myImg1.jpg" alt="">
+            </div>
+            <div class="hintContentsRight floatLeft">
+                <span>收集到</span>
+                <div class="albumName">
+                    <div class="albumChoice clearFloat" onclick="allAlbumShow()">
+                        <span class="albumChoiceResult">默认专辑</span>
+                        <span class="showAllAlbum floatRight">
+                            <i class="iconfont">&#xe797;</i>
+                        </span>
+                    </div>
+                    <!-- 已经写过的专辑 -->
+                    <div class="albumHadItem" id="allAlbum">
+                        <ul class="albumHad" onclick="allAlbumShow()">
+                            <li onclick="choiceAlbumFn(this)">专辑1</li>
+                            <li onclick="choiceAlbumFn(this)">专辑2</li>
+                            <li onclick="choiceAlbumFn(this)">专辑3</li>
+                        </ul>
+                        <!-- 创建新专辑 -->
+                        <div class="creatNewAlbum">
+                            <div class="clearFloat">
+                                <input type="text" class="creatNewAlbumName">
+                                <button class="floatRight creatNewAlbumBtn">创建专辑</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <textarea class="collectTextInfo" id="" cols="30" rows="10"></textarea>
+                <button class="sureCollect">收集</button>
+            </div>
+        </div>
+    </div>
+</div>
 {{/block}}
 
 {{block 'body'}}
-
+<div class="middle">
+    <div class="top">
+        <!-- 专辑名 -->
+        <h1>冷清</h1>
+        <!-- 专辑情况 -->
+        <div class="albumInfo">
+            <span class="allImgs">618张图片</span>
+            <span class=""></span>
+            <span class="allCollect">141收藏</span>
+        </div>
+        <div class="albumWriterInfo">
+            <a href="javascript:;">
+                <img src="/public/img/album1.jpg" alt="">
+                <span>叹爱</span>
+            </a>
+            <span class="yearData">3年前</span>
+        </div>
+        <div class="albumWriterOperator">
+            <span class="albumWriterOperatorItem albumWriterCollect">
+                <i class="iconfont">&#xebae;</i>
+                <span>收藏</span>
+            </span>
+            <span class="albumWriterOperatorItem albumWriterLike">
+                <i class="iconfont">&#xec7f;</i>
+                <span>点赞</span>
+            </span>
+        </div>
+    </div>
+    <!-- 内容区 -->
+    <div class="content">
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg1.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <p class="myImgText">渐行渐远的人怎么会像当初一样热衷</p>
+                </div>
+                <div class="myImgOperatorShow">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg2.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <p class="myImgText">渐行渐远的人怎么会像当初一样热衷</p>
+                </div>
+                <div class="myImgOperatorShow" style="display: none;">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg3.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <!-- <p class="myImgText">渐行渐远的人怎么会像当初一样热衷</p> -->
+                </div>
+                <div class="myImgOperatorShow">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg4.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <p class="myImgText">渐行渐远的人怎么会像当初一样热衷</p>
+                </div>
+                <div class="myImgOperatorShow" style="display: none;">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg5.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <p class="myImgText">
+                        111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p>
+                </div>
+                <div class="myImgOperatorShow">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg6.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <!-- <p class="myImgText">渐行渐远的人怎么会像当初一样热衷</p> -->
+                </div>
+                <div class="myImgOperatorShow">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg7.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <!-- <p class="myImgText">渐行渐远的人怎么会像当初一样热衷</p> -->
+                </div>
+                <div class="myImgOperatorShow">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="contentItem">
+            <div class="">
+                <div class="myImg">
+                    <a href="javascript:;">
+                        <img src="/public/img/myImg8.jpg" alt="">
+                    </a>
+                    <div class="myImgOperator">
+                        <span class="myImgOperatorItem" onclick="collectBoxShowFn(this)">收集</span>
+                        <span class="myImgOperatorItem">点赞</span>
+                        <span class="myImgOperatorItem">评论</span>
+                    </div>
+                </div>
+                <!-- 文本说明 -->
+                <div class="myImgTextItem">
+                    <!-- <p class="myImgText">渐行渐远的人怎么会像当初一样热衷</p> -->
+                </div>
+                <div class="myImgOperatorShow">
+                    <span>
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </span>
+                    <span>
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {{/block}}
 
 {{block 'bottom'}}

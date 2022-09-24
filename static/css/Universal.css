@@ -44,6 +44,7 @@ select {
 
 textarea {
     color: #999999;
+    outline: none;
 }
 
 /* 浮动 */
@@ -104,6 +105,10 @@ textarea {
 }
 
 /* 动画样式 */
+.middleAnimation {
+    width: 600px;
+}
+
 .pulse-container {
     width: 120px;
     margin: 10px auto;

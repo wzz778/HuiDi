@@ -1,12 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>详情</title>
-</head>
-<body>
-    <div></div>
-</body>
-</html>
+{{extend './backstage.html'}}
+{{block 'title'}}详情{{/block}}
+{{block 'header'}}
+<link rel="stylesheet" href="public/css/detail.css">
+{{/block}}
+{{block 'body'}}
+    <a class="returns">返回页面</a>
+    <a class="download">警告</a>
+    <div>
+        <div class="application-details"><span>举报详情</span></div>
+        <div class="history-details">
+            <div class="application-message">
+
+            </div>
+            <div class="ranking">
+
+            </div>
+            <div class="describe">
+
+            </div>
+            <div class="reject">
+
+            </div>
+            </div>
+                   <div class="application-message">
+                       <ul class="messages">
+                        <li>
+                            举报人：
+                            <span class="name">xxxx</span>
+                        </li>
+                           <li>
+                               被举报人：
+                               <span class="name">xxxxx</span>
+                           </li>
+                           <li>
+                               性别：
+                               <span class="sex">男</span>
+                           </li>
+                           <li>
+                               邮箱：
+                               <span>3400164864</span>
+                           </li>
+                           <li class="parctice-content">
+                               举报内容：
+                               <div>
+
+                               </div>
+                           </li>
+                           
+                       </ul>
+                       <div>
+                        <h2>举报理由</h2>
+                       </div>
+                   </div>
+        </div>
+    </div>
+{{/block}}
+{{block 'footer'}}
+<script src="public/js/detail.js"></script>
+{{/block}}

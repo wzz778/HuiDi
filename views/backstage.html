@@ -67,13 +67,26 @@
                         {{/block}}
                     </li>
                     <li class="change">
-                        <a class="changes">
+                        {{block 'audit'}}
+                        <a href="audit" class="changes">
                             <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
-                            内容管理
+                            内容审核
                         </a>
                         <div class="signing">
 
                         </div>
+                        {{/block}}
+                    </li>
+                    <li class="change">
+                        {{block 'classify'}}
+                        <a href="classify" class="changes">
+                            <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
+                            分类管理
+                        </a>
+                        <div class="signing">
+
+                        </div>
+                        {{/block}}
                     </li>
                 </ul>
             </div>

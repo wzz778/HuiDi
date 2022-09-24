@@ -12,27 +12,32 @@
 .card-body-list li{
     display: inline-block;
     /* width: 20%; */
-    line-height: 32px;
     vertical-align: top;
     padding: 8px;
 }
 .card-list-number{
     width: 80px;
+    line-height: 32px;
 }
 .card-list-name{
     width: 160px;
+    line-height: 32px;
 }
 .card-list-sex{
     width: 160px;
+    line-height: 32px;
 }
 .card-list-mail{
     width: 250px;
+    line-height: 32px;
 }
 .card-list-other{
     width: 250px;
+    line-height: 32px;
 }
 .card-list-status{
     width: 160px;
+    line-height: 32px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

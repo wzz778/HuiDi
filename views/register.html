@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/css/Applicationprogress.css">
+    <link rel="stylesheet" href="public/css/login.css">
+    <title>注册</title>
+</head>
+<body>
+    <div class="Card">
+        <div class="LOGO">logo</div>
+        <div class="Re_or_lo">
+            <a href="login">登录</a> | <a style="color: #0dcab7;font-size: 20px;" href="register">注册</a>
+        </div>
+    </div>
+    <div class="body">
+        <div class="content">
+            <div class="card-body">
+              <ul class="nav-step">
+                <li class="nav-step-item active complete">
+                  <span>邮箱注册</span>
+                  <a class="active" aria-expanded="false">
+                  </a>
+                </li>
+                <li class="nav-step-item">
+                  <span>完善注册消息</span>
+                  <a class="uncomplete">
+                  </a>
+                </li>
+                <li class="nav-step-item">
+                  <span>选择兴趣</span>
+                  <a class="uncomplete">
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <h3 style="color: #444;margin: 10px 0;">亲爱的用户：</h3>
+          <span style="color: #888;font-size: 14px;"> 您需要完成邮箱验证才能正常注册账号哦</span>
+          <div class="form">
+            <div class="logindiv">
+                <label >邮箱：</label>
+                <input type="text" id="mymail" autocomplete="off" placeholder="请输入您注册使用的邮箱">
+            </div>
+            <div class="logindiv">
+                <label >验证码：</label>
+                <input type="text" id="mycode" autocomplete="off" placeholder="请输入给您发送的验证码">
+                <div class="getcode">
+                    <a href="javascript:;" id="getcodea" onclick="getcode()">获取验证码</a>
+                </div>
+            </div>
+            <button class="nextprocedure" onclick="checkcode()">下一步</button>
+        </div>
+    </div>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="public/js/register.js"></script>
+</html>

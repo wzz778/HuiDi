@@ -9,29 +9,31 @@
     <title>登录</title>
 </head>
 <body>
-    <div id="">
-
-    </div>
-    <div class="content">
-        <div class="card-body">
-          <ul class="nav-step">
-            <li class="nav-step-item active complete">
-              <span>邮箱注册</span>
-              <a class="active" aria-expanded="false">
-              </a>
-            </li>
-            <li class="nav-step-item">
-              <span>完善注册</span>
-              <a class="uncomplete">
-              </a>
-            </li>
-            <li class="nav-step-item">
-              <span>选择兴趣</span>
-              <a class="uncomplete">
-              </a>
-            </li>
-          </ul>
+    <div class="Card">
+        <div class="LOGO">logo</div>
+        <div class="Re_or_lo">
+            <a href="login" style="color: #0dcab7;font-size: 20px;">登录</a> | <a href="register">注册</a>
         </div>
-      </div>
+    </div>
+    <div class="body">
+          <h3 style="color: #444;margin-top: 40px;">亲爱的用户：</h3>
+          <span style="color: #888;font-size: 14px;">您需要使用邮箱进行登录哦</span>
+          <div class="form">
+            <div class="logindiv">
+                <label >邮箱：</label>
+                <input type="text" autocomplete="off" placeholder="请输入您注册使用的邮箱">
+            </div>
+            <div class="logindiv">
+                <label >填写密码：</label>
+                <input type="text" autocomplete="off" placeholder="请输入您要设置的密码">
+            </div>
+            <div class="repassword">
+                <a href="register">没有账号？点击注册</a>
+                <a href="repassword">忘记密码？点击找回</a>
+            </div>
+            <button class="nextprocedure">登录</button>
+        </div>
+    </div>
 </body>
+<script src="public/js/login.js"></script>
 </html>

@@ -45,7 +45,7 @@ a{
 .form{
     padding-top: 10px;
     width: 400px;
-    height: 350px;
+    height: 300px;
     /* background-color: #effffe; */
     margin:10px auto;
 }
@@ -60,7 +60,7 @@ a{
     position: relative;
 }
 .form .logindiv label{
-    width: 100px;
+    width: 80px;
     height: 28px;
     background-color: white;
 }
@@ -76,7 +76,7 @@ a{
 .getcode{
     color: #444;
     position: absolute;
-    width: 120px;
+    width: 90px;
     height: 28px;
     border-left: 1px solid #dfdfdf;
     line-height: 26px;
@@ -94,7 +94,7 @@ a{
     font-size: 15px;
 }
 .nextprocedure{
-    margin-top: 10px;
+    margin-top: 20px;
     min-height: 40px;
     width: 200px;
     text-align: center;
@@ -110,29 +110,4 @@ a{
 }
 .nextprocedure:hover{
     background-color: #0eb3a2;
-}
-.repassword{
-    display: flex;
-    justify-content: space-between;
-    width: 400px;
-    height: 24px;
-    /* background-color: wheat; */
-}
-.repassword a {
-    padding: 0 10px;
-    font-size: 15px;
-    color: #444;
-}
-.repassword a:hover{
-    color: #0dcab7;
-}
-.code {
-    width: 50px;
-    height: 30px;
-    font-family: Arial;
-    font-style: italic;
-    font-weight: bold;
-    border: 0;
-    letter-spacing: 3px;
-    color: blue;
 }

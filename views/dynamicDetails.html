@@ -126,7 +126,7 @@
                             <button class="operatorBtn">删除</button>
                             <button class="operatorBtn">举报</button>
                         </span>
-                        <button class="reply operatorBtn">回复</button>
+                        <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
                         <span class="dividingLine"></span>
                         <span class="likeSty">
                             <i class="iconfont">&#xec7f;</i>
@@ -138,10 +138,10 @@
                     <p>11</p>
                     <img src="/public/img/myImg1.jpg" alt="">
                     <!-- 回复框 -->
-                    <div class="subcommentBox clearFloat">
+                    <div class="subcommentBox clearFloat CommentStyChange">
                         <textarea id="" cols="30" rows="10" placeholder="说些什么吧"></textarea>
                         <div class="floatRight">
-                            <button class="cancelSty">取消</button>
+                            <button class="cancelSty" onclick="cancelReplyFn(this)" >取消</button>
                             <button class="sendSty">发送</button>
                         </div>
                     </div>

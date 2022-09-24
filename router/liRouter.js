@@ -15,5 +15,9 @@ router.get('/Classification',(req,res)=>{
 router.get('/album',(req,res)=>{
     res.render('album.html')
 })
+// 动态详情页
+router.get('/dynamicDetails',(req,res)=>{
+    res.render('dynamicDetails.html')
+})
 
 module.exports = router

@@ -7,6 +7,7 @@
     {{block 'header'}}{{/block}}
 </head>
 <body>
+    {{block 'pop'}}{{/block}}
 <div >
     <div class="header">
         <div class="pull-left">
@@ -37,32 +38,42 @@
                 <ul>
                     <li class="label">后台管理</li>
                     <li class="change">
-                        <a href="" class="changes active-sign">
+                        {{block 'homepage'}}
+                        <a href="homepage" class="changes">
                             <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
                             用户管理
                             
                         </a>
                         <div class="signing">
+                        
+                        </div>
+                        {{/block}}
+                    </li>
+                    <li class="change">
+                        <a  class="changes">
+                            <i><img src="public/iconfont/album.png" alt="" class="sign"></i>
+                            专辑管理
+                        </a>
+                        <div class="signing ">
 
                         </div>
                     </li>
                     <li class="change">
-                        <a href="" class="changes">
-                            <i><img src="public/iconfont/album.png" alt="" class="sign"></i>
-                            专辑管理
-                        </a>
-                    </li>
-                    <li class="change">
-                        <a href="" class="changes">
+                        {{block 'mangereport'}}
+                        <a href="mangereport" class="changes">
                             <i><img src="public/iconfont/report.png" alt="" class="sign"></i>
                             举报管理
                         </a>
+                        {{/block}}
                     </li>
                     <li class="change">
-                        <a href="" class="changes">
+                        <a class="changes">
                             <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
                             内容管理
                         </a>
+                        <div class="signing">
+
+                        </div>
                     </li>
                 </ul>
             </div>

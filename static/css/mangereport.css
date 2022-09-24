@@ -1,0 +1,9 @@
+.detail{
+    display: inline-block;
+    cursor: pointer;
+    height: 30px;
+    width: 71px;
+    line-height: 32px;
+    font-size: 10px;
+    background-color: rgb(135 222 117);
+}

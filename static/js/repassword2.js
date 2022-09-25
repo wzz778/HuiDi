@@ -12,7 +12,6 @@ function isnull(val) {
 let mymail=document.getElementById('mymail');
 let password=document.getElementById('password');
 let repassword=document.getElementById('repassword');
-let username=document.getElementById('username');
 function createCode() {
 	code = "";
 	var codeLength = 4; //验证码的长度   
@@ -38,14 +37,9 @@ function validate() {
 	} 
 	let pa=password.value;
 	let repa=repassword.value;
-	let name=username.value
 	var passLimit=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/;
-	if(isnull(pa)||isnull(repa)||isnull(name)){
+	if(isnull(pa)||isnull(repa)){
 		alert("请填写完整内容")
-		return 
-	}
-	if(name.length>6){
-		alert("请输入不大于6位的用户名")
 		return 
 	}
 	if(passLimit.test(pa)==false){
@@ -57,17 +51,16 @@ function validate() {
 		return 
 	}else{
 		axios({
-            url: '/api/register',
-            method: 'post',
+            url: 'api/updatepassword',
+            method: 'POST',
             data: {
-              "mail":mymail.innerHTML,
-			  "password":pa,
-			  "username":name
+              "email":mymail.innerHTML,
+			  "newPassword":pa,
             }
           }).then(data => {
             console.log(data.data);
             if(data.data.err==0){
-                alert('注册成功');
+                alert('修改成功');
 				sessionStorage.removeItem('mymail');
 				setTimeout(function () {
 					window.location.assign("/login");

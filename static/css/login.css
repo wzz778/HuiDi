@@ -91,6 +91,8 @@ a{
 }
 .form .logindiv a:hover{
     color: #0dcab7;
+}
+.form .logindiv .biga:hover{
     font-size: 15px;
 }
 .nextprocedure{

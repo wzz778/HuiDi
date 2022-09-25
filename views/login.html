@@ -21,19 +21,20 @@
           <div class="form">
             <div class="logindiv">
                 <label >邮箱：</label>
-                <input type="text" autocomplete="off" placeholder="请输入您注册使用的邮箱">
+                <input type="text" id="mymail" autocomplete="off" placeholder="请输入您要登录账号的邮箱">
             </div>
             <div class="logindiv">
                 <label >填写密码：</label>
-                <input type="text" autocomplete="off" placeholder="请输入您要设置的密码">
+                <input type="password" id="password" autocomplete="off" placeholder="请输入您账号的密码">
             </div>
             <div class="repassword">
                 <a href="register">没有账号？点击注册</a>
                 <a href="repassword">忘记密码？点击找回</a>
             </div>
-            <button class="nextprocedure">登录</button>
+            <button class="nextprocedure" onclick="tologin()">登录</button>
         </div>
     </div>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="public/js/login.js"></script>
 </html>

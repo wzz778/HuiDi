@@ -33,6 +33,6 @@ app.use(liRouter)
 app.use(zllRouter);
 app.use(userRouter);
 // 启动服务器
-app.listen(8080, () => {
+app.listen(8099, () => {
   console.log('服务器已启动,端口号:8080')
 })

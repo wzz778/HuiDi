@@ -1,7 +1,6 @@
 {{extend './backstage.html'}}
 {{block 'title'}}分类管理{{/block}}
 {{block 'header'}}
-<link rel="stylesheet" href="public/css/hompage.css">
 <link rel="stylesheet" href="public/css/classify.css">
 {{/block}}
 {{block 'classify'}}
@@ -17,23 +16,35 @@
 
 {{/block}}
 {{block 'body'}}
-<div class="card-header">
-    
-</div>
 <div class="card-body">
-    <div>
+    <div class="card-header">
         <button class="btn btn-new">新增</button>
     </div>
     <div>
-        <ul>
-            <li>
-
-            </li>
-        </ul>
+        <div class="">
+            <div class="classify-list">
+                <img src="public/iconfont/arrow3.png" alt="" class="arrow arrow-right">
+                <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
+                <span class="classify-name">热门推荐</span>
+                <div class="func">
+                    <button class="btn btn-update">修改</button>
+                    <button class="btn btn-new">新增</button>
+                    <button class="btn btn-delete">删除</button>
+                </div>
+            </div>
+            <div class="classify-list-next">
+                <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
+                <span class="classify-next-name">人像</span>
+                <div class="func">
+                    <button class="btn btn-update">修改</button>
+                    <button class="btn btn-delete">删除</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 {{/block}}
 {{block 'footer'}}
-<script src="public/js/homepage.js"></script>
+<script src="public/js/classify.js"></script>
 {{/block}}

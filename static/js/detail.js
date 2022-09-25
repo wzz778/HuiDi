@@ -1,37 +1,21 @@
+let hidden = document.getElementsByClassName('hidden');
+let download = document.getElementsByClassName('download');
+let cancel = document.getElementsByClassName('cancel');
+let clear = document.getElementsByClassName('clear');
 
+download[0].onclick = function(){
+    hidden[0].style.display = 'block';
 
-// 使用layui轮播图
-function pic(hei){
-    layui.use('carousel',function () {
-        var carousel = layui.carousel;
+}
 
-        carousel.render({
-            elem:'#attchment-pic',
-            width:'100%',
-            arrow:'always',
-            height:hei + 'px',
-            indicator:'none',
-            anim:'default',
-            autoplay:false,
-        })
-    })
+cancel[0].onclick = function(){
+    hidden[0].style.display = 'none';
+}
+clear[0].onclick = function(){
+    hidden[0].style.display = 'none';
 }
 
 
-let id = window.location.search.split("=")[1];
-// console.log(id);
-let history_details = document.getElementsByClassName('history-details');
-let application_message = document.getElementsByClassName('application-message');
-let attchment = document.getElementsByClassName('attchment');
-let carousel_item = document.getElementsByClassName('carousel-item');
-let download = document.getElementsByClassName('download');
-let attchment_imgs = document.getElementsByClassName('attchments');
-let reject = document.getElementsByClassName('reject');
-let attchment_header = document.getElementsByClassName('attchment-header');
-let ranking = document.getElementsByClassName('ranking');
-let describe = document.getElementsByClassName('describe');
-let messages = document.getElementsByName('messages');
-let returns = document.getElementsByClassName('returns');
 
 
 //渲染页面

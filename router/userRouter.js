@@ -17,8 +17,14 @@ router.get('/register',(req,res)=>{
 router.get('/register2',(req,res)=>{
     res.render('register2.html')
 })
+router.get('/repassword',(req,res)=>{
+    res.render('repassword.html')
+})
+router.get('/repassword2',(req,res)=>{
+    res.render('repassword2.html')
+})
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
-//发送验证码
+//发送验证码(查重)
 router.post('/api/sendcode', (req, res) => {    
     var mailLimit = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
     var mailJudge = mailLimit.test(req.body.mail);
@@ -60,7 +66,32 @@ router.post('/api/checkcode', (req, res) => {
             if(response.data.msg=='OK'){
                 res.send({ err: 0, msg:"OK"});
             }else{
-                res.send({ err: -1, msg:'数据操作错误'});
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            console.log(error);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }
+})
+//发送验证码(不查重)
+router.post('/api/resendcode', (req, res) => {    
+    var mailLimit = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    var mailJudge = mailLimit.test(req.body.email);
+    console.log(req.body);
+    if (mailJudge==false){
+        res.send({ err: -1, msg:'邮箱形式错误'});
+    }else{
+        axios({
+            url:'/loginAndRegister/sendRetrieveMail',
+            method:'post',
+            params:req.body,
+        }).then(response=>{
+            console.log(response.data);
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:"OK"});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
             }
         }).catch(function (error) {
             console.log(error);
@@ -79,13 +110,53 @@ router.post('/api/register', (req, res) => {
         if(response.data.msg=='OK'){
             res.send({ err: 0, msg:"OK"});
         }else{
-            res.send({ err: -1, msg:'数据操作错误'});
+            res.send({ err: -1, msg:response.data.msg});
         }
     }).catch(function (error) {
         console.log(error);
         res.send({ err: -1, msg: '网络错误' })
     });
     
+})
+//登录
+router.post('/api/login', (req, res) => {    
+    axios({
+        url:'/loginAndRegister/login',
+        method:'post',
+        params:req.body,    
+    }).then(response=>{
+        console.log(response.data);
+        if(response.data.msg=='OK'){
+            req.session.token=response.data.data.token;
+            req.session.id=jwt.decode(req.session.token).id;
+            req.session.username=jwt.decode(req.session.token).username;
+            console.log(req.session.user);
+            res.send({ err: 0, msg:"OK"});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+    
+})
+//修改密码
+router.post('/api/updatepassword', (req, res) => {
+    axios({
+        method: 'PUT',
+        url: '/loginAndRegister/retrievePassword',
+        params: req.body,
+    }).then((result) => {
+        if (result.data.msg == 'OK') {  
+            res.send({ err: 0, msg: result.data })
+        } else {
+            res.send({ err: -1, msg: result.data })
+        }
+    }).catch((err) => {
+        // console.log(err.data)
+        res.send({ err: -1, msg: err })
+    })
 })
 module.exports=router;
 

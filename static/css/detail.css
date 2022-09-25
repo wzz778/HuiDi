@@ -1,3 +1,49 @@
+*{
+    color: black;
+}
+.hidden{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128,0.5);
+    z-index: 999999;
+    display: none;
+}
+.pop-up{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    background-color: white;
+    border-radius: 5px;
+}
+.hidden-img{
+    display: block;
+    width: 250px;
+    height: 250px;
+    margin: 15px auto;
+}
+.hidden-title{
+    display: block;
+    margin: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+}
+.btn{
+    width: 118px;
+    height: 40px;
+    border-radius: 4px;
+    border: 0;
+    color: rgb(255 255 255);
+    font-size: 17px;
+    line-height: 40px;
+}
 .content{
     min-height: 75%;
     width: 100%;
@@ -69,6 +115,7 @@ a:hover{
 }
 .messages li{
     display: inline-block;
+    padding: 8px;
     width: 50%;
     box-sizing: border-box;
     float: left;
@@ -79,6 +126,9 @@ a:hover{
 }
 .parctice-content{
     width: 100%;
+    color: black;
+    font-size: 15px;
+    font-weight: 900;
 }
 .parctice-content span{
     display: block;
@@ -144,4 +194,33 @@ a:hover{
     font-size: 15px;
     padding-bottom: 10px;
     padding-right: 15px;
+}
+.content-img{
+    margin: 5px 10px;
+    width: 30%;
+    height: 30%;
+    display: inline-block;
+    border-radius: 4px;
+    object-fit: cover;
+}
+.content-main{
+    border: 1px solid rgb(204 204 204);
+    border-radius: 4px;
+}
+.content-title{
+    padding: 8px;
+}
+.cancel{
+    background-color: rgb(135,222,117);
+    float: right;
+    margin-right: 35px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+.clear{
+    background-color: rgb(231 76 60);
+    float: left;
+    margin-left: 35px;
+    cursor: pointer;
+    margin-bottom: 25px;
 }

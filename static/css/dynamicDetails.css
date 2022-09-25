@@ -48,7 +48,7 @@
 
 .focusOn {
     margin-top: 10px;
-    background-color: #FF7E7E;
+    background-color: #BD3F43;
     color: white;
     padding: 5px 20px;
     font-size: 18px;
@@ -145,8 +145,12 @@
     color: #AAAAAA;
 }
 
+.cancelSty:hover {
+    color: #BD3F43;
+}
+
 .sendSty {
-    background-color: #FF7E7E;
+    background-color: #BD3F43;
     color: white;
     padding: 5px 18px;
 }
@@ -249,6 +253,10 @@
     font-weight: 700;
 }
 
+.userName:hover {
+    color: #BD3F43;
+}
+
 .sendDate {
     font-size: 14px;
     color: #aaa;
@@ -262,7 +270,7 @@
 }
 
 .operatorBtn:hover {
-    color: #FF7E7E;
+    color: #BD3F43;
 }
 
 .onmouseShow {

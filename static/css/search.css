@@ -179,6 +179,10 @@
     padding: 10px;
 }
 
+.userInfo>span>a:hover {
+    color: #C71D23;
+}
+
 .textInfo {
     padding: 10px;
     font-size: 14px;

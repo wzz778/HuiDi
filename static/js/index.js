@@ -64,10 +64,10 @@ function rightArrow() {
 
 // 首页左边导航栏
 let centerMiddle = document.getElementsByClassName('centerMiddle')
-let navOperatorChoice=document.getElementsByClassName('navOperatorChoice')
-function navFn(show,close) {
-    centerMiddle[close].style.display='none'
-    centerMiddle[show].style.display='block'
+let navOperatorChoice = document.getElementsByClassName('navOperatorChoice')
+function navFn(show, close) {
+    centerMiddle[close].style.display = 'none'
+    centerMiddle[show].style.display = 'block'
     // 为其添加样式
     navOperatorChoice[show].classList.add('navChoiceSty')
     navOperatorChoice[show].firstElementChild.classList.add('navTextChoiceSty')
@@ -75,3 +75,16 @@ function navFn(show,close) {
     navOperatorChoice[close].classList.remove('navChoiceSty')
     navOperatorChoice[close].firstElementChild.classList.remove('navTextChoiceSty')
 }
+
+// 测试接口
+axios({
+    method: 'POST',
+    url: '/admin/releaseAlbum',
+    data: {}
+})
+    .then((result) => {
+        console.log(result.data)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })

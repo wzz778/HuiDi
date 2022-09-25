@@ -70,16 +70,21 @@
 }
 
 .middleTagNav>a {
-    color: #ff7e7e;
+    color: #C71D23;
     font-size: 14px;
 }
 
 .showFilter {
     padding: 5px 10px;
-    border: 1px solid #FF7E7E;
-    color: #ff7e7e;
+    border: 1px solid #e0e0e0;
+    color: black;
     font-size: 14px;
     cursor: pointer;
+}
+
+.showFilter:hover {
+    color: #C71D23;
+    border: 1px solid #C71D23;
 }
 
 .middleContent {

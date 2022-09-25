@@ -63,11 +63,13 @@
 }
 
 .albumWriterCollect {
-    background-color: #FFB779;
+    background-color: #d3711c;
+    cursor: pointer;
 }
 
 .albumWriterLike {
-    background-color: #FF7E7E;
+    cursor: pointer;
+    background-color: #C71D23;
 }
 
 .content {

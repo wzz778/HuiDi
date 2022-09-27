@@ -202,6 +202,23 @@
     top: -4px;
 }
 
+.showImg {
+    display: flex;
+}
+
+.showImg>img {
+    width: 48px;
+    height: 48px;
+    margin-left: 49px;
+}
+
+.showImgOperator>button {
+    padding: 0px;
+    background-color: #FAFAFA;
+    color: #AAAAAA;
+    margin-left: 10px;
+}
+
 .allComments {
     margin-top: 20px;
     width: 570px;

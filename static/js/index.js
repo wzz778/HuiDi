@@ -75,16 +75,3 @@ function navFn(show, close) {
     navOperatorChoice[close].classList.remove('navChoiceSty')
     navOperatorChoice[close].firstElementChild.classList.remove('navTextChoiceSty')
 }
-
-// 测试接口
-axios({
-    method: 'POST',
-    url: '/admin/releaseAlbum',
-    data: {}
-})
-    .then((result) => {
-        console.log(result.data)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })

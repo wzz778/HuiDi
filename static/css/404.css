@@ -1,0 +1,18 @@
+.middle {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 180px;
+}
+
+.middle>h1 {
+    margin-bottom: 20px;
+}
+
+.middle>h2 {
+    margin-bottom: 20px;
+}
+
+.middle>a:hover {
+    color: #BD3F43;
+}

@@ -62,6 +62,11 @@ textarea {
     float: left;
 }
 
+/* 不显示 */
+.none {
+    display: none !important;
+}
+
 /* 错误信息 */
 .hintSty {
     z-index: 100000;
@@ -75,7 +80,6 @@ textarea {
     align-items: center;
     padding: 10px 20px;
     color: white;
-    display: none;
 }
 
 .wrong {
@@ -91,7 +95,7 @@ textarea {
 }
 
 .animatedSty {
-    animation: hint 1s ease .4s alternate;
+    animation: hint 1s ease alternate;
 }
 
 .wrong>span {

@@ -5,7 +5,33 @@
 <link rel="stylesheet" href="/public/css/dynamicDetails.css">
 {{/block}}
 {{block 'bodytop'}}
-<!-- 弹窗 -->
+<!-- 出错的提示信息 -->
+<div class="wrong hintSty none">
+    <span class="">
+        <i class="iconfont">&#xe606;</i>
+    </span>
+    <span id="wrongText">
+        操作失败
+    </span>
+</div>
+<!-- 成功的提示信息 -->
+<div class="success hintSty none">
+    <span class="">
+        <i class="iconfont">&#xe62a;</i>
+    </span>
+    <span id="successText">
+        操作成功
+    </span>
+</div>
+<!-- 警告信息 -->
+<div class="warning hintSty none">
+    <span class="">
+        <i class="iconfont">&#xe66a;</i>
+    </span>
+    <span id="warningText">
+        信息不符
+    </span>
+</div>
 {{/block}}
 {{block 'body'}}
 <div class="middle">
@@ -71,18 +97,23 @@
                             <input type="file" id="imgFile" style="cursor: pointer;">
                             <span class="floatLeft addImgBtn">
                                 <i class="iconfont">&#xe70a;</i>
-                                <span>添加图片</span>
+                                <span id="clickChangeText">添加图片</span>
                             </span>
                         </span>
                         <span class="floatRight">
-                            <button class="sendSty">发送</button>
+                            <button class="sendSty" onclick="sendCommentFn()">发送</button>
                         </span>
                         <span class="floatRight">
-                            <button class="cancelSty">取消</button>
+                            <button class="cancelSty" onclick="closeCommentBoxFn(this)">取消</button>
                         </span>
 
                     </div>
-                    <div class="showImg"></div>
+                    <div class="showImg none">
+                        <img id="showImgUrl" src="" alt="">
+                        <span class="showImgOperator">
+                            <button onclick="delShowImg()">删除</button>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,7 +154,7 @@
                     </span>
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
-                            <button class="operatorBtn">删除</button>
+                            <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
                             <button class="operatorBtn">举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
@@ -138,13 +169,6 @@
                     <p>11</p>
                     <img src="/public/img/myImg1.jpg" alt="">
                     <!-- 回复框 -->
-                    <div class="subcommentBox clearFloat CommentStyChange">
-                        <textarea id="" cols="30" rows="10" placeholder="说些什么吧"></textarea>
-                        <div class="floatRight">
-                            <button class="cancelSty" onclick="cancelReplyFn(this)" >取消</button>
-                            <button class="sendSty">发送</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -152,5 +176,7 @@
 </div>
 {{/block}}
 {{block 'bottom'}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/toolEncapsulation.js"></script>
 <script src="/public/js/dynamicDetails.js"></script>
 {{/block}}

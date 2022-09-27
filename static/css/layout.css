@@ -21,6 +21,28 @@ a{
 	from {transform: rotate(0deg);}
 	to {transform: rotate(-180deg);}
 }
+.fade {
+  animation: fade .2s;
+  -webkit-animation: fade .2s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 #header{
     position: fixed;
     inset: 0px auto auto 0px;
@@ -51,7 +73,7 @@ a{
     padding-left: 16px; 
     width: 200px;
     border-radius: 45px;
-    border: 2px solid #FF7E7E;
+    border: 2px solid #0dcab7;
     transition: .3s linear;
     float: right;
 }
@@ -65,7 +87,7 @@ a{
     cursor: pointer;
     font-size: 17px;
     color: white;
-    background-color: #FF7E7E;
+    background-color: #0dcab7;
     position: absolute;
     border: none;
     outline: none;
@@ -74,7 +96,7 @@ a{
     right: 0px;
 }
 #header .header_button{
-    margin: 0 15px;
+    margin: 0 40px;
     padding: 0 4px;
     width: 70px;
     height: 36px;
@@ -100,12 +122,37 @@ a{
     background-color: #fff;
     box-shadow: 0 2px 4px rgb(171, 171, 171);
 }
+
+#header .header_co{
+  position: absolute;
+  top: 52px;
+  right:200px;
+  width:120px;
+  height: 150px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgb(171, 171, 171);
+}
+#header .header_co a{
+  display: block;
+  width: 120px;
+  padding:8px 0px;
+  text-align: center;
+  transition: .3s all;
+  margin: 10px 0;
+  color: #0eb2a1;
+}
+#header .header_co a i{
+  padding-right: 5px;
+}
+#header .header_co a:hover{
+    background-color: #f2f2f2;
+}
 .publish_button{
     display: block;
     width: 78px;
     height: 30px;
     padding: 3px 0px;
-    background: #ff7e7e;
+    background: #0dcab7;
     margin: 0 30px;
     border-radius: 44px;
     font-size: 16px;
@@ -115,15 +162,15 @@ a{
     line-height: 30px;
 }
 .publish_button:hover{
-    background: #f15c5c;
+    background: #0eb2a1;
 }
 .message_button{
-    padding: 15px 18px;
+    padding: 15px 30px;
     display: block;
     border-radius: 10px;
     font-size: 16px;
     color: #a8a8a8;
-    margin: 0 10px;
+    margin: 0 20px;
 }
 .message_button:hover{
     background: #f5f5f5;
@@ -160,10 +207,192 @@ a{
     top: 500px;
     right: 30px;
     font-size: 30px;
-    color: #ff7e7e;
+    color: #0dcab7;
     border: 1px solid #e0e0e0;
 }
 #totop:hover{
     border: 1px solid #afafaf;
-    color: #ff6161;
+    color: #0dae9e;
+}
+#publish {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    /* display: block;
+    opacity: 1; */
+  }
+  
+  #publish #publish_main {
+    padding:20px 30px;
+    width: 360px;
+    min-height: 200px;
+    /* height: 330px; */    
+    background-color: white;
+    margin: 20vh auto;
+    border-radius: 2px;
+    position: relative;
+  }
+  
+  #publish #publish_main .publish_main_top {
+    /* font-family: YouYuan; */
+    font-weight: 900;
+    width: 100%;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    color: #b6b6b6;
+    border-bottom: 1px solid #ebebeb;
+  }
+  #publish #publish_main .publish_main_top a {
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 26px;
+    border-radius: 100px;
+    font-size: 20px;
+    position: absolute;
+    color: #000000;
+    top: 10px;
+    z-index: 2;
+    right: 20px;
+    transition: .2s;
+  }
+  
+  #publish #publish_main .publish_main_top a:hover {
+    color: white;
+    background-color: #2bb4a7;
+  }
+  
+  #publish #publish_main .publish_link {
+    /* background-color: #a8a8a8; */
+    width: 100%;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 5px;
+    line-height: 30px;
+  }
+  #publish #publish_main .publish_link select{
+    width: 260px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  #publish #publish_main .publish_link i {
+    color: #0dcab7;
+    padding-right: 5px;
+  }
+  
+  #publish #publish_main button {
+    bottom: 10px;
+    right: 35px;
+    position: absolute;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #E8F4FF;
+    color: #0dcab7;
+    border: #c3e0fc 1px solid;
+    cursor: pointer;
+  }
+  
+  #publish #publish_main button:hover {
+    background-color: #0dcab7;
+    color: white;
+    border: #0dcab7 1px solid;
+  }
+  
+  #publish #publish_main .publish_send {
+    height: 23px;
+    width: 300px;
+    padding-left: 10px;
+    outline: none;
+    border: 1.5px solid gainsboro;
+    border-radius: 2px;
+  }
+  
+  #publish #publish_main .publish_text {
+    margin-top: 15px;
+    resize: none;
+    height: 80px;
+    padding: 5px;
+    width: 340px;
+    outline: none;
+    font-size: 14px;
+    border: 1.5px solid gainsboro;
+    border-radius: 2px;
+    line-height: 18px;
+  }
+  /* .publish_files{ 
+    border: #000000 1px solid;
+  } */
+#img-box{
+  /* border: #0dae9e 1px solid; */
+  display: flex;
+  padding: 5px;
+  flex-wrap: wrap;
+}
+#img-box div{
+  border: 2px dashed gray;
+  width: 90px;
+  height: 90px;
+  position: relative;
+  text-align: center;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 1px;
+}
+#img-box div .deletediv{
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  z-index: 2;
+  opacity: 0;
+  color: white;
+  background-color: rgba(0, 0, 0,0.4);
+  cursor: pointer;
+}
+#img-box div div:hover{
+  opacity: 1;
+}
+#img-box img{
+  width: 90px;
+  height: 90px;
+}
+/*外层div*/
+/* .input-file-box{
+  border: 1px solid gray;
+  width: 90px;
+  height: 90px;
+  position: relative;
+  text-align: center;
+  border-radius: 3px;
+} */
+/*文字描述*/
+.input-file-box > span{
+  display: block;
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: gray;
+}
+/*input框*/
+.input-file-box #uploadfile{
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
 }

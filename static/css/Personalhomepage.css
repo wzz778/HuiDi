@@ -1,34 +1,116 @@
 #body{
     margin-top: 70px;
+    /* background-color: #F6F6F6; */
 }
 .rebody{
-    height: 1000px;
-    background-color: wheat;
+    position: relative;
+    width: 1000px;
+    padding: 0 16px;
+    margin: 10px auto;
 }
 .mymessage{
-    width: 1000px;
-    height: 400px;
-    background-color: aliceblue;
-    position: relative;
-    /* text-align: center; */
+    margin-bottom: 10px;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
+    box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    /* text-align: center; */   
 }
-.mymessage .mymessageback{
+.mytextmessage{
     width: 1000px;
-    height: 200px;
-    /* background-color: aliceblue; */
+    min-height: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+.mytextmessageleft{
+    width: 690px;
+    min-height: 500px;
+    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
+    box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
+    border-radius: 3px;
+}
+.mytextmessageright{
+    width: 300px;
+    min-height: 500px;
+    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
+    box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
+    border-radius: 3px;
+}
+.mymessage #mymessageback{
+    width: 1000px;
+    height: 130px;
+    background-color: aliceblue;
     position: relative;
     background-repeat: no-repeat;
     background-position: 50%;
     background-size: cover;
-    background-image: url(http://127.0.0.1:8080/public/img/duitanglogo.png);
+    background-image: url(/public/img/01.jpeg);
 }
-.mymessage img{
-    width: 70px;
-    height: 70px;
-    border-radius: 100px;
-    border: 2px solid white;
+.mymessage #mymessagetext{
+    width: 1000px;
+    height: 120px;
+    position: relative;
+    background: #fff;
+    margin: 0 20px 0px;
+}
+.mymessage #mymessagetext #cordimg{
+    width: 160px;
+    height: 160px;
+    border-radius: 3px;
+    border: 5px solid white;
     position: absolute;
-    background-color: white;
-    top: 160px;
-    right: 450px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(/public/img/userHead.jpg);
+    top: -57px;
+}
+.mymessage #mymessagetext #cordcon{
+    padding-top: 16px;
+    padding-left: 200px;
+    width: 760px;
+    height: 120px;
+    /* position: absolute; */
+    /* top: -57px; */
+}
+#cord-contentHead{
+    width: 700px;
+    height: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 800;
+    font-size: 26px;
+}
+.cord-contentBot{
+    width: 650px;
+    padding-left: 50px;
+    height: 30px;
+    line-height: 30px;
+}
+.mymessage #mymessagetext #cordcon img{
+    position: relative;
+    left: -50px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+}
+.mymessage #mymessagetext #cordcon span{
+    width: 30px;
+    height: 30px;
+}
+.mymessage #mymessagetext a{
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+    font-size: 14px;
+    color: #0dcab7;
+    border: #0dcab7 1px solid;
+    border-radius: 3px;
+    padding: 6px 16px;
+    transition: .2s all;
+}
+.mymessage #mymessagetext a:hover{
+    background-color:#0dcab737;
 }

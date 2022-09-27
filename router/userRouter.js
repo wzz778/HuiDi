@@ -24,6 +24,27 @@ router.get('/repassword2',(req,res)=>{
     res.render('repassword2.html')
 })
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
+//登录
+router.post('/api/login', (req, res) => {    
+    axios({
+        url:'/loginAndRegister/login',
+        method:'post',
+        params:req.body,    
+    }).then(response=>{
+        console.log(response.data);
+        if(response.data.msg=='OK'){
+            req.session.token=response.data.data.token;
+            req.session.userid=jwt.decode(req.session.token).id;
+            req.session.username=jwt.decode(req.session.token).username;
+            res.send({ err: 0, msg:"OK"});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
 //发送验证码(查重)
 router.post('/api/sendcode', (req, res) => {    
     var mailLimit = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -118,29 +139,6 @@ router.post('/api/register', (req, res) => {
     });
     
 })
-//登录
-router.post('/api/login', (req, res) => {    
-    axios({
-        url:'/loginAndRegister/login',
-        method:'post',
-        params:req.body,    
-    }).then(response=>{
-        console.log(response.data);
-        if(response.data.msg=='OK'){
-            req.session.token=response.data.data.token;
-            req.session.id=jwt.decode(req.session.token).id;
-            req.session.username=jwt.decode(req.session.token).username;
-            console.log(req.session.user);
-            res.send({ err: 0, msg:"OK"});
-        }else{
-            res.send({ err: -1, msg:response.data.msg});
-        }
-    }).catch(function (error) {
-        console.log(error);
-        res.send({ err: -1, msg: '网络错误' })
-    });
-    
-})
 //修改密码
 router.post('/api/updatepassword', (req, res) => {
     axios({
@@ -157,6 +155,30 @@ router.post('/api/updatepassword', (req, res) => {
         // console.log(err.data)
         res.send({ err: -1, msg: err })
     })
+})
+//获取个人信息
+router.get('/api/getmymessage', (req, res) => {   
+    if(req.session.userid){
+        axios({
+            url:'/admin/showUser',
+            method:'get',  
+            params:{
+                id:req.session.userid
+            },    
+        }).then(response=>{ 
+            console.log(response.data);
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg: '未登录' })
+    }
 })
 module.exports=router;
 

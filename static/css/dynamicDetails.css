@@ -3,6 +3,68 @@
     margin: 0 auto;
 }
 
+.reportHint {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.reportHintItem {
+    width: 484px;
+    background-color: white;
+    margin: 200px auto;
+    padding: 0px 20px 30px 20px;
+}
+
+.reportHintTop {
+    text-align: center;
+}
+
+.reportHintTop>span {
+    display: inline-block;
+    height: 46px;
+    line-height: 46px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.reportHintContent {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+#reportReason {
+    width: 300px;
+    margin-left: 0px;
+}
+
+#otherReason {
+    resize: none;
+    padding: 7px 10px;
+    width: 300px;
+    border: 1px solid #DDDDDD;
+    height: 58px;
+    color: #666;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+.reportHintBottom {
+    /* display: grid; */
+    /* align-items: center; */
+    text-align: center;
+}
+
+.reportHintBottom>button {
+    background-color: #BD3F43;
+    color: white;
+}
+
 .content {
     margin-top: 80px;
 }

@@ -32,6 +32,33 @@
         信息不符
     </span>
 </div>
+<!-- 举报弹窗 -->
+<div class="reportHint none">
+    <div class="reportHintItem">
+        <div class="reportHintTop clearFloat">
+            <span>举报</span>
+            <button class="floatRight" onclick="cancelFn(this)">
+                <i class="iconfont">&#xe643;</i>
+            </button>
+        </div>
+        <div class="reportHintContent">
+            <select id="reportReason">
+                <option value="">请选择举报原因</option>
+                <option value="">抄袭/未授权转载</option>
+                <option value="">淫秽低俗</option>
+                <option value="">广告</option>
+                <option value="">言语辱骂</option>
+                <option value="0">其他</option>
+            </select>
+        </div>
+        <div class="reportHintContent none">
+            <textarea id="otherReason" placeholder="说点什么吧"></textarea>
+        </div>
+        <div class="reportHintBottom">
+            <button>确定</button>
+        </div>
+    </div>
+</div>
 {{/block}}
 {{block 'body'}}
 <div class="middle">
@@ -80,7 +107,7 @@
                     </button>
                 </div>
                 <div class="">
-                    <button class="operatorItemBtn">
+                    <button class="operatorItemBtn" onclick='reportFn(this)'>
                         <i class="iconfont">&#xe69b;</i>
                         <span>举报</span>
                     </button>
@@ -155,7 +182,7 @@
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
                             <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
-                            <button class="operatorBtn">举报</button>
+                            <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
                         <span class="dividingLine"></span>
@@ -191,7 +218,7 @@
                         <div class="replyCommnetContent">
                             cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</div>
                         <div class="replyCommneBottom">
-                            <span class="replyCommnetDate">2022-09-27</span>
+                            <span class="replyCommnetDate">9月27日08:10</span>
                             <!-- 举报按钮 -->
                             <button>
                                 <i class="iconfont">&#xe69b;</i>
@@ -202,6 +229,8 @@
                                 <span>1</span>
                             </button>
                             <button onclick="replayCommentShowFn(this)">回复</button>
+                            <button onclick="delReplyCommentFn(this)">删除</button>
+                            <button onclick='reportFn(this)'>举报</button>
                         </div>
                     </div>
                 </div>

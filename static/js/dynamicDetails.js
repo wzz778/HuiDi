@@ -14,7 +14,24 @@ let showImgUrl = document.getElementById('showImgUrl')
 let CommentInfo = document.getElementById('CommentInfo')
 // 存放评论的父盒子
 let allCommentsContent = document.getElementsByClassName('allCommentsContent')
+// 举报的弹窗
+let reportHint=document.getElementsByClassName('reportHint')
+// 举报选择原因
+let reportReason = document.getElementById('reportReason')
 
+// 点击取消按钮将盒子隐藏
+function cancelFn(event) {
+    event.parentElement.parentElement.parentElement.classList.add('none')
+}
+// 当选择框变为其他时文本框出现
+reportReason.onchange = function () {
+    if (this.value === '0') {
+        console.log(this.value)
+        this.parentElement.nextElementSibling.classList.remove('none')
+        return
+    }
+    this.parentElement.nextElementSibling.classList.add('none')
+}
 
 // 点击显现和收起评论按钮
 function showCommentBoxFn() {
@@ -95,7 +112,7 @@ function addComment() {
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
                             <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
-                            <button class="operatorBtn">举报</button>
+                            <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
                         <span class="dividingLine"></span>
@@ -180,16 +197,16 @@ function replyCommentFirstFn(event) {
         hintFn('warning', '请输入评论内容，且评论不能为纯空格')
         return
     }
-    let tempObj={
-        sendUrl:'javascript:;',
-        sendSrc:'/public/img/album1.jpg',
-        sendName:'夜星XY',
-        value:tempStr,
-        replyName:'123',
-        replySrc:'/public/img/album1.jpg',
-        replyUrl:'javascript:;'
+    let tempObj = {
+        sendUrl: 'javascript:;',
+        sendSrc: '/public/img/album1.jpg',
+        sendName: '夜星XY',
+        value: tempStr,
+        replyName: '123',
+        replySrc: '/public/img/album1.jpg',
+        replyUrl: 'javascript:;'
     }
-    addCommentSonComment(event,tempObj)
+    addCommentSonComment(event, tempObj)
 }
 // 回复二级评论
 function replyCommentSonFn(event) {
@@ -198,20 +215,21 @@ function replyCommentSonFn(event) {
         hintFn('warning', '请输入评论内容，且评论不能为纯空格')
         return
     }
-    let tempObj={
-        sendUrl:'javascript:;',
-        sendSrc:'/public/img/album1.jpg',
-        sendName:'夜星XY',
-        value:tempStr,
-        replyName:'123',
-        replySrc:'/public/img/album1.jpg',
-        replyUrl:'javascript:;'
+    let tempObj = {
+        sendUrl: 'javascript:;',
+        sendSrc: '/public/img/album1.jpg',
+        sendName: '夜星XY',
+        value: tempStr,
+        replyName: '123',
+        replySrc: '/public/img/album1.jpg',
+        replyUrl: 'javascript:;'
     }
-    addCommentSonComment(event.parentElement.parentElement,tempObj)
+    addCommentSonComment(event.parentElement.parentElement, tempObj)
 }
 // 将回复的评论添加到盒子中
-function addCommentSonComment(event,commentObj){
-    let tempStr=`
+function addCommentSonComment(event, commentObj) {
+    var myDate = new Date()
+    let tempStr = `
     <div class="replyCommnetBox">
                     <div class="replyCommnetItem">
                         <!-- 回复人 -->
@@ -232,7 +250,7 @@ function addCommentSonComment(event,commentObj){
                         ${commentObj.value}
                         </div>
                         <div class="replyCommneBottom">
-                            <span class="replyCommnetDate">2022-09-27</span>
+                            <span class="replyCommnetDate">${myDate.getMonth() + 1}月${myDate.getDate()}日 ${myDate.getHours()}:${myDate.getMinutes()}</span>
                             <!-- 举报按钮 -->
                             <button>
                                 <i class="iconfont">&#xe69b;</i>
@@ -243,10 +261,21 @@ function addCommentSonComment(event,commentObj){
                                 <span>1</span>
                             </button>
                             <button onclick="replayCommentShowFn(this)">回复</button>
+                            <button onclick="delReplyCommentFn(this)">删除</button>
+                            <button onclick='reportFn(this)'>举报</button>
                         </div>
                     </div>
                 </div>
     `
-    event.parentElement.parentElement.parentElement.parentElement.innerHTML+=tempStr
+    event.parentElement.parentElement.parentElement.parentElement.innerHTML += tempStr
 
+}
+
+// 删除回复评论
+function delReplyCommentFn(event) {
+    event.parentElement.parentElement.parentElement.remove()
+}
+// 举报弹窗显现
+function reportFn(event) {
+    reportHint[0].classList.remove('none')
 }

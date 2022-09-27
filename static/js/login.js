@@ -27,7 +27,7 @@ function tologin(){
         if(data.data.err==0){
             alert('登录成功');
             setTimeout(function () {
-                window.location.assign("/");
+                window.location.assign("/layout");
             }, 300)
         }else{
             alert(data.data.msg);

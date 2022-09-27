@@ -128,13 +128,38 @@ a{
 .repassword a:hover{
     color: #0dcab7;
 }
-.code {
+#checkCode {
     width: 50px;
-    height: 30px;
+    height: 38px;
+    padding: 6px 2px;
+    font-size: 18px;
+    font-weight: bold;
+    /* border: 0; */
+    letter-spacing: 3px;
+    background-image: url(/public/img/yzmbj.jpg);
+    background-repeat: no-repeat;
+}
+.code{
     font-family: Arial;
     font-style: italic;
-    font-weight: bold;
-    border: 0;
-    letter-spacing: 3px;
     color: blue;
+    background-position: 0px 0px;
+}
+.code2{
+    font-family: STHupo;
+    font-style: italic;
+    color: red;
+    background-position: -100px -75px;
+}
+.code3{
+    font-family: STXingkai;
+    font-style: italic;
+    color: #0eb3a2;
+    background-position: -200px -155px;
+}
+.code4{
+    font-family:STCaiyun;
+    font-style: italic;
+    color: #e3d10b;
+    background-position: -155px 0px;
 }

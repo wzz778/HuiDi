@@ -321,7 +321,11 @@
 .commentsContent {
     margin: 10px;
     padding-left: 40px;
+}
 
+.commentsContent>p {
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .commentsContent>img {
@@ -343,4 +347,55 @@
     padding: 6px 10px 6px;
     font-size: 14px;
     border: 1px solid #fecccc;
+}
+
+.replyCommnetBox {
+    margin-left: 50px;
+    padding: 10px;
+}
+
+.replyUserName {
+    color: #FB849F;
+    display: flex;
+}
+
+.replyUserName>img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.replyUserName>span {
+    margin: 10px 0px 0px 10px;
+}
+
+.replyCommnetContent {
+    color: #225370;
+    margin: 5px 45px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.replyCommneBottom>button {
+    color: #9499a0;
+}
+
+.replyCommnetDate {
+    color: #9499a0;
+    font-size: 14px;
+    margin-left: 40px;
+}
+
+.replyCommneBottom>button:hover {
+    color: #FB8FB7;
+}
+
+.replyInfo {
+    display: flex;
+}
+
+.replyInfo>span {
+    margin: 12px 10px 0px 10px;
+    color: #FB849F;
+    font-size: 14px;
 }

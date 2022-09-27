@@ -78,9 +78,9 @@ function sendCommentFn() {
 // 评论添加到指定盒子中
 function addComment() {
     var myDate = new Date()
-    let imgStr=''
-    if(showImgUrl.src!='http://127.0.0.1:8099/dynamicDetails'){
-        imgStr=`<img src="${showImgUrl.src}" alt="">`
+    let imgStr = ''
+    if (showImgUrl.src != 'http://127.0.0.1:8099/dynamicDetails') {
+        imgStr = `<img src="${showImgUrl.src}" alt="">`
     }
     let tempStr = `
     <div class="allCommentsContentItem">
@@ -90,7 +90,7 @@ function addComment() {
                     </a>
                     <span class="sendInfo floatLeft">
                         <a href="javascript:;" class="userName">夜星</a>
-                        <span class="sendDate">${myDate.getMonth()+1}月${myDate.getDate()}日 ${myDate.getHours()}:${myDate.getMinutes()}</span>
+                        <span class="sendDate">${myDate.getMonth() + 1}月${myDate.getDate()}日 ${myDate.getHours()}:${myDate.getMinutes()}</span>
                     </span>
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
@@ -130,7 +130,7 @@ function replyFn(event) {
                         <textarea id="" cols="30" rows="10" placeholder="说些什么吧"></textarea>
                         <div class="floatRight">
                             <button class="cancelSty" onclick="cancelReplyFn(this)" >取消</button>
-                            <button class="sendSty">发送</button>
+                            <button class="sendSty" onclick='replyCommentFirstFn(this)'>发送</button>
                         </div>
                     </div>
     `
@@ -156,4 +156,97 @@ function getAllComment(id) {
         .catch(err => {
             console.log(err)
         })
+}
+
+// 回复子评论盒子显现
+function replayCommentShowFn(event) {
+    if (event.parentElement.lastElementChild.nodeName != 'DIV') {
+        let str = `
+    <div class="subcommentBox clearFloat">
+                        <textarea id="" cols="30" rows="10" placeholder="说些什么吧"></textarea>
+                        <div class="floatRight">
+                            <button class="cancelSty" onclick="cancelReplyFn(this)" >取消</button>
+                            <button class="sendSty" onclick='replyCommentSonFn(this)'>发送</button>
+                        </div>
+                    </div>
+    `
+        event.parentElement.innerHTML += str
+    }
+}
+// 回复主评论
+function replyCommentFirstFn(event) {
+    let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
+    if (tempStr.length == 0) {
+        hintFn('warning', '请输入评论内容，且评论不能为纯空格')
+        return
+    }
+    let tempObj={
+        sendUrl:'javascript:;',
+        sendSrc:'/public/img/album1.jpg',
+        sendName:'夜星XY',
+        value:tempStr,
+        replyName:'123',
+        replySrc:'/public/img/album1.jpg',
+        replyUrl:'javascript:;'
+    }
+    addCommentSonComment(event,tempObj)
+}
+// 回复二级评论
+function replyCommentSonFn(event) {
+    let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
+    if (tempStr.length == 0) {
+        hintFn('warning', '请输入评论内容，且评论不能为纯空格')
+        return
+    }
+    let tempObj={
+        sendUrl:'javascript:;',
+        sendSrc:'/public/img/album1.jpg',
+        sendName:'夜星XY',
+        value:tempStr,
+        replyName:'123',
+        replySrc:'/public/img/album1.jpg',
+        replyUrl:'javascript:;'
+    }
+    addCommentSonComment(event.parentElement.parentElement,tempObj)
+}
+// 将回复的评论添加到盒子中
+function addCommentSonComment(event,commentObj){
+    let tempStr=`
+    <div class="replyCommnetBox">
+                    <div class="replyCommnetItem">
+                        <!-- 回复人 -->
+                        <div class="replyInfo">
+                            <a href="${commentObj.sendUrl}" class="replyUserName">
+                                <img src="${commentObj.sendSrc}" alt="">
+                                <span>${commentObj.sendName}</span>
+                            </a>
+                            <span>回复</span>
+                            <!-- 回复的人 -->
+                            <a href="${commentObj.replyUrl}" class="replyUserName">
+                                <img src="${commentObj.replySrc}" alt="">
+                                <span>${commentObj.replyName}</span>
+                            </a>
+                        </div>
+                        <!-- 回复信息 -->
+                        <div class="replyCommnetContent">
+                        ${commentObj.value}
+                        </div>
+                        <div class="replyCommneBottom">
+                            <span class="replyCommnetDate">2022-09-27</span>
+                            <!-- 举报按钮 -->
+                            <button>
+                                <i class="iconfont">&#xe69b;</i>
+                            </button>
+                            <!-- 点赞 -->
+                            <button>
+                                <i class="iconfont">&#xec7f;</i>
+                                <span>1</span>
+                            </button>
+                            <button onclick="replayCommentShowFn(this)">回复</button>
+                        </div>
+                    </div>
+                </div>
+    `
+    event.parentElement.parentElement.parentElement.parentElement.innerHTML+=tempStr
+
 }

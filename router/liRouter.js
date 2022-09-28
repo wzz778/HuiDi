@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
+const multipart = require('connect-multiparty')
+const FormData = require('form-data')
+var multiparty = require('multiparty')
+const fs = require('fs')
+var mult = multipart()
 const axios = require('axios')
 
 // 指定默认请求路径
@@ -46,6 +51,147 @@ router.post('/admin/showComment', (req, res) => {
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
             }
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 发布评论
+router.post('/admin/publicComment', mult, (req, res) => {
+    let formdata = new FormData()
+    for (let a in req.files) {
+        formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
+    }
+    let { content, level, id } = req.body
+    console.log('传的数据', req.body)
+    formdata.append('content', content)
+    formdata.append('level', level)
+    formdata.append('reflect_id', id)
+    axios({
+        method: 'POST',
+        url: '/admin/publicComment',
+        data: formdata,
+        headers: {
+            // token: req.session.token,
+            formdata: formdata.getHeaders(),
+            maxBodyLength: 1000000000
+        }
+    })
+        .then(result => {
+            console.log(result.data)
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            req.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取所有评论
+router.post('/admin/showComment', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'GET',
+        url: '/admin/showComment',
+        params: {
+            reflect: id
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            req.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 收藏
+router.post('/admin/addCollect', (req, res) => {
+    let { imgId, uId } = req.body
+    axios({
+        method: 'POST',
+        url: '/admin/addCollect',
+        params: {
+            img_id: imgId,
+            u_id: uId
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 取消收藏
+router.post('/admin/deleteCollect', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'DELETE',
+        url: '/admin/deleteCollect',
+        params: {
+            id: id
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 点赞
+router.post('/admin/pointLike', (req, res) => {
+    let { uId, reflectId } = req.body
+    axios({
+        method: 'POST',
+        url: '/admin/pointLike',
+        params: {
+            reflect_id: reflectId,
+            u_id: uId
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 取消点赞
+router.post('/admin/deleteLike', (req, res) => {
+    let { reflectId, uId } = req.body
+    axios({
+        method: 'DELETE',
+        url: '/admin/deleteLike',
+        params: {
+            reflect_id: reflectId,
+            u_id: uId
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
         })
         .catch(err => {
             res.send({ err: -1, msg: err })

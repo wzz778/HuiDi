@@ -461,3 +461,13 @@
     color: #FB849F;
     font-size: 14px;
 }
+
+.noContent {
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+}
+
+.clickOperator {
+    color: #BD3F43;
+}

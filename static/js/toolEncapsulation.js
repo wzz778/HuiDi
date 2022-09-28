@@ -41,3 +41,20 @@ function hintFn(hintType, hintText) {
         tempType[0].classList.add('none')
     }, 2000)
 }
+
+// 发送函数
+function sendFn(url, obj) {
+    return new Promise((resolve, resject) => {
+        axios({
+            method: 'POST',
+            url: url,
+            data: obj
+        })
+            .then(result => {
+                resolve(result.data)
+            })
+            .catch(err => {
+                resject(err)
+            })
+    })
+}

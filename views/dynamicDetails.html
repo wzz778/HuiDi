@@ -89,9 +89,9 @@
             </div>
             <div class="operatorItem">
                 <div class="">
-                    <button class="operatorItemBtn">
+                    <button class="operatorItemBtn" onclick="likeFn(this)">
                         <i class="iconfont">&#xec7f;</i>
-                        <span>赞</span>
+                        <span>1</span>
                     </button>
                 </div>
                 <div class="">
@@ -101,9 +101,9 @@
                     </button>
                 </div>
                 <div class="">
-                    <button class="operatorItemBtn">
+                    <button class="operatorItemBtn clickOperator" onclick="collectFn(this)">
                         <i class="iconfont">&#xebae;</i>
-                        <span>收藏</span>
+                        <span>1</span>
                     </button>
                 </div>
                 <div class="">
@@ -235,6 +235,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="noContent none">
+            还没有评论，你来说点什么吧
         </div>
     </div>
 </div>

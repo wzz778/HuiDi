@@ -9,7 +9,6 @@ function isnull(val) {
         return false;
     }
   }
-axios.defaults.baseURL = 'http://127.0.0.1:8080/'
 var times=60;
 var djs
 function opendjs(){

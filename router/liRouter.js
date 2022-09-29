@@ -42,13 +42,13 @@ router.get('/404', (req, res) => {
 })
 
 // 判断是否登录
-router.post('/judgeLogin',(req,res)=>{
+router.post('/judgeLogin', (req, res) => {
     // 判断是否有值
-    if(req.session.token){
-        res.send({err:0,msg:true})
+    if (req.session.token) {
+        res.send({ err: 0, msg: true })
         return
     }
-    res.send({err:-1,msg:false})
+    res.send({ err: -1, msg: false })
 })
 
 // 动态详情页信息
@@ -81,7 +81,7 @@ router.post('/admin/publicComment', mult, (req, res) => {
     formdata.append('content', content)
     formdata.append('level', level)
     formdata.append('super_id', superId)
-    formdata.append('reflect_id',reflectId)
+    formdata.append('reflect_id', reflectId)
     axios({
         method: 'POST',
         url: '/admin/publicComment',
@@ -155,6 +155,9 @@ router.post('/admin/deleteCollect', (req, res) => {
         url: '/admin/deleteCollect',
         params: {
             id: id
+        },
+        headers: {
+            token: req.session.token
         }
     })
         .then(result => {
@@ -211,5 +214,17 @@ router.post('/admin/deleteLike', (req, res) => {
         .catch(err => {
             res.send({ err: -1, msg: err })
         })
+})
+// 关注
+router.post('/admin/addFocus', (req, res) => {
+    let { focusId, uId }=req.body
+    axios({
+        method:'POST',
+        url:'/admin/addFocus',
+        params:{
+            focus_id:focusId,
+            
+        }
+    })
 })
 module.exports = router

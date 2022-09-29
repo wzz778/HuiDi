@@ -61,18 +61,21 @@ function sendFn(url, obj) {
 
 // 判断是否登录
 function judgeLogin() {
-    return new Promise((resolve,resject)=>{
+    return new Promise((resolve, resject) => {
         axios({
-            method:'POST',
-            url:'/judgeLogin',
+            method: 'POST',
+            url: '/judgeLogin',
         })
-        .then(result=>{
-            console.log(result.data)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+            .then(result => {
+                if (result.data.msg) {
+                    // 登录了
+                    resolve()
+                } else {
+                    resject()
+                }
+            })
+            .catch(err => {
+                resject()
+            })
     })
 }
-
-judgeLogin()

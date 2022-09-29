@@ -1,0 +1,73 @@
+{{extend './layout.html'}}
+{{block 'title'}}关注更多{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/Universal.css">
+<link rel="stylesheet" href="/public/css/focusOnMore.css">
+{{/block}}
+{{block 'bodytop'}}
+{{/block}}
+{{block 'body'}}
+<div class="middle">
+    <div class="content clearFloat">
+        <div class="contentLeft floatLeft" id="choiceFocus">
+            <span class="clickSty">全部</span>
+            <span>美食</span>
+            <span>手工</span>
+            <span>时尚</span>
+            <span>壁纸</span>
+            <span>插画</span>
+            <span>萌系</span>
+            <span>摄影</span>
+            <span>园艺</span>
+        </div>
+        <div class="floatLeft">
+            <div class="item clearFloat">
+                <div class="itemImg floatLeft">
+                    <a href="javascript:;">
+                        <img src="/public/img/01.jpg" alt="">
+                    </a>
+                </div>
+                <div class="itemUserInfo floatLeft">
+                    <!-- 用户名 -->
+                    <a href="javascript:;">
+                        夜星XY
+                    </a>
+                    <!-- 用户介绍 -->
+                    <div class="userIntroduce">
+                        <p>12hdasdhjashjas11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p>
+                    </div>
+                </div>
+                <div class="floatRight operator">
+                    <!-- 关注情况 -->
+                    <button class="defaultSty" onclick="focusOnFn(this)">关注</button>
+                </div>
+            </div>
+            <div class="item clearFloat">
+                <div class="itemImg floatLeft">
+                    <a href="javascript:;">
+                        <img src="/public/img/01.jpg" alt="">
+                    </a>
+                </div>
+                <div class="itemUserInfo floatLeft">
+                    <!-- 用户名 -->
+                    <a href="javascript:;">
+                        夜星XY
+                    </a>
+                    <!-- 用户介绍 -->
+                    <div class="userIntroduce">
+                        <p>12hdasdhjashjas11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p>
+                    </div>
+                </div>
+                <div class="floatRight operator">
+                    <!-- 关注情况 -->
+                    <button id="a" class="defaultSty focusSty" onclick="focusOnFn(this)">已关注</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/block}}
+{{block 'bottom'}}
+<script src="/public/js/toolEncapsulation.js"></script>
+<script src="/public/js/focusOnMore.js"></script>
+{{/block}}

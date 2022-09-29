@@ -2,6 +2,10 @@ const express = require('express');
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const FormData=require('form-data');
+const fs=require('fs');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 router.get('/layout',(req,res)=>{
     res.render('layout.html')
 })

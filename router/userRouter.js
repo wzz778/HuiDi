@@ -251,5 +251,37 @@ router.get('/api/getmyalbumname', (req, res) => {
         res.send({ err: -1, msg: '网络错误' })
     });
 })
+//发布动态
+router.post('/api/send', multipartMiddleware,(req, res) => {
+    let formdata = new FormData()
+    //建立FormData()对象，注意：node中使用要先下载formdata中间件
+    for (let a in req.files) {
+        formdata.append('file', fs.createReadStream(req.files[a].path),req.files[a].originalFilename)//第二个参数试上传的文件名
+    }
+    //循环传递file文件对象，req.files[a].path是该文件的本地地址， 用fs.createReadStream(req.files[a].path)进行读取创作，req.files[a].originalFilename是文件本名，用来传出文件名称
+    formdata.append('enclosure_name',req.body.enclosure_name)
+    formdata.append('application_id',req.body.application_id)
+    console.log(formdata);
+    //req.body中传递非文件数据， req.files是文件数据
+    axios({
+        method: 'POST',
+        url: '/user/photo',
+        data:formdata,
+        // headers: formdata.getHeaders(),
+        headers:{
+            token:req.session.token,
+            formdata:formdata.getHeaders(),//传递formdata数据
+            maxBodyLength:1000000000    
+        }
+    })
+        .then((result) => {
+            // console.log(result.data)
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch((err) => {
+            // console.log(err)
+            res.send({ err: -1, msg: err})
+        })
+})  
 module.exports=router;
 

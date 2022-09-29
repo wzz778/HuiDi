@@ -229,7 +229,7 @@ a{
   
   #publish #publish_main {
     padding:20px 30px;
-    width: 360px;
+    width: 340px;
     min-height: 200px;
     /* height: 330px; */    
     background-color: white;
@@ -277,7 +277,7 @@ a{
     line-height: 30px;
   }
   #publish #publish_main .publish_link select{
-    width: 260px;
+    width: 240px;
     height: 30px;
     font-size: 14px;
     cursor: pointer;
@@ -320,7 +320,7 @@ a{
     resize: none;
     height: 80px;
     padding: 5px;
-    width: 340px;
+    width: 320px;
     outline: none;
     font-size: 14px;
     border: 1.5px solid gainsboro;

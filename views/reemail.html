@@ -1,0 +1,39 @@
+{{extend './layout.html'}}
+{{block 'title'}}个人主页{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/css/reemail.css">
+{{/block}}
+{{block 'body'}}
+    <div id="body">
+        <div class="rebody wrap">
+            <div class="tab">
+                <ul>
+                    <li><a href="modifymessage" class="conli">基本信息</a></li>
+                    <li><a href="reemail" class="conli havebethis">修改邮箱</a></li>
+                    <li><a href="repassword" class="conli">修改密码</a></li>
+                </ul>
+            </div>
+            <div class="mymessage">
+                <!-- <div class="content">
+                    <div class="card-body">
+                      <ul class="nav-step">
+                        <li class="nav-step-item active complete">
+                          <span>账号验证</span>
+                          <a class="active" aria-expanded="false">
+                          </a>
+                        </li>
+                        <li class="nav-step-item">
+                          <span>修改邮箱</span>
+                          <a class="uncomplete">
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div> -->
+            </div>
+        </div>
+    </div>
+{{/block}}
+{{block 'bottom'}}
+<script src="public/js/reemail.js"></script>
+{{/block}}

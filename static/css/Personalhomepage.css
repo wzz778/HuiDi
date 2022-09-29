@@ -8,6 +8,9 @@
     padding: 0 16px;
     margin: 10px auto;
 }
+li {
+    list-style-type: none;
+}
 .mymessage{
     margin-bottom: 10px;
     background: #fff;
@@ -21,20 +24,19 @@
 }
 .mytextmessage{
     width: 1000px;
-    min-height: 500px;
     display: flex;
     justify-content: space-between;
 }
 .mytextmessageleft{
     width: 690px;
-    min-height: 500px;
+    padding-bottom: 10px;
     -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     border-radius: 3px;
 }
 .mytextmessageright{
-    width: 300px;
-    min-height: 500px;
+    width: 290px;
+    padding: 5px;
     -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     border-radius: 3px;
@@ -45,9 +47,9 @@
     background-color: aliceblue;
     position: relative;
     background-repeat: no-repeat;
-    background-position: 50%;
+    background-position: 100% 100%;
     background-size: cover;
-    background-image: url(/public/img/01.jpeg);
+    background-image: url(/public/img/be42c240.jpg);
 }
 .mymessage #mymessagetext{
     width: 1000px;
@@ -113,4 +115,90 @@
 }
 .mymessage #mymessagetext a:hover{
     background-color:#0dcab737;
+}
+.mytextmessageleft ul{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-wrap: nowrap;
+    border-bottom:#ebebeb 1px solid ;
+}
+.mytextmessageleft ul li{
+    display: inline-block;
+
+}
+.mytextmessageleft ul li a{
+    display: block;
+    width: 40px;
+    line-height: 38px;
+    margin:0px 20px;
+    text-align: center;
+    height: 38px;
+    color: #121212;
+}
+.mytextmessageleft ul li a:hover{
+    font-weight: 600;
+    border-bottom:#0dcab7 2px solid ;
+}
+.havebethis{
+    font-weight: 600;
+    border-bottom:#0dcab7 2px solid ;
+}
+.textmessagemax{
+    width: 670px;
+    margin: 10px;
+    /* background-color: wheat; */
+}
+.textmessage{
+    display: none;
+}
+.textmessagemax .class_header{
+    width: 650px;
+    padding-left: 20px;
+    height: 40px;
+    line-height: 40px;
+    border-bottom:#ebebeb 1px solid ;
+}
+.textmessagemax .class_body{
+    margin-top: 10px;
+    width: 670px;
+    height: 200px;
+    background-color: wheat;
+}
+.numberboard{
+    width: 290px;
+    height: 50px;
+    display: flex;
+    padding: 10px 0;
+    border: #ebebeb 1px solid;
+}
+.numberboard a{ 
+    display: block;
+    width: 144.5px;
+    height: 50px;
+    text-align: center;
+}
+.numberboard a span:first-child{ 
+    color: #8590a6;
+    font-size: 14px;
+}
+.numberboard a span:last-child{ 
+    font-size: 18px;
+    font-weight: 600;
+    color: #121212;
+}
+.numberboard a:first-child{ 
+    border-right:#ebebeb 1px solid ;
+}
+.code_publish_button{
+    text-align: center;
+    display: block;
+    font-size: 14px;
+    color: #0dcab7;
+    border: #0dcab7 1px solid;
+    width: 250px;
+    margin: 10px auto;
+    border-radius: 3px;
+    padding: 10px 0px;
+    transition: .2s all;
 }

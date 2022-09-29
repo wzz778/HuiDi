@@ -41,6 +41,16 @@ router.get('/404', (req, res) => {
     res.render('404.html')
 })
 
+// 判断是否登录
+router.post('/judgeLogin',(req,res)=>{
+    // 判断是否有值
+    if(req.session.token){
+        res.send({err:0,msg:true})
+        return
+    }
+    res.send({err:-1,msg:false})
+})
+
 // 动态详情页信息
 router.post('/admin/showComment', (req, res) => {
     let { id } = req.body

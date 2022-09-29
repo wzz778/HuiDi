@@ -58,3 +58,21 @@ function sendFn(url, obj) {
             })
     })
 }
+
+// 判断是否登录
+function judgeLogin() {
+    return new Promise((resolve,resject)=>{
+        axios({
+            method:'POST',
+            url:'/judgeLogin',
+        })
+        .then(result=>{
+            console.log(result.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    })
+}
+
+judgeLogin()

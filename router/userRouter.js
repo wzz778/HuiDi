@@ -256,7 +256,7 @@ router.get('/api/getmyalbumname', (req, res) => {
     });
 })
 //发布动态
-router.post('/api/send', multipartMiddleware,(req, res) => {
+router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
     let formdata = new FormData()
     //建立FormData()对象，注意：node中使用要先下载formdata中间件
     for (let a in req.files) {
@@ -269,7 +269,7 @@ router.post('/api/send', multipartMiddleware,(req, res) => {
     //req.body中传递非文件数据， req.files是文件数据
     axios({
         method: 'POST',
-        url: '/user/photo',
+        url: 'admin/releaseImage',
         data:formdata,
         // headers: formdata.getHeaders(),
         headers:{

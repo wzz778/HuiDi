@@ -223,7 +223,7 @@ router.post('/admin/addFocus', (req, res) => {
         url:'/admin/addFocus',
         params:{
             focus_id:focusId,
-            
+            u_id:uId
         }
     })
 })

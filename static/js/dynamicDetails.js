@@ -86,7 +86,8 @@ function sendCommentFn() {
     }
     formData.append('content', tempStr)
     formData.append('level', 1)
-    formData.append('id', 22)
+    formData.append('superId', 0)
+    formData.append('reflectId',22)
     sendComment(formData)
         .then(result => {
             addComment()

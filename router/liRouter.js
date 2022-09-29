@@ -32,6 +32,10 @@ router.get('/dynamicDetails', (req, res) => {
 router.get('/search', (req, res) => {
     res.render('search.html')
 })
+// 关注更多
+router.get('/focusOnMore', (req, res) => {
+    res.render('focusOnMore.html')
+})
 // 404页面
 router.get('/404', (req, res) => {
     res.render('404.html')
@@ -62,11 +66,12 @@ router.post('/admin/publicComment', mult, (req, res) => {
     for (let a in req.files) {
         formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
     }
-    let { content, level, id } = req.body
+    let { content, level, superId, reflectId } = req.body
     console.log('传的数据', req.body)
     formdata.append('content', content)
     formdata.append('level', level)
-    formdata.append('reflect_id', id)
+    formdata.append('super_id', superId)
+    formdata.append('reflect_id',reflectId)
     axios({
         method: 'POST',
         url: '/admin/publicComment',

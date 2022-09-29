@@ -8,11 +8,13 @@ function isnull(val) {
         return false;
     }
   }
+  //
 function tologin(){
     let mail=mymail.value;
     let pa=password.value;
     if(isnull(pa)||isnull(mail)){
-		alert("请填写完整内容")
+    hintFn('warning' ,'请填写完整内容')
+		// alert("请填写完整内容")
 		return 
 	}
     axios({
@@ -25,10 +27,11 @@ function tologin(){
       }).then(data => {
         console.log(data.data);
         if(data.data.err==0){
-            alert('登录成功');
+          hintFn('success' ,'登录成功')
+            // alert('登录成功');
             setTimeout(function () {
-                window.location.assign("/layout");
-            }, 300)
+                window.location.assign("/Personalhomepage");
+            }, 1000)
         }else{
             alert(data.data.msg);
         }

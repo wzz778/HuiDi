@@ -23,6 +23,15 @@ router.get('/repassword',(req,res)=>{
 router.get('/repassword2',(req,res)=>{
     res.render('repassword2.html')
 })
+router.get('/modifymessage',(req,res)=>{
+    res.render('modifymessage.html')
+})
+router.get('/reemail',(req,res)=>{
+    res.render('reemail.html')
+})
+router.get('/mymessage',(req,res)=>{
+    res.render('mymessage.html')
+})
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 //登录
 router.post('/api/login', (req, res) => {    
@@ -179,6 +188,68 @@ router.get('/api/getmymessage', (req, res) => {
     }else{
         res.send({ err: -1, msg: '未登录' })
     }
+})
+//获取个人的粉丝和关注数
+router.get('/api/getmynumber', (req, res) => {   
+    if(req.session.userid){
+        axios({
+            url:'/admin/showOtherFocus',
+            method:'get',  
+            params:{
+                id:req.session.userid
+            },    
+        }).then(response=>{ 
+            console.log(response.data);
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg: '未登录' })
+    }
+})
+//获取他人的粉丝和关注数
+router.get('/api/getnumber', (req, res) => {   
+    axios({
+        url:'/admin/showOtherFocus',
+        method:'get',  
+        params:req.params
+    }).then(response=>{ 
+        console.log(response.data);
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
+//获取个人的专辑名
+router.get('/api/getmyalbumname', (req, res) => {   
+    axios({
+        url:'/picture/showAlbum',
+        method:'get',  
+        params:{
+            id:5
+        }
+    }).then(response=>{ 
+        console.log(response.data);
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
 })
 module.exports=router;
 

@@ -10,6 +10,7 @@ let header_co=document.getElementsByClassName('header_co')[0];
 var publish = document.getElementById("publish");
 var publish_send = document.getElementsByClassName("publish_send")[0];
 var publish_text = document.getElementsByClassName("publish_text")[0];
+let select=document.getElementsByClassName('albumselect')[0];
 header_button.onmousemove = function() {
     header_class.style.display='block';
     header_button_i.classList.add("arrowtora");
@@ -77,18 +78,18 @@ axios({
     method: 'get',
   }).then(data => {
     console.log(data.data);
-    if(data.data.err==-1){
+    if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){
             headerimg.src=me.img_url;
         }
         headera.innerHTML=me.name;
-        header_headdiv.style.display='none'
-        toland.style.display='block'
-
-    }else{
         header_headdiv.style.display='flex'
         toland.style.display='none'
+        
+    }else{
+        header_headdiv.style.display='none'
+        toland.style.display='block'
         
     }
   }).catch(function (error) {
@@ -153,3 +154,24 @@ function opendetele(event){
     // console.log(event.parentElement);
     document.getElementById("img-box").removeChild(thishtml);
 }
+function getoption(){
+    axios({
+        url: '/api/getmyalbumname',
+        method: 'get',
+      }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            let msg=data.data.msg;
+            select.innerHTML=``
+            for(let i of msg){
+                console.log(i);
+                select.innerHTML+=`<option value=${i.album.id}>${i.album.a_name}</option>`
+            }
+        }else{
+
+        }
+      }).catch(function (error) {
+        
+      });
+}
+getoption()

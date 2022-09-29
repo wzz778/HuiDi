@@ -1,0 +1,45 @@
+{{extend './layout.html'}}
+{{block 'title'}}个人主页{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/css/modifymessage.css">
+{{/block}}
+{{block 'body'}}
+    <div id="body">
+        <div class="rebody wrap">
+            <div class="tab">
+                <ul>
+                    <li><a href="modifymessage" class="conli  havebethis">基本信息</a></li>
+                    <li><a href="reemail" class="conli">修改邮箱</a></li>
+                    <li><a href="repassword" class="conli">修改密码</a></li>
+                </ul>
+            </div>
+            <div class="mymessage">
+                <div id="mymessageback"></div>
+                <!-- <img src="/public/img/userHead.jpg" alt=""> -->
+                <div id="mymessagetext">
+                    <div id="cordimg"></div>
+                    <div id="cordcon">
+                        <div class="inputdiv">
+                            <label >头像上传：</label>
+                            <button>点击上传头像</button>
+                            <input  type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" id="headfile" name="image" size="50" onchange="openimg()">
+                        </div>
+                        <div class="inputdiv">
+                            <label >用户名：</label>
+                            <input type="text" class="kuanginput" autocomplete="off" placeholder="请输入您要修改成的用户名">
+                        </div>
+                        <div class="inputdiv">
+                            <label >性别：</label>
+                            <input type="radio" name="sex" class="chanceinput" value="男" checked>男
+                            <input type="radio" style="margin-left: 15px;" name="sex" class="chanceinput" value="女">女
+                        </div> 
+                        <button style="margin-left: 600px;">保存修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/block}}
+{{block 'bottom'}}
+<script src="public/js/modifymessage.js"></script>
+{{/block}}

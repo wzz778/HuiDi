@@ -6,15 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {{block 'title'}}{{/block}}</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/public/css/Universal.css">
     <link rel="stylesheet" href="public/css/layout.css">
     {{block 'head'}}{{/block}}
 </head>
 <body>
 
     {{block 'bodytop'}}{{/block}}
+        <!-- 出错的提示信息 -->
+    
+<div class="wrong hintSty none">
+    <span class="">
+        <i class="iconfont">&#xe606;</i>
+    </span>
+    <span id="wrongText">
+        操作失败
+    </span>
+</div>
+<!-- 成功的提示信息 -->
+<div class="success hintSty none">
+    <span class="">
+        <i class="iconfont">&#xe62a;</i>
+    </span>
+    <span id="successText">
+        操作成功
+    </span>
+</div>
+<!-- 警告信息 -->
+<div class="warning hintSty none">
+    <span class="">
+        <i class="iconfont">&#xe66a;</i>
+    </span>
+    <span id="warningText">
+        信息不符
+    </span>
+</div>
+
     <div id="header">
         <div class="wrap header_max">
-            <a href="" style="display: block;width: 80px;height: 40px;"><img src="public/img/duitanglogo.png" alt=""></a>
+            <a href="" style="display: block;width: 80px;height: 40px;">
+                <!-- <img src="public/img/duitanglogo.png" alt=""> -->logo
+            </a>
             <div class="header_button">
                 分类  <i class="fa fa-caret-up" aria-hidden="true"></i>
             </div>
@@ -59,7 +91,7 @@
             <div class="publish_link">
                 <i>*</i>
                 图片专辑：
-                <select name="albumselect" class="albumselect" onchange="" >
+                <select name="albumselect" class="albumselect" onchange="getoption()" >
                     <option value="1">专辑1</option>
                     <option value="1">专辑1</option>
                     <option value="1">专辑3</option>
@@ -81,6 +113,7 @@
     {{/block}}
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/toolEncapsulation.js"></script>
 <script src="public/js/layout.js"></script>
 {{block 'bottom'}}{{/block}}
 </html>

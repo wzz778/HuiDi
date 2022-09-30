@@ -68,25 +68,14 @@
         <!-- 左边内容 -->
         <div class="contentLeft floatLeft">
             <div class="clearFloat userInfoTop">
-                <div class="userInfo floatLeft">
-                    <a class="">
-                        <img src="/public/img/album1.jpg" alt="">
-                    </a>
-                    <span class="userNameItem">
-                        <span class="">
-                            <a href="javascript:;">
-                                叹爱
-                            </a>
-                        </span>
-                        <span>9月20日 12:49</span>
-                    </span>
+                <div class="userInfo floatLeft" id="userInfo">
+                    
                 </div>
                 <button class="focusOn floatRight">关注</button>
             </div>
             <!-- 单独的内容 -->
-            <div class="detailsWorks">
-                <p>渐行渐远的人怎么会像当初一样热衷</p>
-                <img src="/public/img/myImg1.jpg" alt="">
+            <div class="detailsWorks" id="detailsWorks">
+                
             </div>
             <div class="operatorItem">
                 <div class="">
@@ -147,18 +136,7 @@
         </div>
         <!-- 右边内容 -->
         <div class="contentRight floatLeft">
-            <a href="javascript:;">
-                <div class="contentRightItem">
-                    <img src="/public/img/myImg3.jpg" alt="">
-                    <div class="">
-                        <span>冷清</span>
-                        <span>
-                            <span>618张图片</span>
-                            <span></span>
-                            <span>0人收藏</span>
-                        </span>
-                    </div>
-                </div>
+            <a href="javascript:;" id="albumInfo">
             </a>
         </div>
     </div>
@@ -242,6 +220,5 @@
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/public/iconfont/iconfont.js"></script>
-<script src="/public/js/toolEncapsulation.js"></script>
 <script src="/public/js/dynamicDetails.js"></script>
 {{/block}}

@@ -20,6 +20,12 @@ let noContent = document.getElementsByClassName('noContent')
 let reportHint = document.getElementsByClassName('reportHint')
 // 举报选择原因
 let reportReason = document.getElementById('reportReason')
+// 专辑信息
+let albumInfo=document.getElementById('albumInfo')
+// 用户信息
+let userInfo=document.getElementById('userInfo')
+// 内容
+let detailsWorks=document.getElementById('detailsWorks')
 
 // 点击取消按钮将盒子隐藏
 function cancelFn(event) {
@@ -423,7 +429,44 @@ function getAllComment(obj) {
 // 获取指定id的信息
 sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
     .then(result => {
-        console.log(result)
+        console.log('结果',result)
+        // 修改专辑的src
+        albumInfo.href=`/album?albumId=${result.msg.album.id}`
+        // 将专辑信息显现
+        let tempAlbumStr=`
+    <div class="contentRightItem">
+        <img src="/public/img/11.png" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
+        <div class="">
+            <span>${result.msg.album.a_name}</span>
+            <span>
+                <span>创建时间</span>
+                <span></span>
+                <span>${result.msg.album.create_time.split(' ')[0]}</span>
+            </span>
+        </div>
+    </div>
+        `
+        albumInfo.innerHTML=tempAlbumStr
+        // 用户信息
+        let tempUserStr=`
+                    <a class="javascript:;">
+                        <img src="/public/img/11.png" alt="" data-url="${result.msg.users.img_url}" onload="operatorImgFn(this)">
+                    </a>
+                    <span class="userNameItem">
+                        <span>
+                            <a href="javascript:;">
+                                ${result.msg.users.name}
+                            </a>
+                        </span>
+                        <span>${result.msg.album.create_time}</span>
+                    </span>
+        `
+        userInfo.innerHTML=tempUserStr
+        let tempWorksStr=`
+                <p>${result.msg.images.describes}</p>
+                <img src="/public/img/11.png" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
+        `
+        detailsWorks.innerHTML=tempWorksStr
     })
     .catch(err => {
         console.log(err)

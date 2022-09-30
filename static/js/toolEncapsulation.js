@@ -10,8 +10,8 @@ function judgeStr(str) {
 }
 
 // 判断文件格式(图片)与大小
+let imgArr = ['image/png', 'image/jpeg']
 function judgeFileImg(fileTemp, size) {
-    let imgArr = ['image/png', 'image/jpeg']
     let resultObj = {}
     if (fileTemp.size > (1024 * 1024 * size)) {
         resultObj.reason = '上传文件太大了'
@@ -78,4 +78,56 @@ function judgeLogin() {
                 resject()
             })
     })
+}
+
+
+// 图片加载优化
+class PreLoadImage {
+    constructor(imgNode) {
+        // 获取真实的DOM节点
+        this.imgNode = imgNode
+    }
+    // 操作img节点的src属性
+    setSrc(imgUrl) {
+        this.imgNode.src = imgUrl
+    }
+}
+class ProxyImage {
+    // 占位图的url地址
+    static LOADING_URL = '/public/img/11.png'
+    constructor(targetImage) {
+        // 目标Image，即PreLoadImage实例
+        this.targetImage = targetImage
+    }
+    // 该方法主要操作虚拟Image，完成加载
+    setSrc(targetUrl) {
+        // 真实img节点初始化时展示的是一个占位图,这里的setSrc是PreLoadImage里边的方法
+        this.targetImage.setSrc(ProxyImage.LOADING_URL)
+        // 创建一个帮我们加载图片的虚拟Image实例
+        const virtualImage = new Image()
+        // 监听目标图片加载的情况，完成时再将DOM上的真实img节点的src属性设置为目标图片的url
+        virtualImage.onload = () => {
+            //virtualImage图片加载好给实例赋值过去
+            this.targetImage.setSrc(targetUrl)
+        }
+        // 设置src属性，虚拟Image实例开始加载图片
+        virtualImage.src = targetUrl
+        // 去除监听的img函数
+        this.targetImage.imgNode.removeAttribute("onload")
+    }
+}
+// 操作img的函数接收一个img dom元素，其下一个元素需要是图片的url地址
+function operatorImgFn(event) {
+    let tempEle = new PreLoadImage(event)
+    let operatorEle = new ProxyImage(tempEle)
+    operatorEle.setSrc(event.getAttribute('data-url'))
+    // let allImgs = document.getElementsByTagName('img')
+    // for (let i = 0; i < allImgs.length; i++) {
+    //     if (!allImgs[i].getAttribute('data-url')) {
+    //         continue
+    //     }
+    //     let tempEle = new PreLoadImage(allImgs[i])
+    //     let operatorEle = new ProxyImage(tempEle)
+    //     operatorEle.setSrc(allImgs[i].getAttribute('data-url'))
+    // }
 }

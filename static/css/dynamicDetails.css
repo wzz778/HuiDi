@@ -110,7 +110,7 @@
 
 .focusOn {
     margin-top: 10px;
-    background-color: #BD3F43;
+    background-color: #056DE8;
     color: white;
     padding: 5px 20px;
     font-size: 18px;
@@ -229,7 +229,7 @@
 
 .contentRightItem {
     display: flex;
-    padding-right: 145px;
+    padding-right: 120px;
 }
 
 .contentRightItem>img {

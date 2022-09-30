@@ -140,7 +140,7 @@
 }
 
 .carouselRightAll>a:hover {
-    background-color: #C71D23;
+    background-color: #056DE8;
     color: white;
 }
 
@@ -160,15 +160,15 @@
 
 .carouselRightFeaturedItem>a>span:nth-child(1) {
     border-radius: 28px 0px 0px 28px;
-    background-color: #C71D23;
-    border: 1px solid #C71D23;
+    background-color: #056DE8;
+    border: 1px solid #056DE8;
     padding: 4px 12px;
     color: white;
 }
 
 .carouselRightFeaturedItem>a>span:nth-child(2) {
     border-radius: 0px 28px 28px 0px;
-    border: 1px solid #C71D23;
+    border: 1px solid #056DE8;
     padding: 4px 12px;
     position: relative;
     left: -4px;
@@ -197,7 +197,7 @@
 }
 
 .logoItemText>span>a:hover {
-    color: #C71D23;
+    color: #056DE8;
 }
 
 .middleContent {
@@ -222,7 +222,7 @@
 }
 
 .navChoiceSty {
-    background-color: #bd3f43;
+    background-color: #056DE8;
     color: white !important;
 }
 
@@ -366,12 +366,12 @@
 }
 
 .focusSty {
-    background-color: #C71D23;
+    background-color: #056DE8;
     color: white;
 }
 
 .cancelFocusSty {
-    background-color: #C71D23;
+    background-color: #056DE8;
     color: white;
 }
 

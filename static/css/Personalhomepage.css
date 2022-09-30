@@ -102,19 +102,28 @@ li {
     width: 30px;
     height: 30px;
 }
+.bluebutton{
+    color: #0461CF;
+    border: #0461CF 1px solid;
+    background-color: #E6F0FD;
+}
+.bluebutton{
+    background-color:#c1dafb;
+}
 .mymessage #mymessagetext a{
     position: absolute;
     bottom: 20px;
     right: 50px;
     font-size: 14px;
-    color: #0dcab7;
-    border: #0dcab7 1px solid;
+    color: #0461CF;
+    /* border: #0461CF 1px solid; */
+    background-color: #E6F0FD;
     border-radius: 3px;
     padding: 6px 16px;
     transition: .2s all;
 }
 .mymessage #mymessagetext a:hover{
-    background-color:#0dcab737;
+    background-color:#c1dafb;
 }
 .mytextmessageleft ul{
     width: 100%;
@@ -138,11 +147,11 @@ li {
 }
 .mytextmessageleft ul li a:hover{
     font-weight: 600;
-    border-bottom:#0dcab7 2px solid ;
+    border-bottom:#0461CF 2px solid ;
 }
 .havebethis{
     font-weight: 600;
-    border-bottom:#0dcab7 2px solid ;
+    border-bottom:#0461CF 2px solid ;
 }
 .textmessagemax{
     width: 670px;
@@ -194,8 +203,8 @@ li {
     text-align: center;
     display: block;
     font-size: 14px;
-    color: #0dcab7;
-    border: #0dcab7 1px solid;
+    color: #0461CF;
+    border: #0461CF 1px solid;
     width: 250px;
     margin: 10px auto;
     border-radius: 3px;

@@ -43,3 +43,21 @@ axios({
   .catch(function (error) {
     console.log(error);
   });
+  axios({
+    url: '/api/getmydynamic',
+    method: 'get',
+    params:{
+        size:10,
+        begin:0
+    }
+  }).then(data => {
+    console.log(data.data);
+    if(data.data.err==0){
+
+    }else{
+        alert("未登录")
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });

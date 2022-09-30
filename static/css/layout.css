@@ -73,7 +73,7 @@ a{
     padding-left: 16px; 
     width: 200px;
     border-radius: 45px;
-    border: 2px solid #0dcab7;
+    border: 2px solid #056DE8;
     transition: .3s linear;
     float: right;
 }
@@ -87,7 +87,7 @@ a{
     cursor: pointer;
     font-size: 17px;
     color: white;
-    background-color: #0dcab7;
+    background-color:#056DE8;
     position: absolute;
     border: none;
     outline: none;
@@ -139,7 +139,7 @@ a{
   text-align: center;
   transition: .3s all;
   margin: 10px 0;
-  color: #0eb2a1;
+  color: #0461CF;
 }
 #header .header_co a i{
   padding-right: 5px;
@@ -152,7 +152,7 @@ a{
     width: 78px;
     height: 30px;
     padding: 3px 0px;
-    background: #0dcab7;
+    background: #056DE8;
     margin: 0 30px;
     border-radius: 44px;
     font-size: 16px;
@@ -162,7 +162,7 @@ a{
     line-height: 30px;
 }
 .publish_button:hover{
-    background: #0eb2a1;
+    background: #056DE8;
 }
 .message_button{
     padding: 15px 30px;
@@ -207,12 +207,12 @@ a{
     top: 500px;
     right: 30px;
     font-size: 30px;
-    color: #0dcab7;
+    color: #056DE8;
     border: 1px solid #e0e0e0;
 }
 #totop:hover{
     border: 1px solid #afafaf;
-    color: #0dae9e;
+    color: #0461CF;
 }
 #publish {
     width: 100%;
@@ -265,7 +265,7 @@ a{
   
   #publish #publish_main .publish_main_top a:hover {
     color: white;
-    background-color: #2bb4a7;
+    background-color: #0461CF;
   }
   
   #publish #publish_main .publish_link {
@@ -277,13 +277,14 @@ a{
     line-height: 30px;
   }
   #publish #publish_main .publish_link select{
-    width: 240px;
+    width: 230px;
     height: 30px;
     font-size: 14px;
+    border-radius: 3px;
     cursor: pointer;
   }
   #publish #publish_main .publish_link i {
-    color: #0dcab7;
+    color: #056DE8;
     padding-right: 5px;
   }
   
@@ -295,15 +296,15 @@ a{
     border-radius: 8px;
     font-size: 16px;
     background-color: #E8F4FF;
-    color: #0dcab7;
+    color: #056DE8;
     border: #c3e0fc 1px solid;
     cursor: pointer;
   }
   
   #publish #publish_main button:hover {
-    background-color: #0dcab7;
+    background-color: #0461CF;
     color: white;
-    border: #0dcab7 1px solid;
+    border: #0461CF 1px solid;
   }
   
   #publish #publish_main .publish_send {

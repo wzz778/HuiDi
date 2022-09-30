@@ -173,7 +173,7 @@ router.post('/api/updatepassword', (req, res) => {
 router.get('/api/getmymessage', (req, res) => {   
     if(req.session.userid){
         axios({
-            url:'/admin/showUser',
+            url:'/picture/showUser',
             method:'get',  
             params:{
                 id:req.session.userid
@@ -197,7 +197,7 @@ router.get('/api/getmymessage', (req, res) => {
 router.get('/api/getmynumber', (req, res) => {   
     if(req.session.userid){
         axios({
-            url:'/admin/showOtherFocus',
+            url:'/picture/showOtherFocus',
             method:'get',  
             params:{
                 id:req.session.userid
@@ -241,7 +241,34 @@ router.get('/api/getmyalbumname', (req, res) => {
         url:'/picture/showAlbum',
         method:'get',  
         params:{
-            id:5
+            id:req.session.userid
+        }
+    }).then(response=>{ 
+        console.log(response.data);
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
+//显示个人动态
+router.get('/api/getmydynamic', (req, res) => {   
+    console.log(req.body);
+    axios({
+        url:'/admin/getPersonInfo',
+        headers:{
+            // token:req.session.token,
+            token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjQ1MjE1NjMsImV4cCI6MTY2NDUyNTE2MywiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IlsvYWRtaW4vKiosIFJvbGVfYWRtaW5dIn0.VSUcNGubL2Lo3RcY9HgR5gdwyzIrUGh3Uo1o-QyRUHY',
+        },
+        method:'get',  
+        params:{
+            size:req.params.size,
+            id:5,
+            begin:req.params.begin
         }
     }).then(response=>{ 
         console.log(response.data);
@@ -260,11 +287,11 @@ router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
     let formdata = new FormData()
     //建立FormData()对象，注意：node中使用要先下载formdata中间件
     for (let a in req.files) {
-        formdata.append('file', fs.createReadStream(req.files[a].path),req.files[a].originalFilename)//第二个参数试上传的文件名
+        formdata.append('files', fs.createReadStream(req.files[a].path),req.files[a].originalFilename)//第二个参数试上传的文件名
     }
     //循环传递file文件对象，req.files[a].path是该文件的本地地址， 用fs.createReadStream(req.files[a].path)进行读取创作，req.files[a].originalFilename是文件本名，用来传出文件名称
-    formdata.append('enclosure_name',req.body.enclosure_name)
-    formdata.append('application_id',req.body.application_id)
+    formdata.append('describes',req.body.describes)
+    formdata.append('al_id',req.body.al_id)
     console.log(formdata);
     //req.body中传递非文件数据， req.files是文件数据
     axios({
@@ -274,18 +301,19 @@ router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
         // headers: formdata.getHeaders(),
         headers:{
             token:req.session.token,
+            // token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjQ1MTU1OTUsImV4cCI6MTY2NDUxOTE5NSwiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IlsvYWRtaW4vKiosIFJvbGVfYWRtaW5dIn0.T5Boi7cRZHidNCSnKPkenLKZFwITWgoSOMsobIIbYAE',
             formdata:formdata.getHeaders(),//传递formdata数据
             maxBodyLength:1000000000    
         }
     })
-        .then((result) => {
-            // console.log(result.data)
-            res.send({ err: 0, msg: result.data })
-        })
-        .catch((err) => {
-            // console.log(err)
-            res.send({ err: -1, msg: err})
-        })
+    .then((result) => {
+        // console.log(result.data)
+        res.send({ err: 0, msg: result.data })
+    })
+    .catch((err) => {
+        // console.log(err)
+        res.send({ err: -1, msg: err})
+    })
 })  
 module.exports=router;
 

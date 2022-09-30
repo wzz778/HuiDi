@@ -3,7 +3,7 @@
     width: 99%;
     background:#FFFFFF;
     border-radius: 6px;
-    margin: 10px auto 20px;
+    margin: 0px auto 20px;
     box-shadow: 1px 1px 3px #d2d2d2;
     position: relative;
     padding-right: 15px;
@@ -107,14 +107,14 @@
     /*-webkit-transform: translateX(8px);*/
     transform: translateX(8px);
     color: transparent;
-    background-color: #3FCEBF;
+    background-color: #0461CF;
 }
 .active a::before {
-    background-color: #dcfcfa;
+    background-color:  #E6F0FD;
 }
 .active a{
-    background-color: #DCFCFA;
+    background-color: #E6F0FD;
 }
 .complete a{
-    background-color: #DCFCFA;
+    background-color:  #E6F0FD;
 }

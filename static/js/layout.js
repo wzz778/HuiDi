@@ -11,6 +11,14 @@ var publish = document.getElementById("publish");
 var publish_send = document.getElementsByClassName("publish_send")[0];
 var publish_text = document.getElementsByClassName("publish_text")[0];
 let select=document.getElementsByClassName('albumselect')[0];
+function isnull(val) {
+    var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+    if (str == '' || str == undefined || str == null) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 header_button.onmousemove = function() {
     header_class.style.display='block';
     header_button_i.classList.add("arrowtora");
@@ -106,44 +114,66 @@ input.onchange=function(){
     readFile(this);
 }
 //处理图片并添加都dom中的函数
+let sortnum=0;
 var readFile=function(obj){
     // 获取input里面的文件组
     fileList=obj.files;
-    for (let i in fileList) {
-        allfileList.append(`file${i}`,fileList[i])
-        i++;
-    }
+    // console.log("------------");
+    // console.log(fileList);
+    // console.log("------------");
     //对文件组进行遍历，可以到控制台打印出fileList去看看
     for(var i=0;i<fileList.length;i++){
         var reader= new FileReader();
         reader.readAsDataURL(fileList[i]);
         // 当文件读取成功时执行的函数
+        let thisfile=fileList[i]
         reader.onload=function(e){
+            allfileList.append(`file${sortnum}`,thisfile)
             div=document.createElement('div');
-            div.innerHTML=`<div class="deletediv" onclick='opendetele(this)'>删除</div><img src="${this.result}" />`;
+            div.innerHTML=`<span style='display:none;'>${sortnum++}</span><div class="deletediv" onclick='opendetele(this)'>删除</div><img src="${this.result}" />`;
             document.getElementById("img-box").appendChild(div);
         }
     }
     // console.log(fileList);
 }
 function look(){
-    console.log(document.getElementById("img-box").childNodes);
+    // console.log(document.getElementById("img-box").childNodes);
+    let option=select.getElementsByTagName('option');
+    let al_id=0;
+    for(let i in option){
+        if(option[i].selected){
+            al_id=option[i].value;
+        }
+    }
     // let formData = new FormData();  
-    // let i=0;w
-    // for (let key in files) {
-    //     formData.append(`file${i}`,files[key])
-    //     i++;
-    // }
-    // allfileList.append('application_id', 400)
-    // allfileList.append('enclosure_name','name')
-    // console.log(formData)
+    // let i=0;
+    allfileList.append('al_id', al_id)
+    allfileList.append('describes',publish_text.value)
+    console.log(Array.from(allfileList));
+    if(Array.from(allfileList).length<3){
+        alert('请选择你要上传的图片！')
+        allfileList.delete('al_id')
+        allfileList.delete('describes')
+        return
+    }
+    if(isnull(publish_text.value)){
+        alert('请填写你对图片的描述！')
+        allfileList.delete('al_id')
+        allfileList.delete('describes')
+        return
+    }
     // axios({
     //     method: 'POST',
-    //     url: 'http://127.0.0.1:3000/api/UploadAttachment',
+    //     url: '/api/Releasedynamics',
     //     data: allfileList,
     // })
     // .then((result) => {
     //     console.log(result.data);
+    //     if(result.data.err==0&&result.data.msg.msg=='OK'){
+    //         alert("上传成功！")
+    //     }else{
+    //         alert("上传失败！")
+    //     }
     // })
     // .catch((err)=>{
     //     // console.log(err)
@@ -151,8 +181,10 @@ function look(){
 }
 function opendetele(event){
     let thishtml=event.parentElement;
-    // console.log(event.parentElement);
+    let thisn=event.parentElement.getElementsByTagName('span')[0].innerHTML;
+    allfileList.delete(`file${thisn}`);
     document.getElementById("img-box").removeChild(thishtml);
+
 }
 function getoption(){
     axios({
@@ -164,7 +196,6 @@ function getoption(){
             let msg=data.data.msg;
             select.innerHTML=``
             for(let i of msg){
-                console.log(i);
                 select.innerHTML+=`<option value=${i.album.id}>${i.album.a_name}</option>`
             }
         }else{

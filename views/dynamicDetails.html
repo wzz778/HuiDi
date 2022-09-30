@@ -1,6 +1,7 @@
 {{extend './layout.html'}}
 {{block 'title'}}动态详情页{{/block}}
 {{block 'head'}}
+<link rel="stylesheet" href="/public/iconfont/iconfont.css">
 <link rel="stylesheet" href="/public/css/Universal.css">
 <link rel="stylesheet" href="/public/css/dynamicDetails.css">
 {{/block}}
@@ -108,7 +109,7 @@
                 </div>
                 <div class="">
                     <button class="operatorItemBtn" onclick='reportFn(this)'>
-                        <i class="iconfont">&#xe69b;</i>
+                        <i class="iconfont">&#xe601;</i>
                         <span>举报</span>
                     </button>
                 </div>
@@ -219,10 +220,6 @@
                             cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</div>
                         <div class="replyCommneBottom">
                             <span class="replyCommnetDate">9月27日08:10</span>
-                            <!-- 举报按钮 -->
-                            <button>
-                                <i class="iconfont">&#xe69b;</i>
-                            </button>
                             <!-- 点赞 -->
                             <button>
                                 <i class="iconfont">&#xec7f;</i>
@@ -244,6 +241,7 @@
 {{/block}}
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/iconfont/iconfont.js"></script>
 <script src="/public/js/toolEncapsulation.js"></script>
 <script src="/public/js/dynamicDetails.js"></script>
 {{/block}}

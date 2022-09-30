@@ -435,7 +435,7 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
         // 将专辑信息显现
         let tempAlbumStr=`
     <div class="contentRightItem">
-        <img src="/public/img/11.png" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
+        <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
         <div class="">
             <span>${result.msg.album.a_name}</span>
             <span>
@@ -450,7 +450,7 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
         // 用户信息
         let tempUserStr=`
                     <a class="javascript:;">
-                        <img src="/public/img/11.png" alt="" data-url="${result.msg.users.img_url}" onload="operatorImgFn(this)">
+                        <img src="${defaultImgUrl}" alt="" data-url="${result.msg.users.img_url}" onload="operatorImgFn(this)">
                     </a>
                     <span class="userNameItem">
                         <span>
@@ -458,13 +458,13 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
                                 ${result.msg.users.name}
                             </a>
                         </span>
-                        <span>${result.msg.album.create_time}</span>
+                        <span>${result.msg.images.create_time}</span>
                     </span>
         `
         userInfo.innerHTML=tempUserStr
         let tempWorksStr=`
                 <p>${result.msg.images.describes}</p>
-                <img src="/public/img/11.png" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
+                <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
         `
         detailsWorks.innerHTML=tempWorksStr
     })

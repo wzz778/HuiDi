@@ -241,7 +241,30 @@ router.post('/admin/addFocus', (req, res) => {
         })
 })
 // 取消关注
-// router.post('')
+router.post('/admin/deleteFocus', (req, res) => {
+    let { focusId, uId } = req.body
+    axios({
+        method: 'DELETE',
+        url: '/admin/deleteFocus',
+        params: {
+            focus_id: focusId,
+            u_id: uId
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
 // 通过id获取作品的一个详细信息
 router.post('/picture/showInfoMessage', (req, res) => {
     let { id } = req.body

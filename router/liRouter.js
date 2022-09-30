@@ -217,14 +217,51 @@ router.post('/admin/deleteLike', (req, res) => {
 })
 // 关注
 router.post('/admin/addFocus', (req, res) => {
-    let { focusId, uId }=req.body
+    let { focusId, uId } = req.body
     axios({
-        method:'POST',
-        url:'/admin/addFocus',
-        params:{
-            focus_id:focusId,
-            u_id:uId
+        method: 'POST',
+        url: '/admin/addFocus',
+        params: {
+            focus_id: focusId,
+            u_id: uId
+        },
+        headers: {
+            token: req.session.token
         }
     })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
 })
+// 取消关注
+// router.post('')
+// 通过id获取作品的一个详细信息
+router.post('/picture/showInfoMessage', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/showInfoMessage',
+        params: {
+            id: id
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
 module.exports = router

@@ -91,7 +91,7 @@ function sendCommentFn() {
             formData.append('level', 1)
             formData.append('superId', 0)
             formData.append('reflectId', 22)
-            sendFn('/admin/publicComment',formData)
+            sendFn('/admin/publicComment', formData)
                 .then(result => {
                     addComment()
                     showCommentBoxFn()
@@ -359,7 +359,7 @@ function likeFn(event) {
                 })
         })
         .catch(() => {
-            hintFn('warning','请先登录')
+            hintFn('warning', '请先登录')
         })
 }
 
@@ -419,3 +419,12 @@ function getAllComment(obj) {
         .then(result => { })
         .catch(err => { })
 }
+
+// 获取指定id的信息
+sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
+    .then(result => {
+        console.log(result)
+    })
+    .catch(err => {
+        console.log(err)
+    })

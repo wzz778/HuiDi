@@ -10,15 +10,15 @@ function judgeStr(str) {
 }
 
 // 判断文件格式(图片)与大小
-let imgResultArr = ['image/png', 'image/jpeg']
 function judgeFileImg(fileTemp, size) {
+    let imgArr = ['image/png', 'image/jpeg']
     let resultObj = {}
     if (fileTemp.size > (1024 * 1024 * size)) {
         resultObj.reason = '上传文件太大了'
         resultObj.result = false
         return resultObj
     }
-    if (imgResultArr.indexOf(fileTemp.type) == -1) {
+    if (imgArr.indexOf(fileTemp.type) == -1) {
         resultObj.reason = '请上传图片'
         resultObj.result = false
         return resultObj

@@ -32,7 +32,7 @@ function focusOnFn(event) {
                 return
             }
             // 取消关注
-            sendFn('', {})
+            sendFn('/admin/deleteFocus', { focusId: 1, uId: 3 })
                 .then(result => {
                     event.innerHTML = '关注'
                     event.classList.remove('focusSty')
@@ -42,6 +42,6 @@ function focusOnFn(event) {
                 })
         })
         .catch(() => {
-            hintFn('warning','请先登录')
+            hintFn('warning', '请先登录')
         })
 }

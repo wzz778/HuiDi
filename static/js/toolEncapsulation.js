@@ -1,3 +1,4 @@
+let defaultImgUrl = '/public/img/11.png'
 // 判断字符串是否是纯空格并替换掉输入的标签
 function judgeStr(str) {
     // 判断是否是全空格
@@ -94,7 +95,7 @@ class PreLoadImage {
 }
 class ProxyImage {
     // 占位图的url地址
-    static LOADING_URL = '/public/img/11.png'
+    static LOADING_URL = defaultImgUrl
     constructor(targetImage) {
         // 目标Image，即PreLoadImage实例
         this.targetImage = targetImage

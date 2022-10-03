@@ -9,6 +9,8 @@ let class_body1=document.getElementsByClassName('class_body')[0]
 let class_body2=document.getElementsByClassName('albumbody')[0];
 let album=document.getElementById('album')
 let album_input=document.getElementsByClassName('album_input');
+let followbutton=document.getElementsByClassName('followbutton')
+let userid = window.location.search.split("=")[1];
 function changeclass(i){
     conli[i].classList.add('havebethis');
     textmessage[i].style.display='block';
@@ -20,10 +22,13 @@ function changeclass(i){
     };
 }
 axios({
-    url: '/api/getmymessage',
+    url: '/api/getusermessage',
     method: 'get',
+    params:{
+        id:userid
+    }
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){
@@ -34,12 +39,15 @@ axios({
         if(me.sex!="男"){
             seximg.src=`url(/public/img/woman.png)`;
         }
-        return axios({url: '/api/getmynumber',method: 'get',})
+        return axios({url: '/api/getusernumber',method: 'get', params:{
+            id:userid
+        }})
     }else{
         // alert("未登录")
-        return 
+        
     }
   }).then(data1 => {
+    // console.log(data1);
     let number=data1.data.msg;
     mynumber[0].innerHTML=number.关注数;
     mynumber[1].innerHTML=number.粉丝数;
@@ -49,11 +57,12 @@ axios({
   });
   function showmydynamic(){
       axios({
-        url: '/api/getmydynamic',
+        url: '/api/getuserdynamic',
         method: 'get',
         params:{
             size:10,
-            begin:0
+            begin:0,
+            id:userid
         }
       }).then(data => {
         if(data.data.err==0){
@@ -96,8 +105,11 @@ axios({
   showmydynamic()
 function getmyalbum(){
     axios({
-        url: '/api/getmyalbumname',
+        url: '/api/getuseralbumname',
         method: 'get',
+        params:{
+            id:userid
+        }
       }).then(data => {
         // console.log(data.data);
         if(data.data.err==0){
@@ -165,45 +177,79 @@ function getmyalbum(){
         
       });
 }
-function album_down() {
-    album.style.display = "none";
-    album.style.opacity = "0";
-    album.classList.remove("fade");
-    for(let i of album_input){
-        i.value=""
-    }
-}
-function album_show() {
-    // getoption()
-    album.style.display = "block";
-    album.style.opacity = "1";
-    album.classList.add("fade");
-}
-function addab(){
-    for(let i of album_input){
-        if(isnull(i.value)){
-            alert("请填写完整内容！");
-            return 
-        }
-    }
+function tofollow(){
     axios({
-        url: '/api/addalbum',
+        url: '/api/addfollow',
         method: 'post',
         data:{
-            album:album_input[0].value,
-            types:album_input[1].value,
-            describes:album_input[2].value
+            userid:userid
         }
       }).then(data => {
         console.log(data.data);
-        if(data.data.err==0){   
-            alert("添加成功！");
-            getmyalbum()
+        if(data.data.err==0){
+            if(data.data.msg=='success'){
+                followbutton[0].style.display='none'
+                followbutton[1].style.display='block'
+            }else{
+                followbutton[1].style.display='none'
+                followbutton[0].style.display='block'
+            }
         }else{
-            return 
+            alert(data.data.msg)
         }
       })
       .catch(function (error) {
         console.log(error);
       });
 }
+function outfollow(){
+    axios({
+        url: '/api/deletefollow',
+        method: 'get',
+        params:{
+            userid:userid
+        }
+      }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            if(data.data.msg=='success'){
+                followbutton[1].style.display='none'
+                followbutton[0].style.display='block'
+            }else{
+                followbutton[0].style.display='none'
+                followbutton[1].style.display='block'
+            }
+        }else{
+            alert(data.data.msg)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+}
+function inspectfollow(){
+    axios({
+        url: '/api/inspectfollow',
+        method: 'get',
+        params:{
+            userid:userid
+        }
+      }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            if(data.data.msg){
+                followbutton[0].style.display='none'
+                followbutton[1].style.display='block'
+            }else{
+                followbutton[1].style.display='none'
+                followbutton[0].style.display='block'
+            }
+        }else{
+            // alert("未登录")
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+}
+inspectfollow()

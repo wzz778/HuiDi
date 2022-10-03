@@ -67,7 +67,7 @@
 .clickCarouselPoints {
     width: 12px;
     height: 12px;
-    background-color: #BD3F43;
+    background-color: #056DE8;
     border: none;
 }
 
@@ -313,7 +313,7 @@
 .centerRightTop>span {
     font-size: 12px;
     line-height: 25px;
-    color: red;
+    color: #3162a3;
     cursor: pointer;
     margin-bottom: 10px;
 }
@@ -385,7 +385,7 @@
     width: 100%;
     text-align: center;
     font-size: 12px;
-    color: #C71D23;
+    color: #3162a3;
 }
 
 .watchMore>a:hover {

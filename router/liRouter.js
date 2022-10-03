@@ -45,31 +45,13 @@ router.get('/404', (req, res) => {
 router.post('/judgeLogin', (req, res) => {
     // 判断是否有值
     if (req.session.token) {
-        res.send({ err: 0, msg: true })
+        res.send({ err: 0, msg: true, userInfo: jwt.decode(req.session.token) })
         return
     }
     res.send({ err: -1, msg: false })
 })
 
-// 动态详情页信息
-router.post('/admin/showComment', (req, res) => {
-    let { id } = req.body
-    axios({
-        method: 'GET',
-        url: '/admin/showComment',
-        params: {
-            reflect: id
-        }
-    })
-        .then(result => {
-            if (result.data.msg == 'OK') {
-                res.send({ err: 0, msg: result.data.data })
-            }
-        })
-        .catch(err => {
-            res.send({ err: -1, msg: err })
-        })
-})
+
 // 发布评论
 router.post('/admin/publicComment', mult, (req, res) => {
     let formdata = new FormData()
@@ -112,6 +94,27 @@ router.post('/admin/showComment', (req, res) => {
         url: '/admin/showComment',
         params: {
             reflect: id
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            req.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 删除评论
+router.post('/admin/deleteComment', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'DELETE',
+        url: '/admin/deleteComment',
+        params: {
+            id: id
         }
     })
         .then(result => {
@@ -202,6 +205,27 @@ router.post('/admin/deleteLike', (req, res) => {
         params: {
             reflect_id: reflectId,
             u_id: uId
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取点赞数量
+router.post('/admin/getLike', (req, res) => {
+    let { reflectId } = req.body
+    axios({
+        method: 'GET',
+        url: '/admin/getLike',
+        params: {
+            reflect_id: reflectId
         }
     })
         .then(result => {

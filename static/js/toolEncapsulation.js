@@ -70,7 +70,7 @@ function judgeLogin() {
             .then(result => {
                 if (result.data.msg) {
                     // 登录了
-                    resolve()
+                    resolve(result.data)
                 } else {
                     resject()
                 }

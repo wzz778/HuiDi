@@ -13,7 +13,21 @@
 </div>
 {{/block}}
 {{block 'pop'}}
-
+<div class="hidden">
+    <div class="pop-up">
+        <div class="hint">
+            新增分类
+        </div>
+        <div class="classifier">
+            <span class="'classifier-title">类别名称：</span>
+            <input type="text" class="classifier-input" placeholder="请输入新的类别名称">
+        </div>
+        <div style="position: relative;top:50px;">
+            <button class="btn btn-confirm">确定</button>
+            <button class="btn btn-cancel">取消</button>
+        </div>
+    </div>
+</div>
 {{/block}}
 {{block 'body'}}
 <div class="card-body">
@@ -21,23 +35,27 @@
         <button class="btn btn-new">新增</button>
     </div>
     <div>
-        <div class="">
-            <div class="classify-list">
-                <img src="public/iconfont/arrow3.png" alt="" class="arrow arrow-right">
-                <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
-                <span class="classify-name">热门推荐</span>
-                <div class="func">
-                    <button class="btn btn-update">修改</button>
-                    <button class="btn btn-new">新增</button>
-                    <button class="btn btn-delete">删除</button>
+        <div class="classifies">
+            <div class="first-level">
+                <div class="classify-list">
+                    <img src="public/iconfont/arrow3.png" alt="" class="arrow arrow-right">
+                    <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
+                    <span class="classify-name">热门推荐</span>
+                    <div class="func">
+                        <button class="btn btn-update">修改</button>
+                        <button class="btn btn-new">新增</button>
+                        <button class="btn btn-delete">删除</button>
+                    </div>
                 </div>
             </div>
-            <div class="classify-list-next">
-                <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
-                <span class="classify-next-name">人像</span>
-                <div class="func">
-                    <button class="btn btn-update">修改</button>
-                    <button class="btn btn-delete">删除</button>
+            <div class="second-level">
+                <div class="classify-list-next">
+                    <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
+                    <span class="classify-next-name">人像</span>
+                    <div class="func">
+                        <button class="btn btn-update">修改</button>
+                        <button class="btn btn-delete">删除</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,5 +64,6 @@
 
 {{/block}}
 {{block 'footer'}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="public/js/classify.js"></script>
 {{/block}}

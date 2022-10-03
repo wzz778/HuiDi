@@ -168,12 +168,6 @@ li {
     line-height: 40px;
     border-bottom:#ebebeb 1px solid ;
 }
-.textmessagemax .class_body{
-    margin-top: 10px;
-    width: 670px;
-    height: 200px;
-    background-color: wheat;
-}
 .numberboard{
     width: 290px;
     height: 50px;
@@ -211,3 +205,138 @@ li {
     padding: 10px 0px;
     transition: .2s all;
 }
+.textmessagemax .class_body{
+    margin-top: 10px;
+    width: 670px;
+    min-height: 200px;
+    overflow: hidden;
+}
+.class_body .dynamicmax{
+    margin-top: 10px;
+    width: 650px;
+    min-height: 250px;
+    background-color: whitesmoke;
+    padding: 10px;
+    border-radius: 5px;
+}
+.class_body .dynamicmax .user_cord{
+    width: 600px;
+    height: 60px;
+    position: relative;
+}
+.class_body .dynamicmax .dyusera{
+    display: block;
+    height: 60px;
+    line-height: 35px;
+    font-size: 18px;
+}
+.class_body .dynamicmax .dyuserhead{
+    margin-top: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+.class_body .dynamicmax .dyusername{
+    padding-right: 50px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 18px;
+    position: absolute;
+    top: 0px;
+    left: 60px;
+}
+.class_body .dynamicmax .dyuserid{
+    display: none;
+}
+.class_body .dynamicmax .dytime{
+    width: 400px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 15px;
+    color: #444;
+    font-weight: 600;
+    position: absolute;
+    top: 35px;
+    left: 60px;
+}
+.class_body .dynamicmax .dytexta{
+    display: block;
+}
+.imgde{
+    /* background-color: #8590a6; */
+    margin: 10px;
+    width: 630px;
+    line-height: 20px;
+}
+.imgmax{
+    width: 650px;
+    /* background-color: wheat; */
+    overflow: hidden;
+}
+.imgmax img{
+    height: 120px;
+    float: left;
+    margin: 5px;
+}
+.class_body .Aalbummax{
+    display: block;
+    width: 310px;
+    height: 330px;
+    border: 1px solid #ebebeb;
+    margin: 10px;
+    border-radius: 2px;
+    float: left;
+    position: relative;
+    top: 0;
+    transition: .3s all;
+}
+.class_body .Aalbummax:hover{
+    top: -10px;
+    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 50%);
+    box-shadow: 0 3px 8px rgb(18 18 18 / 50%);
+}
+.class_body .imgbox{
+    width: 310px;
+    height: 250px;
+    background-color: wheat;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ebebeb;
+}
+.class_body .imgbox .img{
+    width: 310px;
+    height: 250px;
+    background-image: url(/public/img/01.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: 50%;
+}
+.class_body .imgbox .img2{
+    width: 150px;
+    height: 250px;
+    background-image: url(/public/img/02.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: 50%;
+}
+.class_body .Aalbummax .albumid{
+    display: none;
+}
+.class_body .Aalbummax .albumtext{
+    width: 310px;
+    height: 70px;
+    text-align: center;
+}
+.class_body .Aalbummax .albumtext .albumname{
+    margin-top: 10px;
+    width: 310px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 600;   
+}
+.class_body .Aalbummax .albumtext .albumnumber{
+    width: 310px;
+    height: 30px;
+    font-size: 13px;
+}
+

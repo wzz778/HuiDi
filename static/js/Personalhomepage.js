@@ -5,6 +5,8 @@ let seximg=document.getElementsByClassName('seximg')
 let cord_contentHead=document.getElementById('cord-contentHead')
 let useremail=document.getElementsByClassName('useremail')
 let mynumber=document.getElementsByClassName('mynumber')
+let class_body1=document.getElementsByClassName('class_body')[0]
+let class_body2=document.getElementsByClassName('class_body')[1]
 function changeclass(i){
     conli[i].classList.add('havebethis');
     textmessage[i].style.display='block';
@@ -32,7 +34,7 @@ axios({
         }
         return axios({url: '/api/getmynumber',method: 'get',})
     }else{
-        alert("未登录")
+        // alert("未登录")
         return 
     }
   }).then(data1 => {
@@ -43,21 +45,76 @@ axios({
   .catch(function (error) {
     console.log(error);
   });
-  axios({
-    url: '/api/getmydynamic',
-    method: 'get',
-    params:{
-        size:10,
-        begin:0
-    }
-  }).then(data => {
-    console.log(data.data);
-    if(data.data.err==0){
+  function showmydynamic(){
+      axios({
+        url: '/api/getmydynamic',
+        method: 'get',
+        params:{
+            size:10,
+            begin:0
+        }
+      }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            let arr=data.data.msg.records;
+            console.log(arr);
+            class_body1.innerHTML=``
+            for(let i in arr){
+                let arrimg='';
+                for(let n of arr[i].img_url){
+                    arrimg+=`<img src="${n}" alt="">`
+                }
+                class_body1.innerHTML+=`
+                <div class="dynamicmax">
+                    <div class="user_cord">
+                        <a href="" class="dyusera">
+                            <img src="${arr[i].user_img_url}" class="dyuserhead" alt="">
+                            <span class="dyusername">${arr[i].user_name}</span>
+                            <span class="dyuserid">${arr[i].user_id}</span>
+                        </a>
+                        <span class="dytime">${arr[i].create_time}</span>
+                    </div>
+                    <a href="" class="dytexta">
+                        <div class="imgde">
+                        ${arr[i].describes}
+                        </div>
+                        <div class="imgmax">
+                        ${arrimg}
+                        </div>
+                    </a>
+                </div>
+                `
+            }
+        }else{
+            // alert("未登录")
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  showmydynamic()
+function getmyalbum(){
+    axios({
+        url: '/api/getmyalbumname',
+        method: 'get',
+      }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            let allarr=data.data.msg;
+            class_body2.innerHTML=``;
+            for(let i in allarr){
+                let arrimg=allarr[i].images;
+                console.log(arrimg);
+                class_body2.innerHTML+=`
 
-    }else{
-        alert("未登录")
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+                `;
+            }
+        }else{
+
+        }
+      }).catch(function (error) {
+        
+      });
+}
+getmyalbum()

@@ -77,6 +77,7 @@ function publish_down() {
     // publish_text.value = null;
 }
 function publish_show() {
+    getoption()
     publish.style.display = "block";
     publish.style.opacity = "1";
     publish.classList.add("fade");
@@ -118,9 +119,6 @@ let sortnum=0;
 var readFile=function(obj){
     // 获取input里面的文件组
     fileList=obj.files;
-    // console.log("------------");
-    // console.log(fileList);
-    // console.log("------------");
     //对文件组进行遍历，可以到控制台打印出fileList去看看
     for(var i=0;i<fileList.length;i++){
         var reader= new FileReader();
@@ -128,6 +126,7 @@ var readFile=function(obj){
         // 当文件读取成功时执行的函数
         let thisfile=fileList[i]
         reader.onload=function(e){
+            console.log((thisfile.size/1014).toFixed(1));
             allfileList.append(`file${sortnum}`,thisfile)
             div=document.createElement('div');
             div.innerHTML=`<span style='display:none;'>${sortnum++}</span><div class="deletediv" onclick='opendetele(this)'>删除</div><img src="${this.result}" />`;
@@ -162,29 +161,33 @@ function look(){
         allfileList.delete('describes')
         return
     }
-    // axios({
-    //     method: 'POST',
-    //     url: '/api/Releasedynamics',
-    //     data: allfileList,
-    // })
-    // .then((result) => {
-    //     console.log(result.data);
-    //     if(result.data.err==0&&result.data.msg.msg=='OK'){
-    //         alert("上传成功！")
-    //     }else{
-    //         alert("上传失败！")
-    //     }
-    // })
-    // .catch((err)=>{
-    //     // console.log(err)
-    // })
+    axios({
+        method: 'POST',
+        url: '/api/Releasedynamics',
+        data: allfileList,
+    })
+    .then((result) => {
+        console.log(result.data);
+        if(result.data.err==0&&result.data.msg.msg=='OK'){
+            alert("上传成功！")
+            setTimeout(function () {
+                window.location.assign("/Personalhomepage");
+            }, 500)
+        }else{
+            alert("上传失败！")
+        }
+    })
+    .catch((err)=>{
+        // console.log(err)
+    })
+    allfileList.delete('al_id')
+    allfileList.delete('describes')
 }
 function opendetele(event){
     let thishtml=event.parentElement;
     let thisn=event.parentElement.getElementsByTagName('span')[0].innerHTML;
     allfileList.delete(`file${thisn}`);
     document.getElementById("img-box").removeChild(thishtml);
-
 }
 function getoption(){
     axios({
@@ -205,4 +208,3 @@ function getoption(){
         
       });
 }
-getoption()

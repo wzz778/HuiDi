@@ -49,10 +49,21 @@ router.post('/api/login', (req, res) => {
             req.session.token=response.data.data.token;
             req.session.userid=jwt.decode(req.session.token).id;
             req.session.username=jwt.decode(req.session.token).username;
+            console.log(req.session.token);
+            console.log(jwt.decode(req.session.token));
             res.send({ err: 0, msg:"OK"});
+            return     axios({
+                url:'/picture/showUser',
+                method:'get',
+                params:{id:req.session.userid},
+            })
         }else{
             res.send({ err: -1, msg:response.data.msg});
         }
+    }).then(user=>{
+        req.session.user=user.data.data;
+        console.log(req.session.user)
+        // res.send(req.session.user)
     }).catch(function (error) {
         console.log(error);
         res.send({ err: -1, msg: '网络错误' })
@@ -241,7 +252,7 @@ router.get('/api/getmyalbumname', (req, res) => {
         url:'/picture/showAlbum',
         method:'get',  
         params:{
-            id:req.session.userid
+            id:5
         }
     }).then(response=>{ 
         console.log(response.data);
@@ -257,18 +268,18 @@ router.get('/api/getmyalbumname', (req, res) => {
 })
 //显示个人动态
 router.get('/api/getmydynamic', (req, res) => {   
-    console.log(req.body);
+    console.log(req.query);
     axios({
         url:'/admin/getPersonInfo',
         headers:{
-            // token:req.session.token,
-            token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjQ1MjE1NjMsImV4cCI6MTY2NDUyNTE2MywiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IlsvYWRtaW4vKiosIFJvbGVfYWRtaW5dIn0.VSUcNGubL2Lo3RcY9HgR5gdwyzIrUGh3Uo1o-QyRUHY',
+            token:req.session.token,
+            // token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjQ1MjkzODgsImV4cCI6MTY2NDUzMjk4OCwiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IlsvYWRtaW4vKiosIFJvbGVfYWRtaW5dIn0.v7gzsM9OVqL1OCXd1NNbdnRilaJgDn5t3zcGNL1QH6w',
         },
         method:'get',  
         params:{
-            size:req.params.size,
+            size:req.query.size,
             id:5,
-            begin:req.params.begin
+            begin:req.query.begin
         }
     }).then(response=>{ 
         console.log(response.data);
@@ -303,7 +314,7 @@ router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
             token:req.session.token,
             // token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjQ1MTU1OTUsImV4cCI6MTY2NDUxOTE5NSwiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IlsvYWRtaW4vKiosIFJvbGVfYWRtaW5dIn0.T5Boi7cRZHidNCSnKPkenLKZFwITWgoSOMsobIIbYAE',
             formdata:formdata.getHeaders(),//传递formdata数据
-            maxBodyLength:1000000000    
+            maxBodyLength:1000000000
         }
     })
     .then((result) => {

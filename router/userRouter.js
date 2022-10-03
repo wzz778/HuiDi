@@ -37,38 +37,93 @@ router.get('/mymessage',(req,res)=>{
     res.render('mymessage.html')
 })
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
-//登录
-router.post('/api/login', (req, res) => {    
-    axios({
-        url:'/loginAndRegister/login',
-        method:'post',
-        params:req.body,    
-    }).then(response=>{
-        console.log(response.data);
-        if(response.data.msg=='OK'){
-            req.session.token=response.data.data.token;
-            req.session.userid=jwt.decode(req.session.token).id;
-            req.session.username=jwt.decode(req.session.token).username;
-            console.log(req.session.token);
-            console.log(jwt.decode(req.session.token));
-            res.send({ err: 0, msg:"OK"});
-            return     axios({
-                url:'/picture/showUser',
-                method:'get',
-                params:{id:req.session.userid},
-            })
-        }else{
-            res.send({ err: -1, msg:response.data.msg});
-        }
-    }).then(user=>{
-        req.session.user=user.data.data;
-        console.log(req.session.user)
-        // res.send(req.session.user)
-    }).catch(function (error) {
-        console.log(error);
+function saveUserInfo(id){
+    return new Promise((resolve,resject)=>{
+        axios({
+            method:'GET',
+            url:'/picture/showUser',
+            params:{
+                id:id
+            }
+        })
+        .then(result=>{
+            resolve(result)
+        })
+        .catch(err=>{
+            resject()
+        })
+    })
+}
+function sendLogin(obj,req){
+    return new Promise((resolve,resject)=>{
+        axios({
+            method:'POST',
+            url:'/loginAndRegister/login',
+            params:obj
+        })
+        .then(result=>{
+            if(result.data.msg=='OK'){
+                req.session.token=result.data.data.token;
+                req.session.userid=jwt.decode(req.session.token).id;
+                req.session.username=jwt.decode(req.session.token).username;
+                resolve(result.data)
+            }else{
+                resject({ err: -1, msg:result.data.msg})
+            }
+        })
+        .catch(err=>{
+            resject(err)
+        })
+    })
+}
+router.post('/api/login',(req,res)=>{
+    sendLogin(req.body,req)
+    .then(result=>{
+        return saveUserInfo(req.session.userid)
+    })
+    .then(result=>{
+        req.session.user=result.data.data;
+        res.send({ err: 0, msg:"OK"});
+    })
+    .catch(err=>{
+        console.log(err)
         res.send({ err: -1, msg: '网络错误' })
-    });
+    })
 })
+//登录
+// router.post('/api/login', (req, res) => {    
+//     axios({
+//         url:'/loginAndRegister/login',
+//         method:'post',
+//         params:req.body,    
+//     }).then(response=>{
+//         console.log(response.data);
+//         if(response.data.msg=='OK'){
+//             req.session.token=response.data.data.token;
+//             req.session.userid=jwt.decode(req.session.token).id;
+//             req.session.username=jwt.decode(req.session.token).username;
+//             console.log(req.session.token);
+//             console.log(jwt.decode(req.session.token));
+//             res.send({ err: 0, msg:"OK"});
+//             return     axios({
+//                 url:'/picture/showUser',
+//                 method:'get',
+//                 params:{id:req.session.userid},
+//             })
+//         }else{
+//             res.send({ err: -1, msg:response.data.msg});
+//         }
+//     }).then(user=>{
+//         req.session.user=user.data.data;
+//         console.log("__________________________");
+//         console.log(req.session.user)
+//         console.log("__________________________");
+//         // res.send(req.session.user)
+//     }).catch(function (error) {
+//         console.log(error);
+//         res.send({ err: -1, msg: '网络错误' })
+//     });
+// })
 //发送验证码(查重)
 router.post('/api/sendcode', (req, res) => {    
     var mailLimit = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -190,7 +245,9 @@ router.get('/api/getmymessage', (req, res) => {
                 id:req.session.userid
             },    
         }).then(response=>{ 
-            console.log(response.data);
+            console.log("__________________________");
+            console.log(req.session.user)
+            console.log("__________________________");
             if(response.data.msg=='OK'){
                 res.send({ err: 0, msg:response.data.data});
             }else{
@@ -214,7 +271,6 @@ router.get('/api/getmynumber', (req, res) => {
                 id:req.session.userid
             },    
         }).then(response=>{ 
-            console.log(response.data);
             if(response.data.msg=='OK'){
                 res.send({ err: 0, msg:response.data.data});
             }else{
@@ -235,7 +291,6 @@ router.get('/api/getnumber', (req, res) => {
         method:'get',  
         params:req.params
     }).then(response=>{ 
-        console.log(response.data);
         if(response.data.msg=='OK'){
             res.send({ err: 0, msg:response.data.data});
         }else{
@@ -255,7 +310,6 @@ router.get('/api/getmyalbumname', (req, res) => {
             id:5
         }
     }).then(response=>{ 
-        console.log(response.data);
         if(response.data.msg=='OK'){
             res.send({ err: 0, msg:response.data.data});
         }else{
@@ -282,7 +336,6 @@ router.get('/api/getmydynamic', (req, res) => {
             begin:req.query.begin
         }
     }).then(response=>{ 
-        console.log(response.data);
         if(response.data.msg=='OK'){
             res.send({ err: 0, msg:response.data.data});
         }else{

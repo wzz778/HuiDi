@@ -21,11 +21,11 @@ let reportHint = document.getElementsByClassName('reportHint')
 // 举报选择原因
 let reportReason = document.getElementById('reportReason')
 // 专辑信息
-let albumInfo=document.getElementById('albumInfo')
+let albumInfo = document.getElementById('albumInfo')
 // 用户信息
-let userInfo=document.getElementById('userInfo')
+let userInfo = document.getElementById('userInfo')
 // 内容
-let detailsWorks=document.getElementById('detailsWorks')
+let detailsWorks = document.getElementById('detailsWorks')
 
 // 点击取消按钮将盒子隐藏
 function cancelFn(event) {
@@ -78,6 +78,7 @@ function sendCommentFn() {
     // 判断是否登录
     judgeLogin()
         .then(result => {
+            console.log('用户信息', result)
             let tempStr = judgeStr(CommentInfo.value)
             // 判断值是否为空
             if (imgFile.files.length == 0 && tempStr.length == 0) {
@@ -99,6 +100,7 @@ function sendCommentFn() {
             formData.append('reflectId', 22)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
+                    console.log('用户信息', result)
                     addComment()
                     showCommentBoxFn()
                     CommentInfo.value = ''
@@ -115,9 +117,10 @@ function sendCommentFn() {
 }
 // 评论添加到指定盒子中
 function addComment() {
-    var myDate = new Date()
+    let myDate = new Date()
     let imgStr = ''
-    if (showImgUrl.src != 'http://127.0.0.1:8099/dynamicDetails') {
+    console.log(showImgUrl.src)
+    if (showImgUrl.src.indexOf('http://127.0.0.1:8099/dynamicDetails?id=') == -1) {
         imgStr = `<img src="${showImgUrl.src}" alt="">`
     }
     let tempStr = `
@@ -215,10 +218,14 @@ function replyCommentFirstFn(event) {
                 sendUrl: 'javascript:;',
                 sendSrc: '/public/img/album1.jpg',
                 sendName: '夜星XY',
-                value: tempStr,
+                content: tempStr,
                 replyName: '123',
                 replySrc: '/public/img/album1.jpg',
-                replyUrl: 'javascript:;'
+                replyUrl: 'javascript:;',
+                superId: 1,
+                reflectId: 22,
+                id: 3,
+                level: 2
             }
             addCommentSonComment(event, tempObj)
         })
@@ -239,10 +246,14 @@ function replyCommentSonFn(event) {
                 sendUrl: 'javascript:;',
                 sendSrc: '/public/img/album1.jpg',
                 sendName: '夜星XY',
-                value: tempStr,
+                content: tempStr,
                 replyName: '123',
                 replySrc: '/public/img/album1.jpg',
-                replyUrl: 'javascript:;'
+                replyUrl: 'javascript:;',
+                superId: 1,
+                reflectId: 22,
+                id: 3,
+                level: 2
             }
             addCommentSonComment(event.parentElement.parentElement, tempObj)
         })
@@ -252,8 +263,15 @@ function replyCommentSonFn(event) {
 }
 // 将回复的评论添加到盒子中
 function addCommentSonComment(event, commentObj) {
-    var myDate = new Date()
-    let tempStr = `
+    // 判断是否登录
+    judgeLogin()
+        .then(() => {
+            // 发布评论
+            sendFn('/admin/publicComment', commentObj)
+        })
+        .then(result => {
+            let myDate = new Date()
+            let tempStr = `
     <div class="replyCommnetBox">
                     <div class="replyCommnetItem">
                         <!-- 回复人 -->
@@ -271,7 +289,7 @@ function addCommentSonComment(event, commentObj) {
                         </div>
                         <!-- 回复信息 -->
                         <div class="replyCommnetContent">
-                        ${commentObj.value}
+                        ${commentObj.content}
                         </div>
                         <div class="replyCommneBottom">
                             <span class="replyCommnetDate">${myDate.getMonth() + 1}月${myDate.getDate()}日 ${myDate.getHours()}:${myDate.getMinutes()}</span>
@@ -291,11 +309,27 @@ function addCommentSonComment(event, commentObj) {
                     </div>
                 </div>
     `
-    event.parentElement.parentElement.parentElement.parentElement.innerHTML += tempStr
+            event.parentElement.parentElement.parentElement.parentElement.innerHTML += tempStr
+        })
+        .catch(err => {
+            // 未登录
+            hintFn('warning', '请先登录')
+        })
 }
 // 删除回复评论
 function delReplyCommentFn(event) {
-    event.parentElement.parentElement.parentElement.remove()
+    judgeLogin()
+        .then(() => {
+            sendFn('/admin/deleteComment', { id: event })
+        })
+        .then(result => {
+            event.parentElement.parentElement.parentElement.remove()
+        })
+        .catch(err => {
+            console.log(err)
+            // 未登录
+            hintFn('warning', '请先登录')
+        })
 }
 // 举报弹窗显现
 function reportFn(event) {
@@ -420,20 +454,20 @@ function renderAllCommnetFn() {
 }
 
 // 请求所有评论函数
-function getAllComment(obj) {
-    sendFn('/admin/showComment', obj)
-        .then(result => { })
-        .catch(err => { })
-}
-
+sendFn('/admin/showComment', { id: window.location.search.split("=")[1] })
+    .then(result => {
+        console.log('结果', result)
+    })
+    .catch(err => {
+        console.log(err)
+    })
 // 获取指定id的信息
 sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
     .then(result => {
-        console.log('结果',result)
         // 修改专辑的src
-        albumInfo.href=`/album?albumId=${result.msg.album.id}`
+        albumInfo.href = `/album?albumId=${result.msg.album.id}`
         // 将专辑信息显现
-        let tempAlbumStr=`
+        let tempAlbumStr = `
     <div class="contentRightItem">
         <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
         <div class="">
@@ -446,9 +480,9 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
         </div>
     </div>
         `
-        albumInfo.innerHTML=tempAlbumStr
+        albumInfo.innerHTML = tempAlbumStr
         // 用户信息
-        let tempUserStr=`
+        let tempUserStr = `
                     <a class="javascript:;">
                         <img src="${defaultImgUrl}" alt="" data-url="${result.msg.users.img_url}" onload="operatorImgFn(this)">
                     </a>
@@ -461,12 +495,20 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
                         <span>${result.msg.images.create_time}</span>
                     </span>
         `
-        userInfo.innerHTML=tempUserStr
-        let tempWorksStr=`
+        userInfo.innerHTML = tempUserStr
+        let tempWorksStr = `
                 <p>${result.msg.images.describes}</p>
                 <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
         `
-        detailsWorks.innerHTML=tempWorksStr
+        detailsWorks.innerHTML = tempWorksStr
+    })
+    .catch(err => {
+        console.log(err)
+    })
+// 获取指定点赞数量
+sendFn('/admin/getLike', { reflectId: window.location.search.split("=")[1] })
+    .then(result => {
+        console.log(result)
     })
     .catch(err => {
         console.log(err)

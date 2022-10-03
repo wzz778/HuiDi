@@ -100,7 +100,7 @@ function sendCommentFn() {
             formData.append('reflectId', 22)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
-                    console.log('用户信息', result)
+                    console.log('结果', result)
                     addComment()
                     showCommentBoxFn()
                     CommentInfo.value = ''
@@ -119,7 +119,6 @@ function sendCommentFn() {
 function addComment() {
     let myDate = new Date()
     let imgStr = ''
-    console.log(showImgUrl.src)
     if (showImgUrl.src.indexOf('http://127.0.0.1:8099/dynamicDetails?id=') == -1) {
         imgStr = `<img src="${showImgUrl.src}" alt="">`
     }
@@ -208,7 +207,7 @@ function replayCommentShowFn(event) {
 function replyCommentFirstFn(event) {
     // 判断是否登录
     judgeLogin()
-        .then(() => {
+        .then((result) => {
             let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
             if (tempStr.length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
@@ -403,26 +402,58 @@ function likeFn(event) {
         })
 }
 
-// 请求渲染数据
-function renderAllCommnetFn() {
-    let tempResult = getAllComment(22)
-    if (!tempResult.result) {
-        // 获取数据失败
-        return
-    }
-    if (tempResult.msg.length == 0) {
-        allCommentsContent[0].classList.add('none')
-        noContent[0].classList.remove('none')
-        return
-    }
-    // 遍历数据
-    let tempStr = ''
-    for (let i = 0; i < tempResult.msg.length; i++) {
-        tempStr = `
-        <div class="allCommentsContentItem">
+
+// 请求所有评论函数
+sendFn('/picture/showComment', { id: window.location.search.split("=")[1] })
+    .then(result => {
+        console.log('结果', result)
+        // 将数据渲染到页面中
+        let tempStr = ''
+        for (let i = 0; i < result.msg.length; i++) {
+            let replyTempStr = ''
+            if (result.msg[i].commentList) {
+                // 遍历二级评论
+                for (let i = 0; i < result.msg[i].commentList.length; i++) {
+                    replyTempStr += `
+                <div class="replyCommnetBox">
+                    <div class="replyCommnetItem">
+                        <!-- 回复人 -->
+                        <div class="replyInfo">
+                            <a href="javascript:;" class="replyUserName">
+                                <img src="/public/img/album1.jpg" alt="">
+                                <span>夜星XY</span>
+                            </a>
+                            <span>回复</span>
+                            <!-- 回复的人 -->
+                            <a href="javascript:;" class="replyUserName">
+                                <img src="/public/img/album1.jpg" alt="">
+                                <span>123</span>
+                            </a>
+                        </div>
+                        <!-- 回复信息 -->
+                        <div class="replyCommnetContent">
+                            cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</div>
+                        <div class="replyCommneBottom">
+                            <span class="replyCommnetDate">9月27日08:10</span>
+                            <!-- 点赞 -->
+                            <button>
+                                <i class="iconfont">&#xec7f;</i>
+                                <span>1</span>
+                            </button>
+                            <button onclick="replayCommentShowFn(this)">回复</button>
+                            <button onclick="delReplyCommentFn(this)">删除</button>
+                            <button onclick='reportFn(this)'>举报</button>
+                        </div>
+                    </div>
+                </div>
+                `
+                }
+            }
+            tempStr += `
+            <div class="allCommentsContentItem">
                 <div class="commentUserInfo clearFloat">
                     <a href="javascript:;" class="floatLeft">
-                        <img class="userImg" src="/public/img/album1.jpg" alt="">
+                        <img class="userImg" src="${defaultImgUrl}" alt="" data-url="" onload="operatorImgFn(this)">
                     </a>
                     <span class="sendInfo floatLeft">
                         <a href="javascript:;" class="userName">夜星XY</a>
@@ -443,20 +474,17 @@ function renderAllCommnetFn() {
                 </div>
                 <!-- 内容 -->
                 <div class="commentsContent">
-                    <p>11111111111111111111111111111111111111111111111111111111111111</p>
-                    <img src="/public/img/myImg1.jpg" alt="">
+                    <p>${result.msg[i].comment.content}</p>
+                    <img src="${defaultImgUrl}" alt="" data-url="${result.msg[i].comment.img_url}" onload="operatorImgFn(this)">
                     <!-- 回复框 -->
                 </div>
                 <!-- 评论的回复盒子 -->
+                ${replyTempStr}
             </div>
-        `
-    }
-}
-
-// 请求所有评论函数
-sendFn('/admin/showComment', { id: window.location.search.split("=")[1] })
-    .then(result => {
-        console.log('结果', result)
+            
+            `
+        }
+        allCommentsContent[0].innerHTML = tempStr
     })
     .catch(err => {
         console.log(err)

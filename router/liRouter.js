@@ -45,7 +45,7 @@ router.get('/404', (req, res) => {
 router.post('/judgeLogin', (req, res) => {
     // 判断是否有值
     if (req.session.token) {
-        res.send({ err: 0, msg: true, userInfo: jwt.decode(req.session.token) })
+        res.send({ err: 0, msg: true, userInfo: req.session.user })
         return
     }
     res.send({ err: -1, msg: false })
@@ -59,7 +59,6 @@ router.post('/admin/publicComment', mult, (req, res) => {
         formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
     }
     let { content, level, superId, reflectId } = req.body
-    console.log('传的数据', req.body)
     formdata.append('content', content)
     formdata.append('level', level)
     formdata.append('super_id', superId)
@@ -71,7 +70,8 @@ router.post('/admin/publicComment', mult, (req, res) => {
         headers: {
             // token: req.session.token,
             formdata: formdata.getHeaders(),
-            maxBodyLength: 1000000000
+            maxBodyLength: 1000000000,
+            token: req.session.token
         }
     })
         .then(result => {
@@ -86,12 +86,13 @@ router.post('/admin/publicComment', mult, (req, res) => {
             res.send({ err: -1, msg: err })
         })
 })
+
 // 获取所有评论
-router.post('/admin/showComment', (req, res) => {
+router.post('/picture/showComment', (req, res) => {
     let { id } = req.body
     axios({
         method: 'GET',
-        url: '/admin/showComment',
+        url: '/picture/showComment',
         params: {
             reflect: id
         }

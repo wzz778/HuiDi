@@ -86,7 +86,7 @@ axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){
@@ -126,7 +126,6 @@ var readFile=function(obj){
         // 当文件读取成功时执行的函数
         let thisfile=fileList[i]
         reader.onload=function(e){
-            console.log((thisfile.size/1014).toFixed(1));
             allfileList.append(`file${sortnum}`,thisfile)
             div=document.createElement('div');
             div.innerHTML=`<span style='display:none;'>${sortnum++}</span><div class="deletediv" onclick='opendetele(this)'>删除</div><img src="${this.result}" />`;
@@ -167,7 +166,7 @@ function look(){
         data: allfileList,
     })
     .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         if(result.data.err==0&&result.data.msg.msg=='OK'){
             alert("上传成功！")
             setTimeout(function () {
@@ -194,7 +193,7 @@ function getoption(){
         url: '/api/getmyalbumname',
         method: 'get',
       }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){
             let msg=data.data.msg;
             select.innerHTML=``

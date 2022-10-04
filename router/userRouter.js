@@ -36,6 +36,9 @@ router.get('/reemail',(req,res)=>{
 router.get('/mymessage',(req,res)=>{
     res.render('mymessage.html')
 })
+router.get('/userhomepage',(req,res)=>{
+    res.render('userhomepage.html')
+})
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 function saveUserInfo(id){
     return new Promise((resolve,resject)=>{
@@ -64,6 +67,7 @@ function sendLogin(obj,req){
         .then(result=>{
             if(result.data.msg=='OK'){
                 req.session.token=result.data.data.token;
+                console.log(result.data.data.token);
                 req.session.userid=jwt.decode(req.session.token).id;
                 req.session.username=jwt.decode(req.session.token).username;
                 resolve(result.data)
@@ -136,7 +140,7 @@ router.post('/api/sendcode', (req, res) => {
             method:'post',
             params:req.body,
         }).then(response=>{
-            console.log(response.data);
+            // console.log(response.data);
             if(response.data.msg=='OK'){
                 res.send({ err: 0, msg:"OK"});
             }else if(response.data.msg=='已有该用户'){
@@ -162,7 +166,7 @@ router.post('/api/checkcode', (req, res) => {
             method:'post',
             params:req.body,
         }).then(response=>{
-            console.log(response.data);
+            // console.log(response.data);
             if(response.data.msg=='OK'){
                 res.send({ err: 0, msg:"OK"});
             }else{
@@ -187,7 +191,7 @@ router.post('/api/resendcode', (req, res) => {
             method:'post',
             params:req.body,
         }).then(response=>{
-            console.log(response.data);
+            // console.log(response.data);
             if(response.data.msg=='OK'){
                 res.send({ err: 0, msg:"OK"});
             }else{
@@ -245,9 +249,28 @@ router.get('/api/getmymessage', (req, res) => {
                 id:req.session.userid
             },    
         }).then(response=>{ 
-            console.log("__________________________");
-            console.log(req.session.user)
-            console.log("__________________________");
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            // console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg: '未登录' })
+    }
+})
+//获取用户信息
+router.get('/api/getusermessage', (req, res) => {   
+    console.log(req.query );
+        axios({
+            url:'/picture/showUser',
+            method:'get',  
+            params:req.query 
+        }).then(response=>{ 
+            // console.log(response);
             if(response.data.msg=='OK'){
                 res.send({ err: 0, msg:response.data.data});
             }else{
@@ -257,13 +280,9 @@ router.get('/api/getmymessage', (req, res) => {
             console.log(error.response);
             res.send({ err: -1, msg: '网络错误' })
         });
-    }else{
-        res.send({ err: -1, msg: '未登录' })
-    }
 })
 //获取个人的粉丝和关注数
 router.get('/api/getmynumber', (req, res) => {   
-    if(req.session.userid){
         axios({
             url:'/picture/showOtherFocus',
             method:'get',  
@@ -279,17 +298,16 @@ router.get('/api/getmynumber', (req, res) => {
         }).catch(function (error) {
             console.log(error.response);
             res.send({ err: -1, msg: '网络错误' })
-        });
-    }else{
-        res.send({ err: -1, msg: '未登录' })
-    }
+        }); 
 })
 //获取他人的粉丝和关注数
-router.get('/api/getnumber', (req, res) => {   
+router.get('/api/getusernumber', (req, res) => {   
     axios({
-        url:'/admin/showOtherFocus',
+        url:'/picture/showOtherFocus',
         method:'get',  
-        params:req.params
+        params:{
+            id:req.query.id
+        }
     }).then(response=>{ 
         if(response.data.msg=='OK'){
             res.send({ err: 0, msg:response.data.data});
@@ -304,12 +322,33 @@ router.get('/api/getnumber', (req, res) => {
 //获取个人的专辑名
 router.get('/api/getmyalbumname', (req, res) => {   
     axios({
-        url:'/picture/showAlbum',
+        url:'picture/showAlbum',
         method:'get',  
         params:{
-            id:5
+            id:req.session.userid,
         }
     }).then(response=>{ 
+        console.log(response.data);
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
+//获取他人的专辑名
+router.get('/api/getuseralbumname', (req, res) => {   
+    axios({
+        url:'picture/showAlbum',
+        method:'get',  
+        params:{
+            id:req.query.id
+        }
+    }).then(response=>{ 
+        console.log(response.data);
         if(response.data.msg=='OK'){
             res.send({ err: 0, msg:response.data.data});
         }else{
@@ -322,17 +361,12 @@ router.get('/api/getmyalbumname', (req, res) => {
 })
 //显示个人动态
 router.get('/api/getmydynamic', (req, res) => {   
-    console.log(req.query);
     axios({
-        url:'/admin/getPersonInfo',
-        headers:{
-            token:req.session.token,
-            // token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjQ1MjkzODgsImV4cCI6MTY2NDUzMjk4OCwiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IlsvYWRtaW4vKiosIFJvbGVfYWRtaW5dIn0.v7gzsM9OVqL1OCXd1NNbdnRilaJgDn5t3zcGNL1QH6w',
-        },
+        url:'/picture/getPersonInfo',
         method:'get',  
         params:{
             size:req.query.size,
-            id:5,
+            id:req.session.userid,
             begin:req.query.begin
         }
     }).then(response=>{ 
@@ -345,6 +379,52 @@ router.get('/api/getmydynamic', (req, res) => {
         console.log(error.response);
         res.send({ err: -1, msg: '网络错误' })
     });
+})
+//显示用户动态
+router.get('/api/getuserdynamic', (req, res) => {   
+    axios({
+        url:'/picture/getPersonInfo',
+        method:'get',  
+        params:{
+            size:req.query.size,
+            id:req.query.id,
+            begin:req.query.begin
+        }
+    }).then(response=>{ 
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
+///发布专辑
+router.post('/api/addalbum', (req, res) => {
+    axios({
+        method: 'post',
+        url: '/admin/releaseAlbum',
+        params:{
+            u_id:req.session.userid,
+            album:req.body.album,
+            describes:req.body.describes,
+            types:req.body.types,
+        },
+        headers:{
+            token:req.session.token,
+        }
+    }).then((result) => {
+        if (result.data.msg == 'OK') {  
+            res.send({ err: 0, msg: result.data })
+        } else {
+            res.send({ err: -1, msg: result.data })
+        }
+    }).catch((err) => {
+        // console.log(err.data)
+        res.send({ err: -1, msg: err })
+    })
 })
 //发布动态
 router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
@@ -379,5 +459,85 @@ router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
         res.send({ err: -1, msg: err})
     })
 })  
+//关注
+router.post('/api/addfollow', (req, res) => {   
+    if(req.session.userid){
+        axios({
+            url:'/admin/addFocus',
+            method:'post',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                u_id:req.session.userid,
+                focus_id:req.body.userid,
+            },    
+        }).then(response=>{ 
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            // console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg: '未登录' })
+    }
+})
+router.get('/api/deletefollow', (req, res) => {   
+    if(req.session.userid){
+        axios({
+            url:'/admin/deleteFocus',
+            method:'delete',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                u_id:req.session.userid,
+                focus_id:req.query.userid,
+            },    
+        }).then(response=>{ 
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            // console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg: '未登录' })
+    }
+})
+//检查是否互相关注
+router.get('/api/inspectfollow', (req, res) => {   
+    if(req.session.userid){
+        axios({
+            url:'/admin/checkFocus',
+            method:'get',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                focus_id:req.session.userid,
+                u_id:req.query.userid,
+            },    
+        }).then(response=>{ 
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            // console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg: '未登录' })
+    }
+})
 module.exports=router;
 

@@ -4,41 +4,6 @@
 <link rel="stylesheet" href="public/css/Personalhomepage.css">
 {{/block}}
 {{block 'body'}}
-    <div id="album">
-        <div id="album_main">
-            <div class="album_main_top">
-                添加专辑
-                <a href="javascript:;" onclick="album_down()">×</a>
-            </div>  
-            <div class="album_link">
-                <i>*</i>
-                专辑名称：
-                <input type="text" class="album_send album_input" placeholder="请填写你要建立的专辑名称">
-            </div>
-            <div class="album_link">
-                <i>*</i>
-                专辑类型：
-                <input type="text" class="album_send album_input" placeholder="请填写你要建立专辑的类型">
-            </div>
-            <!-- <div class="album_link">
-                <i>*</i>
-                图片专辑：
-                <select name="albumselect" class="albumselect" onchange="getoption()" >
-                    <option value="1">专辑1</option>
-                    <option value="1">专辑1</option>
-                    <option value="1">专辑3</option>
-                    <option value="1">专辑4</option>
-                </select>
-            </div> -->
-            <textarea type="text" class="album_text album_input" placeholder="请填写您对专辑的描述"></textarea>
-            <div style="font-weight: 600;" class="album_link">
-                <i>*</i>
-                <!-- 最多只能发4张图片! -->
-                <i>*</i>
-            </div>
-            <button id="toalbum" onclick="addab()" class="havaland">点击添加专辑</button>
-        </div>
-    </div>
     <div id="body">
         <div class="rebody wrap">
             <div class="mymessage">
@@ -55,7 +20,8 @@
                             邮箱：<span class="useremail">1111111111@qq.com</span>
                         </div>
                     </div>
-                    <a href="modifymessage">编辑个人资料</a>
+                    <a href="javascript:;" class="followbutton" onclick="tofollow()"><span style="font-size: 16px;padding:0 3px;font-weight: bold">+</span>关注</a>
+                    <a href="javascript:;" class="followbutton" style=" border: 1px solid #ccccd8;color: #7d7d81;" onclick="outfollow()"><span style="font-size: 16px;padding:0 3px;font-weight: bold">+</span>取消关注</a>
                 </div>
             </div>
             <div class="mytextmessage">
@@ -69,44 +35,17 @@
                     <div class="textmessagemax">
                         <div class="textmessage" style="display:block;">
                             <div class="class_header">
-                                <h4>我的动态</h4>
+                                <h4>用户动态</h4>
                             </div>
                             <div class="class_body">
-                                <!-- <div class="dynamicmax">
-                                    <div class="user_cord">
-                                        <a href="" class="dyusera">
-                                            <img src="public/img/userHead.jpg" class="dyuserhead" alt="">
-                                            <span class="dyusername">发布动态的用户名</span>
-                                        </a>
-                                        <span class="dytime">2021:10:33</span>
-                                    </div>
-                                    <a href="" class="dytexta">
-                                        <div class="imgde">
-                                            对图的描述对图的描述对图的描述对图的描述对图的描述对图的描述对图的描述
-                                            对图的描述对图的描述对图的描述对图的描述对图的描述对图的描述对图的描述
-                                        </div>
-                                        <div class="imgmax">
-                                            <img src="public/img/userHead.jpg" alt="">
-                                            <img src="public/img/01.jpg" alt="">
-                                            <img src="public/img/02.jpg" alt="">
-                                            <img src="public/img/03.jpg" alt="">
-                                            <img src="public/img/11.png" alt="">
-                                            <img src="public/img/img1.jpeg" alt="">
-                                            <img src="public/img/img2.jpeg" alt="">
-                                            <img src="public/img/img3.jpeg" alt="">
-                                        </div>
-                                    </a>
-                                </div> -->
+
                             </div>
                         </div>
                         <div class="textmessage" style="display: none;">
                             <div class="class_header">
-                                <h4>我的专辑</h4>
+                                <h4>用户专辑</h4>
                             </div>
                             <div class="class_body">
-                                <a href="javascript:;" class="Aalbummax addalbum" onclick="album_show()">
-                                    <div>点击添加专辑</div>
-                                </a>
                                 <div class="albumbody">
                                     <!-- <a href="" class="Aalbummax">
                                         <span class="albumid"></span>
@@ -140,13 +79,13 @@
                         </div>
                         <div class="textmessage">
                             <div class="class_header">
-                                <h4>我的文章</h4>
+                                <h4>用户的文章</h4>
                             </div>
                             <div class="class_body"></div>
                         </div>
                         <div class="textmessage">
                             <div class="class_header">
-                                <h4>我的收藏</h4>
+                                <h4>用户的收藏</h4>
                             </div>
                             <div class="class_body"></div>
                         </div>
@@ -163,12 +102,12 @@
                             <span class="mynumber">11</span>
                         </a>
                     </div>
-                    <a href="javascript:;" onclick="publish_show()" class="code_publish_button"><i class="fa fa-plus" aria-hidden="true" style="margin-right:3px;"></i>  开始创作</a>
+                    <!-- <a href="javascript:;" onclick="publish_show()" class="code_publish_button"><i class="fa fa-plus" aria-hidden="true" style="margin-right:3px;"></i>  开始创作</a> -->
                 </div>
             </div>
         </div>
     </div>
 {{/block}}
 {{block 'bottom'}}
-<script src="public/js/Personalhomepage.js"></script>
+<script src="public/js/userhomepage.js"></script>
 {{/block}}

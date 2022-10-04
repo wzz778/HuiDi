@@ -313,10 +313,12 @@ a{
     padding-left: 10px;
     outline: none;
     border: 1.5px solid gainsboro;
+    color: #444;
     border-radius: 2px;
   }
   
   #publish #publish_main .publish_text {
+    color: #444;
     margin-top: 15px;
     resize: none;
     height: 80px;

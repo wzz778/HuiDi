@@ -50,13 +50,15 @@
                         {{/block}}
                     </li>
                     <li class="change">
-                        <a  class="changes">
+                        {{block 'collection'}}
+                        <a href="collection" class="changes">
                             <i><img src="public/iconfont/album.png" alt="" class="sign"></i>
                             专辑管理
                         </a>
                         <div class="signing ">
 
                         </div>
+                        {{/block}}
                     </li>
                     <li class="change">
                         {{block 'mangereport'}}
@@ -82,6 +84,17 @@
                         <a href="classify" class="changes">
                             <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
                             分类管理
+                        </a>
+                        <div class="signing">
+
+                        </div>
+                        {{/block}}
+                    </li>
+                    <li class="change">
+                        {{block 'role'}}
+                        <a href="role" class="changes">
+                            <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
+                            角色管理
                         </a>
                         <div class="signing">
 

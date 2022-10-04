@@ -3,10 +3,10 @@
 {{block 'header'}}
 <link rel="stylesheet" href="public/css/hompage.css">
 {{/block}}
-{{block 'homepage'}}
-<a href="homepage" class="changes active-sign">
-    <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
-    用户管理
+{{block 'collection'}}
+<a href="collection" class="changes active-sign">
+    <i><img src="public/iconfont/album.png" alt="" class="sign"></i>
+    专辑管理
     
 </a>
 <div class="signing active-signing">
@@ -19,7 +19,7 @@
         <div class="hint">
             禁言处理
         </div>
-        <div  class="pop-main">
+        <div style="padding: 8px;color: black;font-size: 17px;">
             禁言时间：
             <select name="" id="select">
                 <option value="请选择">请选择...</option>
@@ -50,6 +50,23 @@
         <li class="card-list-mail">邮箱</li>
         <li class="card-list-other">其他操作</li>
     </ul>
+    <ul class="card-body-list">
+        <li class="card-list-number">1</li>
+        <li class="card-list-name">李宁</li>
+        <li class="card-list-sex">女</li>
+        <li class="card-list-status">封号</li>
+        <li class="card-list-mail">3400164864@qq.com</li>
+        <li class="card-list-other">
+            <button class="btn forbiding">
+                <img src="public/iconfont/warn.png" alt="" class="forbid">
+                禁言
+            </button>
+            <button class="btn seal">
+                <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                封号
+            </button>
+        </li>
+    </ul>
 </div>
 <div class="page-change">
     <div class="page-background">
@@ -74,8 +91,6 @@
 </div>
 {{/block}}
 {{block 'footer'}}
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="public/js/communal.js"></script>
 <script src="public/js/homepage.js"></script>
-
+<script src="public/js/communal.js"></script>
 {{/block}}

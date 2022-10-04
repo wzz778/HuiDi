@@ -69,7 +69,7 @@ function judgeLogin() {
         })
             .then(result => {
                 if (result.data.msg) {
-                    console.log('封装的函数',result.data)
+                    // console.log('封装的函数',result.data)
                     // 登录了
                     resolve(result.data)
                 } else {
@@ -122,7 +122,7 @@ class ProxyImage {
 function operatorImgFn(event) {
     let tempEle = new PreLoadImage(event)
     let operatorEle = new ProxyImage(tempEle)
-    if(!event.getAttribute('data-url')){
+    if(!event.getAttribute('data-url')||event.getAttribute('data-url')=='null'){
         return
     }
     operatorEle.setSrc(event.getAttribute('data-url'))

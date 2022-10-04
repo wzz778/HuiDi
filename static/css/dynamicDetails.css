@@ -471,3 +471,8 @@
 .clickOperator {
     color: #BD3F43;
 }
+
+.focusOnSty {
+    color: #056de8;
+    background-color: rgba(5,109,232,.1);
+}

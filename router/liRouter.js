@@ -41,6 +41,131 @@ router.get('/404', (req, res) => {
     res.render('404.html')
 })
 
+// 封装的查看多少点赞数量，以及是否点赞
+function getLikeSumFn(url, type, obj) {
+    return new Promise((resolve, resject) => {
+        axios({
+            method: type,
+            url: url,
+            params: obj
+        })
+            .then(result => {
+                if (result.data.msg == 'OK') {
+                    resolve(result.data)
+                    return
+                }
+                resject(result.data)
+            })
+            .catch(err => {
+                resject(err)
+            })
+    })
+}
+// 判断是否点赞
+function judgeLike(req, sendResult) {
+    return new Promise((resolve, resject) => {
+        // 判断是否登录(没登录直接就是未点赞)
+        if (!req.session.token) {
+            sendResult.images.like = false
+            resolve()
+            return
+        }
+        axios({
+            method: 'GET',
+            url: '/admin/checkLike',
+            params: {
+                reflect_id: sendResult.images.id,
+                u_id: req.session.user.id
+            },
+            headers: {
+                token: req.session.token
+            }
+        })
+            .then(result => {
+                sendResult.images.like = result.data.data
+                resolve()
+            })
+            .catch(err => {
+                resject(err)
+            })
+
+
+    })
+}
+// 获取收藏数量
+function getCollectNum(req, sendResult) {
+    return new Promise((resolve, resject) => {
+        axios({
+            method: 'GET',
+            url: '/picture/showCollectCount',
+            params: {
+                reflect_id: sendResult.images.id
+            }
+        })
+            .then(result => {
+                sendResult.images.collectNum = result.data.data
+                resolve()
+            })
+            .catch(err => {
+                resject(err)
+            })
+    })
+}
+// 获取是否收藏
+function judgeCollect(req, sendResult) {
+    return new Promise((resolve, resject) => {
+        if (!req.session.token) {
+            sendResult.images.collect = false
+            resolve()
+            return
+        }
+        axios({
+            method: 'GET',
+            url: '/admin/checkCollect',
+            params: {
+                img_id: sendResult.images.id,
+                u_id: req.session.user.id
+            },
+            headers: {
+                token: req.session.token
+            }
+        })
+            .then(result => {
+                // 判断是否收藏
+                sendResult.images.collect = result.data.data
+                resolve()
+            })
+            .catch(err => {
+                resject(err)
+            })
+    })
+}
+// 获取作品点赞和收藏信息
+function getWorkInfo(req, sendResult) {
+    return new Promise((resolve, resject) => {
+        // 发送点赞数目
+        getLikeSumFn('/picture/getLike', 'GET', { reflect_id: sendResult.images.id })
+            .then(result => {
+                // 将点赞数目保存进去
+                sendResult.images.likeNum = result.data
+                // 获取当前用户是否点赞
+                return judgeLike(req, sendResult)
+            })
+            .then(result => {
+                return judgeCollect(req, sendResult)
+            })
+            .then(result => {
+                return getCollectNum(req, sendResult)
+            })
+            .then(result => {
+                resolve()
+            })
+            .catch(err => {
+                resject(err)
+            })
+    })
+}
+
 // 判断是否登录
 router.post('/judgeLogin', (req, res) => {
     // 判断是否有值
@@ -131,13 +256,16 @@ router.post('/admin/deleteComment', (req, res) => {
 })
 // 收藏
 router.post('/admin/addCollect', (req, res) => {
-    let { imgId, uId } = req.body
+    let { imgId } = req.body
     axios({
         method: 'POST',
         url: '/admin/addCollect',
         params: {
             img_id: imgId,
-            u_id: uId
+            u_id: req.session.user.id
+        },
+        headers: {
+            token: req.session.token
         }
     })
         .then(result => {
@@ -177,13 +305,16 @@ router.post('/admin/deleteCollect', (req, res) => {
 })
 // 点赞
 router.post('/admin/pointLike', (req, res) => {
-    let { uId, reflectId } = req.body
+    let { reflectId } = req.body
     axios({
         method: 'POST',
         url: '/admin/pointLike',
         params: {
             reflect_id: reflectId,
-            u_id: uId
+            u_id: req.session.user.id
+        },
+        headers: {
+            token: req.session.token
         }
     })
         .then(result => {
@@ -199,13 +330,16 @@ router.post('/admin/pointLike', (req, res) => {
 })
 // 取消点赞
 router.post('/admin/deleteLike', (req, res) => {
-    let { reflectId, uId } = req.body
+    let { reflectId } = req.body
     axios({
         method: 'DELETE',
         url: '/admin/deleteLike',
         params: {
             reflect_id: reflectId,
-            u_id: uId
+            u_id: req.session.user.id
+        },
+        headers: {
+            token: req.session.token
         }
     })
         .then(result => {
@@ -220,11 +354,11 @@ router.post('/admin/deleteLike', (req, res) => {
         })
 })
 // 获取点赞数量
-router.post('/admin/getLike', (req, res) => {
+router.post('/picture/getLike', (req, res) => {
     let { reflectId } = req.body
     axios({
         method: 'GET',
-        url: '/admin/getLike',
+        url: '/picture/getLike',
         params: {
             reflect_id: reflectId
         }
@@ -302,7 +436,13 @@ router.post('/picture/showInfoMessage', (req, res) => {
     })
         .then(result => {
             if (result.data.msg == 'OK') {
-                res.send({ err: 0, msg: result.data.data })
+                getWorkInfo(req, result.data.data)
+                    .then(() => {
+                        res.send({ err: 0, msg: result.data.data })
+                    })
+                    .catch(err => {
+                        res.send({ err: -1, msg: err })
+                    })
                 return
             }
             res.send({ err: -1, msg: result.data })
@@ -312,4 +452,110 @@ router.post('/picture/showInfoMessage', (req, res) => {
         })
 })
 
+// 首页热门信息
+router.post('/picture/showAllPicture', (req, res) => {
+    let { beginIndex } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/showAllPicture',
+        params: {
+            begin_index: beginIndex,
+            size: 10
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                let sendArr = []
+                for (let i = 0; i < result.data.data.list.length; i++) {
+                    sendArr[i] = getWorkInfo(req, result.data.data.list[i])
+                }
+                Promise.all(sendArr)
+                    .then(() => {
+                        res.send({ err: 0, msg: result.data.data })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 查看自己是否关注
+router.post('/admin/checkFocus', (req, res) => {
+    // 未登录
+    if (!req.session.token) {
+        res.send({ err: 0, msg: false })
+        return
+    }
+    let { uId } = req.body
+    axios({
+        method: 'GET',
+        url: '/admin/checkFocus',
+        params: {
+            focus_id: req.session.user.id,
+            u_id: uId
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 关注
+router.post('/li/admin/addFocus', (req, res) => {
+    let { focusId } = req.body
+    axios({
+        method: 'POST',
+        url: '/admin/addFocus',
+        params: {
+            focus_id: focusId,
+            u_id: req.session.user.id
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 取消关注
+router.post('/li/admin/deleteFocus', (req, res) => {
+    let { focusId } = req.body
+    axios({
+        method: 'DELETE',
+        url: '/admin/deleteFocus',
+        params: {
+            focus_id: focusId,
+            u_id: req.session.user.id
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
 module.exports = router

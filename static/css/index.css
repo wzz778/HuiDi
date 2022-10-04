@@ -60,8 +60,8 @@
     display: inline-block;
     width: 8px;
     height: 8px;
-    background-color: rgba(0,0,0,.2);
-    border: 2px solid rgba(255,255,255,.8);
+    background-color: rgba(0, 0, 0, .2);
+    border: 2px solid rgba(255, 255, 255, .8);
 }
 
 .clickCarouselPoints {
@@ -115,7 +115,7 @@
     margin-top: 5px;
     margin-left: 15px;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .topSty {
@@ -189,7 +189,7 @@
     text-align: center;
     font-size: 14px;
     display: grid;
-    grid-template-rows: repeat(3,1fr);
+    grid-template-rows: repeat(3, 1fr);
 }
 
 .logoItemText>span {
@@ -268,7 +268,7 @@
 .userPostContentAllimg {
     width: 360px;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .userPostContentAllimg>img {
@@ -283,7 +283,7 @@
     padding-top: 20px;
     text-align: center;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     border-top: 1px solid #e0e0e0;
 }
 
@@ -292,7 +292,7 @@
     cursor: pointer;
 }
 
-.userWorkOperate>span:hover>span{
+.userWorkOperate>span:hover>span {
     color: red;
 }
 
@@ -320,7 +320,7 @@
 
 .recommendedBloggersItem {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .recommendedBloggersItem>a>img {
@@ -330,9 +330,9 @@
 }
 
 .userNameInfoItem>a {
-   width: 100px; 
-   font-size: 12px;
-   overflow: hidden;
+    width: 100px;
+    font-size: 12px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #444;
@@ -394,4 +394,9 @@
 
 .pulse-container {
     margin: 10px 50%;
+}
+
+/* 点赞或收藏的样式 */
+.likeSty {
+    color: red;
 }

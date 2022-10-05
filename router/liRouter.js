@@ -183,24 +183,24 @@ router.post('/admin/publicComment', mult, (req, res) => {
     for (let a in req.files) {
         formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
     }
-    let { content, level, superId, reflectId } = req.body
+    let { content, level, superId, reflectId, reportId } = req.body
     formdata.append('content', content)
     formdata.append('level', level)
     formdata.append('super_id', superId)
     formdata.append('reflect_id', reflectId)
+    formdata.append('u_id', req.session.user.id)
+    formdata.append('report_id', reportId)
     axios({
         method: 'POST',
         url: '/admin/publicComment',
         data: formdata,
         headers: {
-            // token: req.session.token,
             formdata: formdata.getHeaders(),
             maxBodyLength: 1000000000,
             token: req.session.token
         }
     })
         .then(result => {
-            console.log(result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
                 return
@@ -214,12 +214,14 @@ router.post('/admin/publicComment', mult, (req, res) => {
 
 // 获取所有评论
 router.post('/picture/showComment', (req, res) => {
-    let { id } = req.body
+    let { id, beginIndex } = req.body
     axios({
         method: 'GET',
         url: '/picture/showComment',
         params: {
-            reflect: id
+            reflect: id,
+            begin_index: beginIndex,
+            size: 1
         }
     })
         .then(result => {
@@ -235,12 +237,19 @@ router.post('/picture/showComment', (req, res) => {
 })
 // 删除评论
 router.post('/admin/deleteComment', (req, res) => {
-    let { id } = req.body
+    let { id, userId } = req.body
+    if (userId != req.session.user.id) {
+        res.send({ err: -1, msg: '不能删除他人评论' })
+        return
+    }
     axios({
         method: 'DELETE',
         url: '/admin/deleteComment',
         params: {
             id: id
+        },
+        headers: {
+            token: req.session.token
         }
     })
         .then(result => {
@@ -286,7 +295,8 @@ router.post('/admin/deleteCollect', (req, res) => {
         method: 'DELETE',
         url: '/admin/deleteCollect',
         params: {
-            id: id
+            img_id: id,
+            u_id: req.session.user.id
         },
         headers: {
             token: req.session.token
@@ -460,7 +470,7 @@ router.post('/picture/showAllPicture', (req, res) => {
         url: '/picture/showAllPicture',
         params: {
             begin_index: beginIndex,
-            size: 10
+            size: 1
         }
     })
         .then(result => {
@@ -545,6 +555,108 @@ router.post('/li/admin/deleteFocus', (req, res) => {
         },
         headers: {
             token: req.session.token
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取关注动态
+router.post('/admin/getFocusDynamic', (req, res) => {
+    let { beginIndex } = req.body
+    axios({
+        method: 'GET',
+        url: '/admin/getFocusDynamic',
+        params: {
+            begin_index: beginIndex,
+            id: req.session.user.id,
+            size: 10
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                let sendArr = []
+                for (let i = 0; i < result.data.data.list.length; i++) {
+                    sendArr[i] = getWorkInfo(req, result.data.data.list[i])
+                }
+                Promise.all(sendArr)
+                    .then(() => {
+                        res.send({ err: 0, msg: result.data.data })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 举报
+router.post('/admin/addReport', (req, res) => {
+    let { message, reportId, types } = req.body
+    axios({
+        method: 'POST',
+        url: '/admin/addReport',
+        params: {
+            message: message,
+            report_id: reportId,
+            types: types,
+            u_id: req.session.user.id
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取专辑信息
+router.post('/picture/showAlbum', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/showAlbum',
+        params: {
+            id: id
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取轮播图片
+router.post('/picture/showCarousel', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/picture/showCarousel',
+        params: {
+            size: 3
         }
     })
         .then(result => {

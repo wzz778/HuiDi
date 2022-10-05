@@ -30,6 +30,12 @@ let detailsWorks = document.getElementById('detailsWorks')
 let operatorItem = document.getElementById('operatorItem')
 // 关注
 let foucs = document.getElementById('foucs')
+// 存放举报的信息
+let sendReportInfo = document.getElementById('sendReportInfo')
+// 动画
+let animation = document.getElementById('animation')
+
+let sendArrNone = []
 
 // 点击取消按钮将盒子隐藏
 function cancelFn(event) {
@@ -38,7 +44,6 @@ function cancelFn(event) {
 // 当选择框变为其他时文本框出现
 reportReason.onchange = function () {
     if (this.value === '0') {
-        console.log(this.value)
         this.parentElement.nextElementSibling.classList.remove('none')
         return
     }
@@ -77,12 +82,11 @@ function delShowImg() {
     showImg[0].classList.add('none')
     clickChangeText.innerHTML = '添加图片'
 }
-// 发布评论
+// 发布主评论
 function sendCommentFn() {
     // 判断是否登录
     judgeLogin()
         .then(result => {
-            console.log('用户信息', result)
             let userObj = result.userInfo
             let tempStr = judgeStr(CommentInfo.value)
             // 判断值是否为空
@@ -103,9 +107,12 @@ function sendCommentFn() {
             formData.append('level', 1)
             formData.append('superId', 0)
             formData.append('reflectId', window.location.search.split("=")[1])
+            formData.append('reportId', 0)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
-                    console.log('结果', result)
+                    userObj.commentId = result.msg[0].id
+                    sendArrNone.push(result.msg[0].id)
+                    // 将评论的id传过来
                     addComment(userObj)
                     showCommentBoxFn()
                     CommentInfo.value = ''
@@ -120,25 +127,39 @@ function sendCommentFn() {
         })
 
 }
-// 评论添加到指定盒子中
+// 补全时间
+function dataCompletion(date) {
+    return date < 10 ? '0' + date : date
+}
+// (主)评论添加到指定盒子中
 function addComment(userObj) {
     let myDate = new Date()
     let imgStr = ''
     if (showImgUrl.src.indexOf('http://127.0.0.1:8099/dynamicDetails?id=') == -1) {
         imgStr = `<img src="${showImgUrl.src}" alt="">`
     }
+    let userObjInfo = {
+        name: userObj.name,
+        imgUrl: userObj.img_url,
+        id: userObj.id,
+        commentId: userObj.commentId
+    }
     let tempStr = `
     <div class="allCommentsContentItem">
+                <div class="none">
+                    ${JSON.stringify(userObjInfo)}
+                </div>
                 <div class="commentUserInfo clearFloat">
                     <a href="javascript:;" class="floatLeft">
                         <img class="userImg" src="${userObj.img_url}" alt="">
                     </a>
                     <span class="sendInfo floatLeft">
                         <a href="javascript:;" class="userName">${userObj.name}</a>
-                        <span class="sendDate">${myDate.getMonth() + 1}月${myDate.getDate()}日 ${myDate.getHours()}:${myDate.getMinutes()}</span>
+                        <span class="sendDate">${myDate.getFullYear()}-${dataCompletion(myDate.getMonth() + 1)}-${dataCompletion(myDate.getDate())} ${dataCompletion(myDate.getHours())}:${dataCompletion(myDate.getMinutes())}:${dataCompletion(myDate.getSeconds())}</span>
                     </span>
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
+                            <div class="none">${JSON.stringify({ commentId: userInfo.commentId, id: userInfo.id })}</div>
                             <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
@@ -174,17 +195,21 @@ function delCommentFn(event) {
                 return
             }
             // 删除评论接口
-            sendFn('/admin/deleteComment', { id: event.parentElement.firstElementChild.innerHTML })
+            return sendFn('/admin/deleteComment', { id: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId, userId: JSON.parse(event.parentElement.firstElementChild.innerHTML).userId })
         })
         .then(result => {
-            console.log('删除评论的结果', result)
-            event.parentElement.parentElement.parentElement.parentElement.remove()
-            // 判断是否还有评论
-            let tempLength = allCommentsContent[0].getElementsByTagName('div').length
-            if (tempLength == 0) {
-                allCommentsContent[0].classList.add('none')
-                noContent[0].classList.remove('none')
+            if (result.err == 0) {
+                event.parentElement.parentElement.parentElement.parentElement.remove()
+                // 判断是否还有评论
+                let tempLength = allCommentsContent[0].getElementsByTagName('div').length
+                if (tempLength == 0) {
+                    allCommentsContent[0].classList.add('none')
+                    noContent[0].classList.remove('none')
+                }
+                return
             }
+            // 不能删除他人的评论
+            hintFn('warning', '您不能删除他人评论')
         })
         .catch(err => {
             hintFn('warning', '请先登录')
@@ -227,6 +252,7 @@ function replayCommentShowFn(event) {
 }
 // 回复主评论
 function replyCommentFirstFn(event) {
+    let replyObj = JSON.parse(event.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML)
     // 判断是否登录
     judgeLogin()
         .then((result) => {
@@ -240,13 +266,14 @@ function replyCommentFirstFn(event) {
                 sendSrc: result.userInfo.img_url,
                 sendName: result.userInfo.name,
                 content: tempStr,
-                replyName: '123',
-                replySrc: '/public/img/album1.jpg',
+                replyName: replyObj.name,
+                replySrc: replyObj.imgUrl,
                 replyUrl: 'javascript:;',
-                superId: 1,
+                superId: replyObj.commentId,
                 reflectId: window.location.search.split("=")[1],
                 id: result.userInfo.id,
-                level: 2
+                level: 2,
+                reportId: replyObj.id
             }
             addCommentSonComment(event, tempObj)
         })
@@ -265,20 +292,21 @@ function replyCommentSonFn(event) {
             }
             let tempObj = {
                 sendUrl: 'javascript:;',
-                sendSrc: '/public/img/album1.jpg',
-                sendName: '夜星XY',
+                sendSrc: result.userInfo.img_url,
+                sendName: result.userInfo.name,
                 content: tempStr,
-                replyName: '123',
-                replySrc: '/public/img/album1.jpg',
+                replyName: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userName,
+                replySrc: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userImg,
                 replyUrl: 'javascript:;',
-                superId: 1,
-                reflectId: 22,
-                id: 3,
-                level: 2
+                superId: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).commentId,
+                reflectId: window.location.search.split("=")[1],
+                level: 2,
+                reportId: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userId,
             }
             addCommentSonComment(event.parentElement.parentElement, tempObj)
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             hintFn('warning', '请先登录')
         })
 }
@@ -288,13 +316,20 @@ function addCommentSonComment(event, commentObj) {
     judgeLogin()
         .then(() => {
             // 发布评论
-            sendFn('/admin/publicComment', commentObj)
+            return sendFn('/admin/publicComment', commentObj)
         })
         .then(result => {
-            console.log(result)
+            let tempObj = {
+                userId: commentObj.id,
+                commentId: commentObj.superId,
+                userName: commentObj.sendName,
+                userId: commentObj.id,
+                userImg: commentObj.sendSrc
+            }
             let myDate = new Date()
             let tempStr = `
     <div class="replyCommnetBox">
+                    <div class="none">${JSON.stringify(tempObj)}</div>
                     <div class="replyCommnetItem">
                         <!-- 回复人 -->
                         <div class="replyInfo">
@@ -314,7 +349,8 @@ function addCommentSonComment(event, commentObj) {
                         ${commentObj.content}
                         </div>
                         <div class="replyCommneBottom">
-                            <span class="replyCommnetDate">${myDate.getMonth() + 1}月${myDate.getDate()}日 ${myDate.getHours()}:${myDate.getMinutes()}</span>
+                            <div class="none">存放举报的信息</div>
+                            <span class="sendDate">${myDate.getFullYear()}-${dataCompletion(myDate.getMonth() + 1)}-${dataCompletion(myDate.getDate())} ${dataCompletion(myDate.getHours())}:${dataCompletion(myDate.getMinutes())}:${dataCompletion(myDate.getSeconds())}</span>
                             <!-- 举报按钮 -->
                             <button>
                                 <i class="iconfont">&#xe69b;</i>
@@ -334,6 +370,7 @@ function addCommentSonComment(event, commentObj) {
             event.parentElement.parentElement.parentElement.parentElement.innerHTML += tempStr
         })
         .catch(err => {
+            console.log(err)
             // 未登录
             hintFn('warning', '请先登录')
         })
@@ -342,7 +379,7 @@ function addCommentSonComment(event, commentObj) {
 function delReplyCommentFn(event) {
     judgeLogin()
         .then(() => {
-            sendFn('/admin/deleteComment', { id: event })
+            return sendFn('/admin/deleteComment', { id: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId, userId: JSON.parse(event.parentElement.firstElementChild.innerHTML).userId })
         })
         .then(result => {
             event.parentElement.parentElement.parentElement.remove()
@@ -353,22 +390,17 @@ function delReplyCommentFn(event) {
             hintFn('warning', '请先登录')
         })
 }
-// 举报弹窗显现
-function reportFn(event) {
-    reportHint[0].classList.remove('none')
-}
 
 // 收藏函数
 function collectFn(event) {
     // 判断是否登录
     judgeLogin()
-        .then(() => {
+        .then((result) => {
             // 判断是收藏还是取消收藏
             if (event.classList.value.indexOf('clickOperator') != -1) {
                 // 取消收藏
-                sendFn('/admin/deleteCollect', { id: 22 })
+                sendFn('/admin/deleteCollect', { id: window.location.search.split("=")[1] })
                     .then(result => {
-                        console.log(result)
                         event.classList.remove('clickOperator')
                         event.lastElementChild.innerHTML--
                     })
@@ -377,9 +409,8 @@ function collectFn(event) {
                     })
                 return
             }
-            sendFn('/admin/addCollect', { imgId: 22, uId: 3 })
+            sendFn('/admin/addCollect', { imgId: window.location.search.split("=")[1], uId: result.userInfo.id })
                 .then(result => {
-                    console.log(result)
                     event.classList.add('clickOperator')
                     event.lastElementChild.innerHTML++
                 })
@@ -401,7 +432,6 @@ function likeFn(event) {
                 // 取消收藏
                 sendFn('/admin/deleteLike', { reflectId: window.location.search.split("=")[1] })
                     .then(result => {
-                        console.log(result)
                         event.classList.remove('clickOperator')
                         event.lastElementChild.innerHTML--
                     })
@@ -412,7 +442,6 @@ function likeFn(event) {
             }
             sendFn('/admin/pointLike', { reflectId: window.location.search.split("=")[1] })
                 .then(result => {
-                    console.log(result)
                     event.classList.add('clickOperator')
                     event.lastElementChild.innerHTML++
                 })
@@ -427,37 +456,52 @@ function likeFn(event) {
 
 
 // 请求所有评论函数
-sendFn('/picture/showComment', { id: window.location.search.split("=")[1] })
-    .then(result => {
-        console.log('结果', result)
-        // 将数据渲染到页面中
-        let tempStr = ''
-        for (let i = 0; i < result.msg.length; i++) {
-            let replyTempStr = ''
-            if (result.msg[i].commentList) {
-                // 遍历二级评论
-                for (let i = 0; i < result.msg[i].commentList.length; i++) {
-                    replyTempStr += `
+let allPges = 0
+let nowPage = 1
+function getAllComment() {
+    sendFn('/picture/showComment', { id: window.location.search.split("=")[1], beginIndex: nowPage })
+        .then(result => {
+            allPges = result.msg.all_page
+            // 将数据渲染到页面中
+            let tempStr = ''
+            for (let i = 0; i < result.msg.list.length; i++) {
+                if (sendArrNone.indexOf(result.msg.list[i].comment.id) != -1) {
+                    continue
+                }
+                let replyTempStr = ''
+                if (result.msg.list[i].commentList) {
+                    // 遍历二级评论
+                    for (let j = 0; j < result.msg.list[i].commentList.length; j++) {
+                        let tempObj = {
+                            userId: result.msg.list[i].commentList[j].comment.ob.u_id.id,
+                            userImg: result.msg.list[i].commentList[j].comment.ob.u_id.img_url,
+                            userName: result.msg.list[i].commentList[j].comment.ob.u_id.name,
+                            commentId: result.msg.list[i].comment.id
+                        }
+                        replyTempStr += `
                 <div class="replyCommnetBox">
+                    <div class="none">${JSON.stringify(tempObj)}</div>
                     <div class="replyCommnetItem">
                         <!-- 回复人 -->
                         <div class="replyInfo">
                             <a href="javascript:;" class="replyUserName">
-                                <img src="/public/img/album1.jpg" alt="">
-                                <span>夜星XY</span>
+                                <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].commentList[j].comment.ob.u_id.img_url}" onload="operatorImgFn(this)">
+                                <span>${result.msg.list[i].commentList[j].comment.ob.u_id.name}</span>
                             </a>
                             <span>回复</span>
                             <!-- 回复的人 -->
                             <a href="javascript:;" class="replyUserName">
-                                <img src="/public/img/album1.jpg" alt="">
-                                <span>123</span>
+                                <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].commentList[j].comment.ob.report_id.img_url}" onload="operatorImgFn(this)">
+                                <span>${result.msg.list[i].commentList[j].comment.ob.report_id.name}</span>
                             </a>
                         </div>
                         <!-- 回复信息 -->
                         <div class="replyCommnetContent">
-                            cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</div>
+                            ${result.msg.list[i].commentList[j].comment.content}
+                        </div>
                         <div class="replyCommneBottom">
-                            <span class="replyCommnetDate">9月27日08:10</span>
+                            <div class="none">${JSON.stringify({ commentId: result.msg.list[i].commentList[j].comment.id, userId: result.msg.list[i].commentList[j].comment.ob.u_id.id })}</div>
+                            <span class="replyCommnetDate">${result.msg.list[i].commentList[j].comment.create_time}</span>
                             <!-- 点赞 -->
                             <button>
                                 <i class="iconfont">&#xec7f;</i>
@@ -470,25 +514,32 @@ sendFn('/picture/showComment', { id: window.location.search.split("=")[1] })
                     </div>
                 </div>
                 `
+                    }
                 }
-            }
-            let imgStr = ''
-            if (result.msg[i].comment.img_url) {
-                imgStr = `<img src="${defaultImgUrl}" alt="" data-url="${result.msg[i].comment.img_url}" onload="operatorImgFn(this)">`
-            }
-            tempStr += `
+                let imgStr = ''
+                if (result.msg.list[i].comment.img_url) {
+                    imgStr = `<img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].comment.img_url}" onload="operatorImgFn(this)">`
+                }
+                let userObj = {
+                    name: result.msg.list[i].comment.ob.u_id.name,
+                    imgUrl: result.msg.list[i].comment.ob.u_id.img_url,
+                    id: result.msg.list[i].comment.ob.u_id.id,
+                    commentId: result.msg.list[i].comment.id
+                }
+                tempStr += `
             <div class="allCommentsContentItem">
+                <div class="none">${JSON.stringify(userObj)}</div>
                 <div class="commentUserInfo clearFloat">
                     <a href="javascript:;" class="floatLeft">
-                        <img class="userImg" src="${defaultImgUrl}" alt="" data-url="" onload="operatorImgFn(this)">
+                        <img class="userImg" src="${defaultImgUrl}" alt="${result.msg.list[i].comment.ob.u_id.img_url}" data-url="" onload="operatorImgFn(this)">
                     </a>
                     <span class="sendInfo floatLeft">
-                        <a href="javascript:;" class="userName">夜星XY</a>
-                        <span class="sendDate">9月24日 10:33</span>
+                        <a href="javascript:;" class="userName">${result.msg.list[i].comment.ob.u_id.name}</a>
+                        <span class="sendDate">${result.msg.list[i].comment.create_time}</span>
                     </span>
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
-                            <div class="none">${result.msg[i].comment.id}</div>
+                            <div class="none">${JSON.stringify({ commentId: result.msg.list[i].comment.id, userId: result.msg.list[i].comment.ob.u_id.id })}</div>
                             <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
@@ -502,7 +553,7 @@ sendFn('/picture/showComment', { id: window.location.search.split("=")[1] })
                 </div>
                 <!-- 内容 -->
                 <div class="commentsContent">
-                    <p>${result.msg[i].comment.content}</p>
+                    <p>${result.msg.list[i].comment.content}</p>
                     ${imgStr}
                     <!-- 回复框 -->
                 </div>
@@ -511,12 +562,14 @@ sendFn('/picture/showComment', { id: window.location.search.split("=")[1] })
             </div>
             
             `
-        }
-        allCommentsContent[0].innerHTML = tempStr
-    })
-    .catch(err => {
-        console.log(err)
-    })
+            }
+            allCommentsContent[0].innerHTML += tempStr
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+getAllComment()
 // 获取指定id的信息
 sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
     .then(result => {
@@ -616,7 +669,7 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
                 </div>
                 ${tempCollectStr}
                 <div class="">
-                    <button class="operatorItemBtn" onclick='reportFn(this)'>
+                    <button class="operatorItemBtn" onclick='reportFn(this,0)'>
                         <i class="iconfont">&#xe601;</i>
                         <span>举报</span>
                     </button>
@@ -647,7 +700,6 @@ function focusOnFn(event) {
                 // 关注
                 sendFn('/li/admin/addFocus', { focusId: event.parentElement.firstElementChild.lastElementChild.lastElementChild.innerHTML })
                     .then(result => {
-                        console.log(result)
                         event.classList.add('focusOnSty')
                         event.innerHTML = '已关注'
                     })
@@ -659,7 +711,6 @@ function focusOnFn(event) {
             // 取消关注
             sendFn('/li/admin/deleteFocus', { focusId: event.parentElement.firstElementChild.lastElementChild.lastElementChild.innerHTML })
                 .then(result => {
-                    console.log(result)
                     event.classList.remove('focusOnSty')
                     event.innerHTML = '关注'
                 })
@@ -670,5 +721,94 @@ function focusOnFn(event) {
         .catch(err => {
             hintFn('warning', '请先登录')
         })
+}
 
+// 举报弹窗显现
+function reportFn(event, type) {
+    judgeLogin()
+        .then(result => {
+            reportHint[0].classList.remove('none')
+            if (type == 0) {
+                // 举报作品
+                sendReportInfo.innerHTML = `${JSON.stringify({
+                    reportId: window.location.search.split("=")[1],
+                    types: 0
+                })
+                    }`
+                return
+            }
+            // 举报评论
+            sendReportInfo.innerHTML = `${JSON.stringify({
+                reportId: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId,
+                types: 1
+            })}`
+        })
+        .catch(err => {
+            console.log(err)
+            hintFn('warning', '请先登录')
+        })
+}
+// 点击取消按钮将盒子隐藏
+function cancelFn(event) {
+    event.parentElement.parentElement.parentElement.classList.add('none')
+}
+// 当选择框变为其他时文本框出现
+reportReason.onchange = function () {
+    if (this.value === '0') {
+        this.parentElement.nextElementSibling.classList.remove('none')
+        return
+    }
+    this.parentElement.nextElementSibling.classList.add('none')
+}
+// 发送举报(作品)
+function sendReportFn(event) {
+    if (reportReason.value != '0' && reportReason.value == '') {
+        // 没有选择举报内容
+        hintFn('warning', '请选择举报内容')
+        return
+    }
+    // 发送数据
+    let obj = JSON.parse(sendReportInfo.innerHTML)
+    if (reportReason.value == '0') {
+        obj.message = judgeStr(otherReason.value)
+    } else {
+        obj.message = reportReason.value
+    }
+    sendFn('/admin/addReport', obj)
+        .then(result => {
+            reportHint[0].classList.add('none')
+            hintFn('success', '举报成功')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+// 监听滚轮
+window.onmousewheel = function (event) {
+    // 视口的高度
+    const viewHeight = document.documentElement.clientHeight
+    // 滚动条高度
+    const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
+    const offsetHeight = animation.offsetTop
+    let scrollTop = document.documentElement.scrollTop || document.body.scrollTop // 滚动条距离顶部的距离
+    let windowHeight = document.documentElement.clientHeight || document.body.clientHeight // 可视区的高度
+    let scrollHeightOther = document.documentElement.scrollHeight || document.body.scrollHeight //dom元素的高度，包含溢出不可见的内容
+    let yn = true
+    // 没有数据了
+    if (nowPage == allPges) {
+        yn = false
+        animation.classList.add('none')
+    }
+    // 提示没有内容了
+    if (event.wheelDelta < 0 && !yn && nowPage == allPges) {
+        // 判断是否该提示没有数据了
+        if (scrollHeightOther <= scrollTop + windowHeight) {
+            hintFn('warning', '没有更多内容了')
+        }
+    }
+    if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yn) {
+        nowPage++
+        getAllComment()
+    }
 }

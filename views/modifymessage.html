@@ -1,5 +1,5 @@
 {{extend './layout.html'}}
-{{block 'title'}}个人主页{{/block}}
+{{block 'title'}}修改信息{{/block}}
 {{block 'head'}}
 <link rel="stylesheet" href="public/css/modifymessage.css">
 {{/block}}
@@ -33,7 +33,7 @@
                             <input type="radio" name="sex" class="chanceinput" value="男" checked>男
                             <input type="radio" style="margin-left: 15px;" name="sex" class="chanceinput" value="女">女
                         </div> 
-                        <button style="margin-left: 600px;">保存修改</button>
+                        <button style="margin-left: 600px;" onclick="keepmessage()">保存修改</button>
                     </div>
                 </div>
             </div>

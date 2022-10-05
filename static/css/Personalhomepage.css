@@ -1,6 +1,6 @@
 #body{
     margin-top: 70px;
-    /* background-color: #F6F6F6; */
+    background-color: #F6F6F6;
 }
 .rebody{
     position: relative;
@@ -141,7 +141,7 @@ li {
 }
 .mytextmessageleft ul li a{
     display: block;
-    width: 40px;
+    width: 60px;
     line-height: 38px;
     margin:0px 20px;
     text-align: center;
@@ -218,7 +218,7 @@ li {
     margin-top: 10px;
     width: 650px;
     min-height: 250px;
-    background-color: whitesmoke;
+    background-color: rgb(236, 236, 236);
     padding: 10px;
     border-radius: 5px;
 }
@@ -321,15 +321,15 @@ li {
     height: 250px;
     background-image: url(/public/img/01.png);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     background-position: 50%;
 }
 .class_body .imgbox .img2{
-    width: 150px;
+    width: 154px;
     height: 250px;
     background-image: url(/public/img/02.png);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     background-position: 50%;
 }
 .class_body .Aalbummax .albumid{
@@ -467,4 +467,112 @@ li {
     border: 1.5px solid gainsboro;
     border-radius: 2px;
     line-height: 18px;
+  }
+ #lookmore {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    color: #1682e6;
+    font-weight: 300;
+    position: relative;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+ #lookmore .loading {
+    width: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    animation: rotate 3s linear infinite;
+    position: absolute;
+    top: 20px;
+    right: 220px;
+  }
+  
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+ #lookmore .loading span {
+    width: 10px;
+    height: 10px;
+    background: red;
+    margin: 1.5px;
+    animation: scale 1.5s linear infinite;
+  }
+  
+  @keyframes scale {
+    50% {
+      transform: scale(1.4);
+    }
+  }
+  
+ #lookmore .loading span:nth-child(1) {
+    border-radius: 50% 50% 0 50%;
+    background: #e77f67;
+    transform-origin: bottom right;
+  }
+  
+ #lookmore .loading span:nth-child(2) {
+    border-radius: 50% 50% 50% 0;
+    background: #778beb;
+    transform-origin: bottom left;
+    animation-delay: 0.5s;
+  }
+  
+#lookmore .loading span:nth-child(3) {
+    border-radius: 50% 0 50% 50%;
+    background: #f8a5c2;
+    transform-origin: top right;
+    animation-delay: 1.5s;
+  }
+  
+   #lookmore .loading span:nth-child(4) {
+    border-radius: 0 50% 50% 50%;
+    background: #f5cd79;
+    transform-origin: top left;
+    animation: 1s;
+  }
+  
+#lookend {
+    display: none;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    color: #1682e6;
+    font-weight: 300;
+    position: relative;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+ #lookend i {
+    padding: 0 20px;
+    color: #067ff1;
+    animation: rotate 3s linear infinite;
+  }
+  
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+#lookend {
+    display: block;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    color: #1682e6;
+    font-weight: 300;
+    position: relative;
+    font-size: 18px;
+    text-align: center;
+  } 
+  
+#lookend i {
+    padding: 0 20px;
+    color: #067ff1;
+    animation: rotate 3s linear infinite;
   }

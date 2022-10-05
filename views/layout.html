@@ -7,6 +7,7 @@
     <title> {{block 'title'}}{{/block}}</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="/public/css/Universal.css">
+    <link rel="stylesheet" href="/public/iconfont/iconfont.css">
     <link rel="stylesheet" href="public/css/layout.css">
     {{block 'head'}}{{/block}}
 </head>
@@ -20,7 +21,7 @@
         <i class="iconfont">&#xe606;</i>
     </span>
     <span id="wrongText">
-        操作失败
+        操作失败    
     </span>
 </div>
 <!-- 成功的提示信息 -->
@@ -56,7 +57,7 @@
                 <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
             </div>
             <a href="javascript:;" onclick="publish_show()" class="publish_button"><i class="fa fa-plus" aria-hidden="true" style="margin-right:3px;"></i>发布</a>
-            <a href="mymessage"  class="message_button">消息</a>
+            <a href="mymessage"  class="message_button">消息<span id="mymessagedian"></span></a>
             <a href="login" id="toland" class="message_button">登录/注册</a>
             <div id="header_headdiv" style="display: none;">
                 <img src="public/img/userHead.jpg" alt="">
@@ -65,7 +66,7 @@
             <div class="header_co" style="display: none;">
                 <a href="Personalhomepage"><i class="fa fa-user-circle-o" aria-hidden="true"></i>个人主页</a>
                 <a href="modifymessage"><i class="fa fa-cog" aria-hidden="true"></i>账号设置</a>
-                <a href=""><i class="fa fa-sign-out" aria-hidden="true"></i>退出登录</a>
+                <a href="javascript:;" onclick="outlogin()"><i class="fa fa-sign-out" aria-hidden="true"></i>退出登录</a>
             </div>
         </div>
     </div>
@@ -112,7 +113,7 @@
         <div style="height: 1000px;" id="begin-main"></div>
     {{/block}}
 </body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/node_modules/axios/dist/axios.min.js"></script>
 <script src="/public/js/toolEncapsulation.js"></script>
 <script src="public/js/layout.js"></script>
 {{block 'bottom'}}{{/block}}

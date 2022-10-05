@@ -43,8 +43,9 @@ function renders(begin,size){
         }
         card_body[0].innerHTML += All;
         page_current[0].maxNumber = result.data.msg.pages;
+        page_current[0].all_size = result.data.msg.total;
         console.log(page_current[0].maxNumber);
-        renderPaging(renders,page_current[0].maxNumber);
+        renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size);
         for(let j=0;j<all.length;j++){
             seal[j].ids = all[j].id;
             seal[j].onclick = function(){

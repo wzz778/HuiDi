@@ -90,12 +90,13 @@ router.get('/superAdmin/updateStatus', (req, res) => {
 
 //审核失败
 router.get('/superAdmin/updatePass', (req, res) => {
-    let { id } = req.query;
+    let { id ,message} = req.query;
     axios({
         method: 'PUT',
         url: '/superAdmin/updatePass',
         params: {
-            id
+            id:id,
+            message:message
         },
         headers: {
             token:req.session.token
@@ -156,12 +157,13 @@ router.post('/superAdmin/manageRole', (req, res) => {
 
 //显示未审核的内容
 router.get('/superAdmin/showAllNoPass', (req, res) => {
-    let { type } = req.query;
+    let { begin_index,size } = req.query;
     axios({
         method: 'GET',
         url: '/superAdmin/showAllNoPass',
         params: {
-            type
+            begin_index:begin_index,
+            size:size
         },
         headers: {
             token:req.session.token
@@ -176,9 +178,14 @@ router.get('/superAdmin/showAllNoPass', (req, res) => {
 
 //显示角色内容即可用接口
 router.get('/superAdmin/showRole', (req, res) => {
+    let {begin_index,size} = req.query
     axios({
         method: 'GET',
         url: '/superAdmin/showRole',
+        params:{
+            begin_index:begin_index,
+            size:size
+        },
         headers: {
             token: req.session.token
         }
@@ -187,10 +194,10 @@ router.get('/superAdmin/showRole', (req, res) => {
         let temps = {
 
         }
-        for (let i = 0; i < result.data.data.length; i++) {
+        for (let i = 0; i < result.data.data.list.length; i++) {
             let temp = [];
-            for (let j = 0; j < result.data.data[i].list.length; j++) {
-                temp.push(result.data.data[i].list[j].permiss_name)
+            for (let j = 0; j < result.data.data.list[i].list.length; j++) {
+                temp.push(result.data.data.list[i].list[j].permiss_name)
                 temps[i] = temp
             }
         }
@@ -341,7 +348,7 @@ router.get('/superAdmin/deleteType', (req, res) => {
     axios({
         method: 'DELETE',
         url: '/superAdmin/deleteType',
-        data: {
+        params: {
             id,
         },
         headers: {
@@ -356,10 +363,14 @@ router.get('/superAdmin/deleteType', (req, res) => {
 })
 //显示专辑
 router.get('/superAdmin/showAlbum', (req, res) => {
-    let { id } = req.query;
+    let {begin_index,size} = req.query
     axios({
         method: 'GET',
         url: '/superAdmin/showAlbum',
+        params:{
+            begin_index:begin_index,
+            size:size
+        },
         headers: {
             token:req.session.token
         }
@@ -372,7 +383,6 @@ router.get('/superAdmin/showAlbum', (req, res) => {
 })
 //显示所有类型
 router.get('/superAdmin/showAllType', (req, res) => {
-    let { id } = req.query;
     axios({
         method: 'GET',
         url: '/superAdmin/showAllType',
@@ -388,12 +398,11 @@ router.get('/superAdmin/showAllType', (req, res) => {
         for (let i = 0; i < result.data.data.length; i++) {
             let temp = [];
             if(result.data.data[i].list.length == 0){
-                console.log(1);
-                temp.push(-1)
+                // console.log(1);
                 temps[i] = temp
             }else{
                 for (let j = 0; j < result.data.data[i].list.length; j++) {
-                    temp.push(result.data.data[i].list[j].permiss_name)
+                    temp.push(result.data.data[i].list[j])
                     temps[i] = temp
                 }
             }
@@ -423,6 +432,8 @@ router.get('/superAdmin/showByRoleName', (req, res) => {
     })
 })
 
+
+//修改分类
 router.get('/superAdmin/updateType',(req,res)=>{
     let {id,name}  = req.query;
     axios({
@@ -443,6 +454,46 @@ router.get('/superAdmin/updateType',(req,res)=>{
     })
 })
 
-
+//更新专辑状态
+router.get('/superAdmin/updateAlbumStatus',(req,res)=>{
+    let {id,status} = req.query;
+    axios({
+        method:'PUT',
+        url:'/superAdmin/updateAlbumStatus',
+        params:{
+            id:id,
+            status:status
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+//更新专辑状态
+router.get('/superAdmin/updateAlbumStatuss',(req,res)=>{
+    let {id,status,message} = req.query;
+    axios({
+        method:'PUT',
+        url:'/superAdmin/updateAlbumStatus',
+        params:{
+            id:id,
+            status:status,
+            message:message
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
 
 module.exports = router;

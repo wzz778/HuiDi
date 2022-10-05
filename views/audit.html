@@ -17,20 +17,26 @@
 <div class="hidden">
     <div class="pop-up">
         <div class="hint">
-            禁言处理
+            驳回处理
         </div>
-        <div style="padding: 8px;color: black;font-size: 17px;">
-            禁言时间：
-            <select name="" id="select">
-                <option value="请选择">请选择...</option>
-                <option value="7">7天</option>
-                <option value="15">15天</option>
-                <option value="30">30天</option>
-                <option value="180">180天</option>
-                <option value="360">360天</option>
-            </select>
+        <div style="padding-left:20px ;color: black;font-size: 17px;">
+            驳回理由：
+            <input type="text" class="classifier-input">
         </div>
         <div style="position: relative;bottom:-50px">
+            <button class="btn confirm">确定</button>
+            <button class="btn cancel">取消</button>
+        </div>
+    </div>
+</div>
+<div class="hidden">
+    <div class="pop-up warn">
+        <div >
+            <span class="pop-header">系统提示</span>
+            <img src="public/iconfont/warn2.png" alt="" class="warning">
+            <span class="warn-text">确定通过嘛</span>
+        </div>
+        <div class="button">
             <button class="btn confirm">确定</button>
             <button class="btn cancel">取消</button>
         </div>
@@ -44,23 +50,24 @@
 <div class="card-body">
     <ul class="card-body-list">
         <li class="card-list-number">序号</li>
-        <li class="card-list-name">昵称</li>
-        <li class="card-list-sex">性别</li>
-        <li class="card-list-status">状态</li>
-        <li class="card-list-mail">内容</li>
+        <li class="card-list-name">作者</li>
+        <li class="card-list-name">类型</li>
+        <li class="card-list-sex">内容</li>
+        <li class="card-list-status">内容照片</li>
+        <li class="card-list-mail">创建时间</li>
         <li class="card-list-other">其他操作</li>
     </ul>
-    <ul class="card-body-list">
+    <div class="card-body-main">
+
+    </div>
+    <!-- <ul class="card-body-list">
         <li class="card-list-number audit-change">1</li>
         <li class="card-list-name audit-change">李宁</li>
-        <li class="card-list-sex audit-change">女</li>
-        <li class="card-list-status audit-change">封号</li>
-        <li class="card-list-mail ">
-            <div>
-                <span class="content-main">今天天气真好</span>
-                <img src="public/img/02.jpg" alt="" class="content-img">
-            </div>
+        <li class="card-list-sex audit-change">今天天气真好</li>
+        <li class="card-list-status audit-change">
+            <img src="public/img/02.jpg" alt="" class="content-img">
         </li>
+        <li class="card-list-mail "></li>
         <li class="card-list-other audit-change">
             <button class="btn detail">
                 <img src="public/iconfont/detail1.png" alt="" class="forbid">
@@ -75,7 +82,7 @@
                 驳回
             </button>
         </li>
-    </ul>
+    </ul> -->
 </div>
 <div class="page-change">
     <div class="page-background">
@@ -100,5 +107,8 @@
 </div>
 {{/block}}
 {{block 'footer'}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="public/js/communal.js"></script>
 <script src="public/js/audit.js"></script>
 {{/block}}

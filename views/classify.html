@@ -15,16 +15,31 @@
 {{block 'pop'}}
 <div class="hidden">
     <div class="pop-up">
-        <div class="hint">
-            新增分类
-        </div>
-        <div class="classifier">
-            <span class="'classifier-title">类别名称：</span>
-            <input type="text" class="classifier-input" placeholder="请输入新的类别名称">
+        <div class="pop-main">
+            <div class="hint">
+                新增分类
+            </div>
+            <div class="classifier">
+                <span class="'classifier-title">类别名称：</span>
+                <input type="text" class="classifier-input" placeholder="请输入新的类别名称">
+            </div>
         </div>
         <div style="position: relative;top:50px;">
             <button class="btn btn-confirm">确定</button>
             <button class="btn btn-cancel">取消</button>
+        </div>
+    </div>
+</div>
+<div class="hidden">
+    <div class="pop-up warn">
+        <div >
+            <span class="pop-header">系统提示</span>
+            <img src="public/iconfont/warn2.png" alt="" class="warning">
+            <span class="warn-text">确定删除嘛？</span>
+        </div>
+        <div class="button">
+            <button class="btn confirm">确定</button>
+            <button class="btn cancel">取消</button>
         </div>
     </div>
 </div>
@@ -48,13 +63,15 @@
                     </div>
                 </div>
             </div>
-            <div class="second-level">
-                <div class="classify-list-next">
-                    <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
-                    <span class="classify-next-name">人像</span>
-                    <div class="func">
-                        <button class="btn btn-update">修改</button>
-                        <button class="btn btn-delete">删除</button>
+            <div class="secondLevel">
+                <div class="second-level">
+                    <div class="classify-list-next">
+                        <!-- <img src="public/iconfont/arrow4.png" alt="" class="arrow arrow-bottom"> -->
+                        <span class="classify-next-name">人像</span>
+                        <div class="func">
+                            <button class="btn btn-update">修改</button>
+                            <button class="btn btn-delete">删除</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -18,25 +18,32 @@ let  warn_text = document.getElementsByClassName('warn-text');
 let updates = document.getElementsByClassName('update');
 let deletes = document.getElementsByClassName('delete');
 let news = document.getElementsByClassName('new');
+let card_body_main = document.getElementsByClassName('card-body-main');
 
 
 //渲染页面
-function renders(){
+function renders(begin_index,size){
     axios({
         method:'GET',
         url:'/superAdmin/showRole',
+        params:{
+            begin_index:begin_index,
+            size:size
+        }
     }).then(result =>{
         console.log(result.data);
         let all =  result.data;
+        page_current[0].maxLength = result.data.msg.all_page
+        page_current[0].all_size = result.data.msg.all_count
         let All = ''
-        for(let i=0;i<all.msg.length;i++){
+        for(let i=0;i<all.msg.list.length;i++){
             let str = all.temps[i].join(",")
                 All += `<ul class="card-body-list">
             <li class="card-list-checkbox"><input type="checkbox" class="checkbox"></li>
             <li class="card-list-number">${i+1}</li>
-            <li class="card-list-name">${all.msg[i].role.role_name}</li>
+            <li class="card-list-name">${all.msg.list[i].role.role_name}</li>
             <li class="card-list-sex">${str}</li>
-            <li class="card-list-status">${all.msg[i].role.id}</li>
+            <li class="card-list-status">${all.msg.list[i].role.id}</li>
             <li class="card-list-other">
                 <button class="btn update">
                     修改
@@ -50,11 +57,12 @@ function renders(){
             </li>
         </ul>`
         }
-        card_body[0].innerHTML += All;
-        for(let j=0;j<all.msg.length;j++){
+        card_body_main[0].innerHTML = All;
+        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size)
+        for(let j=0;j<all.msg.list.length;j++){
             checkbox_all[0].numbers = 0;
-            card_list_checkbox[j].ids = all.msg[j].role.id;
-            card_list_checkbox[j].names = all.msg[j].role.role_name;
+            card_list_checkbox[j].ids = all.msg.list[j].role.id;
+            card_list_checkbox[j].names = all.msg.list[j].role.role_name;
             checkbox[j].onclick = function(){
                 if(this.checked == true){
                     checkbox_all[0].numbers +=1;
@@ -117,7 +125,7 @@ function renders(){
             deletes[j].onclick = function(){
                 btn_delete[0].numbers = 1;
                 btn_delete[0].name = card_list_checkbox[j].names;
-                btn_delete[0].ids = all.msg[j].role.id;
+                btn_delete[0].ids = all.msg.list[j].role.id;
                 hidden[1].style.display = 'block';
                 warn_text[0].innerHTML = '确定删除角色名称为：' + card_list_checkbox[j].names + '嘛？'
             }
@@ -143,7 +151,7 @@ function renders(){
     })
 }
 
-renders();
+renders(1,5);
 
 //新增
 btn_new[0].onclick = function(){

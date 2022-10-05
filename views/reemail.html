@@ -1,5 +1,5 @@
 {{extend './layout.html'}}
-{{block 'title'}}个人主页{{/block}}
+{{block 'title'}}修改邮箱{{/block}}
 {{block 'head'}}
 <link rel="stylesheet" href="public/css/reemail.css">
 {{/block}}
@@ -13,23 +13,33 @@
                     <li><a href="repassword" class="conli">修改密码</a></li>
                 </ul>
             </div>
-            <div class="mymessage">
-                <!-- <div class="content">
-                    <div class="card-body">
-                      <ul class="nav-step">
-                        <li class="nav-step-item active complete">
-                          <span>账号验证</span>
-                          <a class="active" aria-expanded="false">
-                          </a>
-                        </li>
-                        <li class="nav-step-item">
-                          <span>修改邮箱</span>
-                          <a class="uncomplete">
-                          </a>
-                        </li>
-                      </ul>
+            <div class="mymessage" style="display: block;">
+              <h3 style="color: #444;margin: 70px 0 10px;">亲爱的用户：</h3>
+              <span style="color: #888;font-size: 14px;"> 您需要完成身份验证后能正常修改账号邮箱哦</span>
+              <div class="form">
+                <div class="logindiv">
+                    <label >密码：</label>
+                    <input type="text" id="mypassword" autocomplete="off" placeholder="请输入您账号的密码">
+                </div>
+                <button class="nextprocedure" onclick="checkpassword()">下一步</button>
+              </div>
+            </div>
+            <div class="mymessage" style="display: none;">
+              <h3 style="color: #444;margin: 10px 0;">亲爱的用户：</h3>
+              <span style="color: #888;font-size: 14px;"> 您需要完成身份验证后能正常修改账号哦</span>
+              <div class="form">
+                <div class="logindiv">
+                    <label >邮箱：</label>
+                    <input type="text" id="mymail" autocomplete="off" placeholder="请输入您要修改的邮箱">
+                </div>
+                <div class="logindiv">
+                    <label >验证码：</label>
+                    <input type="text" id="mycode" autocomplete="off" placeholder="请输入给您发送的验证码">
+                    <div class="getcode">
+                        <a href="javascript:;" id="getcodea" onclick="getcode()" class="biga">获取验证码</a>
                     </div>
-                  </div> -->
+                </div>
+                <button class="nextprocedure" onclick="checkcode()">下一步</button>
             </div>
         </div>
     </div>

@@ -39,9 +39,15 @@ router.get('/mymessage',(req,res)=>{
 router.get('/userhomepage',(req,res)=>{
     res.render('userhomepage.html')
 })
+router.get('/MyFollowers',(req,res)=>{
+    res.render('MyFollowers.html')
+})
+router.get('/Myfans',(req,res)=>{
+    res.render('Myfans.html')
+})
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 function saveUserInfo(id){
-    return new Promise((resolve,resject)=>{
+    return new Promise((resolve,reject)=>{
         axios({
             method:'GET',
             url:'/picture/showUser',
@@ -53,18 +59,18 @@ function saveUserInfo(id){
             resolve(result)
         })
         .catch(err=>{
-            resject()
+            reject()
         })
     })
 }
 function sendLogin(obj,req){
-    return new Promise((resolve,resject)=>{
+    return new Promise((resolve,reject)=>{
         axios({
             method:'POST',
             url:'/loginAndRegister/login',
             params:obj
         })
-        .then(result=>{
+        .then(result=>{ 
             if(result.data.msg=='OK'){
                 req.session.token=result.data.data.token;
                 console.log(result.data.data.token);
@@ -72,14 +78,15 @@ function sendLogin(obj,req){
                 req.session.username=jwt.decode(req.session.token).username;
                 resolve(result.data)
             }else{
-                resject({ err: -1, msg:result.data.msg})
+                reject({ err: -1, msg:result.data.msg})
             }
         })
         .catch(err=>{
-            resject(err)
+            reject(err)
         })
     })
 }
+//登录
 router.post('/api/login',(req,res)=>{
     sendLogin(req.body,req)
     .then(result=>{
@@ -93,6 +100,41 @@ router.post('/api/login',(req,res)=>{
         console.log(err)
         res.send({ err: -1, msg: '网络错误' })
     })
+})
+//验证账号
+router.get('/api/checkaccount',(req,res)=>{
+    if(req.session.user){
+        axios({
+            method:'POST',
+            url:'/loginAndRegister/login',
+            params:{
+                username:req.session.user.mail,
+                password:req.query.password
+            }
+        })
+        .then(result=>{ 
+            if(result.data.msg=='OK'){
+                res.send({ err: 0, msg:"OK"})
+            }else{
+                res.send({ err: -1, msg:result.data.msg})
+            }
+        })
+        .catch(err=>{
+            res.send({ err: -1, msg:'访问错误'})
+        })
+    }else{
+        res.send({ err: -1, msg:'未登录'})
+    }
+})
+//判断是否是该用户
+router.get('/api/isuser',(req,res)=>{
+    if(req.session.userid){
+        if(req.session.userid==req.query.id){
+            res.send({ err: 0, msg: 'true' })
+        }
+    }else{
+        res.send({ err: -1, msg: '未登录' })
+    }
 })
 //登录
 // router.post('/api/login', (req, res) => {    
@@ -128,6 +170,16 @@ router.post('/api/login',(req,res)=>{
 //         res.send({ err: -1, msg: '网络错误' })
 //     });
 // })
+//退出登录
+router.get('/api/outlogin', (req, res) => {
+    try {
+        req.session.destroy()
+        res.send({err: 0, msg:'退出成功'});
+    } catch (error) {
+        res.send({err: 1, msg:'退出失败'});
+    }
+        
+})
 //发送验证码(查重)
 router.post('/api/sendcode', (req, res) => {    
     var mailLimit = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -287,7 +339,7 @@ router.get('/api/getmynumber', (req, res) => {
             url:'/picture/showOtherFocus',
             method:'get',  
             params:{
-                id:req.session.userid
+                u_id:req.session.userid
             },    
         }).then(response=>{ 
             if(response.data.msg=='OK'){
@@ -306,7 +358,7 @@ router.get('/api/getusernumber', (req, res) => {
         url:'/picture/showOtherFocus',
         method:'get',  
         params:{
-            id:req.query.id
+            u_id:req.query.id
         }
     }).then(response=>{ 
         if(response.data.msg=='OK'){
@@ -325,6 +377,8 @@ router.get('/api/getmyalbumname', (req, res) => {
         url:'picture/showAlbum',
         method:'get',  
         params:{
+            begin_index:req.query.begin,
+            size:req.query.size,
             id:req.session.userid,
         }
     }).then(response=>{ 
@@ -345,6 +399,8 @@ router.get('/api/getuseralbumname', (req, res) => {
         url:'picture/showAlbum',
         method:'get',  
         params:{
+            begin_index:req.query.begin,
+            size:req.query.size,
             id:req.query.id
         }
     }).then(response=>{ 
@@ -426,6 +482,35 @@ router.post('/api/addalbum', (req, res) => {
         res.send({ err: -1, msg: err })
     })
 })
+//更改信息
+router.post('/api/remymessage', multipartMiddleware,(req, res) => {
+    let formdata = new FormData()
+    formdata.append('file', fs.createReadStream(req.files.file.path),req.files.file.originalFilename)//第二个参数试上传的文件名
+    formdata.append('sex',req.body.sex)
+    // formdata.append('name',req.body.username)
+    formdata.append('id',req.session.userid)
+    // req.session.userid
+    console.log(formdata);
+    axios({
+        method: 'POST',
+        url: '/admin/updateUserPicture',
+        data:formdata,
+        // headers: formdata.getHeaders(),
+        headers:{
+            token:req.session.token,
+            formdata:formdata.getHeaders(),//传递formdata数据
+            maxBodyLength:1000000000
+        }
+    })
+    .then((result) => {
+        // console.log(result.data)
+        res.send({ err: 0, msg: result.data })
+    })
+    .catch((err) => {
+        // console.log(err)
+        res.send({ err: -1, msg: err})
+    })
+})  
 //发布动态
 router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
     let formdata = new FormData()
@@ -458,7 +543,7 @@ router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
         // console.log(err)
         res.send({ err: -1, msg: err})
     })
-})  
+}) 
 //关注
 router.post('/api/addfollow', (req, res) => {   
     if(req.session.userid){
@@ -486,6 +571,7 @@ router.post('/api/addfollow', (req, res) => {
         res.send({ err: -1, msg: '未登录' })
     }
 })
+//取消关注
 router.get('/api/deletefollow', (req, res) => {   
     if(req.session.userid){
         axios({
@@ -538,6 +624,173 @@ router.get('/api/inspectfollow', (req, res) => {
     }else{
         res.send({ err: -1, msg: '未登录' })
     }
+})
+
+function savefan(id,response,req){
+    return new Promise((resolve,reject)=>{
+        axios({
+            url:'/admin/checkFocus',
+            method:'get',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                focus_id:req.session.userid,
+                u_id:id,
+            },    
+        }).then(result=>{ 
+            if(result.data.msg=="OK"){
+                response.havefollow=result.data.data;
+                resolve();
+            }else{
+                reject({ err: -1, msg: '获取失败' })
+            }
+        }).catch(function (error) {
+            
+        });
+    })
+}
+function lookfollow(response,req){
+    // console.log(response);
+    // console.log(response.list);
+    return new Promise((resolve,reject)=>{
+        let funarr=[]
+        for(let i in response.list){
+            funarr[i]=savefan(response.list[i].id,response.list[i],req);
+        }
+        Promise.all(funarr)
+        .then((allend) => {
+            resolve(response)
+        })
+        .catch((err) => {
+            reject()
+        })
+    })
+}
+//观看粉丝
+router.get('/api/lookmyfans', (req, res) => {   
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'GET',
+            url:'/admin/showFan',
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                u_id:req.session.userid,
+                size:req.query.size,
+                begin_index:req.query.page,
+            }
+        }) 
+        .then(result=>{
+            // console.log(result.data);
+            if(result.data.msg=='OK'){
+                resolve(result.data)
+            }else{
+                reject({ err: -1, msg:result.data.msg})
+            }
+        }).catch(function (error) {
+            reject({ err: -1, msg:error})
+        });
+    })
+    .then(result2=>{
+        return lookfollow(result2.data,req)
+    })
+    .then(result3=>{
+        res.send({ err: 0, msg:result3})
+    })
+    .catch(err=>{
+        console.log(err);
+        res.send({ err: -1, msg: '获取失败' })
+    })
+})
+//观看我的关注
+router.get('/api/lookmyfollowers', (req, res) => {   
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'GET',
+            url:'/admin/showFocus',
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                u_id:req.session.userid,
+                size:req.query.size,
+                begin_index:req.query.page,
+            }
+        }) 
+        .then(result=>{
+            // console.log(result.data);
+            if(result.data.msg=='OK'){
+                resolve(result.data)
+            }else{
+                reject({ err: -1, msg:result.data.msg})
+            }
+        }).catch(function (error) {
+            reject({ err: -1, msg:error})
+        });
+    })
+    .then(result2=>{
+        return lookfollow(result2.data,req)
+    })
+    .then(result3=>{
+        res.send({ err: 0, msg:result3})
+    })
+    .catch(err=>{
+        console.log(err);
+        res.send({ err: -1, msg: '获取失败' })
+    })
+})
+//修改个人邮箱
+router.post('/api/remyemail', multipartMiddleware,(req, res) => {
+    let formdata = new FormData()
+    formdata.append('mail',req.body.email)
+    formdata.append('id',req.session.userid)
+    axios({
+        method: 'POST',
+        url: '/admin/updateUserPicture',
+        data:formdata,
+        headers:{
+            token:req.session.token,
+            formdata:formdata.getHeaders(),//传递formdata数据
+            maxBodyLength:1000000000
+        }
+    })
+    .then((result) => {
+        // console.log(result.data)
+        res.send({ err: 0, msg: result.data })
+    })
+    .catch((err) => {
+        // console.log(err)
+        res.send({ err: -1, msg: err})
+    })
+})  
+//检查是否有没读的消息
+router.get('/api/getUserIsMessage', (req, res) => {   
+    // if(req.session.userid){
+
+    // }else{
+    //     res.send({ err: -1, msg:'未登录'})
+    // }
+    axios({
+        url:'/admin/getUserIsMessage',
+        method:'get',  
+        headers:{
+            token:req.session.token,
+        },
+        params:{
+            u_id:5
+        }
+    }).then(response=>{ 
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
 })
 module.exports=router;
 

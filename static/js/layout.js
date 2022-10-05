@@ -11,6 +11,7 @@ var publish = document.getElementById("publish");
 var publish_send = document.getElementsByClassName("publish_send")[0];
 var publish_text = document.getElementsByClassName("publish_text")[0];
 let select=document.getElementsByClassName('albumselect')[0];
+let mymessagedian=document.getElementById('mymessagedian')
 function isnull(val) {
     var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
     if (str == '' || str == undefined || str == null) {
@@ -104,7 +105,19 @@ axios({
   }).catch(function (error) {
     
   });
-
+  //观看是否有消息
+  axios({
+    url: '/api/getUserIsMessage',
+    method: 'get',
+  }).then(data => {
+    if(data.data.err==0){
+        if(data.data.msg){
+            mymessagedian.style.display='block'
+        }
+    }
+  }).catch(function (error) {
+    
+  });
 //多张
 // window.onload=function(){
 var input=document.getElementById("uploadfile");
@@ -205,5 +218,20 @@ function getoption(){
         }
       }).catch(function (error) {
         
+      });
+}
+function outlogin(){
+    axios({
+        url: '/api/outlogin',
+        method: 'get',
+      }).then(data => {
+        if(data.data.err==0){
+            alert('退出成功');
+            window.location.assign("/login");
+        }else{
+            alert('退出失败')
+        }
+      }).catch(function (error) {
+        alert('退出失败')
       });
 }

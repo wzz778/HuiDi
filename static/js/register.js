@@ -31,6 +31,7 @@ function getcode(){
     let mail=mymail.value;
     if(isnull(mail)){
         alert('请输入您要注册的邮箱');
+        return
     }else{
         axios({
             url: '/api/sendcode',
@@ -55,9 +56,11 @@ function checkcode(){
     let mail=mymail.value;
     let code=mycode.value;
     if(isnull(mail)){
-        alert('请输入您要注册的邮箱');
+        alert('请输入您要注册的邮箱');r
+        return
     }else if(isnull(code)){
         alert('请输入验证码');
+        return
     }else{
         axios({
             url: '/api/checkcode',

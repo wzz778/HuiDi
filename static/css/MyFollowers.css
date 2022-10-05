@@ -1,6 +1,6 @@
 #body {
-  margin-top: 70px;
-  background-color: #F6F6F6;
+    margin-top: 70px;
+    /* background-color: #F6F6F6; */
 }
 
 .rebody {
@@ -28,7 +28,7 @@
   background-color: white;
 }
 
-#main #main-left .message-sort {
+#main #main-left .feedback-sort {
   width: 100%;
   height: 40px;
   display: block;
@@ -41,27 +41,28 @@
   position: relative;
 }
 
-#main #main-left .message-sort div {
-  /* display: none; */
-  width: 10px;
-  height: 10px;
+#main #main-left .feedback-sort div {
+  display: none;
+  width: 8px;
+  height: 8px;
   border-radius: 100px;
-  background-color:#DC4E41;
+  background-color: #fa5252;
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
-#main #main-left .message-sort:hover {
+#main #main-left .feedback-sort:hover {
   color: white;
-  background-color: #73b2ff ;
+  background-color: #73b2ff;
 }
 
 #main #main-right {
   width: 820px;
   padding: 10px;
   background-color: white;
-  height: 650px;
+  /* background-color: wheat; */
+  height: 600px;
 }
 
 #main #main-right .main-right-top {
@@ -148,7 +149,7 @@
   border-bottom: 1.5px #e5e5e5 solid;
   width: 800px;
   padding: 10px;
-  height: 60px;
+  height: 80px;
   display: flex;
   transition: .5s;
   position: relative;
@@ -166,27 +167,28 @@
 }
 
 #main #main-right .alike-a img {
-  margin: 5px;
-  width: 40px;
-  height: 40px;
+  margin: 10px;
+  width: 60px;
+  height: 60px;
   border-radius: 100px;
 }
 
 #main #main-right .alike-a .message-card {
   width: 580px;
-  height: 60px;
+  height: 80px;
   margin-left: 10px;
 }
 
 #main #main-right .alike-a .message-card .message-card-top {
   width: 600px;
   height: 30px;
+  margin-top: 10px;
   line-height: 30px;
 }
 
 #main #main-right .alike-a .message-card .message-card-top .message-username {
   color: #2a2929;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
 }
 
@@ -202,52 +204,58 @@
 #main #main-right .alike-a .message-card .message-card-bon {
   width: 580px;
   height: 30px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* background-color: wheat; */
 }
 
-#main #main-right .alike-a .message-card .message-card-bon a {
-  color: #68a2e8;
-  font-weight: 600;
-}
-
-#main #main-right .alike-a .message-card .message-card-bon a:hover {
-  color: #056DE8;
-  font-weight: 700;
+#main #main-right .alike-a .message-card .message-card-bon img{
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -10px;
 }
 
 #main #main-right .alike-a .message-con {
-  width: 170px;
-  height: 50px;
-  padding: 5px;
+  width: 250px;
+  height: 70px;
+  padding: 6px;
+  /* background-color: wheat; */
   overflow: hidden;
   position: relative;
 }
 
-#main #main-right .alike-a .message-con .message-delete {
+#main #main-right .alike-a .message-con .message-operation{
+  position: absolute;
+  top: 10px;
+  right: 20px;
   opacity: .8;
-  border: #bbd7f8 1px solid;
+  border: #bbd7f8 2px solid;
+  width: 100px;
+  height: 36px;
   cursor: pointer;
   border-radius: 8px;
   padding: 6px;
-  margin-left: 100px;
-  transition: 0.15s;
+  transition: 0.1s;
+  background-color: #bbd7f8;
+  color:#0461CF;
 }
 
-#main #main-right .alike-a .message-con .message-delete i {
+#main #main-right .alike-a .message-con .message-operation i {
   padding: 0 3px;
 }
 
-#main #main-right .alike-a .message-con .message-delete:hover {
-  background-color: #FFEDED;
-  color: #ec4c4c;
-  border: #e9a4a4 1px solid;
+#main #main-right .alike-a .message-con .message-operation:hover {
+  background-color: #bbd7f8;
+  color:#0461CF;
+  border: #58a6ff 2px solid;
 }
 
-#main #main-right .alike-a .message-con span {
+#main #main-right .alike-a .message-con a{
+  text-align: center; 
+  height: 30px;
+  position: absolute;
+  bottom: 0px;
   display: block;
-  width: 170px;
-  font-size: 14px;
+  width: 110px;
+  font-size: 16px;
   color: #525252;
 }

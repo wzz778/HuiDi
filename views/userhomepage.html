@@ -21,13 +21,13 @@
                         </div>
                     </div>
                     <a href="javascript:;" class="followbutton" onclick="tofollow()"><span style="font-size: 16px;padding:0 3px;font-weight: bold">+</span>关注</a>
-                    <a href="javascript:;" class="followbutton" style=" border: 1px solid #ccccd8;color: #7d7d81;" onclick="outfollow()"><span style="font-size: 16px;padding:0 3px;font-weight: bold">+</span>取消关注</a>
+                    <a href="javascript:;" class="followbutton" style=" border: 1px solid #ccccd8;color: #7d7d81;display: none;" onclick="outfollow()">取消关注</a>
                 </div>
             </div>
             <div class="mytextmessage">
                 <div class="mytextmessageleft">
                     <ul>
-                        <li><a href="javascript:;" onclick="changeclass(0)" class="conli  havebethis">动态</a></li>
+                        <li><a href="javascript:;" onclick="changeclass(0)" class="conli  havebethis">动态  <span id="dynumber">0</span></a></li>
                         <li onclick="getmyalbum()"><a href="javascript:;" onclick="changeclass(1)" class="conli">专辑</a></li>
                         <li><a href="javascript:;" onclick="changeclass(2)" class="conli">文章</a></li>
                         <li><a href="javascript:;" onclick="changeclass(3)" class="conli">收藏</a></li>
@@ -46,7 +46,7 @@
                                 <h4>用户专辑</h4>
                             </div>
                             <div class="class_body">
-                                <div class="albumbody">
+                                <div class="albumbody" id="albumbody"> 
                                     <!-- <a href="" class="Aalbummax">
                                         <span class="albumid"></span>
                                         <div class="imgbox">
@@ -89,6 +89,19 @@
                             </div>
                             <div class="class_body"></div>
                         </div>
+                    </div>
+                    <div id="lookmore">
+                        正在努力加载更多
+                        <div class="loading">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div id="lookend" style="display: none;">
+                        已经是全部内容了哦
+                        <i class="fa fa-sun-o" aria-hidden="true"></i>
                     </div>
                 </div>
                 <div class="mytextmessageright">

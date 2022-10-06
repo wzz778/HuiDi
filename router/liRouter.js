@@ -7,6 +7,7 @@ var multiparty = require('multiparty')
 const fs = require('fs')
 var mult = multipart()
 const axios = require('axios')
+const { log } = require('console')
 
 // 指定默认请求路径
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
@@ -184,7 +185,6 @@ router.post('/admin/publicComment', mult, (req, res) => {
         formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
     }
     let { content, level, superId, reflectId, reportId } = req.body
-    console.log('结果', content, level, superId, reflectId, reportId)
     formdata.append('content', content)
     formdata.append('level', level)
     formdata.append('super_id', superId)
@@ -668,6 +668,38 @@ router.post('/picture/showCarousel', (req, res) => {
             res.send({ err: -1, msg: result.data })
         })
         .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 通过专辑id获取信息
+router.post('/picture/showAlbumById', (req, res) => {
+    let { alId, beginIndex } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/showAlbumById',
+        params: {
+            al_id: alId,
+            begin_index: beginIndex,
+            size: 10
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                let sendArr = []
+                for (let i = 0; i < result.data.data.image.list.length; i++) {
+                    sendArr[i] = getWorkInfo(req, result.data.data.image.list[i])
+                }
+                Promise.all(sendArr)
+                    .then(() => {
+                        res.send({ err: 0, msg: result.data.data })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+        })
+        .catch(err => {
+            console.log(err)
             res.send({ err: -1, msg: err })
         })
 })

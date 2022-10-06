@@ -199,7 +199,6 @@ function delCommentFn(event) {
             return sendFn('/admin/deleteComment', { id: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId, userId: JSON.parse(event.parentElement.firstElementChild.innerHTML).userId })
         })
         .then(result => {
-            console.log(result)
             if (result.err == 0) {
                 event.parentElement.parentElement.parentElement.parentElement.remove()
                 // 判断是否还有评论
@@ -374,7 +373,6 @@ function addCommentSonComment(event, commentObj) {
     `
             let tempEle=event.parentElement.parentElement.parentElement.parentElement
             tempEle.innerHTML += tempStr
-            console.log()
             tempEle.getElementsByTagName('textarea')[0].parentElement.remove()
         })
         .catch(err => {

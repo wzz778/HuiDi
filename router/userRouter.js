@@ -45,6 +45,21 @@ router.get('/MyFollowers',(req,res)=>{
 router.get('/Myfans',(req,res)=>{
     res.render('Myfans.html')
 })
+router.get('/chatmessage',(req,res)=>{
+    res.render('chatmessage.html')
+})
+router.get('/likemessage',(req,res)=>{
+    res.render('likemessage.html')
+})
+router.get('/collectmessage',(req,res)=>{
+    res.render('collectmessage.html')
+})
+router.get('/focusmessage',(req,res)=>{
+    res.render('focusmessage.html')
+})
+router.get('/commentmessage',(req,res)=>{
+    res.render('commentmessage.html')
+})
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 function saveUserInfo(id){
     return new Promise((resolve,reject)=>{
@@ -767,30 +782,144 @@ router.post('/api/remyemail', multipartMiddleware,(req, res) => {
 })  
 //检查是否有没读的消息
 router.get('/api/getUserIsMessage', (req, res) => {   
-    // if(req.session.userid){
-
-    // }else{
-    //     res.send({ err: -1, msg:'未登录'})
-    // }
-    axios({
-        url:'/admin/getUserIsMessage',
-        method:'get',  
-        headers:{
-            token:req.session.token,
-        },
-        params:{
-            u_id:5
+    if(req.session.userid){
+        axios({
+            url:'/admin/getUserIsMessage',
+            method:'get',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                u_id:req.session.userid
+            }
+        }).then(response=>{ 
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg:'未登录'})
+    }
+})
+function oneaddtitle(onelist){
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'GET',
+            url:'/picture/showInfoMessage',
+            params:{
+                id:onelist.reflect_id,
+            }
+        }) 
+        .then(result=>{
+            if(result.data.msg=='OK'){
+                onelist.title=result.data.data.images.describes
+                resolve()
+            }else{
+                reject({ err: -1, msg:result.data.msg})
+            }
+        }).catch(function (error) {
+            reject({ err: -1, msg:error})
+        });
+    })
+}
+function addAtitle(result){
+    return new Promise((resolve,reject)=>{
+        let funarr=[]
+        for(let i in result.list){
+            if(result.list[i].reflect_id!=null){
+                funarr[i]=oneaddtitle(result.list[i])
+            }
         }
-    }).then(response=>{ 
-        if(response.data.msg=='OK'){
-            res.send({ err: 0, msg:response.data.data});
-        }else{
-            res.send({ err: -1, msg:response.data.msg});
-        }
-    }).catch(function (error) {
-        console.log(error.response);
-        res.send({ err: -1, msg: '网络错误' })
-    });
+        Promise.all(funarr)
+        .then((allend) => {
+            resolve(result)
+        })
+        .catch((err) => {
+            reject()
+        })
+    })
+}
+//观看我的全部信息
+router.get('/api/lookmymessage', (req, res) => {   
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'GET',
+            url:'/admin/getDynamic',
+            headers:{
+                token:req.session.token,
+                // token:`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjUwMTQwNzcsImV4cCI6MTY2NTA3NDU1NywiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IltzdHJuZywgL2FkbWluLyoqLCAvc29ja2V0LyoqLCBSb2xlX2FkbWluXSJ9.wUsrAoXYIdmereUzcqO4B8js8e-bdw1DHhO_D77VyDE`,
+            },
+            params:{
+                // id:1,
+                id:req.session.userid,
+                size:req.query.size,
+                begin_index:req.query.page,
+            }
+        }) 
+        .then(result=>{
+            if(result.data.msg=='OK'){
+                resolve(result.data)
+            }else{
+                reject({ err: -1, msg:result.data.msg})
+            }
+        }).catch(function (error) {
+            reject({ err: -1, msg:error})
+        });
+    })
+    .then(result2=>{
+        return addAtitle(result2.data)
+    })
+    .then(result3=>{
+        res.send({ err: 0, msg:result3})
+    })
+    .catch(err=>{
+        console.log(err);
+        res.send({ err: -1, msg: '获取失败' })
+    })
+})
+//根据类型观看我的全部信息
+router.get('/api/lookmymessagebytype', (req, res) => {   
+    return new Promise((resolve,reject)=>{
+        axios({
+            method:'GET',
+            url:'/admin/getByTypeShowDynamic',
+            headers:{
+                token:req.session.token,
+                // token:`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjUwMTQwNzcsImV4cCI6MTY2NTA3NDU1NywiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IltzdHJuZywgL2FkbWluLyoqLCAvc29ja2V0LyoqLCBSb2xlX2FkbWluXSJ9.wUsrAoXYIdmereUzcqO4B8js8e-bdw1DHhO_D77VyDE`,
+            },
+            params:{
+                // id:1,
+                id:req.session.userid,
+                type:req.query.type,
+                size:req.query.size,
+                begin_index:req.query.page,
+            }
+        }) 
+        .then(result=>{
+            if(result.data.msg=='OK'){
+                resolve(result.data)
+            }else{
+                reject({ err: -1, msg:result.data.msg})
+            }
+        }).catch(function (error) {
+            reject({ err: -1, msg:error})
+        });
+    })
+    .then(result2=>{
+        return addAtitle(result2.data)
+    })
+    .then(result3=>{
+        res.send({ err: 0, msg:result3})
+    })
+    .catch(err=>{
+        console.log(err);
+        res.send({ err: -1, msg: '获取失败' })
+    })
 })
 module.exports=router;
 

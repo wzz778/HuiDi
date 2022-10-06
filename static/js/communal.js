@@ -4,13 +4,15 @@ let page_left = document.getElementsByClassName('page-left');
 let page_right = document.getElementsByClassName('page-right'); 
 let page_input = document.getElementsByClassName('page-input');
 let pageSize = document.getElementsByClassName('pageSize');
+let page_size = document.getElementsByClassName('page-size');
 
 // forbiding[0].onclick = function(){
 //     hidden[0].style.display = 'block';
 // }
 
-function renderPaging(name,maxLength){
+function renderPaging(name,maxLength,all_size){
     console.log(maxLength);
+    page_size[0].innerHTML = '共' + all_size + '条';
     pageSize[0].onchange = function(){
         console.log(this.value,page_current[0].innerHTML);
         name(page_current[0].innerHTML,pageSize[0].value);
@@ -43,7 +45,7 @@ function renderPaging(name,maxLength){
                 page_left[0].style.cursor = 'pointer';
                 page_current[0].innerHTML = num;
                 name(page_current[0].innerHTML,pageSize[0].value);
-                if(page_current[0].innerHTML == 100){
+                if(page_current[0].innerHTML == maxLength){
                     page_right[0].style.cursor = 'not-allowed';
                 }
             }

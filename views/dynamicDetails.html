@@ -45,10 +45,10 @@
         <div class="reportHintContent">
             <select id="reportReason">
                 <option value="">请选择举报原因</option>
-                <option value="">抄袭/未授权转载</option>
-                <option value="">淫秽低俗</option>
-                <option value="">广告</option>
-                <option value="">言语辱骂</option>
+                <option value="抄袭/未授权转载">抄袭/未授权转载</option>
+                <option value="淫秽低俗">淫秽低俗</option>
+                <option value="广告">广告</option>
+                <option value="言语辱骂">言语辱骂</option>
                 <option value="0">其他</option>
             </select>
         </div>
@@ -56,7 +56,9 @@
             <textarea id="otherReason" placeholder="说点什么吧"></textarea>
         </div>
         <div class="reportHintBottom">
-            <button>确定</button>
+            <div class="none" id="sendReportInfo"></div>
+            <button onclick="sendReportFn(this)">确定</button>
+            <div class="none" id="reportId"></div>
         </div>
     </div>
 </div>
@@ -69,13 +71,13 @@
         <div class="contentLeft floatLeft">
             <div class="clearFloat userInfoTop">
                 <div class="userInfo floatLeft" id="userInfo">
-                    
+
                 </div>
                 <button class="focusOn floatRight" id="foucs">关注</button>
             </div>
             <!-- 单独的内容 -->
             <div class="detailsWorks" id="detailsWorks">
-                
+
             </div>
             <div class="operatorItem" id="operatorItem">
                 <div class="">
@@ -97,7 +99,7 @@
                     </button>
                 </div>
                 <div class="">
-                    <button class="operatorItemBtn" onclick='reportFn(this)'>
+                    <button class="operatorItemBtn" onclick='reportFn(this,0)'>
                         <i class="iconfont">&#xe601;</i>
                         <span>举报</span>
                     </button>
@@ -149,66 +151,13 @@
             <span>所有评论</span>
         </div>
         <div class="allCommentsContent">
-            <div class="allCommentsContentItem">
-                <div class="commentUserInfo clearFloat">
-                    <a href="javascript:;" class="floatLeft">
-                        <img class="userImg" src="/public/img/album1.jpg" alt="">
-                    </a>
-                    <span class="sendInfo floatLeft">
-                        <a href="javascript:;" class="userName">夜星XY</a>
-                        <span class="sendDate">9月24日 10:33</span>
-                    </span>
-                    <span class="floatRight commentsOperator">
-                        <span class="onmouseShow">
-                            <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
-                            <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
-                        </span>
-                        <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
-                        <span class="dividingLine"></span>
-                        <span class="likeSty">
-                            <i class="iconfont">&#xec7f;</i>
-                            <span>0</span>
-                        </span>
-                    </span>
-                </div>
-                <!-- 内容 -->
-                <div class="commentsContent">
-                    <p>11111111111111111111111111111111111111111111111111111111111111</p>
-                    <img src="/public/img/myImg1.jpg" alt="">
-                    <!-- 回复框 -->
-                </div>
-                <!-- 评论的回复盒子 -->
-                <div class="replyCommnetBox">
-                    <div class="replyCommnetItem">
-                        <!-- 回复人 -->
-                        <div class="replyInfo">
-                            <a href="javascript:;" class="replyUserName">
-                                <img src="/public/img/album1.jpg" alt="">
-                                <span>夜星XY</span>
-                            </a>
-                            <span>回复</span>
-                            <!-- 回复的人 -->
-                            <a href="javascript:;" class="replyUserName">
-                                <img src="/public/img/album1.jpg" alt="">
-                                <span>123</span>
-                            </a>
-                        </div>
-                        <!-- 回复信息 -->
-                        <div class="replyCommnetContent">
-                            cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</div>
-                        <div class="replyCommneBottom">
-                            <span class="replyCommnetDate">9月27日08:10</span>
-                            <!-- 点赞 -->
-                            <button>
-                                <i class="iconfont">&#xec7f;</i>
-                                <span>1</span>
-                            </button>
-                            <button onclick="replayCommentShowFn(this)">回复</button>
-                            <button onclick="delReplyCommentFn(this)">删除</button>
-                            <button onclick='reportFn(this)'>举报</button>
-                        </div>
-                    </div>
-                </div>
+            
+        </div>
+        <div class="middleAnimation" id="animation">
+            <div class="pulse-container">
+                <div class="pulse-bubble pulse-bubble-1"></div>
+                <div class="pulse-bubble pulse-bubble-2"></div>
+                <div class="pulse-bubble pulse-bubble-3"></div>
             </div>
         </div>
         <div class="noContent none">

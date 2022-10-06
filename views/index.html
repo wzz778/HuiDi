@@ -38,12 +38,40 @@
         信息不符
     </span>
 </div>
+<!-- 举报弹窗 -->
+<div class="reportHint none">
+    <div class="reportHintItem">
+        <div class="reportHintTop clearFloat">
+            <span>举报</span>
+            <button class="floatRight" onclick="cancelFn(this)">
+                <i class="iconfont">&#xe643;</i>
+            </button>
+        </div>
+        <div class="reportHintContent">
+            <select id="reportReason">
+                <option value="">请选择举报原因</option>
+                <option value="抄袭/未授权转载">抄袭/未授权转载</option>
+                <option value="淫秽低俗">淫秽低俗</option>
+                <option value="广告">广告</option>
+                <option value="言语辱骂">言语辱骂</option>
+                <option value="0">其他</option>
+            </select>
+        </div>
+        <div class="reportHintContent none">
+            <textarea id="otherReason" placeholder="说点什么吧"></textarea>
+        </div>
+        <div class="reportHintBottom">
+            <button onclick="sendReportFn(this)">确定</button>
+            <div class="none" id="reportId"></div>
+        </div>
+    </div>
+</div>
 {{/block}}
 {{block 'body'}}
 <!-- 内容区 -->
 <div class="middle clearFloat bodySty">
     <div class="carouselLeft floatLeft" onmouseleave="beginSettimeout()" onmouseenter="endSettimeout()">
-        <div class="carousel">
+        <div class="carousel" id="carouselInfo">
             <div class="carouselItem">
                 <a href="javascript:;">
                     <img src="/public/img/01.png" alt="">
@@ -134,49 +162,10 @@
             <div class="centerMiddle" id="hotTicket">
 
             </div>
-            <div class="centerMiddle" style="display: none;">
-                <!-- 关注的动态 -->
-                <div class="centerMiddleItem">
-                    <div class="centerMiddleItemUser">
-                        <div class="userInfo">
-                            <a href="javascript:;">
-                                <img src="/public/img/01.jpg" alt="">
-                            </a>
-                            <div class="userName">
-                                <!-- 用户名 -->
-                                <a href="javascript:;">
-                                    <span>阿泽爱干饭</span>
-                                </a>
-                                <span>1天前</span>
-                            </div>
-                        </div>
-                        <div class="userPostContent">
-                            <p>蜡笔小新锁屏+壁纸套图</p>
-                            <div class="userPostContentAllimg">
-                                <img src="/public/img/img1.jpeg" alt="">
-                                <img src="/public/img/img2.jpeg" alt="">
-                                <img src="/public/img/img3.jpeg" alt="">
-                                <img src="/public/img/img.png" alt="">
-                            </div>
-                            <div class="userWorkOperate">
-                                <span>
-                                    <i class="iconfont">&#xec7f;</i>
-                                    <span>152</span>
-                                </span>
-                                <span>
-                                    <i class="iconfont">&#xebae;</i>
-                                    <span>476</span>
-                                </span>
-                                <span>
-                                    <i class="iconfont">&#xe601;</i>
-                                    <span>举报</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="centerMiddle none" id="focusOn">
+
             </div>
-            <div class="middleAnimation">
+            <div class="middleAnimation" id="animation">
                 <div class="pulse-container">
                     <div class="pulse-bubble pulse-bubble-1"></div>
                     <div class="pulse-bubble pulse-bubble-2"></div>

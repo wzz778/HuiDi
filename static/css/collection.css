@@ -1,24 +1,6 @@
-.content-main{
-    display: block;
-}
-.content-img{
-    width: 144px;
-    height: 144px;
-    object-fit: cover;
-
-}
-.audit-change{
-    height: 160px;
-    line-height: 160px;
-}
-.detail{
-    display: inline-block;
-    cursor: pointer;
-    height: 30px;
-    width: 71px;
+.card-list-timer{
+    width: 250px;
     line-height: 32px;
-    background-color: rgb(135 222 117);   
-    font-size: 10px;
 }
 .pass{
     display: inline-block;
@@ -26,7 +8,7 @@
     height: 30px;
     width: 71px;
     line-height: 32px;
-    background-color: rgb(3,169,244);
+    background-color: rgb(136,222,119);
     font-size: 10px;
 }
 .reject{

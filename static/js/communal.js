@@ -10,12 +10,16 @@ let page_size = document.getElementsByClassName('page-size');
 //     hidden[0].style.display = 'block';
 // }
 
-function renderPaging(name,maxLength,all_size){
+function renderPaging(name,maxLength,all_size,numbers){
     console.log(maxLength);
     page_size[0].innerHTML = '共' + all_size + '条';
     pageSize[0].onchange = function(){
         console.log(this.value,page_current[0].innerHTML);
-        name(page_current[0].innerHTML,pageSize[0].value);
+        if(numbers == -1){
+            name(page_current[0].innerHTML,pageSize[0].value);
+        }else{
+            name(page_current[0].innerHTML,pageSize[0].value,numbers);
+        }
     }
     page_left[0].onclick = function(){
         let num = page_current[0].innerText;
@@ -25,7 +29,11 @@ function renderPaging(name,maxLength,all_size){
             num--;
             page_right[0].style.cursor = 'pointer';
             page_current[0].innerHTML = num;
-            name(page_current[0].innerHTML,pageSize[0].value);
+            if(numbers == -1){
+                name(page_current[0].innerHTML,pageSize[0].value);
+            }else{
+                name(page_current[0].innerHTML,pageSize[0].value,numbers);
+            }
             if(page_current[0].innerHTML == 1){
                 page_left[0].style.cursor = 'not-allowed';
             }
@@ -44,7 +52,11 @@ function renderPaging(name,maxLength,all_size){
                 num++;
                 page_left[0].style.cursor = 'pointer';
                 page_current[0].innerHTML = num;
-                name(page_current[0].innerHTML,pageSize[0].value);
+                if(numbers == -1){
+                    name(page_current[0].innerHTML,pageSize[0].value);
+                }else{
+                    name(page_current[0].innerHTML,pageSize[0].value,numbers);
+                }
                 if(page_current[0].innerHTML == maxLength){
                     page_right[0].style.cursor = 'not-allowed';
                 }

@@ -14,6 +14,8 @@ function renders(begin_index,size){
         console.log(result.data);
         page_current[0].maxLength = result.data.msg.all_page;
         page_current[0].all_size = result.data.msg.all_count
+        page_current[0].cur_index = result.data.msg.cur_index
+        page_current[0].size = result.data.msg.size
         let all = '';
         for(let i=0;i<result.data.msg.list.length;i++){
             all += `<ul class="card-body-list">
@@ -35,7 +37,7 @@ function renders(begin_index,size){
                     </ul>`
         }
         card_body_main[0].innerHTML = all;
-        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size)
+        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size,-1)
     })
 }
 renders(1,5)

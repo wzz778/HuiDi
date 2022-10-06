@@ -19,18 +19,39 @@
         <div class="hint">
             封号处理
         </div>
-        <div  class="pop-main">
-            封号时间：
-            <select name="" id="select">
-                <option value="">请选择...</option>
-                <option value="7">7天</option>
-                <option value="15">15天</option>
-                <option value="30">30天</option>
-                <option value="180">180天</option>
-                <option value="360">360天</option>
-            </select>
+        <div class="layer-form-item">
+            <label class="layer-form-label">封号时长</label>
+            <div class="layer-input-block">
+                <div class="layer-unselect layer-form-select ">
+                    <div class="layer-select-title">
+                        <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
+                        <i class="layer-edge"></i>
+                    </div>
+                    <dl class="layer-list">
+                        <dd class="layer-select-tips layer-this startTimes" value="">请选择</dd>
+                        <dd class="layer-select-tips startTimes" value="2018">7天</dd>
+                        <dd class="layer-select-tips startTimes" value="2019">15天</dd>
+                        <dd class="layer-select-tips startTimes" value="2020">30天</dd>
+                        <dd class="layer-select-tips startTimes" value="2021">180天</dd>
+                        <dd class="layer-select-tips startTimes" value="2021">360天</dd>
+                    </dl>
+                </div>
+            </div>
         </div>
-        <div style="position: relative;bottom:-50px">
+        <div style="position: relative;bottom:-10px">
+            <button class="btn confirm">确定</button>
+            <button class="btn cancel">取消</button>
+        </div>
+    </div>
+</div>
+<div class="hidden">
+    <div class="pop-up warn">
+        <div >
+            <span class="pop-header">系统提示</span>
+            <img src="public/iconfont/warn2.png" alt="" class="warning">
+            <span class="warn-text">确定通过嘛</span>
+        </div>
+        <div class="button">
             <button class="btn confirm">确定</button>
             <button class="btn cancel">取消</button>
         </div>

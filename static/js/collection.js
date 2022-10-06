@@ -18,7 +18,8 @@ function renders(begin_index,size){
         url:'/superAdmin/showAlbum',
         params:{
             begin_index:begin_index,
-            size:size
+            size:size,
+            status:"0",
         }
     }).then(result =>{
         console.log(result.data);
@@ -39,7 +40,7 @@ function renders(begin_index,size){
                 let describes = '无'
                 all +=`<ul class="card-body-list">
                         <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${st}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
                         <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
                         <li class="card-list-status">${status}</li>
                         <li class="card-list-mail">${describes}</li>

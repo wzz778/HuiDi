@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const e = require('express');
 const router = express.Router();
 
 router.all('*', (req, res, next) => {
@@ -259,12 +260,14 @@ router.get('/superAdmin/updateRolePermiss',(req,res)=>{
 
 //修改用户状态
 router.get('/superAdmin/updateUserStatus', (req, res) => {
-    let { id } = req.query;
+    let { id ,end_time,status} = req.query;
     axios({
         method: 'PUT',
         url: '/superAdmin/updateUserStatus',
         params: {
-            id
+            id:id,
+            end_time:end_time,
+            status:status
         },
         headers: {
             token: req.session.token
@@ -363,13 +366,14 @@ router.get('/superAdmin/deleteType', (req, res) => {
 })
 //显示专辑
 router.get('/superAdmin/showAlbum', (req, res) => {
-    let {begin_index,size} = req.query
+    let {begin_index,size,status} = req.query
     axios({
         method: 'GET',
         url: '/superAdmin/showAlbum',
         params:{
             begin_index:begin_index,
-            size:size
+            size:size,
+            status:status
         },
         headers: {
             token:req.session.token
@@ -484,6 +488,27 @@ router.get('/superAdmin/updateAlbumStatuss',(req,res)=>{
             id:id,
             status:status,
             message:message
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+// 受理举报
+router.get('/superAdmin/acceptReport',(req,res)=>{
+    let {begin_index,size} = req.query
+    axios({
+        method:'PUT',
+        url:'/superAdmin/acceptReport',
+        params:{
+            begin_index:begin_index,
+            size:size
         },
         headers:{
             token:req.session.token

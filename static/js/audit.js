@@ -6,7 +6,7 @@ let cancel = document.getElementsByClassName('cancel');
 let hidden = document.getElementsByClassName('hidden');
 let warn_text = document.getElementsByClassName('warn-text');
 let classifier_input = document.getElementsByClassName('classifier-input');
-
+let detail = document.getElementsByClassName('detail');
 
 classifier_input[0].oninput = function(){
     this.value = this.value.replace(/\s*/g,"");

@@ -184,6 +184,7 @@ router.post('/admin/publicComment', mult, (req, res) => {
         formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
     }
     let { content, level, superId, reflectId, reportId } = req.body
+    console.log('结果', content, level, superId, reflectId, reportId)
     formdata.append('content', content)
     formdata.append('level', level)
     formdata.append('super_id', superId)

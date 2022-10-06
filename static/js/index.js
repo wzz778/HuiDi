@@ -19,6 +19,7 @@ let carouselIndex = 0
 let timerIndex = ''
 // 动画
 let animation = document.getElementById('animation')
+let carouselInfo = document.getElementById('carouselInfo')
 // 定时器
 function beginSettimeout() {
     timerIndex = setInterval(() => {
@@ -447,9 +448,27 @@ function sendReportFn(event) {
         .then(result => {
             console.log(result)
             reportHint[0].classList.add('none')
-            hintFn('success','举报成功')
+            hintFn('success', '举报成功')
         })
         .catch(err => {
             console.log(err)
         })
 }
+// 获取轮播图
+sendFn('/picture/showCarousel', {})
+    .then(result => {
+        let tempStr=''
+        for (let i = 0; i < result.msg.list.length; i++) {
+            tempStr+=`
+            <div class="carouselItem">
+                <a href="/album?id=${result.msg.list[i].al_id}">
+                    <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].img_url}" onload="operatorImgFn(this)">
+                </a>
+            </div>
+            `
+        }
+        carouselInfo.innerHTML=tempStr
+    })
+    .catch(err => {
+        console.log(err)
+    })

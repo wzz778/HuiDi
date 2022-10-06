@@ -95,9 +95,10 @@ function sendCommentFn() {
                 return
             }
             // 判断是否需要把盒子显现
-            if (allCommentsContent[0].classList.value.indexOf('none')) {
+            if (allCommentsContent[0].classList.value.indexOf('none')!=-1) {
                 allCommentsContent[0].classList.remove('none')
                 noContent[0].classList.add('none')
+                animation.classList.remove('none')
             }
             var formData = new FormData()
             if (imgFile.files[0]) {
@@ -142,7 +143,7 @@ function addComment(userObj) {
         name: userObj.name,
         imgUrl: userObj.img_url,
         id: userObj.id,
-        commentId: userObj.commentId
+        commentId: userObj.commentId,
     }
     let tempStr = `
     <div class="allCommentsContentItem">
@@ -159,7 +160,7 @@ function addComment(userObj) {
                     </span>
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
-                            <div class="none">${JSON.stringify({ commentId: userInfo.commentId, id: userInfo.id })}</div>
+                            <div class="none">${JSON.stringify({ commentId: userObj.commentId, userId: userObj.id })}</div>
                             <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
@@ -198,6 +199,7 @@ function delCommentFn(event) {
             return sendFn('/admin/deleteComment', { id: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId, userId: JSON.parse(event.parentElement.firstElementChild.innerHTML).userId })
         })
         .then(result => {
+            console.log(result)
             if (result.err == 0) {
                 event.parentElement.parentElement.parentElement.parentElement.remove()
                 // 判断是否还有评论
@@ -205,6 +207,7 @@ function delCommentFn(event) {
                 if (tempLength == 0) {
                     allCommentsContent[0].classList.add('none')
                     noContent[0].classList.remove('none')
+                    animation.classList.add('none')
                 }
                 return
             }
@@ -212,6 +215,7 @@ function delCommentFn(event) {
             hintFn('warning', '您不能删除他人评论')
         })
         .catch(err => {
+            console.log(err)
             hintFn('warning', '请先登录')
         })
 }
@@ -302,6 +306,7 @@ function replyCommentSonFn(event) {
                 reflectId: window.location.search.split("=")[1],
                 level: 2,
                 reportId: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userId,
+                id:JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userId
             }
             addCommentSonComment(event.parentElement.parentElement, tempObj)
         })
@@ -349,7 +354,7 @@ function addCommentSonComment(event, commentObj) {
                         ${commentObj.content}
                         </div>
                         <div class="replyCommneBottom">
-                            <div class="none">存放举报的信息</div>
+                            <div class="none">${JSON.stringify(tempObj)}</div>
                             <span class="sendDate">${myDate.getFullYear()}-${dataCompletion(myDate.getMonth() + 1)}-${dataCompletion(myDate.getDate())} ${dataCompletion(myDate.getHours())}:${dataCompletion(myDate.getMinutes())}:${dataCompletion(myDate.getSeconds())}</span>
                             <!-- 举报按钮 -->
                             <button>
@@ -367,7 +372,10 @@ function addCommentSonComment(event, commentObj) {
                     </div>
                 </div>
     `
-            event.parentElement.parentElement.parentElement.parentElement.innerHTML += tempStr
+            let tempEle=event.parentElement.parentElement.parentElement.parentElement
+            tempEle.innerHTML += tempStr
+            console.log()
+            tempEle.getElementsByTagName('textarea')[0].parentElement.remove()
         })
         .catch(err => {
             console.log(err)
@@ -464,6 +472,11 @@ function getAllComment() {
             allPges = result.msg.all_page
             // 将数据渲染到页面中
             let tempStr = ''
+            if(result.msg.list.length==0){
+                // 没有数据
+                noContent[0].classList.remove('none')
+                animation.classList.add('none')
+            }
             for (let i = 0; i < result.msg.list.length; i++) {
                 if (sendArrNone.indexOf(result.msg.list[i].comment.id) != -1) {
                     continue
@@ -531,7 +544,7 @@ function getAllComment() {
                 <div class="none">${JSON.stringify(userObj)}</div>
                 <div class="commentUserInfo clearFloat">
                     <a href="javascript:;" class="floatLeft">
-                        <img class="userImg" src="${defaultImgUrl}" alt="${result.msg.list[i].comment.ob.u_id.img_url}" data-url="" onload="operatorImgFn(this)">
+                        <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].comment.ob.u_id.img_url}" onload="operatorImgFn(this)">
                     </a>
                     <span class="sendInfo floatLeft">
                         <a href="javascript:;" class="userName">${result.msg.list[i].comment.ob.u_id.name}</a>

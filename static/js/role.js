@@ -35,6 +35,8 @@ function renders(begin_index,size){
         let all =  result.data;
         page_current[0].maxLength = result.data.msg.all_page
         page_current[0].all_size = result.data.msg.all_count
+        page_current[0].cur_index = result.data.msg.cur_index;
+        page_current[0].size = result.data.msg.size;
         let All = ''
         for(let i=0;i<all.msg.list.length;i++){
             let str = all.temps[i].join(",")
@@ -58,7 +60,7 @@ function renders(begin_index,size){
         </ul>`
         }
         card_body_main[0].innerHTML = All;
-        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size)
+        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size,-1)
         for(let j=0;j<all.msg.list.length;j++){
             checkbox_all[0].numbers = 0;
             card_list_checkbox[j].ids = all.msg.list[j].role.id;
@@ -273,7 +275,7 @@ confirms[0].onclick = function(){
                 }
             }).then(result =>{
                 console.log(result.data);
-                renders();
+                renders(page_current[0].cur_index,page_current[0].size,-1);
             })
         })
     }else if(btn_new[0].numbers == 2){
@@ -286,7 +288,7 @@ confirms[0].onclick = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            renders();
+            renders(page_current[0].cur_index,page_current[0].size,-1);
         })
     }
     hidden[0].style.display = 'none';
@@ -309,7 +311,7 @@ confirms[1].onclick = function(){
                     }
                 }).then(result =>{
                     console.log(result.data);
-                    renders();
+                    renders(page_current[0].cur_index,page_current[0].size,-1);
                 })
             }
         }
@@ -322,7 +324,7 @@ confirms[1].onclick = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            renders();
+            renders(page_current[0].cur_index,page_current[0].size,-1);
         })
     }
     hidden[1].style.display = 'none';

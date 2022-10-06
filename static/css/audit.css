@@ -7,6 +7,9 @@
     object-fit: cover;
 
 }
+.card-list-mail{
+    width: 160px;
+}
 .audit-change{
     height: 160px;
     line-height: 160px;

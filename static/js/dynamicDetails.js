@@ -95,7 +95,7 @@ function sendCommentFn() {
                 return
             }
             // 判断是否需要把盒子显现
-            if (allCommentsContent[0].classList.value.indexOf('none')!=-1) {
+            if (allCommentsContent[0].classList.value.indexOf('none') != -1) {
                 allCommentsContent[0].classList.remove('none')
                 noContent[0].classList.add('none')
                 animation.classList.remove('none')
@@ -151,11 +151,11 @@ function addComment(userObj) {
                     ${JSON.stringify(userObjInfo)}
                 </div>
                 <div class="commentUserInfo clearFloat">
-                    <a href="javascript:;" class="floatLeft">
+                    <a href="/userhomepage?id=${userObj.id}" class="floatLeft">
                         <img class="userImg" src="${userObj.img_url}" alt="">
                     </a>
                     <span class="sendInfo floatLeft">
-                        <a href="javascript:;" class="userName">${userObj.name}</a>
+                        <a href="/userhomepage?id=${userObj.id}" class="userName">${userObj.name}</a>
                         <span class="sendDate">${myDate.getFullYear()}-${dataCompletion(myDate.getMonth() + 1)}-${dataCompletion(myDate.getDate())} ${dataCompletion(myDate.getHours())}:${dataCompletion(myDate.getMinutes())}:${dataCompletion(myDate.getSeconds())}</span>
                     </span>
                     <span class="floatRight commentsOperator">
@@ -199,7 +199,6 @@ function delCommentFn(event) {
             return sendFn('/admin/deleteComment', { id: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId, userId: JSON.parse(event.parentElement.firstElementChild.innerHTML).userId })
         })
         .then(result => {
-            console.log(result)
             if (result.err == 0) {
                 event.parentElement.parentElement.parentElement.parentElement.remove()
                 // 判断是否还有评论
@@ -266,13 +265,13 @@ function replyCommentFirstFn(event) {
                 return
             }
             let tempObj = {
-                sendUrl: 'javascript:;',
+                sendUrl: `/userhomepage?id=${result.userInfo.id}`,
                 sendSrc: result.userInfo.img_url,
                 sendName: result.userInfo.name,
                 content: tempStr,
                 replyName: replyObj.name,
                 replySrc: replyObj.imgUrl,
-                replyUrl: 'javascript:;',
+                replyUrl: `/userhomepage?id=${replyObj.id}`,
                 superId: replyObj.commentId,
                 reflectId: window.location.search.split("=")[1],
                 id: result.userInfo.id,
@@ -295,18 +294,18 @@ function replyCommentSonFn(event) {
                 return
             }
             let tempObj = {
-                sendUrl: 'javascript:;',
+                sendUrl: `/userhomepage?id=${result.userInfo.id}`,
                 sendSrc: result.userInfo.img_url,
                 sendName: result.userInfo.name,
                 content: tempStr,
                 replyName: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userName,
                 replySrc: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userImg,
-                replyUrl: 'javascript:;',
+                replyUrl: `/userhomepage?id=${JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userId}`,
                 superId: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).commentId,
                 reflectId: window.location.search.split("=")[1],
                 level: 2,
                 reportId: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userId,
-                id:JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userId
+                id: JSON.parse(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.innerHTML).userId
             }
             addCommentSonComment(event.parentElement.parentElement, tempObj)
         })
@@ -328,7 +327,6 @@ function addCommentSonComment(event, commentObj) {
                 userId: commentObj.id,
                 commentId: commentObj.superId,
                 userName: commentObj.sendName,
-                userId: commentObj.id,
                 userImg: commentObj.sendSrc
             }
             let myDate = new Date()
@@ -372,9 +370,8 @@ function addCommentSonComment(event, commentObj) {
                     </div>
                 </div>
     `
-            let tempEle=event.parentElement.parentElement.parentElement.parentElement
+            let tempEle = event.parentElement.parentElement.parentElement.parentElement
             tempEle.innerHTML += tempStr
-            console.log()
             tempEle.getElementsByTagName('textarea')[0].parentElement.remove()
         })
         .catch(err => {
@@ -472,7 +469,7 @@ function getAllComment() {
             allPges = result.msg.all_page
             // 将数据渲染到页面中
             let tempStr = ''
-            if(result.msg.list.length==0){
+            if (result.msg.list.length == 0) {
                 // 没有数据
                 noContent[0].classList.remove('none')
                 animation.classList.add('none')
@@ -497,13 +494,13 @@ function getAllComment() {
                     <div class="replyCommnetItem">
                         <!-- 回复人 -->
                         <div class="replyInfo">
-                            <a href="javascript:;" class="replyUserName">
+                            <a href="/userhomepage?id=${result.msg.list[i].commentList[j].comment.ob.u_id.id}" class="replyUserName">
                                 <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].commentList[j].comment.ob.u_id.img_url}" onload="operatorImgFn(this)">
                                 <span>${result.msg.list[i].commentList[j].comment.ob.u_id.name}</span>
                             </a>
                             <span>回复</span>
                             <!-- 回复的人 -->
-                            <a href="javascript:;" class="replyUserName">
+                            <a href="/userhomepage?id=${result.msg.list[i].commentList[j].comment.ob.report_id.id}" class="replyUserName">
                                 <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].commentList[j].comment.ob.report_id.img_url}" onload="operatorImgFn(this)">
                                 <span>${result.msg.list[i].commentList[j].comment.ob.report_id.name}</span>
                             </a>
@@ -543,11 +540,11 @@ function getAllComment() {
             <div class="allCommentsContentItem">
                 <div class="none">${JSON.stringify(userObj)}</div>
                 <div class="commentUserInfo clearFloat">
-                    <a href="javascript:;" class="floatLeft">
+                    <a href="/userhomepage?id=${result.msg.list[i].comment.ob.u_id.id}" class="floatLeft">
                         <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].comment.ob.u_id.img_url}" onload="operatorImgFn(this)">
                     </a>
                     <span class="sendInfo floatLeft">
-                        <a href="javascript:;" class="userName">${result.msg.list[i].comment.ob.u_id.name}</a>
+                        <a href="/userhomepage?id=${result.msg.list[i].comment.ob.u_id.id}" class="userName">${result.msg.list[i].comment.ob.u_id.name}</a>
                         <span class="sendDate">${result.msg.list[i].comment.create_time}</span>
                     </span>
                     <span class="floatRight commentsOperator">
@@ -590,7 +587,7 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
         albumInfo.href = `/album?albumId=${result.msg.album.id}`
         // 将专辑信息显现
         let imgStr = ''
-        for (let j = 0; j < result.msg.list.length; j++) {
+        for (let j = 0; j < 1; j++) {
             imgStr += `<img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[j]}" onload="operatorImgFn(this)">`
         }
         let tempAlbumStr = `
@@ -609,12 +606,12 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
         albumInfo.innerHTML = tempAlbumStr
         // 用户信息
         let tempUserStr = `
-                    <a class="javascript:;">
+                    <a class="/userhomepage?id=${result.msg.users.id}">
                         <img src="${defaultImgUrl}" alt="" data-url="${result.msg.users.img_url}" onload="operatorImgFn(this)">
                     </a>
                     <span class="userNameItem">
                         <span>
-                            <a href="javascript:;">
+                            <a href="/userhomepage?id=${result.msg.users.id}">
                                 ${result.msg.users.name}
                             </a>
                         </span>
@@ -623,9 +620,13 @@ sendFn('/picture/showInfoMessage', { id: window.location.search.split("=")[1] })
                     </span>
         `
         userInfo.innerHTML = tempUserStr
+        let tempWorkImages = ''
+        for (let j = 0; j < result.msg.list.length; j++) {
+            tempWorkImages += ` <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[j]}" onload="operatorImgFn(this)">`
+        }
         let tempWorksStr = `
                 <p>${result.msg.images.describes}</p>
-                <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[0]}" onload="operatorImgFn(this)">
+               ${tempWorkImages}
         `
         let tempLikeStr = ''
         let tempCollectStr = ''

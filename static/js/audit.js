@@ -6,12 +6,14 @@ let cancel = document.getElementsByClassName('cancel');
 let hidden = document.getElementsByClassName('hidden');
 let warn_text = document.getElementsByClassName('warn-text');
 let classifier_input = document.getElementsByClassName('classifier-input');
-
+let detail = document.getElementsByClassName('detail');
 
 classifier_input[0].oninput = function(){
     this.value = this.value.replace(/\s*/g,"");
 }
 
+
+// 渲染页面
 function renders(begin_index,size){
     axios({
         method:'GET',
@@ -24,6 +26,8 @@ function renders(begin_index,size){
         console.log(result.data);
         page_current[0].maxLength = result.data.msg.all_page
         page_current[0].all_size = result.data.msg.all_count
+        page_current[0].cur_index = result.data.msg.cur_index;
+        page_current[0].size = result.data.msg.size;
         let all = '';
         for(let i=0;i<result.data.msg.list.length;i++){
             if(result.data.msg.list[i].list.length == 0){
@@ -42,7 +46,7 @@ function renders(begin_index,size){
                                 详情
                             </button>
                             <button class="btn pass">
-                                <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                                <img src="public/iconfont/pass.png" alt="" class="forbid">
                                 通过
                             </button>
                             <button class="btn reject">
@@ -67,7 +71,7 @@ function renders(begin_index,size){
                                 详情
                             </button>
                             <button class="btn pass">
-                                <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                                <img src="public/iconfont/pass.png" alt="" class="forbid">
                                 通过
                             </button>
                             <button class="btn reject">
@@ -80,7 +84,7 @@ function renders(begin_index,size){
             
         }
         card_body_main[0].innerHTML = all;
-        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size)
+        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size,-1)
         for(let j=0;j<result.data.msg.list.length;j++){
             pass[j].onclick = function(){
                 pass[0].ids = result.data.msg.list[j].images.id;
@@ -108,9 +112,12 @@ confirm[0].onclick = function(){
                 id:pass[1].ids,
                 massage:classifier_input[0].value
             }
+        }).then(result =>{
+            console.log(result.data);
+            renders(page_current[0].cur_index,page_current[0].size,-1);
+            hidden[0].style.display = 'none'
         })
     }
-    hidden[0].style.display = 'none'
 }
 cancel[1].onclick = function(){
     hidden[1].style.display = 'none'
@@ -123,6 +130,8 @@ confirm[1].onclick = function(){
             id:pass[0].ids
         }
     }).then(result =>{
+        console.log(result.data);
         hidden[1].style.display = 'none'
+        renders(page_current[0].cur_index,page_current[0].size,-1);
     })
 }

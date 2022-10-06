@@ -44,29 +44,31 @@
 <div class="card-body">
     <ul class="card-body-list">
         <li class="card-list-number">序号</li>
-        <li class="card-list-name">被举报</li>
+        <li class="card-list-name">举报人</li>
         <li class="card-list-sex">性别</li>
-        <li class="card-list-status">理由</li>
         <li class="card-list-mail">邮箱</li>
+        <li class="card-list-status">举报理由</li>
         <li class="card-list-other">其他操作</li>
     </ul>
-    <ul class="card-body-list">
-        <li class="card-list-number">1</li>
-        <li class="card-list-name">李宁</li>
-        <li class="card-list-sex">女</li>
-        <li class="card-list-status">传播不良信息,信息过于假</li>
-        <li class="card-list-mail">3400164864@qq.com</li>
-        <li class="card-list-other">
-            <button class="btn forbiding">
-                <img src="public/iconfont/warn.png" alt="" class="forbid">
-                警告
-            </button>
-            <button class="btn detail">
-                <img src="public/iconfont/detail1.png" alt="" class="forbid">
-                详情
-            </button>
-        </li>
-    </ul>
+    <div class="card-body-main">
+        <!-- <ul class="card-body-list">
+            <li class="card-list-number">1</li>
+            <li class="card-list-name">李宁</li>
+            <li class="card-list-sex">女</li>
+            <li class="card-list-status">传播不良信息,信息过于假</li>
+            <li class="card-list-mail">3400164864@qq.com</li>
+            <li class="card-list-other">
+                <button class="btn forbiding">
+                    <img src="public/iconfont/warn.png" alt="" class="forbid">
+                    警告
+                </button>
+                <button class="btn detail">
+                    <img src="public/iconfont/detail1.png" alt="" class="forbid">
+                    详情
+                </button>
+            </li>
+        </ul> -->
+    </div>
 </div>
 <div class="page-change">
     <div class="page-background">
@@ -91,6 +93,7 @@
 </div>
 {{/block}}
 {{block 'footer'}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="public/js/communal.js"></script>
 <script src="public/js/mangereport.js"></script>
 {{/block}}

@@ -1,8 +1,10 @@
 const express = require('express');
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const e = require('express');
 const router = express.Router();
 
+// 设置全局的拦截
 router.all('*', (req, res, next) => {
     console.log('管理员的', jwt.decode(req.session.token))
     // if(!req.session.token){
@@ -16,28 +18,40 @@ router.all('*', (req, res, next) => {
     return next()
 })
 
+// 用户管理页面
 router.get('/homepage', (req, res) => {
     res.render('homepage.html');
 })
 
+
+// 举报管理页面
 router.get('/mangereport', (req, res) => {
     res.render('mangereport.html');
 })
 
+// 详情页面
 router.get('/detail', (req, res) => {
     res.render('detail.html');
 })
 
+
+// 内容管理页面
 router.get('/audit', (req, res) => {
     res.render('audit.html');
 })
+
+// 分类管理页面
 router.get('/classify', (req, res) => {
     res.render('classify.html');
 })
 
+// 专辑管理页面
 router.get('/collection', (req, res) => {
     res.render('collection.html');
 })
+
+
+// 角色管理页面
 router.get('/role', (req, res) => {
     res.render('role.html');
 })
@@ -259,12 +273,14 @@ router.get('/superAdmin/updateRolePermiss',(req,res)=>{
 
 //修改用户状态
 router.get('/superAdmin/updateUserStatus', (req, res) => {
-    let { id } = req.query;
+    let { id ,end_time,status} = req.query;
     axios({
         method: 'PUT',
         url: '/superAdmin/updateUserStatus',
         params: {
-            id
+            id:id,
+            end_time:end_time,
+            status:status
         },
         headers: {
             token: req.session.token
@@ -363,13 +379,14 @@ router.get('/superAdmin/deleteType', (req, res) => {
 })
 //显示专辑
 router.get('/superAdmin/showAlbum', (req, res) => {
-    let {begin_index,size} = req.query
+    let {begin_index,size,status} = req.query
     axios({
         method: 'GET',
         url: '/superAdmin/showAlbum',
         params:{
             begin_index:begin_index,
-            size:size
+            size:size,
+            status:status
         },
         headers: {
             token:req.session.token
@@ -495,5 +512,45 @@ router.get('/superAdmin/updateAlbumStatuss',(req,res)=>{
         res.send({ err: -1, msg: error })
     })
 })
+
+// 受理举报
+router.get('/superAdmin/acceptReport',(req,res)=>{
+    let {begin_index,size} = req.query
+    axios({
+        method:'PUT',
+        url:'/superAdmin/acceptReport',
+        params:{
+            begin_index:begin_index,
+            size:size
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+// 随机显示专辑
+router.get('/superAdmin/showRandomAlbum',(req,res)=>{
+    axios({
+        method:'GET',
+        url:'/superAdmin/showRandomAlbum',
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+
+
 
 module.exports = router;

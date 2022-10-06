@@ -100,7 +100,7 @@ function getmyalbum(){
                 let arrimg=allarr[i].images;
                 if(JSON.stringify(arrimg)=="{}"){
                     albumbody.innerHTML+=`
-                    <a href="album?albumId=${allarr[i].album.id}" class="Aalbummax">
+                    <a href="album?id=${allarr[i].album.id}" class="Aalbummax">
                         <span class="albumid">${allarr[i].album.id}</span>
                         <div class="imgbox">
                         <div class="img" style="background-image:url(/public/img/kongalbum.png);"></div>
@@ -142,7 +142,7 @@ function getmyalbum(){
                 `
                 }
                 albumbody.innerHTML+=`
-                <a href="album?albumId=${allarr[i].album.id}" class="Aalbummax">
+                <a href="album?id=${allarr[i].album.id}" class="Aalbummax">
                     <span class="albumid">${allarr[i].album.id}</span>
                     <div class="imgbox">
                         ${allimg}

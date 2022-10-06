@@ -102,7 +102,7 @@ function getfan(){
                             <div class="message-card">
                                 <div class="message-card-top">
                                     <a href="userhomepage?id=${ms[i].id}" class="message-username">${ms[i].name}</a>
-                                    <span class="message-tpye">关注了你：</span>
+                                    <span class="message-tpye">你的关注：</span>
                                     <span class="message-userid" style="display: none;">${ms[i].id}</span>
                                 </div>
                                 <div class="message-card-bon">
@@ -111,7 +111,8 @@ function getfan(){
                             </div>
                             <div class="message-con">
                                 ${button}</br>
-                                <a href="" class="send_message">发信息</a>
+                                <a href="" class="send_message">私信</a>
+                                <span class="message-time">${ms[i].end_time}</span>
                             </div>
                         </div>
                     `

@@ -66,7 +66,7 @@ function getfan(){
             size:5
         }
     }).then(data => {
-        // console.log(data.data);
+        console.log(data.data);
         message_body.innerHTML=``;
         if(data.data.err==0){
             fansnumber.innerText=`共${data.data.msg.all_count}条数据`
@@ -111,7 +111,8 @@ function getfan(){
                             </div>
                             <div class="message-con">
                                 ${button}</br>
-                                <a href="" class="send_message">发信息</a>
+                                <a href="" class="send_message">私信</a>
+                                <span class="message-time">${ms[i].end_time}</span>
                             </div>
                         </div>
                     `

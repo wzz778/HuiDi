@@ -33,6 +33,7 @@ li {
     -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     border-radius: 3px;
+    background-color: white;
 }
 .mytextmessageright{
     width: 290px;
@@ -43,6 +44,7 @@ li {
     -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     border-radius: 3px;
+    background-color: white;
 }
 .mymessage #mymessageback{
     width: 1000px;
@@ -215,10 +217,11 @@ li {
     overflow: hidden;
 }
 .class_body .dynamicmax{
+    border-bottom:#ebebeb 1.5px solid ;
     margin-top: 10px;
     width: 650px;
     min-height: 250px;
-    background-color: rgb(236, 236, 236);
+    background-color: #f9f9f9;
     padding: 10px;
     border-radius: 5px;
 }

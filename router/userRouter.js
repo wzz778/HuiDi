@@ -109,7 +109,7 @@ router.post('/api/login',(req,res)=>{
     })
     .then(result=>{
         req.session.user=result.data.data;
-        res.send({ err: 0, msg:"OK"});
+        res.send({ err: 0, msg:result.data.data});
     })
     .catch(err=>{
         console.log(err)

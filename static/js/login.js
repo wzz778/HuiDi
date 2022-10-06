@@ -29,9 +29,15 @@ function tologin(){
         if(data.data.err==0){
           hintFn('success' ,'登录成功')
             // alert('登录成功');
-            setTimeout(function () {
-                window.location.assign("/Personalhomepage");
+            if(data.data.msg.power==2){
+              setTimeout(function () {
+                  window.location.assign("/");
+              }, 1000)
+            }else{
+              setTimeout(function () {
+                window.location.assign("/homepage");
             }, 1000)
+            }
         }else{
             alert(data.data.msg);
         }

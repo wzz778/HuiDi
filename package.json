@@ -34,7 +34,7 @@
     "pkg": "^5.8.0"
   },
   "bin": {
-    "credit-recognition-system": "server.js"
+    "picture-web": "server.js"
   },
   "pkg": {
     "scripts": [

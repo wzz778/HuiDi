@@ -151,12 +151,12 @@ function getHotTicket() {
                 <div class="centerMiddleItem">
                     <div class="centerMiddleItemUser">
                         <div class="userInfo">
-                            <a href="javascript:;">
+                            <a href="/userhomepage?id=${result.msg.list[i].users.id}">
                                 <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].users.img_url}" onload="operatorImgFn(this)">
                             </a>
                             <div class="userName">
                                 <!-- 用户名 -->
-                                <a href="javascript:;">
+                                <a href="/userhomepage?id=${result.msg.list[i].users.id}">
                                     <span>${result.msg.list[i].users.name}</span>
                                 </a>
                                 <span>热门内容</span>
@@ -164,7 +164,7 @@ function getHotTicket() {
                         </div>
                         <div class="userPostContent">
                             <p>${result.msg.list[i].images.describes}</p>
-                            <a href="javascript:;">
+                            <a href="/dynamicDetails?id=${result.msg.list[i].images.id}">
                                 <div class="userPostContentAllimg">
                                     ${tempImg}
                                 </div>
@@ -245,12 +245,12 @@ function getFocusOn() {
                 <div class="centerMiddleItem">
                     <div class="centerMiddleItemUser">
                         <div class="userInfo">
-                            <a href="javascript:;">
+                            <a href="/userhomepage?id=${result.msg.list[i].users.id}">
                                 <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].users.img_url}" onload="operatorImgFn(this)">
                             </a>
                             <div class="userName">
                                 <!-- 用户名 -->
-                                <a href="javascript:;">
+                                <a href="/userhomepage?id=${result.msg.list[i].users.id}">
                                     <span>${result.msg.list[i].users.name}</span>
                                 </a>
                                 <span>关注内容</span>
@@ -258,7 +258,7 @@ function getFocusOn() {
                         </div>
                         <div class="userPostContent">
                             <p>${result.msg.list[i].images.describes}</p>
-                            <a href="javascript:;">
+                            <a href="/dynamicDetails?id=${result.msg.list[i].images.id}">
                                 <div class="userPostContentAllimg">
                                     ${tempImg}
                                 </div>

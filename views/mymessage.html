@@ -1,5 +1,5 @@
 {{extend './layout.html'}}
-{{block 'title'}}{{/block}}
+{{block 'title'}}动态信息{{/block}}
 {{block 'head'}}
 <link rel="stylesheet" href="public/css/mymessage.css">
 {{/block}}
@@ -8,21 +8,34 @@
         <div class="rebody wrap">
             <div id="main">
                 <div id="main-left">
-                    <a class="message-sort" style="color: white;background-color: #73b2ff ;" href="javascript:;"><div class="sortred"></div>赞或收藏</a>
-                    <a class="message-sort" href="javascript:;"><div class="sortred"></div>评论空间</a>
+                    <a class="message-sort" style="color: white;background-color: #73b2ff ;" href="mymessage"><div class="sortred"></div>消息空间</a>
+                    <a class="message-sort" href="chatmessage"><div class="sortred"></div>聊天消息</a>
                 </div>
                 <div id="main-right">
-                    <div class="main-right-top">反馈栏目<a href='javascript:;'>清空该信息空间</a></div>
+                    <div class="main-right-top">
+                        <div class="tab">
+                            <ul>
+                                {{block 'tab'}}
+                                <li><a href="mymessage" class="conli  havebethis">全部消息</a></li>
+                                <li><a href="likemessage" class="conli">点赞</a></li>
+                                <li><a href="collectmessage" class="conli">收藏</a></li>
+                                <li><a href="focusmessage" class="conli">关注</a></li>
+                                <li><a href="commentmessage" class="conli">评论</a></li>
+                                {{/block}}
+                            </ul>
+                        </div>
+                    </div>
                     <div class="messagebody">
-                        <div class="alike-a">
+                        <!-- <div class="alike-a">
                             <div class="red"></div>
-                            <img src="public/img/userHead.jpg" class="message-img" alt="">
+                            <a href="">
+                                <img src="public/img/userHead.jpg" class="message-img" alt="">
+                            </a>
                             <div class="message-card">
                                 <div class="message-card-top">
-                                       <a href="javascript:;" class="message-username">这是用户名</a>
+                                    <a href="javascript:;" class="message-username">这是用户名</a>
                                     <span class="message-tpye">点赞了你的文章：</span>
                                     <span class="message-userid" style="display: none;"></span>
-                                    <span class="message-postid" style="display: none;"></span>
                                 </div>
                                 <div class="message-card-bon">
                                     <a class="message-postname" href="javascript:;">这是你自己的文章标题这是你自己的文章标题这是你自己的文章标题这是你自己的文章标题这是你自己的文章标题这是你自己的文章标题</a>
@@ -33,13 +46,30 @@
                                 <span class="message-time">2022-05-12 16:38</span>
                             </div>
                         </div>
+                        <div class="alike-a">
+                            <div class="red"></div>
+                            <a href="">
+                                <img src="public/img/userHead.jpg" class="message-img" alt="">
+                            </a>
+                            <div class="message-card">
+                                <div class="message-card-tops">
+                                    <a href="" class="message-username">这是用户名</a>
+                                    <span class="message-tpye">关注了你：</span>
+                                    <span class="message-userid" style="display: none;"></span>
+                                </div>
+                            </div>
+                            <div class="message-con">
+                                <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
+                                <span class="message-time">2022-05-12 16:38</span>
+                            </div>
+                        </div> -->
                     </div>
                     <div class="main-right-bon">
-                        <button>最后一页</button>
+                        <button onclick="lastpage()">最后一页</button>
                         <a href="javascript:;"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                        <a id="rpages" href="javascript:;" style="background-color:#056DE8;color: white;">1</a>
+                        <a id="rpages" href="javascript:;" style="background-color:#4f8edb;color: white;">1</a>
                         <a href="javascript:;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-                        <span id="reportpage_number">共0个数据</span>
+                        <span id="fansnumber">共0个数据</span>
                     </div>
                 </div>
             </div>
@@ -47,5 +77,13 @@
     </div>
 {{/block}}
 {{block 'bottom'}}
+<!-- <script>
+    var thistype='全部'
+</script> -->
+{{block 'script'}}
+<script>
+    var thistype='全部'
+</script>
+{{/block}}
 <script src="public/js/mymessage.js"></script>
 {{/block}}

@@ -73,7 +73,7 @@ function getfan(){
             allpage=data.data.msg.all_page
             if(data.data.msg.list.length==0){
                 message_body.innerHTML += `
-                <div id="emptymeaage" style="padding-top: 200px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                <div id="emptymeaage" style="padding-top: 150px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
                     <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
                     什么都没有呢 . . .
                 </div>
@@ -127,17 +127,20 @@ function getfan(){
 getfan()
 function lastpage(){
     nowpage=allpage;
+    pagearrow[1].innerText=nowpage;
     getfan()
 }
 pagearrow[0].onclick=function(){
     if(nowpage<allpage){
         nowpage++; 
+        pagearrow[1].innerText=nowpage;
         getfan()
     }
 }
 pagearrow[2].onclick=function(){
     if(nowpage>1){
         nowpage--; 
+        pagearrow[1].innerText=nowpage;
         getfan()
     }
 }

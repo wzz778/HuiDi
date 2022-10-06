@@ -1,0 +1,13 @@
+{{extend './mymessage.html'}}
+{{block 'tab'}}
+<li><a href="mymessage" class="conli">全部消息</a></li>
+<li><a href="likemessage" class="conli havebethis">点赞</a></li>
+<li><a href="collectmessage" class="conli">收藏</a></li>
+<li><a href="focusmessage" class="conli">关注</a></li>
+<li><a href="commentmessage" class="conli">评论</a></li>
+{{/block}}
+{{block 'script'}}
+<script>
+    var thistype='点赞'
+</script>
+{{/block}}

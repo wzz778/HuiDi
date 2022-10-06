@@ -19,7 +19,10 @@ let carouselIndex = 0
 let timerIndex = ''
 // 动画
 let animation = document.getElementById('animation')
+// 
 let carouselInfo = document.getElementById('carouselInfo')
+// 绑定事件
+let bindEvent = document.getElementById('bindEvent')
 // 定时器
 function beginSettimeout() {
     timerIndex = setInterval(() => {
@@ -50,6 +53,9 @@ function clickJump(num) {
 function endSettimeout() {
     clearInterval(timerIndex)
 }
+
+bindEvent.setAttribute('onmouseleave', 'beginSettimeout()')
+bindEvent.setAttribute('onmouseenter', 'endSettimeout()')
 
 // 点击左箭头
 function leftArrow() {
@@ -457,9 +463,9 @@ function sendReportFn(event) {
 // 获取轮播图
 sendFn('/picture/showCarousel', {})
     .then(result => {
-        let tempStr=''
+        let tempStr = ''
         for (let i = 0; i < result.msg.list.length; i++) {
-            tempStr+=`
+            tempStr += `
             <div class="carouselItem">
                 <a href="/album?id=${result.msg.list[i].al_id}">
                     <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].img_url}" onload="operatorImgFn(this)">
@@ -467,7 +473,7 @@ sendFn('/picture/showCarousel', {})
             </div>
             `
         }
-        carouselInfo.innerHTML=tempStr
+        carouselInfo.innerHTML = tempStr
     })
     .catch(err => {
         console.log(err)

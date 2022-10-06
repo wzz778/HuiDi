@@ -134,9 +134,13 @@ function dataCompletion(date) {
 }
 // (主)评论添加到指定盒子中
 function addComment(userObj) {
+    noContent[0].classList.add('none')
+    animation.classList.remove('none')
+    allCommentsContent[0].classList.remove('none')
+    console.log(noContent[0].classList)
     let myDate = new Date()
     let imgStr = ''
-    if (showImgUrl.src.indexOf('http://127.0.0.1:8099/dynamicDetails?id=') == -1) {
+    if (showImgUrl.src.indexOf('/dynamicDetails?id=') == -1) {
         imgStr = `<img src="${showImgUrl.src}" alt="">`
     }
     let userObjInfo = {
@@ -201,14 +205,15 @@ function delCommentFn(event) {
         .then(result => {
             if (result.err == 0) {
                 event.parentElement.parentElement.parentElement.parentElement.remove()
+                console.log(allCommentsContent[0].getElementsByTagName('div'))
                 // 判断是否还有评论
                 let tempLength = allCommentsContent[0].getElementsByTagName('div').length
                 if (tempLength == 0) {
                     allCommentsContent[0].classList.add('none')
                     noContent[0].classList.remove('none')
                     animation.classList.add('none')
+                    return
                 }
-                return
             }
             // 不能删除他人的评论
             hintFn('warning', '您不能删除他人评论')

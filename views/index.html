@@ -70,7 +70,7 @@
 {{block 'body'}}
 <!-- 内容区 -->
 <div class="middle clearFloat bodySty">
-    <div class="carouselLeft floatLeft" onmouseleave="beginSettimeout()" onmouseenter="endSettimeout()">
+    <div class="carouselLeft floatLeft" id="bindEvent">
         <div class="carousel" id="carouselInfo">
             <div class="carouselItem">
                 <a href="javascript:;">
@@ -226,7 +226,7 @@
 {{/block}}
 {{block 'bottom'}}
 <!-- 引入js -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
 <script src="/public/iconfont/iconfont.js"></script>
 <script src="/public/js/index.js"></script>
 {{/block}}

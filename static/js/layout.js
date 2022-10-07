@@ -53,7 +53,7 @@ header_co.onmouseout = function() {
     header_co.style.display='none';
 }  
 function Topfun() {
-    four = setInterval(FourscrollBy, 8);
+    four = setInterval(FourscrollBy, 2);
 }
 function FourscrollBy() {
     if (document.documentElement && document.documentElement.scrollTop) {

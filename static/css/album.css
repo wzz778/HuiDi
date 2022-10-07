@@ -119,11 +119,15 @@
     margin: 5px 10px;
     color: white;
     font-size: 10px;
-    padding: 2px 13px;
+    padding: 2px 11px;
     border-radius: 50px;
     border: 1px solid white;
     text-align: center;
     cursor: pointer;
+}
+
+.myImgOperatorItem>a {
+    color: white;
 }
 
 .myImgOperatorItem:hover {
@@ -299,4 +303,18 @@
 .creatNewAlbumBtn {
     background-color: #FF7E7E;
     color: white;
+}
+
+.likeSty {
+    color: red;
+}
+
+.middleAnimation {
+    width: auto;
+}
+
+.noContent {
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
 }

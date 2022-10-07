@@ -703,4 +703,25 @@ router.post('/picture/showAlbumById', (req, res) => {
             res.send({ err: -1, msg: err })
         })
 })
+// 推荐关注
+router.post('/picture/recommendFocus', (req, res) => {
+    let { size } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/recommendFocus',
+        params: {
+            size: size
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
 module.exports = router

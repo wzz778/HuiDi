@@ -45,8 +45,8 @@
 
     <div id="header">
         <div class="wrap header_max">
-            <a href="/" style="display: block;width: 80px;height: 40px;">
-                <!-- <img src="public/img/duitanglogo.png" alt=""> -->logo
+            <a href="/" style="display: block;width: 80px;height: 60px;">
+                <img class="huidilogo" src="public/img/huidilogo.png" alt="">
             </a>
             <div class="header_button">
                 分类  <i class="fa fa-caret-up" aria-hidden="true"></i>
@@ -84,7 +84,7 @@
                 <div id="img-box">
                     <div class="input-file-box">
                         <span>点击上传图片</span>
-                        <input type="file" name="" id="uploadfile" multiple>
+                        <input type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" name="" id="uploadfile" multiple>
                     </div>
                 </div>
                 <!-- <button  onclick="look()">看文件</button> -->
@@ -113,7 +113,7 @@
         <div style="height: 1000px;" id="begin-main"></div>
     {{/block}}
 </body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
 <!-- <script src="/node_modules/axios/dist/axios.min.js"></script> -->
 <script src="/public/js/toolEncapsulation.js"></script>
 <script src="public/js/layout.js"></script>

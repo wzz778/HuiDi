@@ -57,6 +57,12 @@ a{
     box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
     background-color: white;
 }
+.huidilogo{
+  height: 150px;
+  position: relative;
+  left: -40px;
+  top: -45px;
+}
 .wrap{
     width: 1000px;
     margin: 0 auto;
@@ -108,7 +114,7 @@ a{
     right: 0px;
 }
 #header .header_button{
-    margin: 0 40px;
+    margin-left:80px;
     padding: 0 4px;
     width: 70px;
     height: 36px;
@@ -129,7 +135,7 @@ a{
 #header .header_class{
     position: absolute;
     top: 52px;
-    /* left: -101px; */
+    left: 180px;
     width: 290px;
     height: 275px;
     background-color: #fff;
@@ -228,6 +234,7 @@ a{
     height: 46px;
     border-radius: 4px;
     text-align: center;
+    z-index: 998;
     position: fixed;
     top: 500px;
     right: 30px;

@@ -12,6 +12,7 @@ var publish_send = document.getElementsByClassName("publish_send")[0];
 var publish_text = document.getElementsByClassName("publish_text")[0];
 let select=document.getElementsByClassName('albumselect')[0];
 let mymessagedian=document.getElementById('mymessagedian')
+//检查输入为空
 function isnull(val) {
     var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
     if (str == '' || str == undefined || str == null) {
@@ -19,7 +20,7 @@ function isnull(val) {
     } else {
         return false;
     }
-  }
+}
 header_button.onmousemove = function() {
     header_class.style.display='block';
     header_button_i.classList.add("arrowtora");
@@ -118,6 +119,21 @@ axios({
   }).catch(function (error) {
     
   });
+  //检查文件是否是图片
+function checkFile(img) {
+    let file = img;
+    console.log(file);
+    if (file == null || file == "") {
+        return false;
+    }
+    var allow_ext = ".jpg|.png|.gif|.jpeg|";
+    var ext_name = file.name.substring(file.name.lastIndexOf("."));
+    if (allow_ext.indexOf(ext_name + "|") == -1) {
+        successText.innerHTML =  "该文件不允许上传，请上传" + allow_ext + "类型的文件,当前文件类型为：" + ext_name;
+        return false;
+    }
+    return true
+}
 //多张
 // window.onload=function(){
 var input=document.getElementById("uploadfile");
@@ -134,6 +150,9 @@ var readFile=function(obj){
     fileList=obj.files;
     //对文件组进行遍历，可以到控制台打印出fileList去看看
     for(var i=0;i<fileList.length;i++){
+    //    if(!checkFile(fileList[i]==true){
+        
+    //    }
         var reader= new FileReader();
         reader.readAsDataURL(fileList[i]);
         // 当文件读取成功时执行的函数

@@ -35,16 +35,99 @@ li {
     border-radius: 3px;
     background-color: white;
 }
-.mytextmessageright{
+.mytextmessageright {
     width: 290px;
-    height: 300px;
-    padding: 5px;
+    max-height: 450px;
+    padding: 5px;   
     position: sticky;
     top: 80px;
-    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
-    box-shadow: 0 1px 3px rgb(18 18 18 / 20%);
     border-radius: 3px;
     background-color: white;
+}
+.myalbum{
+    width: 290px;
+    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
+    box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
+    border-radius: 3px;
+    background-color: white;
+    border: 1px solid #e8e8ed;
+    margin-top: 8px;
+    min-height: auto;
+    max-height: 310px;
+    overflow: hidden;
+    position: relative;
+}
+.mytextmessageright .myalbum .myalbum_top{
+    width:275px;
+    height: 30px;
+    font-size: 16px;
+    color: #222226;
+    font-weight: 500;
+    padding-top: 5px;
+    line-height: 30px;
+    padding-left: 15px;
+    border-bottom: 1px solid #e8e8ed;
+}
+.myalbumbox{
+    width: 290px;
+}
+.lookmoreal{
+    text-align: center;
+    display: block;
+    font-size: 14px;
+    color: #0461CF;
+    height: 20px;
+    width: 120px;
+    padding: 5px 0px;
+    transition: .2s all;
+    background-color: #9bc7ff;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 3px;
+    padding: 6px 0px;
+}
+.lookmoreal:hover{
+    background-color: #b1d2fd;
+}
+.myalbumbox .myalbuma{
+    width: 270px;
+    height: 35px;
+    display: flex;
+    line-height: 30px;
+    margin: 5px auto;
+    padding: 5px;
+    color: #555666;
+    font-size: 14px;
+    background-color: #eff6fc;
+    border: 2px #c9dffc dashed;
+    border-radius: 2px;
+}
+.myalbumbox .myalbuma img{
+    width: 35px;
+    height:35px;
+    margin: 0 2px;
+    color: #555666;
+    font-size: 14px;
+}
+.myalbumbox .myalbuma span{
+    color: #555666;
+    display: block;
+    font-size: 14px;
+    height: 35px;
+    width: 200px;
+    line-height: 35px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.myalbumbox .myalbuma div{
+    color: #555666;
+    font-size: 14px;
+    height: 35px;   
+    width: 60px;
+    line-height: 35px;
 }
 .mymessage #mymessageback{
     width: 1000px;
@@ -178,7 +261,11 @@ li {
     height: 50px;
     display: flex;
     padding: 10px 0;
-    border: #ebebeb 1px solid;
+    border: #ebebeb 1px solid;  
+    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
+    box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
+    border-radius: 3px;
+    background-color: white;
 }
 .numberboard a{ 
     display: block;
@@ -203,12 +290,18 @@ li {
     display: block;
     font-size: 14px;
     color: #0461CF;
+    height: 20px;
     border: #0461CF 1px solid;
     width: 250px;
     margin: 10px auto;
     border-radius: 3px;
     padding: 10px 0px;
     transition: .2s all;
+}
+.code_publish_button:hover{
+    font-size: 16px;
+    color:  #0355b9;
+    border:  #0355b9 1px solid;
 }
 .textmessagemax .class_body{
     margin-top: 10px;
@@ -217,13 +310,12 @@ li {
     overflow: hidden;
 }
 .class_body .dynamicmax{
-    border-bottom:#ebebeb 1.5px solid ;
+    border-bottom:#bdbdbd 1.5px solid ;
     margin-top: 10px;
     width: 650px;
     min-height: 250px;
     background-color: #f9f9f9;
     padding: 10px;
-    border-radius: 5px;
 }
 .class_body .dynamicmax .user_cord{
     width: 600px;

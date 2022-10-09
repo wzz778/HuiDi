@@ -5,17 +5,24 @@
 a{
     text-decoration: none;
 }
+body{
+    background-image:url(/public/img/loginback.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 .Card {
     padding: 15px 0;
     text-align: center;
     width: 100%;
     height: 100px;
-    background-color: #dceafc;
+    background-color: white;
 }
 .LOGO{
     margin: 0px auto;
     font-size: 40px;
-
+}
+.LOGO img{ 
+    height: 60px;
 }
 .Card .Re_or_lo{
     margin: 10px auto 0px;
@@ -33,27 +40,33 @@ a{
     margin-bottom: 10px;
     width: 100%;
     min-height: 500px;
-    background: #fff;
+    /* background: #fff; */
     overflow: hidden;
     border-radius: 2px;
-    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 50%);
-    box-shadow: 0 1px 3px rgb(18 18 18 / 50%);
+    /* -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 50%);
+    box-shadow: 0 1px 3px rgb(18 18 18 / 50%); */
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     text-align: center;
+    /* background-color: rgba(0,0,0,0.2); */
 }
 .form{
-    padding-top: 10px;
-    width: 400px;
-    height: 350px;
-    /* background-color: #effffe; */
+    padding: 20px;
+    padding-bottom:50px ;
+    background-color: white;
+    width: 440px;
+    min-height: 250px;
+    border-radius:5px ;
     margin:10px auto;
+    border: 5px #dceafc solid;
+    -webkit-box-shadow: 0 3px 6px rgb(18 18 18 / 30%);
+    box-shadow: 0 3px 6px rgb(18 18 18 / 30%);
 }
 .form .logindiv{
     width: 400px;
     height: 36px;
     line-height: 36px;
-    margin-bottom: 20px;
+    margin-top: 20px;
     /* background-color: wheat; */
     display: flex;
     color: #888;
@@ -118,6 +131,7 @@ a{
     justify-content: space-between;
     width: 400px;
     height: 24px;
+    margin-top: 20px;
     /* background-color: wheat; */
 }
 .repassword a {

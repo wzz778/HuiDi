@@ -167,6 +167,35 @@ function getWorkInfo(req, sendResult) {
     })
 }
 
+// 获取是否关注对方
+function judgeFocus(req, sendResult) {
+    return new Promise((resolve, resject) => {
+        if (!req.session.token) {
+            sendResult.focusInfo=false
+            return
+        }
+        let { uId } = req.body
+        axios({
+            method: 'GET',
+            url: '/admin/checkFocus',
+            params: {
+                focus_id: req.session.user.id,
+                u_id: sendResult.id
+            },
+            headers: {
+                token: req.session.token
+            }
+        })
+            .then(result => {
+                sendResult.focusInfo=result.data.data
+                resolve()
+            })
+            .catch(err => {
+                res.send({ err: -1, msg: err })
+            })
+    })
+}
+
 // 判断是否登录
 router.post('/judgeLogin', (req, res) => {
     // 判断是否有值
@@ -700,6 +729,27 @@ router.post('/picture/showAlbumById', (req, res) => {
         })
         .catch(err => {
             console.log(err)
+            res.send({ err: -1, msg: err })
+        })
+})
+// 推荐关注
+router.post('/picture/recommendFocus', (req, res) => {
+    let { size } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/recommendFocus',
+        params: {
+            size: size
+        }
+    })
+        .then(result => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+                return
+            }
+            res.send({ err: -1, msg: result.data })
+        })
+        .catch(err => {
             res.send({ err: -1, msg: err })
         })
 })

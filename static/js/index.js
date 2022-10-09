@@ -109,7 +109,6 @@ let allPageHotFocusOn = 0
 function getHotTicket() {
     sendFn('/picture/showAllPicture', { beginIndex: nowPageHotTicket })
         .then(result => {
-            // console.log('结果', result)
             allPageHotTicket = result.msg.all_page
             let tempStr = ''
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -203,7 +202,6 @@ function getFocusOn() {
             // 登录了去访问关注接口
             sendFn('/admin/getFocusDynamic', { beginIndex: nowPageFocusOn })
                 .then(result => {
-                    console.log('关注动态', result)
                     allPageHotFocusOn = result.msg.all_page
                     let tempStr = ''
                     for (let i = 0; i < result.msg.list.length; i++) {
@@ -474,6 +472,15 @@ sendFn('/picture/showCarousel', {})
             `
         }
         carouselInfo.innerHTML = tempStr
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+// 推荐关注
+sendFn('/picture/recommendFocus', { size: 5 })
+    .then(result => {
+        console.log(result)
     })
     .catch(err => {
         console.log(err)

@@ -16,10 +16,10 @@ choiceFocus.addEventListener('click', (event) => {
 function focusOnFn(event) {
     // 判断是否登录
     judgeLogin()
-        .then(() => {
+        .then((result) => {
             // 判断是关注函数取关
             if (event.classList.value.indexOf('focusSty') == -1) {
-                sendFn('/admin/addFocus', { focusId: 1, uId: 3 })
+                sendFn('/admin/addFocus', { focusId: event.parentElement.lastElementChild.innerHTML, uId: result.userInfo.id })
                     .then(result => {
                         // 关注
                         event.innerHTML = '已关注'
@@ -32,7 +32,7 @@ function focusOnFn(event) {
                 return
             }
             // 取消关注
-            sendFn('/admin/deleteFocus', { focusId: 1, uId: 3 })
+            sendFn('/admin/deleteFocus', { focusId: parentElement.lastElementChild.innerHTML, uId: result.userInfo.id })
                 .then(result => {
                     event.innerHTML = '关注'
                     event.classList.remove('focusSty')

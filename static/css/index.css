@@ -462,3 +462,8 @@
 .likeSty {
     color: red;
 }
+
+.focusOnSty {
+    color: #056de8;
+    background-color: rgba(5,109,232,.1);
+}

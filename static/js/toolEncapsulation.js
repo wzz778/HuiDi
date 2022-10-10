@@ -122,17 +122,8 @@ class ProxyImage {
 function operatorImgFn(event) {
     let tempEle = new PreLoadImage(event)
     let operatorEle = new ProxyImage(tempEle)
-    if(!event.getAttribute('data-url')||event.getAttribute('data-url')=='null'){
+    if (!event.getAttribute('data-url') || event.getAttribute('data-url') == 'null' || event.getAttribute('data-url') == 'undefined') {
         return
     }
     operatorEle.setSrc(event.getAttribute('data-url'))
-    // let allImgs = document.getElementsByTagName('img')
-    // for (let i = 0; i < allImgs.length; i++) {
-    //     if (!allImgs[i].getAttribute('data-url')) {
-    //         continue
-    //     }
-    //     let tempEle = new PreLoadImage(allImgs[i])
-    //     let operatorEle = new ProxyImage(tempEle)
-    //     operatorEle.setSrc(allImgs[i].getAttribute('data-url'))
-    // }
 }

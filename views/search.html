@@ -14,7 +14,6 @@
         <div class="topContent floatLeft">
             <span>图片</span>
             <span>专辑</span>
-            <span>文章</span>
             <span>达人</span>
         </div>
         <!-- 搜索历史 -->
@@ -43,194 +42,32 @@
 <div class="middle divide">
     <div class="content">
         <div class="topContent floatLeft">
-            <span>图片</span>
-            <span>专辑</span>
-            <span>文章</span>
-            <span>达人</span>
+            <span class="clickSty">
+                <a class="searchJumpInfo" href="javascript:;">图片</a>
+            </span>
+            <span onclick="choiceTypeFn(this)">
+                <a class="searchJumpInfo" href="javascript:;">专辑</a>
+            </span>
+            <span onclick="choiceTypeFn(this)">
+                <a href="javascript:;" class="searchJumpInfo">达人</a>
+            </span>
         </div>
-        <div class="searchResult">
-            <div class="middleContentItem">
-                <a href="javascript:;">
-                    <img src="/public/img/01.jpeg" alt="">
-                    <div class="operator">
-                        <span>收集</span>
-                        <span>点赞</span>
-                        <span>评论</span>
-                    </div>
-                </a>
-                <p class="textInfo">11111111111111111111111111111111111111111111111111111111111111111</p>
-                <!-- 点赞信息 -->
-                <span class="likeInfo">
-                    <span>
-                        <i class="iconfont">&#xec7f;</i>
-                        <span>11</span>
-                    </span>
-                    <!-- 收藏信息 -->
-                    <span>
-                        <i class="iconfont">&#xebae;</i>
-                        <span>1</span>
-                    </span>
-                </span>
-                <!-- 作者信息 -->
-                <div class="userInfo">
-                    <a href="javascript:;">
-                        <img src="/public/img/01.jpg" alt="">
-                    </a>
-                    <span>
-                        <a href="javascript:;">小蒜蒜</a>
-                        <span>
-                            发布到
-                            <a href="javascript:;">装修</a>
-                        </span>
-                    </span>
-                </div>
+        <div class="searchResult albumSty talentShow" id="content">
+
+        </div>
+        <div class="middleAnimation" id="animation">
+            <div class="pulse-container">
+                <div class="pulse-bubble pulse-bubble-1"></div>
+                <div class="pulse-bubble pulse-bubble-2"></div>
+                <div class="pulse-bubble pulse-bubble-3"></div>
             </div>
-            <div class="middleContentItem">
-                <a href="javascript:;">
-                    <img src="/public/img/02.png" alt="">
-                    <div class="operator">
-                        <span>收集</span>
-                        <span>点赞</span>
-                        <span>评论</span>
-                    </div>
-                </a>
-                <p class="textInfo">11111111111111111111111111111111111111111111111111111111111111111</p>
-                <!-- 点赞信息 -->
-                <span class="likeInfo">
-                    <span>
-                        <i class="iconfont">&#xec7f;</i>
-                        <span>11</span>
-                    </span>
-                    <!-- 收藏信息 -->
-                    <span>
-                        <i class="iconfont">&#xebae;</i>
-                        <span>1</span>
-                    </span>
-                </span>
-                <!-- 作者信息 -->
-                <div class="userInfo">
-                    <a href="javascript:;">
-                        <img src="/public/img/01.jpg" alt="">
-                    </a>
-                    <span>
-                        <a href="javascript:;">小蒜蒜</a>
-                        <span>
-                            发布到
-                            <a href="javascript:;">装修</a>
-                        </span>
-                    </span>
-                </div>
-            </div>
-            <div class="middleContentItem">
-                <a href="javascript:;">
-                    <img src="/public/img/03.png" alt="">
-                    <div class="operator">
-                        <span>收集</span>
-                        <span>点赞</span>
-                        <span>评论</span>
-                    </div>
-                </a>
-                <p class="textInfo"></p>
-                <!-- 点赞信息 -->
-                <span class="likeInfo">
-                    <span>
-                        <i class="iconfont">&#xec7f;</i>
-                        <span>11</span>
-                    </span>
-                    <!-- 收藏信息 -->
-                    <span>
-                        <i class="iconfont">&#xebae;</i>
-                        <span>1</span>
-                    </span>
-                </span>
-                <!-- 作者信息 -->
-                <div class="userInfo">
-                    <a href="javascript:;">
-                        <img src="/public/img/01.jpg" alt="">
-                    </a>
-                    <span>
-                        <a href="javascript:;">小蒜蒜</a>
-                        <span>
-                            发布到
-                            <a href="javascript:;">装修</a>
-                        </span>
-                    </span>
-                </div>
-            </div>
-            <div class="middleContentItem">
-                <a href="javascript:;">
-                    <img src="/public/img/myImg1.jpg" alt="">
-                    <div class="operator">
-                        <span>收集</span>
-                        <span>点赞</span>
-                        <span>评论</span>
-                    </div>
-                </a>
-                <p class="textInfo">11111111111111111111111111111111111111111111111111111111111111111</p>
-                <!-- 点赞信息 -->
-                <span class="likeInfo">
-                    <span>
-                        <i class="iconfont">&#xec7f;</i>
-                        <span>11</span>
-                    </span>
-                    <!-- 收藏信息 -->
-                    <span>
-                        <i class="iconfont">&#xebae;</i>
-                        <span>1</span>
-                    </span>
-                </span>
-                <!-- 作者信息 -->
-                <div class="userInfo">
-                    <a href="javascript:;">
-                        <img src="/public/img/01.jpg" alt="">
-                    </a>
-                    <span>
-                        <a href="javascript:;">小蒜蒜</a>
-                        <span>
-                            发布到
-                            <a href="javascript:;">装修</a>
-                        </span>
-                    </span>
-                </div>
-            </div>
-            <div class="middleContentItem">
-                <a href="javascript:;">
-                    <img src="/public/img/img1.jpeg" alt="">
-                    <div class="operator">
-                        <span>收集</span>
-                        <span>点赞</span>
-                        <span>评论</span>
-                    </div>
-                </a>
-                <p class="textInfo">11111111111111111111111111111111111111111111111111111111111111111</p>
-                <!-- 点赞信息 -->
-                <span class="likeInfo">
-                    <span>
-                        <i class="iconfont">&#xec7f;</i>
-                        <span>11</span>
-                    </span>
-                    <!-- 收藏信息 -->
-                    <span>
-                        <i class="iconfont">&#xebae;</i>
-                        <span>1</span>
-                    </span>
-                </span>
-                <!-- 作者信息 -->
-                <div class="userInfo">
-                    <a href="javascript:;">
-                        <img src="/public/img/01.jpg" alt="">
-                    </a>
-                    <span>
-                        <a href="javascript:;">小蒜蒜</a>
-                        <span>
-                            发布到
-                            <a href="javascript:;">装修</a>
-                        </span>
-                    </span>
-                </div>
-            </div>
+        </div>
+        <div class="noContent none" id="noContent">
+            没有内容,换一个搜索内容吧
         </div>
     </div>
+
+    <!-- 右边 -->
     <div class="content clearFloat">
         <div class="searchHistory floatLeft">
             <div class="searchHistoryItem">

@@ -23,6 +23,8 @@ let animation = document.getElementById('animation')
 let carouselInfo = document.getElementById('carouselInfo')
 // 绑定事件
 let bindEvent = document.getElementById('bindEvent')
+// 推荐关注
+let focusOnContent = document.getElementById('focusOnContent')
 // 定时器
 function beginSettimeout() {
     timerIndex = setInterval(() => {
@@ -481,7 +483,86 @@ sendFn('/picture/showCarousel', {})
 sendFn('/picture/recommendFocus', { size: 5 })
     .then(result => {
         console.log(result)
+        let tempStr = ``
+        for (let i = 0; i < result.msg.length; i++) {
+            if (result.msg[i]) {
+                let tempFocusStr = ''
+                if (result.msg[i].focusInfo) {
+                    tempFocusStr = `
+                    <span class="focusSty cancelFocusSty focusOnAllSty focusOnSty" onclick="focusOnFn(this)" focusInfo="false">已关注</span>
+                    `
+                } else {
+                    tempFocusStr = `
+                    <span class="focusSty cancelFocusSty focusOnAllSty" onclick="focusOnFn(this)" focusInfo="true">关注</span>
+                    `
+                }
+                tempStr += `
+                <div class="recommendedBloggers">
+                        <div class="recommendedBloggersItem">
+                            <a href="/userhomepage?id=${result.msg[i].id}">
+                                <img src="${defaultImgUrl}" alt="" data-url="${result.msg[i].img_url}" onload="operatorImgFn(this)">
+                            </a>
+                            <span class="userNameInfoItem">
+                                <a href="/userhomepage?id=${result.msg[i].id}">${result.msg[i].name}</a>
+                                <p>性别:${result.msg[i].sex}</p>
+                            </span>
+                            <span>
+                                ${tempFocusStr}
+                                <div class="none">${result.msg[i].id}</div>
+                            </span>
+                        </div>
+                    </div>
+                `
+            }
+        }
+        let watchMore = `
+        <!-- 查看更多 -->
+                    <div class="watchMore">
+                        <a href="/focusOnMore">
+                            查看更多
+                            <i class="iconfont">&#xe65f;</i>
+                        </a>
+                    </div>
+        `
+        focusOnContent.innerHTML = tempStr + watchMore
+
     })
     .catch(err => {
         console.log(err)
     })
+
+// 关注函数
+function focusOnFn(event) {
+    judgeLogin()
+        .then(result => {
+            // 判断是关注还是取消关注
+            if (event.getAttribute('focusInfo') == 'true') {
+                // 关注
+                sendFn('/li/admin/addFocus', { focusId: event.parentElement.lastElementChild.innerHTML })
+                    .then(result => {
+                        console.log('关注', result)
+                        event.setAttribute('focusInfo', false)
+                        event.classList.add('focusOnSty')
+                        event.innerHTML = '已关注'
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                return
+            }
+            // 取消关注
+            sendFn('/li/admin/deleteFocus', { focusId: event.parentElement.lastElementChild.innerHTML })
+                .then(result => {
+                    console.log('取消关注', result)
+                    event.setAttribute('focusInfo', true)
+                    event.classList.remove('focusOnSty')
+                    event.innerHTML = '关注'
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+        .catch(err => {
+            hintFn('warning', '请先登录')
+        })
+}

@@ -21,7 +21,7 @@
     margin-top: 20px;
     border: 1px solid #e0e0e0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     text-align: center;
     padding: 15px 0px;
 }
@@ -30,7 +30,7 @@
     cursor: pointer;
 }
 
-.topContent>span:nth-child(3) {
+/* .topContent>span:nth-child(3) {
     position: relative;
 }
 
@@ -46,7 +46,7 @@
 
 .topContent>span:hover {
     color: #C71D23;
-}
+} */
 
 .searchHistory {
     width: 180px;
@@ -87,7 +87,7 @@
 
 .searchHortContent {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     padding: 10px;
 }
 
@@ -121,13 +121,14 @@
     height: 100%;
     overflow: auto;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .middleContentItem:hover {
     box-shadow: 1px 1px 0px rgba(0, 0, 0, .2);
 }
 
-.middleContentItem>a {
+.middleContentSty {
     display: inline-block;
     /* width: 235px; */
     /* min-height: 100px; */
@@ -135,7 +136,7 @@
     overflow: hidden;
 }
 
-.middleContentItem>a>img {
+.middleContentSty>a>img {
     /* max-width: 235px; */
     width: 100%;
     height: 100%;
@@ -161,6 +162,22 @@
     border: 1px solid white;
     text-align: center;
 }
+
+.operator>a {
+    margin-right: 20px;
+    font-size: 10px;
+    padding: 3px 0px;
+    border-radius: 50px;
+    border: 1px solid white;
+    text-align: center;
+    color: white;
+}
+
+.operator>a:hover {
+    background-color: white;
+    color: black;
+}
+
 
 .operator>span:hover {
     background-color: white;
@@ -219,4 +236,116 @@
 
 .searchResult {
     margin-top: 90px;
+}
+
+.clickSty {
+    color: red;
+}
+
+.albumInfo {
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.albumInfo>a>img {
+    margin-top: 10px;
+    width: 233px;
+    height: 233px;
+}
+
+.albumInfo>a>p {
+    margin: 10px 0px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.albumSty {
+    display: grid;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.albumDescribe {
+    text-align: center;
+    display: inline-block;
+    width: 230px;
+    overflow: hidden;
+    margin: 0;
+    font-size: 14px;
+    color: #444;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.noContent {
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+}
+
+.talentShow {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.item {
+    margin-left: 20px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.itemImg>a>img {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+}
+
+.itemUserInfo {
+    margin: 12px 0px 0px 20px;
+}
+
+.operatorTalentShow {
+    margin: 34px 34px 0px 40px;
+}
+
+.userIntroduce {
+    margin-top: 10px;
+}
+
+.userIntroduce>p {
+    white-space: nowrap;
+    width: 380px;
+    padding: 5px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    max-height: 40px;
+    overflow: hidden;
+}
+
+.defaultSty {
+    background-color: #C71D23;
+    color: white;
+    width: 55px;
+    text-align: center;
+}
+
+.focusSty {
+    background-color: #946061;
+}
+
+.middleAnimation {
+    width: 100%;
+    margin-top: 120px;
 }

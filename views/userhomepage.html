@@ -28,7 +28,7 @@
                 <div class="mytextmessageleft">
                     <ul>
                         <li><a href="javascript:;" onclick="changeclass(0)" class="conli  havebethis">动态  <span id="dynumber">0</span></a></li>
-                        <li onclick="getmyalbum()"><a href="javascript:;" onclick="changeclass(1)" class="conli">专辑</a></li>
+                        <li><a href="javascript:;" onclick="changeclass(1)" class="conli">专辑</a></li>
                         <li><a href="javascript:;" onclick="changeclass(2)" class="conli">文章</a></li>
                         <li><a href="javascript:;" onclick="changeclass(3)" class="conli">收藏</a></li>
                     </ul>
@@ -39,6 +39,19 @@
                             </div>
                             <div class="class_body">
 
+                            </div>
+                            <div id="lookmore">
+                                正在努力加载更多
+                                <div class="loading">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div id="lookend" style="display: none;">
+                                已经是全部内容了哦
+                                <i class="fa fa-sun-o" aria-hidden="true"></i>
                             </div>
                         </div>
                         <div class="textmessage" style="display: none;">
@@ -90,19 +103,6 @@
                             <div class="class_body"></div>
                         </div>
                     </div>
-                    <div id="lookmore">
-                        正在努力加载更多
-                        <div class="loading">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                    <div id="lookend" style="display: none;">
-                        已经是全部内容了哦
-                        <i class="fa fa-sun-o" aria-hidden="true"></i>
-                    </div>
                 </div>
                 <div class="mytextmessageright">
                     <div class="numberboard">
@@ -114,6 +114,17 @@
                             <span>关注者</span></br>
                             <span class="mynumber">11</span>
                         </a>
+                    </div>
+                    <div class="myalbum">
+                        <div class="myalbum_top">TA的专辑：</div>
+                        <div class="myalbumbox">
+                            <!-- <a href="" class="myalbuma">
+                                <img src="/public/img/loginback.png" alt="">
+                                <span>这是专辑名qqqqqqwea qq</span>
+                                <div>11  图片</div>
+                            </a> -->
+                        </div>
+                        <a href="javascript:;" class="lookmoreal" onclick="changeclass(1)">点击观看更多</a>
                     </div>
                     <!-- <a href="javascript:;" onclick="publish_show()" class="code_publish_button"><i class="fa fa-plus" aria-hidden="true" style="margin-right:3px;"></i>  开始创作</a> -->
                 </div>

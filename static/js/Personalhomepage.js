@@ -14,6 +14,7 @@ let album_input=document.getElementsByClassName('album_input');
 let mymessageback=document.getElementById('mymessageback')
 let lookmore=document.getElementById('lookmore');
 let lookend=document.getElementById('lookend');
+let myalbumbox=document.getElementsByClassName('myalbumbox')[0];
 function changeclass(i){
     conli[i].classList.add('havebethis');
     textmessage[i].style.display='block';
@@ -67,6 +68,7 @@ function getmyalbum(){
         if(data.data.err==0){
             let allarr=data.data.msg.list;
             class_body2.innerHTML=``;
+            myalbumbox.innerHTML=``;
             for(let i in allarr){
                 let arrimg=allarr[i].images;
                 // console.log(arrimg);
@@ -85,10 +87,18 @@ function getmyalbum(){
                         </div>
                     </a>
                     `;
-                    return 
+                    myalbumbox.innerHTML+=`
+                    <a href="album?id=${allarr[i].album.id}" class="myalbuma">
+                        <img src="/public/img/kongalbum.png" alt="">
+                        <span>${allarr[i].album.a_name}</span>
+                        <div>0  图片</div>
+                    </a>
+                    `;
+                    continue
                 }
                 // console.log(arrimg);
                 let allimg=``;
+                let conimg=``;
                 let thisimg;
                 let imgnumber=0;
                 for(let key in arrimg){
@@ -101,15 +111,20 @@ function getmyalbum(){
                     allimg=`
                         <div class="img" style="background-image:url(${thisimg[0].img_url});"></div>
                     `
+                    conimg=`<img src="${thisimg[0].img_url}" alt="">`
                 }else if(imglength==0){
                     allimg=`
                         <div class="img" style="background-image:url(public/img/userHead.jpg);"></div>
+                    `
+                    conimg=`
+                        <img src="/public/img/kongalbum.png" alt="">
                     `
                 }else{
                     allimg=`
                     <div class="img2" style="background-image:url(${thisimg[0].img_url});"></div>
                     <div class="img2" style="background-image:url(${thisimg[1].img_url});"></div>
                 `
+                conimg=`<img src="${thisimg[0].img_url}" alt="">`
                 }
                 class_body2.innerHTML+=`
                 <a href="album?id=${allarr[i].album.id}" class="Aalbummax">
@@ -125,6 +140,13 @@ function getmyalbum(){
                     </div>
                 </a>
                 `;
+                myalbumbox.innerHTML+=`
+                <a href="album?id=${allarr[i].album.id}" class="myalbuma">
+                    ${conimg}
+                    <span>${allarr[i].album.a_name}</span>
+                    <div>${imgnumber}  图片</div>
+                </a>
+                `;
             }
         }else{
 
@@ -133,6 +155,7 @@ function getmyalbum(){
         
       });
 }
+getmyalbum()
 function album_down() {
     album.style.display = "none";
     album.style.opacity = "0";

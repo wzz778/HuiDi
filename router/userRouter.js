@@ -392,8 +392,8 @@ router.get('/api/getmyalbumname', (req, res) => {
         url:'picture/showAlbum',
         method:'get',  
         params:{
-            begin_index:req.query.begin,
-            size:req.query.size,
+            begin_index:1,
+            size:10,
             id:req.session.userid,
         }
     }).then(response=>{ 
@@ -404,7 +404,7 @@ router.get('/api/getmyalbumname', (req, res) => {
             res.send({ err: -1, msg:response.data.msg});
         }
     }).catch(function (error) {
-        console.log(error.response);
+        console.log(error);
         res.send({ err: -1, msg: '网络错误' })
     });
 })

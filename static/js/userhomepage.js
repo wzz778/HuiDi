@@ -15,6 +15,7 @@ let album_input=document.getElementsByClassName('album_input');
 let followbutton=document.getElementsByClassName('followbutton')
 let userid = window.location.search.split("=")[1];
 let mymessageback=document.getElementById('mymessageback')
+let myalbumbox=document.getElementsByClassName('myalbumbox')[0];
 axios({
     url: '/api/isuser',
     method: 'get',
@@ -113,33 +114,43 @@ function getmyalbum(){
                         </div>
                     </a>
                     `;
+                    myalbumbox.innerHTML+=`
+                    <a href="album?id=${allarr[i].album.id}" class="myalbuma">
+                        <img src="/public/img/kongalbum.png" alt="">
+                        <span>${allarr[i].album.a_name}</span>
+                        <div>0  图片</div>
+                    </a>
+                    `;
                     continue
                 }
                 // console.log(arrimg);
                 let allimg=``;
                 let thisimg;
                 let imgnumber=0;
+                let conimg=``;
                 for(let key in arrimg){
                      thisimg=arrimg[key];
-                     console.log(key);
                      imgnumber+=arrimg[key].length;
                 }
-                // console.log(thisimg);   
+                
                 let imglength=thisimg.length;
                 if(imglength==1){
                     allimg=`
                         <div class="img" style="background-image:url(${thisimg[0].img_url});"></div>
                     `
+                    conimg=`<img src="${thisimg[0].img_url}" alt="">`
                 }else if(imglength==0){
                     allimg=`
                         <div class="img" style="background-image:url(public/img/userHead.jpg);"></div>
                     `
+                    conimg=`<img src="/public/img/kongalbum.png" alt="">`
                 }
                 else{
                     allimg=`
                     <div class="img2" style="background-image:url(${thisimg[0].img_url});"></div>
                     <div class="img2" style="background-image:url(${thisimg[1].img_url});"></div>
                 `
+                conimg=`<img src="${thisimg[0].img_url}" alt="">`
                 }
                 albumbody.innerHTML+=`
                 <a href="album?id=${allarr[i].album.id}" class="Aalbummax">
@@ -155,6 +166,13 @@ function getmyalbum(){
                     </div>
                 </a>
                 `;
+                myalbumbox.innerHTML+=`
+                <a href="album?id=${allarr[i].album.id}" class="myalbuma">
+                    ${conimg}
+                    <span>${allarr[i].album.a_name}</span>
+                    <div>${imgnumber}  图片</div>
+                </a>
+                `;
             }
         }else{
             console.log(data.data);
@@ -163,6 +181,7 @@ function getmyalbum(){
         console.log(error);
       });
 }
+getmyalbum()
 function tofollow(){
     axios({
         url: '/api/addfollow',
@@ -251,7 +270,6 @@ function showmydynamic(){
           id:userid
       }
     }).then(data => { 
-      console.log(data.data.msg);
       if(data.data.err==0){
           dynumber.innerText=data.data.msg.all_count
           dyallpage=data.data.msg.all_page;

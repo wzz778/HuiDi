@@ -1,15 +1,14 @@
 .content{
     height: 80px;
-    width: 99%;
+    width:100%;
     background:#FFFFFF;
-    border-radius: 6px;
     margin: 0px auto 20px;
-    box-shadow: 1px 1px 3px #d2d2d2;
     position: relative;
     padding-right: 15px;
     padding-left: 15px;
     box-sizing: border-box;
     overflow: hidden;
+    border:2px rgb(212, 212, 212) solid;
 }
 .card-body{
     padding: 24px 24px;

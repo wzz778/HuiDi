@@ -4,6 +4,9 @@
 }
 body{
   background-color: #F6F6F6;
+  /* background-image:url(https://i.gtimg.cn/qzone/space_item/orig/3/72019_top.jpg);
+    background-size: 120% 120%;
+    background-repeat: no-repeat; */
 }
 a{
     text-decoration: none;
@@ -58,10 +61,8 @@ a{
     background-color: white;
 }
 .huidilogo{
-  height: 150px;
-  position: relative;
-  left: -40px;
-  top: -45px;
+  height: 60px;
+  margin-left: 5px;
 }
 .wrap{
     width: 1000px;
@@ -79,9 +80,9 @@ a{
 .header_search input {
     width: 100%;
     height: 35px;
-    padding-left: 16px; 
+    padding-left: 10px; 
     width: 200px;
-    border-radius: 30px;
+    border-radius: 8px;
     background: #f6f6f6;
     border: 2px solid #EBEBEB;
     transition: .3s linear;
@@ -109,7 +110,7 @@ a{
     position: absolute;
     border: none;
     outline: none;
-    border-radius: 0  100px 100px 0;
+    border-radius: 0  8px 8px 0;
     top: 0px;
     right: 0px;
 }
@@ -122,6 +123,7 @@ a{
     text-align: center;
     background-color: #fff;
     border: 1px solid #cdcdcd;
+    position: relative;
     cursor: pointer;
     border-radius: 44px;
 }
@@ -134,8 +136,8 @@ a{
 }
 #header .header_class{
     position: absolute;
-    top: 52px;
-    left: 180px;
+    top: 37px;
+    left: -100px;
     width: 290px;
     height: 275px;
     background-color: #fff;
@@ -144,8 +146,8 @@ a{
 
 #header .header_co{
   position: absolute;
-  top: 52px;
-  right:160px;
+  top: 57px;
+  left:0px;
   width:120px;
   height: 150px;
   background-color: #fff;
@@ -210,6 +212,7 @@ a{
     height: 65px;
     margin-left: 50px;
     display: flex;
+    position: relative;
     align-items: center;
 }
 #header_headdiv img{

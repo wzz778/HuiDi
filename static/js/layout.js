@@ -138,22 +138,23 @@ function checkFile(img) {
 // window.onload=function(){
 var input=document.getElementById("uploadfile");
 var div;
-var allfileList=new FormData();
+var allfileList=new FormData();//创建队列暂存form文件
 // 当用户上传时触发事件
 input.onchange=function(){
     readFile(this);
 }
 //处理图片并添加都dom中的函数
-let sortnum=0;
+let sortnum=0;//标记文件索引
 var readFile=function(obj){
     // 获取input里面的文件组
     fileList=obj.files;
     //对文件组进行遍历，可以到控制台打印出fileList去看看
     for(var i=0;i<fileList.length;i++){
-    //    if(!checkFile(fileList[i]==true){
-        
-    //    }
         var reader= new FileReader();
+        if(!checkFile(fileList[i])){
+            alert("请上传图片文件！");
+            return
+        }
         reader.readAsDataURL(fileList[i]);
         // 当文件读取成功时执行的函数
         let thisfile=fileList[i]
@@ -225,9 +226,8 @@ function getoption(){
         url: '/api/getmyalbumname',
         method: 'get',
       }).then(data => {
-        // console.log(data.data);
         if(data.data.err==0){
-            let msg=data.data.msg;
+            let msg=data.data.msg.list;
             select.innerHTML=``
             for(let i of msg){
                 select.innerHTML+=`<option value=${i.album.id}>${i.album.a_name}</option>`
@@ -239,6 +239,7 @@ function getoption(){
         
       });
 }
+getoption()
 function outlogin(){
     axios({
         url: '/api/outlogin',

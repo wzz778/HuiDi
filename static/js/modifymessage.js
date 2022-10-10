@@ -32,6 +32,10 @@ axios({
   });
 function openimg(){
     var reader= new FileReader();
+    if(!checkFile(headfile.files[0])){
+        alert('请上传图片类型的头像！');
+        return 
+    }
     reader.readAsDataURL(headfile.files[0]);
     reader.onload=function(e){
         cordimg.style.backgroundImage=`url(${this.result})`;

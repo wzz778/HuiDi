@@ -80,10 +80,46 @@ li {
   background-size: cover;
   background-image: url(/public/img/be42c240.jpg);
 }
-
+.mymessage #mymessageback button {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 14px;
+  color: #d3d3d3;
+  border: #d3d3d3 1px solid;
+  background-color: rgba(18, 18, 18, 0.2);
+  border-radius: 3px;
+  padding: 6px 16px;
+  transition: .2s all;
+  cursor: pointer;
+}
+.mymessage #mymessageback button:hover{
+  color: white;
+  border: white 1px solid;
+  background-color: rgba(18, 18, 18, 0.6);
+}
+.mymessage #mymessageback input{
+  position: absolute;
+  opacity: 0;
+  width: 130px;
+  height: 30px;
+  bottom: 20px;
+  right: 30px;
+  cursor: pointer;
+}
+.mymessage #mymessageback {
+  width: 1000px;
+  height: 130px;
+  background-color: aliceblue;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: cover;
+  background-image: url(/public/img/be42c240.jpg);
+}
 .mymessage #mymessagetext {
   width: 1000px;
-  height: 300px;
+  height: 400px;
   position: relative;
   background: #fff;
   margin: 0 20px 0px;
@@ -104,6 +140,7 @@ li {
 .mymessage #mymessagetext #cordcon {
   padding: 16px 0px 20px 200px;
   width: 760px;
+  position: relative;
 }
 
 .mymessage #mymessagetext #cordcon .inputdiv {
@@ -116,7 +153,37 @@ li {
   color: #888;
   position: relative;
 }
-
+.mymessage #mymessagetext #cordcon .inputdivs{
+  width: 700px;
+  margin-bottom: 20px;
+  height: 100px;
+  display: flex;
+  color: #888;
+  position: relative;
+}
+.mymessage #mymessagetext #cordcon .inputdivs label {
+  width: 80px;
+  height: 28px;
+  background-color: white;
+}
+.mymessage #mymessagetext #cordcon .inputdivs textarea{
+  width: 520px;
+  height: 80px;
+  background-color: white;
+  color: #444;
+  resize: none;
+  padding: 6px;
+  outline: none;
+  font-size: 14px;
+  border: 1px solid #DDDDDD;
+  border-radius: 5px;
+  line-height: 18px;
+}
+.mymessage #mymessagetext #cordcon .inputdivs #denumbermax{
+  position: absolute;
+  bottom: 10px;
+  right: 100px;
+}
 .mymessage #mymessagetext #cordcon .inputdiv #headfile {
   width: 130px;
   height: 36px;
@@ -159,10 +226,9 @@ li {
   border-radius: 3px;
   padding: 6px 16px;
   transition: .2s all;
-  background-color: rgba(#0461CF, 0);
   cursor: pointer;
 }
 
 .mymessage #mymessagetext #cordcon button:hover {
-  background-color: rgba(#0461CF, 0.2);
+  background-color: #accdf6;
 }

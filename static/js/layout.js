@@ -6,12 +6,17 @@ let headera=header_headdiv.getElementsByTagName('a')[0];
 let header_button=document.getElementsByClassName('header_button')[0];
 let header_button_i=header_button.getElementsByTagName('i')[0];
 let header_class=document.getElementsByClassName('header_class')[0];
+let search_class=document.getElementsByClassName('search_class')[0];
 let header_co=document.getElementsByClassName('header_co')[0];
 var publish = document.getElementById("publish");
 var publish_send = document.getElementsByClassName("publish_send")[0];
 var publish_text = document.getElementsByClassName("publish_text")[0];
 let select=document.getElementsByClassName('albumselect')[0];
 let mymessagedian=document.getElementById('mymessagedian')
+let searchinput=document.getElementById('searchinput')
+let dydenumber=document.getElementById('dydenumber')
+let dyde=document.getElementById('dyde')
+let searchva=document.getElementsByClassName('searchva');
 //检查输入为空
 function isnull(val) {
     var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
@@ -20,6 +25,15 @@ function isnull(val) {
     } else {
         return false;
     }
+}
+function judgeStrs(val) {
+    // 判断是否是全空格
+    // if (str.replace(/(^\s*)|(\s*$)/g, "") == "") {
+    //     return false
+    // }
+    // 将字符串中的标签替换
+    var str = val.toString().replace(/(^\s*)|(\s*$)/g, "").replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    return str
 }
 header_button.onmousemove = function() {
     header_class.style.display='block';
@@ -53,9 +67,25 @@ header_headdiv.onmouseout = function() {
 header_co.onmouseout = function() {
     header_co.style.display='none';
 }  
+function showsearch(){
+    for(let i of searchva){
+        i.innerText=searchinput.value
+    }
+    search_class.style.display='block'
+}
+function fadesearch(){
+    search_class.style.display='none'
+}
 function Topfun() {
     four = setInterval(FourscrollBy, 2);
 }
+searchinput.onblur=fadesearch;
+search_class.onmousemove = function() {
+    searchinput.onblur=null;
+}  
+search_class.onmouseout= function() {
+    searchinput.onblur=fadesearch;
+}  
 function FourscrollBy() {
     if (document.documentElement && document.documentElement.scrollTop) {
         if (document.documentElement.scrollTop <= 0) {
@@ -168,7 +198,6 @@ var readFile=function(obj){
     // console.log(fileList);
 }
 function look(){
-    // console.log(document.getElementById("img-box").childNodes);
     let option=select.getElementsByTagName('option');
     let al_id=0;
     for(let i in option){
@@ -176,19 +205,15 @@ function look(){
             al_id=option[i].value;
         }
     }
-    // let formData = new FormData();  
-    // let i=0;
+    if(isnull(publish_text.value)){
+        alert('请填写你对图片的描述！')
+        return
+    }
     allfileList.append('al_id', al_id)
-    allfileList.append('describes',publish_text.value)
+    allfileList.append('describes',judgeStr(publish_text.value))
     console.log(Array.from(allfileList));
     if(Array.from(allfileList).length<3){
         alert('请选择你要上传的图片！')
-        allfileList.delete('al_id')
-        allfileList.delete('describes')
-        return
-    }
-    if(isnull(publish_text.value)){
-        alert('请填写你对图片的描述！')
         allfileList.delete('al_id')
         allfileList.delete('describes')
         return
@@ -255,3 +280,75 @@ function outlogin(){
         alert('退出失败')
       });
 }
+function tofind(type){
+    if(isnull(searchinput.value)){
+        alert('请输入搜索内容！');
+        return 
+    }
+    let thisvalue={
+        message:searchinput.value,
+        type:type
+    }
+    let maxle=8;
+    if(localStorage.getItem('hdsearch_history')==undefined||localStorage.getItem('hdsearch_history')==''){
+        let arr=[]
+        arr[0]=thisvalue;
+        // console.log(JSON.stringify(arr));
+        localStorage.setItem('hdsearch_history',JSON.stringify(arr));
+    }else{
+        let now=localStorage.getItem('hdsearch_history');
+        let nowarr=JSON.parse(now);
+        let nowarrlength=nowarr.length;
+        for(let i of nowarr){
+            if(JSON.stringify(thisvalue)==JSON.stringify(i)){
+                window.location.assign(`/search?message=${searchinput.value}&type=${type}`);
+                return
+            }
+        }
+        if(nowarrlength<maxle-1){
+            nowarr[nowarrlength]=thisvalue
+        }else{
+            for(let i=0;i<maxle-2;i++){
+                nowarr[i]=nowarr[1+i]
+            }
+            nowarr[maxle-1]=thisvalue
+        }
+        localStorage.setItem('hdsearch_history',JSON.stringify(nowarr));
+    }
+    window.location.assign(`/search?message=${searchinput.value}&type=${type}`);
+}
+axios({
+    method: 'GET',
+    url: '/api/lookalltype',
+})
+.then((result) => {
+    console.log(result.data);
+    if(result.data.err==0){
+        header_class.innerHTML=``;
+        for(let i of result.data.msg){
+            header_class.innerHTML+=`
+                <a href="search?message=${i.type.name}&type=图片">${i.type.name}</a>
+            `;
+        }
+    }else{
+    }
+})
+.catch((err)=>{
+    // console.log(err)
+})
+dyde.onkeyup=function(){
+    var len = dyde.value.length;
+    if(len > 99){
+        dyde.value.substring(0,100);
+    }
+    var num = len;
+    dydenumber.innerText=num;
+};
+dyde.onkeydown=function(){
+  var len = dyde.value.length;
+  if(len > 99){
+    dyde.value=dyde.value.substring(0,100);
+  }
+  var num = len;
+  dydenumber.innerText=num;
+};

@@ -50,11 +50,18 @@
             </a>
             <div class="header_button">
                 分类  <i class="fa fa-caret-up" aria-hidden="true"></i>
-                <div class="header_class" style="display: none;"></div>
+                <div class="header_class" style="display: none;">
+                    <a href="">分类内容1</a>
+                </div>
             </div>
             <div class="header_search">
-                <input type="text"  placeholder="请输入您要搜索的内容...">   
-                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <input type="text" id="searchinput" oninput="showsearch()" onfocus="showsearch()"  placeholder="请输入您要搜索的内容...">   
+                <button type="submit" onclick="tofind('图片')"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <div class="search_class">  
+                    <a href="javascript:;" onclick="tofind('图片')">搜索与 <span class="searchva">111</span> 相关的“图片”内容</a>
+                    <a href="javascript:;" onclick="tofind('专辑')">搜索与 <span class="searchva">111</span> 相关的“专辑”内容</a>
+                    <a href="javascript:;" onclick="tofind('达人')">搜索与 <span class="searchva">111</span> 相关的“达人”内容</a>
+                </div>
             </div>
             <a href="javascript:;" onclick="publish_show()" class="publish_button"><i class="fa fa-plus" aria-hidden="true" style="margin-right:3px;"></i>发布</a>
             <a href="mymessage"  class="message_button">消息<span id="mymessagedian"></span></a>
@@ -94,13 +101,13 @@
                 图片专辑：
                 <select name="albumselect" class="albumselect"  >
                     <option value="1">专辑1</option>
-                    <option value="1">专辑1</option>
-                    <option value="1">专辑3</option>
-                    <option value="1">专辑4</option>
                 </select>
                 <!-- <input type="text" class="publish_send" placeholder="邮箱/电话号"> -->
             </div>
-            <textarea type="text" class="publish_text" placeholder="请填写您对图片的描述"></textarea>
+            <div class="publish_links">
+                <textarea type="text" maxlength="100" id="dyde" class="publish_text" placeholder="请填写您对图片的描述"></textarea>
+                <span id="dydenumbermax"><span id="dydenumber">0</span>/100</span>
+            </div>
             <div style="font-weight: 600;" class="publish_link">
                 <i>*</i>
                 最多只能发4张图片!

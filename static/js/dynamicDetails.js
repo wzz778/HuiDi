@@ -486,6 +486,10 @@ function getAllComment() {
                 if (result.msg.list[i].commentList) {
                     // 遍历二级评论
                     for (let j = 0; j < result.msg.list[i].commentList.length; j++) {
+                        let commentSonDel = ''
+                        if (result.msg.login && result.msg.login == result.msg.list[i].commentList[j].comment.ob.u_id.id) {
+                            commentSonDel = `<button onclick="delReplyCommentFn(this)">删除</button>`
+                        }
                         let tempObj = {
                             userId: result.msg.list[i].commentList[j].comment.ob.u_id.id,
                             userImg: result.msg.list[i].commentList[j].comment.ob.u_id.img_url,
@@ -522,7 +526,7 @@ function getAllComment() {
                                 <span>1</span>
                             </button>
                             <button onclick="replayCommentShowFn(this)">回复</button>
-                            <button onclick="delReplyCommentFn(this)">删除</button>
+                            ${commentSonDel}
                             <button onclick='reportFn(this)'>举报</button>
                         </div>
                     </div>
@@ -533,6 +537,10 @@ function getAllComment() {
                 let imgStr = ''
                 if (result.msg.list[i].comment.img_url) {
                     imgStr = `<img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].comment.img_url}" onload="operatorImgFn(this)">`
+                }
+                let commentDel = ``
+                if (result.msg.login && result.msg.login == result.msg.list[i].comment.ob.u_id.id) {
+                    commentDel = `<button class="operatorBtn" onclick="delCommentFn(this)">删除</button>`
                 }
                 let userObj = {
                     name: result.msg.list[i].comment.ob.u_id.name,
@@ -554,7 +562,7 @@ function getAllComment() {
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
                             <div class="none">${JSON.stringify({ commentId: result.msg.list[i].comment.id, userId: result.msg.list[i].comment.ob.u_id.id })}</div>
-                            <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
+                            ${commentDel}
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>

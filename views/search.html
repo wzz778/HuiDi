@@ -71,10 +71,16 @@
     <div class="content clearFloat">
         <div class="searchHistory floatLeft">
             <div class="searchHistoryItem">
-                <div class="searchHistoryTop">历史记录</div>
+                <div class="searchHistoryTop clearFloat">
+                    <span>历史记录</span>
+                    <button onclick="delAllSearch()">清空</button>
+                </div>
                 <!-- 存放历史记录 -->
-                <div class="searchHistoryContent">
+                <div class="searchHistoryContent none" id="searchNoContent">
                     暂无记录
+                </div>
+                <div class="searchContent" id="searchContent">
+
                 </div>
             </div>
             <!-- 热门搜索 -->

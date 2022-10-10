@@ -6,6 +6,11 @@ let content = document.getElementById('content')
 let noContent = document.getElementById('noContent')
 // 动画
 let animation = document.getElementById('animation')
+// 搜索没有内容
+let searchNoContent = document.getElementById('searchNoContent')
+// 搜索内容
+let searchContent = document.getElementById('searchContent')
+
 let pictureNowPage = 1
 let pictureAllPages = 0
 let albumNowPage = 1
@@ -13,6 +18,7 @@ let albumAllPages = 0
 let talentShowNowPage = 1
 let talentShowAllPages = 0
 function getSearchInfo() {
+    searchinput.value = decodeURI(window.location.search).split("=")[1].split('&')[0]
     // 将搜索类别报存到本地
     window.sessionStorage.setItem('searchType', decodeURI(window.location.search).split("=")[2])
     // 将搜索的链接替换
@@ -385,4 +391,50 @@ window.onmousewheel = function (event) {
         }
         return
     }
+}
+
+// 历史记录
+function getSearchHistory() {
+    console.log(window.localStorage.getItem('hdsearch_history'))
+    if (!window.localStorage.getItem('hdsearch_history')) {
+        searchNoContent.classList.remove('none')
+        searchContent.classList.add('none')
+        return
+    }
+    let historyInfo = JSON.parse(window.localStorage.getItem('hdsearch_history'))
+
+    let tempStr = ``
+    for (let i = 0; i < historyInfo.length; i++) {
+        tempStr += `
+    <span>
+        <a href="/search?message=${historyInfo[i].message}&type=${historyInfo[i].type}">${historyInfo[i].message}</a>
+        <button class="none" onclick="delSearchFn(this)" delIndex="${i}">
+            <i class="iconfont">&#xe643;</i>
+        </button>
+    </span>
+        `
+    }
+    searchContent.innerHTML = tempStr
+}
+getSearchHistory()
+function delSearchFn(event) {
+    // 将内容删除
+    let historyInfo = JSON.parse(window.localStorage.getItem('hdsearch_history'))
+    let searchArr = []
+    for (let i = 0; i < historyInfo.length; i++) {
+        if (i != event.getAttribute('delIndex')) {
+            searchArr.push(historyInfo[i])
+        }
+    }
+    event.parentElement.remove()
+    window.localStorage.setItem('hdsearch_history', searchArr)
+    if (!window.localStorage.getItem('hdsearch_history')) {
+        searchNoContent.classList.remove('none')
+        searchContent.classList.add('none')
+    }
+}
+// 删除全部
+function delAllSearch() {
+    window.localStorage.setItem('hdsearch_history', '')
+    getSearchHistory()
 }

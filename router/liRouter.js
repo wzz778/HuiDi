@@ -254,9 +254,10 @@ router.post('/picture/showComment', (req, res) => {
         }
     })
         .then(result => {
+            console.log('评论', result.data)
             if (result.data.msg == 'OK') {
-                if (!req.session.token) {
-                    result.data.data.login = true
+                if (req.session.token) {
+                    result.data.data.login = req.session.user.id
                 }
                 res.send({ err: 0, msg: result.data.data })
                 return
@@ -264,6 +265,7 @@ router.post('/picture/showComment', (req, res) => {
             req.send({ err: -1, msg: result.data })
         })
         .catch(err => {
+            console.log('错误', err)
             res.send({ err: -1, msg: err })
         })
 })

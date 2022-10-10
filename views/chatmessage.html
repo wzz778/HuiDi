@@ -1,0 +1,62 @@
+{{extend './layout.html'}}
+{{block 'title'}}动态信息{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/css/chatmessage.css">
+{{/block}}
+{{block 'body'}}
+    <div id="body">
+        <div class="rebody wrap">
+            <div id="main">
+                <div id="main-left">
+                    <a class="message-sort" href="mymessage"><div class="sortred"></div>消息空间</a>
+                    <a class="message-sort" style="color: white;background-color: #73b2ff ;" href="chatmessage"><div class="sortred"></div>聊天空间</a>
+                </div>
+                <div id="main-right">
+                    <div class="main-right-top">
+                        <div class="tab">
+                            <ul>
+                                {{block 'tab'}}
+                                <li><a href="chatmessage" class="conli  havebethis">全部聊天</a></li>
+                                <li><a href="chatmessage" class="conli">未读聊天</a></li>
+                                {{/block}}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="messagebody">
+                        <div class="alike-a">
+                            <div class="red"></div>
+                            <a href="">
+                                <img src="public/img/userHead.jpg" class="message-img" alt="">
+                            </a>
+                            <div class="message-card">
+                                <div class="message-card-top">
+                                    <a href="javascript:;" class="message-username">这是用户名</a>
+                                    <span class="message-tpye">给你发的消息：</span>
+                                    <span class="message-userid" style="display: none;"></span>
+                                    <a href="chat" class="sendbutton">给 TA 发信息</a>
+                                </div>
+                                <div class="message-card-bon">
+                                    <a class="message-postname" href="javascript:;">这是给你发的消息</a>
+                                </div>
+                            </div>
+                            <div class="message-con">
+                                <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
+                                <span class="message-time">2022-05-12 16:38</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-right-bon">
+                        <button onclick="lastpage()">最后一页</button>
+                        <a href="javascript:;"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        <a id="rpages" href="javascript:;" style="background-color:#4f8edb;color: white;">1</a>
+                        <a href="javascript:;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <span id="fansnumber">共0个数据</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/block}}
+{{block 'bottom'}}
+<!-- <script src="public/js/mymessage.js"></script> -->
+{{/block}}

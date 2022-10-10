@@ -60,6 +60,9 @@ router.get('/focusmessage',(req,res)=>{
 router.get('/commentmessage',(req,res)=>{
     res.render('commentmessage.html')
 })
+router.get('/chat',(req,res)=>{
+    res.render('chat.html')
+})
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 function saveUserInfo(id){
     return new Promise((resolve,reject)=>{
@@ -459,6 +462,27 @@ router.get('/api/getuserdynamic', (req, res) => {
         params:{
             size:req.query.size,
             id:req.query.id,
+            begin:req.query.begin
+        }
+    }).then(response=>{ 
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
+//显示用户收藏
+router.get('/api/getusercollect', (req, res) => {   
+    axios({
+        url:'/picture/showCollect',
+        method:'get',  
+        params:{
+            size:req.query.size,
+            u_id:1,
             begin:req.query.begin
         }
     }).then(response=>{ 
@@ -897,7 +921,6 @@ router.get('/api/lookmymessagebytype', (req, res) => {
             url:'/admin/getByTypeShowDynamic',
             headers:{
                 token:req.session.token,
-                // token:`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjUwMTQwNzcsImV4cCI6MTY2NTA3NDU1NywiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IltzdHJuZywgL2FkbWluLyoqLCAvc29ja2V0LyoqLCBSb2xlX2FkbWluXSJ9.wUsrAoXYIdmereUzcqO4B8js8e-bdw1DHhO_D77VyDE`,
             },
             params:{
                 // id:1,
@@ -931,14 +954,10 @@ router.get('/api/lookmymessagebytype', (req, res) => {
 //获取文章类型
 router.get('/api/lookalltype', (req, res) => {   
     axios({
-        url:'/superAdmin/showAllType',
+        url:'/picture/showAllType',
         method:'get',  
-        headers:{
-            token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjUzNjAxNTAsImV4cCI6MTY2NTQyMDYzMCwiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IltzdHJuZywgL2FkbWluLyoqLCAvc29ja2V0LyoqLCBSb2xlX2FkbWluXSJ9.iYHqu0cPwhn2qtuw7AEOfneTfDrOlXU6qlT2wGhfNtk',
-        }, 
     }).then(response=>{ 
         if(response.data.msg=='OK'){
-            
             res.send({ err: 0, msg:response.data.data});
         }else{
             res.send({ err: -1, msg:response.data.msg});

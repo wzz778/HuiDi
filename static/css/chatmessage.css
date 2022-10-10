@@ -1,0 +1,297 @@
+#body {
+    margin-top: 70px;
+    background-color: #F6F6F6;
+  }
+  
+  .rebody {
+    position: relative;
+    width: 1000px;
+    padding: 0 16px;
+    margin: 10px auto;
+  }
+  
+  #main {
+    margin: 0 auto;
+    width: 1000px;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    background-color: white;
+    z-index: 1;
+    top: 0;
+  }
+  
+  #main #main-left {
+    border: 1.5px #e5e5e5 solid;
+    width: 150px;
+    background-color: white;
+  }
+  
+  #main #main-left .message-sort {
+    width: 100%;
+    height: 40px;
+    display: block;
+    border-bottom: 1.5px #e5e5e5 solid;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 40px;
+    color: black;
+    position: relative;
+  }
+  
+  #main #main-left .message-sort div {
+    display: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 100px;
+    background-color:#DC4E41;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  #main #main-left .message-sort:hover {
+    color: white;
+    background-color: #73b2ff ;
+  }
+  
+  #main #main-right {
+    width: 820px;
+    padding: 10px;
+    background-color: white;
+    height: 650px;
+  }
+  
+  #main #main-right .main-right-top {
+    width: 800px;
+    padding-bottom: 10px;
+    height: 30px;
+    font-size: 17px;
+    border-bottom: 1.5px #e5e5e5 solid;
+  }
+  #main #main-right .main-right-bon {
+    width: 400px;
+    margin-top: 10px;
+    margin-left: 400px;
+    height: 28px;
+    font-size: 14px;
+    overflow: hidden;
+  }
+  
+  #main #main-right .main-right-bon input {
+    border: 1.5px solid #056DE8;
+    border-radius: 8px;
+    font-size: 13px;
+    padding-left: 5px;
+  }
+  
+  #main #main-right .main-right-bon a {
+    width: 25px;
+    height: 25px;
+    display: block;
+    float: right;
+    line-height: 25px;
+    text-align: center;
+    border-radius: 5px;
+    color: #77787c;
+    margin: 0 5px;
+    background-color: gainsboro;
+  }
+  
+  #main #main-right .main-right-bon a:hover {
+    background-color: #056DE8;
+    color: white;
+  }
+  
+  #main #main-right .main-right-bon button {
+    width: 80px;
+    height: 26px;
+    display: block;
+    float: right;
+    line-height: 1px;
+    background-color: #E8F4FF;
+    color: #056DE8;
+    border: #c3e0fc 1px solid;
+    text-align: center;
+    border-radius: 5px;
+    color: #6e6e6e;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  #main #main-right .main-right-bon button:hover {
+    background-color: #056DE8;
+    color: white;
+  }
+  
+  #main #main-right .main-right-bon span {
+    height: 25px;
+    margin: 0 5px;
+    line-height: 25px;
+    float: right;
+  }
+  
+  #main #main-right .alike-a {
+    border-bottom: 1.5px #e5e5e5 solid;
+    width: 800px;
+    padding: 5px;
+    height: 60px;
+    display: flex;
+    transition: .5s;
+    position: relative;
+  }
+  
+  #main #main-right .alike-a .red {
+    /* display: none; */
+    width: 8px;
+    height: 8px;
+    border-radius: 100px;
+    background-color: #fa5252;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  #main #main-right .alike-a img {
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+  }
+  
+  #main #main-right .alike-a .message-card {
+    width: 580px;
+    height: 60px;
+    margin-left: 10px;
+  }
+  
+  #main #main-right .alike-a .message-card .message-card-top {
+    width: 600px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+  }
+  
+  #main #main-right .alike-a .message-card .message-card-top .message-username {
+    color: #2a2929;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  
+  #main #main-right .alike-a .message-card .message-card-top .message-username:hover {
+    color: #525252;
+  }
+  
+  #main #main-right .alike-a .message-card .message-card-top .message-tpye {
+    color: #525252;
+    font-size: 13px;
+  }
+  #main #main-right .alike-a .message-card .message-card-top .sendbutton {
+    position: absolute;
+    top: 0;
+    right: -60px;
+    display: block;
+    color: #525252;
+    font-size: 14px;
+    color: #0461CF;
+    z-index: 10;
+    background-color: #E6F0FD;
+    border-radius: 3px;
+    padding: 3px 16px;
+    transition: .2s all;
+  }
+  #main #main-right .alike-a .message-card .message-card-top .sendbutton:hover{
+    background-color: #8ebfff;
+    color:white;
+  }
+  #main #main-right .alike-a .message-card .message-card-bon {
+    width: 580px;
+    height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  #main #main-right .alike-a .message-card .message-card-bon a {
+    color: #68a2e8;
+    font-weight: 600;
+  }
+  
+  #main #main-right .alike-a .message-card .message-card-bon a:hover {
+    color: #056DE8;
+    font-weight: 700;
+  }
+  
+  #main #main-right .alike-a .message-con {
+    width: 170px;
+    height: 50px;
+    padding: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  #main #main-right .alike-a .message-con .message-delete {
+    opacity: .8;
+    border: #bbd7f8 1px solid;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 6px;
+    margin-left: 100px;
+    transition: 0.15s;
+  }
+  
+  #main #main-right .alike-a .message-con .message-delete i {
+    padding: 0 3px;
+  }
+  
+  #main #main-right .alike-a .message-con .message-delete:hover {
+    background-color: #FFEDED;
+    color: #ec4c4c;
+    border: #e9a4a4 1px solid;
+  }
+  
+  #main #main-right .alike-a .message-con span {
+    display: block;
+    width: 170px;
+    font-size: 14px;
+    color: #525252;
+  }
+  .tab {
+    width: 600px;
+    height: 40px;
+    background-color: wheat;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: white;
+  }
+  
+  .tab ul {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  .tab ul li {
+    display: inline-block;
+  }
+  
+  .tab ul li a {
+    display: block;
+    width: 80px;
+    line-height: 38px;
+    margin: 0px 20px;
+    text-align: center;
+    height: 38px;
+    color: #121212;
+  }
+  .tab ul li a:hover{
+    font-weight: 600;
+    border-bottom: #0461CF 2px solid;
+  }
+  .tab .havebethis {
+    font-weight: 600;
+    border-bottom: #0461CF 2px solid;
+  }

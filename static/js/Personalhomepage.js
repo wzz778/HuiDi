@@ -21,7 +21,7 @@ let album_text=document.getElementsByClassName('album_text')[0]
 function changeclass(i){
     conli[i].classList.add('havebethis');
     textmessage[i].style.display='block';
-    for(let n=0;n<4;n++){
+    for(let n=0;n<3;n++){
         if(n!=i){
             conli[n].classList.remove('havebethis');
             textmessage[n].style.display='none';
@@ -294,3 +294,12 @@ album_text.onkeydown=function(){
   var num = len;
   abdenumber.innerText=num;
 };
+function open1(){
+    hintFn('success' ,'登录成功')
+}
+function open2(){
+    hintFn('wrong' ,'登录错误')
+}
+function open3(){
+    hintFn('warning' ,'报错')
+}

@@ -152,7 +152,7 @@ axios({
   //检查文件是否是图片
 function checkFile(img) {
     let file = img;
-    console.log(file);
+    // console.log(file);
     if (file == null || file == "") {
         return false;
     }
@@ -211,7 +211,7 @@ function look(){
     }
     allfileList.append('al_id', al_id)
     allfileList.append('describes',judgeStr(publish_text.value))
-    console.log(Array.from(allfileList));
+    // console.log(Array.from(allfileList));
     if(Array.from(allfileList).length<3){
         alert('请选择你要上传的图片！')
         allfileList.delete('al_id')
@@ -282,6 +282,7 @@ function outlogin(){
 }
 function tofind(type){
     if(isnull(searchinput.value)){
+        fadesearch()
         alert('请输入搜索内容！');
         return 
     }
@@ -322,7 +323,7 @@ axios({
     url: '/api/lookalltype',
 })
 .then((result) => {
-    console.log(result.data);
+    // console.log(result.data);
     if(result.data.err==0){
         header_class.innerHTML=``;
         for(let i of result.data.msg){

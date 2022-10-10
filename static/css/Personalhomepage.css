@@ -53,9 +53,10 @@ li {
     border: 1px solid #e8e8ed;
     margin-top: 8px;
     min-height: auto;
-    max-height: 310px;
+    max-height: 260px;
     overflow: hidden;
     position: relative;
+    padding-bottom: 50px;
 }
 .mytextmessageright .myalbum .myalbum_top{
     width:275px;
@@ -70,6 +71,9 @@ li {
 }
 .myalbumbox{
     width: 290px;
+    min-height: 60px;
+    max-height: 220px;
+    overflow: hidden;
 }
 .lookmoreal{
     text-align: center;
@@ -692,3 +696,70 @@ li {
     color: #067ff1;
     animation: rotate 3s linear infinite;
   }
+  .class_body .dynamicmax{
+    border-bottom:#bdbdbd 1.5px solid ;
+    margin-top: 10px;
+    width: 650px;
+    min-height: 250px;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    padding: 10px;
+}
+.class_body .colnamicmax .user_cord{
+    width: 300px;
+    height: 50px;
+    position: relative;
+    background-color: wheat;
+    float: left;
+}
+.class_body .colnamicmax .dyuserhead{
+    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+}
+.class_body .colnamicmax .dyusername{
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    width: 200px;
+    position: absolute;
+    top: 0px;
+    left: 50px;
+}
+.class_body .colnamicmax .dyuserid{
+    display: none;
+}
+.class_body .colnamicmax .dytexta{
+    display: block;
+}
+.class_body .colnamicmax .dytime{
+    width: 400px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 15px;
+    color: #444;
+    font-weight: 600;
+    position: absolute;
+    top: 30px;
+    left: 50px;
+}
+.class_body .colnamicmax .imgde{
+    font-size: 14px;
+}
+.class_body .colnamicmax .abmax{
+    width: 350px;
+    display: block;
+    height: 50px;
+    margin-left: 10px;
+    float: left;
+    background-color: rgb(219, 219, 219);
+}
+.class_body .colnamicmax .abmax span{
+    width: 350px;
+    display: block;
+    height: 50px;
+    margin-left: 10px;
+    float: left;
+    background-color: rgb(219, 219, 219);
+}

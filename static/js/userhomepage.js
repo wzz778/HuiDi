@@ -16,6 +16,7 @@ let followbutton=document.getElementsByClassName('followbutton')
 let userid = window.location.search.split("=")[1];
 let mymessageback=document.getElementById('mymessageback')
 let myalbumbox=document.getElementsByClassName('myalbumbox')[0];
+let mydetext=document.getElementById('mydetext')
 axios({
     url: '/api/isuser',
     method: 'get',
@@ -56,11 +57,12 @@ axios({
   }).then(data => {
     if(data.data.err==0){
         let me=data.data.msg;
+        mydetext.innerHTML=me.describes;
+        if(me.background!=null){
+            mymessageback.style.backgroundImage=`url(${me.background})`;
+        }
         if(me.img_url!=null){
             cordimg.style.backgroundImage=`url(${me.img_url})`;
-        }
-        if(me.background_img!=null){
-            mymessageback.style.backgroundImage=`url(${me.background_img})`;
         }
         cord_contentHead.innerHTML=me.name;
         useremail[0].innerHTML=me.mail;

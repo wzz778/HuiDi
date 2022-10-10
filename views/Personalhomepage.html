@@ -30,7 +30,10 @@
                     <option value="1">专辑4</option>
                 </select>
             </div> -->
-            <textarea type="text" class="album_text album_input" placeholder="请填写您对专辑的描述"></textarea>
+            <div class="album_links">   
+                <textarea type="text" maxlength="100" class="album_text album_input" placeholder="请填写您对专辑的描述"></textarea>
+                <span id="abdenumbermax"><span id="abdenumber">0</span>/100</span>
+            </div>
             <div style="font-weight: 600;" class="album_link">
                 <i>*</i>
                 <!-- 最多只能发4张图片! -->
@@ -53,6 +56,12 @@
                         <div class="cord-contentBot">
                             <img src="/public/img/man.png" class="seximg" alt="">
                             邮箱：<span class="useremail">1111111111@qq.com</span>
+                        </div>
+                        <div class="cord-contentde">
+                            <span style="font-size: 14px;color: #444;font-weight: 600;">描述： </span>
+                            <span id="mydetext">
+                                111
+                            </span>
                         </div>
                     </div>
                     <a href="modifymessage">编辑个人资料</a>

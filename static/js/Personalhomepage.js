@@ -15,6 +15,9 @@ let mymessageback=document.getElementById('mymessageback')
 let lookmore=document.getElementById('lookmore');
 let lookend=document.getElementById('lookend');
 let myalbumbox=document.getElementsByClassName('myalbumbox')[0];
+let mydetext=document.getElementById('mydetext')
+let abdenumber=document.getElementById('abdenumber')
+let album_text=document.getElementsByClassName('album_text')[0]
 function changeclass(i){
     conli[i].classList.add('havebethis');
     textmessage[i].style.display='block';
@@ -29,13 +32,15 @@ axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
+    console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
+        mydetext.innerHTML=me.describes;
         if(me.img_url!=null){
             cordimg.style.backgroundImage=`url(${me.img_url})`;
         }
-        if(me.background_img!=null){
-            mymessageback.style.backgroundImage=`url(${me.background_img})`;
+        if(me.background!=null){
+            mymessageback.style.backgroundImage=`url(${me.background})`;
         }
         cord_contentHead.innerHTML=me.name;
         useremail[0].innerHTML=me.mail;
@@ -177,13 +182,17 @@ function addab(){
             return 
         }
     }
+    if(album_input[1].value.length>8){
+        alert("请填写8个字符一下的专辑名称！");
+        return 
+    }
     axios({
         url: '/api/addalbum',
         method: 'post',
         data:{
-            album:album_input[0].value,
-            types:album_input[1].value,
-            describes:album_input[2].value
+            album:judgeStr(album_input[0].value),
+            types:judgeStr(album_input[1].value),
+            describes:judgeStr(album_input[2].value)
         }
       }).then(data => {
         console.log(data.data);
@@ -268,4 +277,20 @@ window.onscroll = function () {
             lookend.style.display='block';
         }
     }
+};
+album_text.onkeyup=function(){
+    var len = album_text.value.length;
+    if(len > 99){
+        album_text.value.substring(0,100);
+    }
+    var num = len;
+    abdenumber.innerText=num;
+};
+album_text.onkeydown=function(){
+  var len = album_text.value.length;
+  if(len > 99){
+    album_text.value=album_text.value.substring(0,100);
+  }
+  var num = len;
+  abdenumber.innerText=num;
 };

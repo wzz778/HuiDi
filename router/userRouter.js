@@ -500,8 +500,15 @@ router.post('/api/addalbum', (req, res) => {
 //更改信息
 router.post('/api/remymessage', multipartMiddleware,(req, res) => {
     let formdata = new FormData()
-    formdata.append('file', fs.createReadStream(req.files.file.path),req.files.file.originalFilename)//第二个参数试上传的文件名
+    console.log(req.files)
+    if(req.files.file!=undefined){
+        formdata.append('file', fs.createReadStream(req.files.file.path),req.files.file.originalFilename)//第二个参数试上传的文件名
+    }
+    if(req.files.background_img!=undefined){
+        formdata.append('background_img', fs.createReadStream(req.files.background_img.path),req.files.background_img.originalFilename)//第二个参数试上传的文件名
+    }
     formdata.append('sex',req.body.sex)
+    formdata.append('describes',req.body.describes)
     // formdata.append('name',req.body.username)
     formdata.append('id',req.session.userid)
     // req.session.userid
@@ -920,6 +927,25 @@ router.get('/api/lookmymessagebytype', (req, res) => {
         console.log(err);
         res.send({ err: -1, msg: '获取失败' })
     })
+})
+//获取文章类型
+router.get('/api/lookalltype', (req, res) => {   
+    axios({
+        url:'/superAdmin/showAllType',
+        method:'get',  
+        headers:{
+            token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjUzNjAxNTAsImV4cCI6MTY2NTQyMDYzMCwiaWQiOjUsInVzZXJuYW1lIjoiMjI5NTkwODI1MUBxcS5jb20iLCJwb3dlciI6IltzdHJuZywgL2FkbWluLyoqLCAvc29ja2V0LyoqLCBSb2xlX2FkbWluXSJ9.iYHqu0cPwhn2qtuw7AEOfneTfDrOlXU6qlT2wGhfNtk',
+        }, 
+    }).then(response=>{ 
+        if(response.data.msg=='OK'){
+            
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        res.send({ err: -1, msg: '网络错误' })
+    });
 })
 module.exports=router;
 

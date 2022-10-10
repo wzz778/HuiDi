@@ -14,7 +14,10 @@
                 </ul>
             </div>
             <div class="mymessage">
-                <div id="mymessageback"></div>
+                <div id="mymessageback">
+                    <button>点击上传背景</button>
+                    <input  type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" id="backfile" name="backimage" size="50" onchange="openbackimg()">
+                </div>
                 <!-- <img src="/public/img/userHead.jpg" alt=""> -->
                 <div id="mymessagetext">
                     <div id="cordimg"></div>
@@ -32,6 +35,11 @@
                             <label >性别：</label>
                             <input type="radio" name="sex" class="chanceinput" value="男" checked>男
                             <input type="radio" style="margin-left: 15px;" name="sex" class="chanceinput" value="女">女
+                        </div> 
+                        <div class="inputdivs">
+                            <label >描述：</label>
+                            <textarea type="text" maxlength="100" class="describe" id="subtextarea" placeholder="请填写您对自己的描述"></textarea>
+                            <span id="denumbermax"><span id="denumber">0</span>/100</span>
                         </div> 
                         <button style="margin-left: 600px;" onclick="keepmessage()">保存修改</button>
                     </div>

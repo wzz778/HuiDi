@@ -7,7 +7,6 @@ var multiparty = require('multiparty')
 const fs = require('fs')
 var mult = multipart()
 const axios = require('axios')
-const { log } = require('console')
 
 // 指定默认请求路径
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
@@ -171,10 +170,10 @@ function getWorkInfo(req, sendResult) {
 function judgeFocus(req, sendResult) {
     return new Promise((resolve, resject) => {
         if (!req.session.token) {
-            sendResult.focusInfo=false
+            sendResult.focusInfo = false
+            resolve()
             return
         }
-        let { uId } = req.body
         axios({
             method: 'GET',
             url: '/admin/checkFocus',
@@ -187,11 +186,11 @@ function judgeFocus(req, sendResult) {
             }
         })
             .then(result => {
-                sendResult.focusInfo=result.data.data
+                sendResult.focusInfo = result.data.data
                 resolve()
             })
             .catch(err => {
-                res.send({ err: -1, msg: err })
+                resject()
             })
     })
 }
@@ -743,11 +742,104 @@ router.post('/picture/recommendFocus', (req, res) => {
         }
     })
         .then(result => {
-            if (result.data.msg == 'OK') {
+            let sendArr = []
+            for (let i = 0; i < result.data.data.length; i++) {
+                if (result.data.data[i]) {
+                    sendArr[i] = judgeFocus(req, result.data.data[i])
+                }
+            }
+            Promise.all(sendArr)
+                .then(() => {
+                    res.send({ err: 0, msg: result.data.data })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 搜索图片
+router.post('/picture/getInfo/picture', (req, res) => {
+    let { beginIndex, message, type } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/getInfo',
+        params: {
+            begin_index: beginIndex,
+            message: message,
+            size: 10,
+            type: type
+        }
+    })
+        .then(result => {
+            if (!result.data.data.info) {
                 res.send({ err: 0, msg: result.data.data })
                 return
             }
-            res.send({ err: -1, msg: result.data })
+            let sendArr = []
+            for (let i = 0; i < result.data.data.info.length; i++) {
+                sendArr[i] = getWorkInfo(req, result.data.data.info[i])
+            }
+            Promise.all(sendArr)
+                .then(() => {
+                    res.send({ err: 0, msg: result.data.data })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({ err: -1, msg: err })
+        })
+})
+// 搜索专辑
+router.post('/picture/getInfo/album', (req, res) => {
+    let { beginIndex, message, type } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/getInfo',
+        params: {
+            begin_index: beginIndex,
+            message: message,
+            size: 10,
+            type: type
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 搜索达人
+router.post('/picture/getInfo/talentShow', (req, res) => {
+    let { beginIndex, message, type } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/getInfo',
+        params: {
+            begin_index: beginIndex,
+            message: message,
+            size: 10,
+            type: type
+        }
+    })
+        .then(result => {
+            let sendArr = []
+            for (let i = 0; i < result.data.data.list.length; i++) {
+                sendArr[i] = judgeFocus(req, result.data.data.list[i])
+            }
+            Promise.all(sendArr)
+                .then(() => {
+                    res.send({ err: 0, msg: result.data.data })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         })
         .catch(err => {
             res.send({ err: -1, msg: err })

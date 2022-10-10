@@ -205,7 +205,6 @@ function delCommentFn(event) {
         .then(result => {
             if (result.err == 0) {
                 event.parentElement.parentElement.parentElement.parentElement.remove()
-                console.log(allCommentsContent[0].getElementsByTagName('div'))
                 // 判断是否还有评论
                 let tempLength = allCommentsContent[0].getElementsByTagName('div').length
                 if (tempLength == 0) {

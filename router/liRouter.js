@@ -255,6 +255,9 @@ router.post('/picture/showComment', (req, res) => {
     })
         .then(result => {
             if (result.data.msg == 'OK') {
+                if (!req.session.token) {
+                    result.data.data.login = true
+                }
                 res.send({ err: 0, msg: result.data.data })
                 return
             }

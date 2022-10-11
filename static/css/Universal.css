@@ -70,30 +70,41 @@ textarea {
 .none {
     display: none !important;
 }
-
+#tipsback{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0px;
+    z-index: 99999;
+    display: none;
+/* display: block; */
+    text-align: center;
+  }
 /* 错误信息 */
 .hintSty {
+    border-radius: 3px;
     z-index: 100000;
-    position: fixed;
-    top: 50%;
-    left: 42%;
+    width: 200px;
+    min-height: 50px;
+    /* position: fixed; */
+    /* top: 50%; */
+    margin: 25vh auto;
+    /* left: 42%; */
     text-align: center;
-    display: grid;
-    grid-template-rows: 50px auto;
+    /* display: grid; */
+    /* grid-template-rows: 50px auto;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     padding: 10px 20px;
     color: white;
 }
-
 .wrong {
     background-color: #FF0000;
 }
-
 .success {
     background-color: #27AE60;
 }
-
 .warning {
     background-color: #F39C12;
 }
@@ -102,21 +113,28 @@ textarea {
     animation: hint 1s ease alternate;
 }
 
-.wrong>span {
+/* .wrong>span {
     display: grid;
     text-align: center;
-}
+} */
 
-.wrongText {
+/* .wrongText {
     text-align: center;
     display: inline-block;
-}
+} */
 
 /* 动画样式 */
 .middleAnimation {
     width: 600px;
 }
-
+.tiptext{
+    display: block;
+    width: 200px;
+    line-height: 30px;
+    font-size: 14px;
+    /* background-color: wheat; */
+    /* display: flex; */
+}
 .pulse-container {
     width: 120px;
     margin: 10px auto;
@@ -159,9 +177,20 @@ textarea {
 
 @keyframes hint {
     from {
+        margin:-200px auto;
         top: 10px;
     }
     to {
-        top: 50%;
+        margin: 25vh auto;
+        /* top: 50%; */
     }
+}
+.tipsi{
+    width: 200px;
+    line-height: 30px;
+    text-align: center;
+    display: block;
+}
+.tipsi i{
+    font-size: 26px;
 }

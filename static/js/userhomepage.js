@@ -7,6 +7,7 @@ let useremail=document.getElementsByClassName('useremail')
 let mynumber=document.getElementsByClassName('mynumber')
 let class_body1=document.getElementsByClassName('class_body')[0]
 let albumbody=document.getElementById('albumbody');
+let collect_body=document.getElementsByClassName('class_body')[2]
 let album=document.getElementById('album')
 let dynumber=document.getElementById('dynumber')
 let lookmore=document.getElementById('lookmore')
@@ -330,3 +331,55 @@ window.onscroll = function () {
         }
     }
 };
+let connowpage=1;
+let conallpage=1;
+function showmycollect(){
+    axios({
+      url: '/api/getusercollect',
+      method: 'get',
+      params:{
+          size:5,
+          begin:connowpage,
+          id:userid
+      }
+    }).then(data => { 
+        console.log(data.data);
+      if(data.data.err==0){
+        conallpage=data.data.msg.all_page;
+        let arr=data.data.msg.list;
+        // //   class_body1.innerHTML=``
+        //   for(let i in arr){
+        //       let arrimg='';
+        //       for(let n of arr[i].img_url){
+        //           arrimg+=`<img src="${n}" alt="">`
+        //       }
+        //       collect_body.innerHTML+=`
+        //       <div class="dynamicmax">
+        //           <div class="user_cord">
+        //               <a href="userhomepage?id=${arr[i].user_id}" class="dyusera">
+        //                   <img src="${arr[i].user_img_url}" class="dyuserhead" alt="">
+        //                   <span class="dyusername">${arr[i].user_name}</span>
+        //                   <span class="dyuserid">${arr[i].user_id}</span>
+        //               </a>
+        //               <span class="dytime">${arr[i].create_time}</span>
+        //           </div>
+        //           <a href="dynamicDetails?id=${arr[i].img_id}" class="dytexta">
+        //               <div class="imgde">
+        //               ${arr[i].describes}
+        //               </div>
+        //               <div class="imgmax">
+        //               ${arrimg}
+        //               </div>
+        //           </a>
+        //       </div>
+        //       `
+        //   }
+      }else{
+          // alert("未登录")
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+showmycollect()

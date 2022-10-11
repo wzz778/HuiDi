@@ -1,0 +1,32 @@
+{{extend './layout.html'}}
+{{block 'title'}}动态信息{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/css/chat.css">
+{{/block}}
+{{block 'body'}}
+    <div id="body">
+        <div class="rebody wrap">
+            <div id="main">
+                <div id="main-left">
+                    <a class="message-sort" href="mymessage"><div class="sortred"></div>消息空间</a>
+                    <a class="message-sort" style="color: white;background-color: #73b2ff ;" href="chatmessage"><div class="sortred"></div>聊天空间</a>
+                </div>
+                <div id="main-right">
+                    <div class="main-right-top">
+                        我与 <span>用户名</span> 的聊天
+                        <a href='mymessage'><i class="fa fa-reply-all" aria-hidden="true"></i>  返回观看去全部消息</a>
+                    </div>
+                    <div class="messagebody">
+
+                    </div>
+                    <div class="main-right-bon">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/block}}
+{{block 'bottom'}}
+<script src="public/js/chat.js"></script>
+{{/block}}

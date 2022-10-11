@@ -12,37 +12,36 @@
     {{block 'head'}}{{/block}}
 </head>
 <body>
-
     {{block 'bodytop'}}{{/block}}
         <!-- 出错的提示信息 -->
-    
-<div class="wrong hintSty none">
-    <span class="">
-        <i class="iconfont">&#xe606;</i>
-    </span>
-    <span id="wrongText">
-        操作失败    
-    </span>
-</div>
-<!-- 成功的提示信息 -->
-<div class="success hintSty none">
-    <span class="">
-        <i class="iconfont">&#xe62a;</i>
-    </span>
-    <span id="successText">
-        操作成功
-    </span>
-</div>
-<!-- 警告信息 -->
-<div class="warning hintSty none">
-    <span class="">
-        <i class="iconfont">&#xe66a;</i>
-    </span>
-    <span id="warningText">
-        信息不符
-    </span>
-</div>
-
+    <div id="tipsback">
+        <div class="wrong hintSty none">
+            <span class="tipsi">
+                <i class="iconfont">&#xe606;</i>
+            </span>
+            <span id="wrongText" class="tiptext">
+                操作失败
+            </span>
+        </div>
+        <!-- 成功的提示信息 -->
+        <div class="success hintSty none">
+            <span class="tipsi">
+                <i class="iconfont">&#xe62a;</i>
+            </span>
+            <span id="successText" class="tiptext">
+                操作成功
+            </span>
+        </div>
+        <!-- 警告信息 -->
+        <div class="warning hintSty none">
+            <span class="tipsi">
+                <i class="iconfont">&#xe66a;</i>
+            </span>
+            <span id="warningText" class="tiptext">
+                信息不符
+            </span>
+        </div>
+    </div>
     <div id="header">
         <div class="wrap header_max">
             <a href="/" style="display: block;width: 80px;height: 60px;">

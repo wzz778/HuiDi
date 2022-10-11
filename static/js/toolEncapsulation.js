@@ -28,11 +28,13 @@ function judgeFileImg(fileTemp, size) {
     resultObj.result = true
     return resultObj
 }
+let tipsback=document.getElementById('tipsback');
 // 提示文本信息(默认是错误)
 function hintFn(hintType, hintText) {
     let tempType = document.getElementsByClassName(hintType) || document.getElementsByClassName('wrong')
     tempType[0].classList.add('animatedSty')
     tempType[0].classList.remove('none')
+    tipsback.style.display='block';
     let tempTextEle = `${hintType}Text`
     let hintTextEle = document.getElementById(tempTextEle) || document.getElementById('wrongText')
     hintTextEle.innerHTML = hintText || '操作失败'
@@ -40,6 +42,7 @@ function hintFn(hintType, hintText) {
     setTimeout(() => {
         tempType[0].classList.remove('animatedSty')
         tempType[0].classList.add('none')
+        tipsback.style.display='none';
     }, 2000)
 }
 

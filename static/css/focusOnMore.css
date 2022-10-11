@@ -79,3 +79,9 @@
 .focusSty {
     background-color: #946061;
 }
+
+.noContent {
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+}

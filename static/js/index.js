@@ -25,6 +25,10 @@ let carouselInfo = document.getElementById('carouselInfo')
 let bindEvent = document.getElementById('bindEvent')
 // 推荐关注
 let focusOnContent = document.getElementById('focusOnContent')
+// 存放热门内容
+let carouselRightAll = document.getElementById('carouselRightAll')
+// 精选
+let carouselOne = document.getElementById('carouselOne')
 // 定时器
 function beginSettimeout() {
     timerIndex = setInterval(() => {
@@ -111,7 +115,7 @@ let allPageHotFocusOn = 0
 function getHotTicket() {
     sendFn('/picture/showAllPicture', { beginIndex: nowPageHotTicket })
         .then(result => {
-            console.log(result)
+            console.log('每日精选', result)
             allPageHotTicket = result.msg.all_page
             let tempStr = ''
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -205,7 +209,7 @@ function getFocusOn() {
             // 登录了去访问关注接口
             sendFn('/admin/getFocusDynamic', { beginIndex: nowPageFocusOn })
                 .then(result => {
-                    console.log(result)
+                    console.log('关注动态', result)
                     allPageHotFocusOn = result.msg.all_page
                     let tempStr = ''
                     for (let i = 0; i < result.msg.list.length; i++) {
@@ -482,42 +486,46 @@ sendFn('/picture/showCarousel', {})
     })
 
 // 推荐关注
-sendFn('/picture/recommendFocus', { size: 5 })
-    .then(result => {
-        console.log(result)
-        let tempStr = ``
-        for (let i = 0; i < result.msg.length; i++) {
-            if (result.msg[i]) {
-                let tempFocusStr = ''
-                if (result.msg[i].focusInfo) {
-                    tempFocusStr = `
+let focusNowPage = 1
+let focusAllPages = 0
+function getFocusInfo() {
+    sendFn('/picture/recommendFocus', { size: 5, beginIndex: focusNowPage })
+        .then(result => {
+            console.log('推荐关注', result)
+            focusAllPages = result.msg.all_page
+            let tempStr = ``
+            for (let i = 0; i < result.msg.list.length; i++) {
+                if (result.msg.list[i]) {
+                    let tempFocusStr = ''
+                    if (result.msg.list[i].focusInfo) {
+                        tempFocusStr = `
                     <span class="focusSty cancelFocusSty focusOnAllSty focusOnSty" onclick="focusOnFn(this)" focusInfo="false">已关注</span>
                     `
-                } else {
-                    tempFocusStr = `
+                    } else {
+                        tempFocusStr = `
                     <span class="focusSty cancelFocusSty focusOnAllSty" onclick="focusOnFn(this)" focusInfo="true">关注</span>
                     `
-                }
-                tempStr += `
+                    }
+                    tempStr += `
                 <div class="recommendedBloggers">
                         <div class="recommendedBloggersItem">
-                            <a href="/userhomepage?id=${result.msg[i].id}">
-                                <img src="${defaultImgUrl}" alt="" data-url="${result.msg[i].img_url}" onload="operatorImgFn(this)">
+                            <a href="/userhomepage?id=${result.msg.list[i].id}">
+                                <img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].img_url}" onload="operatorImgFn(this)">
                             </a>
                             <span class="userNameInfoItem">
-                                <a href="/userhomepage?id=${result.msg[i].id}">${result.msg[i].name}</a>
-                                <p>性别:${result.msg[i].sex}</p>
+                                <a href="/userhomepage?id=${result.msg.list[i].id}">${result.msg.list[i].name}</a>
+                                <p>介绍:${result.msg.list[i].describes}</p>
                             </span>
                             <span>
                                 ${tempFocusStr}
-                                <div class="none">${result.msg[i].id}</div>
+                                <div class="none">${result.msg.list[i].id}</div>
                             </span>
                         </div>
                     </div>
                 `
+                }
             }
-        }
-        let watchMore = `
+            let watchMore = `
         <!-- 查看更多 -->
                     <div class="watchMore">
                         <a href="/focusOnMore">
@@ -526,12 +534,24 @@ sendFn('/picture/recommendFocus', { size: 5 })
                         </a>
                     </div>
         `
-        focusOnContent.innerHTML = tempStr + watchMore
+            focusOnContent.innerHTML = tempStr + watchMore
 
-    })
-    .catch(err => {
-        console.log(err)
-    })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+getFocusInfo()
+
+function focusChangeFn() {
+    if (focusNowPage >= focusAllPages) {
+        hintFn('warning', '没有更多内容了')
+        return
+    }
+    focusNowPage++
+    getFocusInfo()
+}
 
 // 关注函数
 function focusOnFn(event) {
@@ -568,3 +588,29 @@ function focusOnFn(event) {
             hintFn('warning', '请先登录')
         })
 }
+
+// 获取热内容
+function getcarouselAll() {
+    sendFn('/picture/ShowHotContent', {})
+        .then(result => {
+            console.log('热门内容', result)
+            let tempStr = ''
+            carouselOne.innerHTML = `
+            <a href="/search?message=${result.msg[0]}&type=图片">
+                    <span>精选</span>
+                    <span>${result.msg[0]}</span>
+                </a>
+            `
+            let len = result.msg.length > 9 ? 9 : result.msg.length
+            for (let i = 1; i < len; i++) {
+                tempStr += `
+                <a href="/search?message=${result.msg[i]}&type=图片">${result.msg[i]}</a>
+                `
+            }
+            carouselRightAll.innerHTML = tempStr
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+getcarouselAll()

@@ -744,19 +744,21 @@ router.post('/picture/showAlbumById', (req, res) => {
 })
 // 推荐关注
 router.post('/picture/recommendFocus', (req, res) => {
-    let { size } = req.body
+    let { size, beginIndex } = req.body
     axios({
         method: 'GET',
         url: '/picture/recommendFocus',
         params: {
-            size: size
+            size: size,
+            begin_index: beginIndex
         }
     })
         .then(result => {
+            console.log('推荐关注', result.data)
             let sendArr = []
-            for (let i = 0; i < result.data.data.length; i++) {
-                if (result.data.data[i]) {
-                    sendArr[i] = judgeFocus(req, result.data.data[i])
+            for (let i = 0; i < result.data.data.list.length; i++) {
+                if (result.data.data.list[i]) {
+                    sendArr[i] = judgeFocus(req, result.data.data.list[i])
                 }
             }
             Promise.all(sendArr)
@@ -903,4 +905,83 @@ router.post('/superAdmin/addCarousel', mult, (req, res) => {
             res.send({ err: -1, msg: err })
         })
 })
+// 修改状态
+router.post('/superAdmin/updateAlbumStatus', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'PUT',
+        url: '/superAdmin/updateAlbumStatus',
+        params: {
+            id: id,
+            status: 3
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 显示热门内容
+router.post('/picture/ShowHotContent', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/picture/ShowHotContent',
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 推荐用户类别
+router.post('/picture/showRecommendType', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/picture/showRecommendType',
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取领域内认证用户
+router.post('/picture/FindUsersRecommendationCategories', (req, res) => {
+    let { nowPage, type } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/FindUsersRecommendationCategories',
+        params: {
+            begin_index: nowPage,
+            type: type,
+            size: 10
+        }
+    })
+        .then(result => {
+            let sendArr = []
+            for (let i = 0; i < result.data.data.list.length; i++) {
+                if (result.data.data.list[i]) {
+                    sendArr[i] = judgeFocus(req, result.data.data.list[i])
+                }
+            }
+            Promise.all(sendArr)
+                .then(() => {
+                    res.send({ err: 0, msg: result.data.data })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
 module.exports = router

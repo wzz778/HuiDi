@@ -10,6 +10,8 @@ let animation = document.getElementById('animation')
 let searchNoContent = document.getElementById('searchNoContent')
 // 搜索内容
 let searchContent = document.getElementById('searchContent')
+// 热门内容
+let carouselRightAll = document.getElementById('carouselRightAll')
 
 let pictureNowPage = 1
 let pictureAllPages = 0
@@ -439,3 +441,23 @@ function delAllSearch() {
     window.localStorage.setItem('hdsearch_history', '')
     getSearchHistory()
 }
+
+// 获取热内容
+function getcarouselAll() { 
+    sendFn('/picture/ShowHotContent', {})
+        .then(result => {
+            console.log('热门内容', result)
+            let tempStr = ''
+            let len = result.msg.length > 8 ? 8 : result.msg.length
+            for (let i = 0; i < len; i++) {
+                tempStr += `
+                <a href="/search?message=${result.msg[i]}&type=图片">${result.msg[i]}</a>
+                `
+            }
+            carouselRightAll.innerHTML = tempStr
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+getcarouselAll()

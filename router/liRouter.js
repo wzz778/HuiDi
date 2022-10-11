@@ -850,4 +850,24 @@ router.post('/picture/getInfo/talentShow', (req, res) => {
             res.send({ err: -1, msg: err })
         })
 })
+// 显示分类
+router.post('/picture/showAllType', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/showAllType',
+    })
+        .then(result => {
+            for (let i = 0; i < result.data.data.length; i++) {
+                if (result.data.data[i].type.id == id) {
+                    res.send({ err: 0, msg: result.data.data[i] })
+                    return
+                }
+            }
+            res.send({ err: -1, msg: '没有该一级类别' })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
 module.exports = router

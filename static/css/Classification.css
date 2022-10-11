@@ -30,9 +30,15 @@
 }
 
 .categoryAll {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-right: 15px;
+}
+
+.categoryAll>span {
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
 .categoryAllItemContent {
@@ -197,4 +203,70 @@
 
 .pulse-container {
     margin: 10px auto;
+}
+
+#title {
+    color: #444;
+}
+
+#noContent {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    color: #0461CF;
+}
+
+.middleContentItem {
+    /* width: 235px;
+    display: inline-block; */
+    border: 1px solid #e0e0e0;
+    /* border-bottom: none; */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.middleContentItem:hover {
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, .2);
+}
+
+.middleContentSty {
+    display: inline-block;
+    /* width: 235px; */
+    /* min-height: 100px; */
+    position: relative;
+    overflow: hidden;
+}
+
+.middleContentSty>a>img {
+    /* max-width: 235px; */
+    width: 100%;
+    height: 100%;
+}
+
+.operator>a {
+    margin-right: 20px;
+    font-size: 10px;
+    padding: 3px 0px;
+    border-radius: 50px;
+    border: 1px solid white;
+    text-align: center;
+    color: white;
+}
+
+.operator>a:hover {
+    background-color: white;
+    color: black;
+}
+
+
+.operator>span:hover {
+    background-color: white;
+    color: black;
+}
+
+.clickSty {
+    color: red;
 }

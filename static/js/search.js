@@ -52,7 +52,7 @@ function getSearchInfo() {
                 let collectInfo = ``
                 let imgStr = ``
                 for (let j = 0; j < result.msg.info[i].list.length; j++) {
-                    imgStr += ``
+                    imgStr += `<img src="${defaultImgUrl}" alt="" data-url="${result.msg.info[i].list[j]}" onload="operatorImgFn(this)">`
                 }
                 if (result.msg.info[i].images.like) {
                     likeInfo = `
@@ -88,10 +88,10 @@ function getSearchInfo() {
                     <div class="middleContentItem">
                         <div class="middleContentSty">
                             <a href="/dynamicDetails?id=${result.msg.info[i].images.id}">
-                                <img src="/public/img/01.jpeg" alt="">
+                                ${imgStr}
                             </a>
                             <div class="operator">
-                                <span onclick="collectFn(this)">收集</span>
+                                <span onclick="collectFn(this)">收藏</span>
                                 <span onclick="likeFn(this)">点赞</span>
                                 <a href="/dynamicDetails?id=${result.msg.info[i].images.id}">
                                     <span>评论</span>
@@ -240,6 +240,7 @@ function collectFn(event) {
                     .catch(err => {
                         hintFn('warning', '操作失败')
                     })
+                return
             }
             sendFn('/admin/addCollect', { imgId: event.parentElement.lastElementChild.innerHTML, uId: result.userInfo.id })
                 .then(result => {

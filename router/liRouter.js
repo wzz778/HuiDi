@@ -41,6 +41,11 @@ router.get('/404', (req, res) => {
     res.render('404.html')
 })
 
+// 管理员看的专辑页面
+router.get('/superAlbum', (req, res) => {
+    res.render('superAlbum.html')
+})
+
 // 封装的查看多少点赞数量，以及是否点赞
 function getLikeSumFn(url, type, obj) {
     return new Promise((resolve, resject) => {
@@ -254,7 +259,6 @@ router.post('/picture/showComment', (req, res) => {
         }
     })
         .then(result => {
-            console.log('评论', result.data)
             if (result.data.msg == 'OK') {
                 if (req.session.token) {
                     result.data.data.login = req.session.user.id
@@ -508,6 +512,7 @@ router.post('/picture/showAllPicture', (req, res) => {
         }
     })
         .then(result => {
+            console.log('获取所有', result)
             if (result.data.msg == 'OK') {
                 let sendArr = []
                 for (let i = 0; i < result.data.data.list.length; i++) {
@@ -618,6 +623,7 @@ router.post('/admin/getFocusDynamic', (req, res) => {
         }
     })
         .then(result => {
+            console.log('关注', result.data)
             if (result.data.msg == 'OK') {
                 let sendArr = []
                 for (let i = 0; i < result.data.data.list.length; i++) {
@@ -867,6 +873,33 @@ router.post('/picture/showAllType', (req, res) => {
             res.send({ err: -1, msg: '没有该一级类别' })
         })
         .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 添加轮播图
+router.post('/superAdmin/addCarousel', mult, (req, res) => {
+    let { alId } = req.body
+    let formdata = new FormData()
+    for (let v in req.files) {
+        formdata.append('file', fs.createReadStream(req.files[v].path))
+    }
+    formdata.append('al_id', alId)
+    axios({
+        method: 'POST',
+        url: '/superAdmin/addCarousel',
+        data: formdata,
+        headers: {
+            token: req.session.token,
+            formdata: formdata.getHeaders(),
+            maxBodyLength: 1000000000,
+        }
+    })
+        .then(result => {
+            console.log('上传图片', result.data)
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            console.log('上传图片', err)
             res.send({ err: -1, msg: err })
         })
 })

@@ -111,6 +111,7 @@ let allPageHotFocusOn = 0
 function getHotTicket() {
     sendFn('/picture/showAllPicture', { beginIndex: nowPageHotTicket })
         .then(result => {
+            console.log(result)
             allPageHotTicket = result.msg.all_page
             let tempStr = ''
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -204,6 +205,7 @@ function getFocusOn() {
             // 登录了去访问关注接口
             sendFn('/admin/getFocusDynamic', { beginIndex: nowPageFocusOn })
                 .then(result => {
+                    console.log(result)
                     allPageHotFocusOn = result.msg.all_page
                     let tempStr = ''
                     for (let i = 0; i < result.msg.list.length; i++) {

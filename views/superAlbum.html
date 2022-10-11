@@ -1,0 +1,112 @@
+{{extend './layout.html'}}
+{{block 'title'}}专辑详情页{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/iconfont/iconfont.css">
+<link rel="stylesheet" href="/public/css/Universal.css">
+<link rel="stylesheet" href="/public/css/album.css">
+<link rel="stylesheet" href="/public/css/superAlbum.css">
+{{/block}}
+
+{{block 'bodytop'}}
+<!-- 收集弹窗 -->
+<div class="collectHint none">
+    <div class="collectHintContent">
+        <div class="collectHintContentTop clearFloat">
+            <span class="floatLeft">收集</span>
+            <button class="floatRight" onclick="cancelShow(this)">
+                <i class="iconfont">&#xe643;</i>
+            </button>
+        </div>
+        <div class="hintContents clearFloat">
+            <div class="hintContentsLeft floatLeft">
+                <img src="/public/img/myImg1.jpg" alt="">
+            </div>
+            <div class="hintContentsRight floatLeft">
+                <span>收集到</span>
+                <div class="albumName">
+                    <div class="albumChoice clearFloat" onclick="allAlbumShow()">
+                        <span class="albumChoiceResult">默认专辑</span>
+                        <span class="showAllAlbum floatRight">
+                            <i class="iconfont">&#xe797;</i>
+                        </span>
+                    </div>
+                    <!-- 已经写过的专辑 -->
+                    <div class="albumHadItem" id="allAlbum">
+                        <ul class="albumHad" onclick="allAlbumShow()">
+                            <li onclick="choiceAlbumFn(this)">专辑1</li>
+                            <li onclick="choiceAlbumFn(this)">专辑2</li>
+                            <li onclick="choiceAlbumFn(this)">专辑3</li>
+                        </ul>
+                        <!-- 创建新专辑 -->
+                        <div class="creatNewAlbum">
+                            <div class="clearFloat">
+                                <input type="text" class="creatNewAlbumName">
+                                <button class="floatRight creatNewAlbumBtn">创建专辑</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <textarea class="collectTextInfo" id="" cols="30" rows="10"></textarea>
+                <button class="sureCollect">收集</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 上传 -->
+<div class="addShufflingFigure">
+    <div class="">
+        <span onclick="popupShowFn()">增加轮播图</span>
+    </div>
+    <div class="">
+        <a href="javascript:;">返回管理页</a>
+    </div>
+</div>
+<!-- 添加轮播图的弹窗 -->
+<div class="Popup none">
+    <div class="">
+        <div class="uploadFile">
+            <div class="uploadFileSty">
+                <div>
+                    <i class="iconfont">&#xe70a;</i>
+                    <span id="clickChangeText">添加图片</span>
+                </div>
+            </div>
+            <img src="" alt="" id="showImg">
+            <input type="file" id="file">
+        </div>
+        <div class="uploadFileOperator">
+            <button onclick="uploadFile(this)">上传</button>
+            <button id="cancelSty" onclick="cancelUploadFn(this)">取消</button>
+        </div>
+    </div>
+</div>
+{{/block}}
+
+{{block 'body'}}
+<div class="middle">
+    <div class="top" id="userAlbumInfo">
+    </div>
+    <!-- 内容区 -->
+    <div class="content" id="content">
+
+    </div>
+    <!-- 没有内容 -->
+    <div class="noContent none" id="noContent">
+        还没有发布动态
+    </div>
+    <div class="middleAnimation" id="animation">
+        <div class="pulse-container">
+            <div class="pulse-bubble pulse-bubble-1"></div>
+            <div class="pulse-bubble pulse-bubble-2"></div>
+            <div class="pulse-bubble pulse-bubble-3"></div>
+        </div>
+    </div>
+</div>
+{{/block}}
+
+{{block 'bottom'}}
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+<script src="/public/iconfont/iconfont.js"></script>
+<script src="/public/js/album.js"></script>
+<script src="/public/js/superAlbum.js"></script>
+{{/block}}

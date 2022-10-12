@@ -30,7 +30,7 @@ function opendjs(){
 function getcode(){
     let mail=mymail.value;
     if(isnull(mail)){
-        alert('请输入您要注册的邮箱');
+        hintFn('warning' ,'请输入您要注册的邮箱')
         return
     }else{
         axios({
@@ -42,10 +42,10 @@ function getcode(){
           }).then(data => {
             console.log(data.data);
             if(data.data.err==0){
-                alert('发送成功');
+                hintFn('success' ,'发送成功')
                 opendjs()
             }else{
-                alert(data.data.msg);
+                hintFn('warning' ,data.data.msg)
             }
           }).catch(function (error) {
             
@@ -56,10 +56,10 @@ function checkcode(){
     let mail=mymail.value;
     let code=mycode.value;
     if(isnull(mail)){
-        alert('请输入您要注册的邮箱');r
+        hintFn('warning' ,'请输入您要注册的邮箱')
         return
     }else if(isnull(code)){
-        alert('请输入验证码');
+        hintFn('warning' ,'请输入验证码')
         return
     }else{
         axios({
@@ -72,13 +72,13 @@ function checkcode(){
           }).then(data => {
             console.log(data.data);
             if(data.data.err==0){
-                alert('验证成功');
+                hintFn('success' ,'验证成功')
                 sessionStorage.setItem('mymail',mail);
                 setTimeout(function () {
                     window.location.assign("/register2");
                 }, 300)
             }else{
-                alert(data.data.msg);
+                hintFn('warning' ,data.data.msg)
             }
           }).catch(function (error) {
             

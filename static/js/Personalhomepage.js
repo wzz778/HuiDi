@@ -17,10 +17,31 @@ let lookend=document.getElementById('lookend');
 let myalbumbox=document.getElementsByClassName('myalbumbox')[0];
 let mydetext=document.getElementById('mydetext')
 let abdenumber=document.getElementById('abdenumber')
-let album_text=document.getElementsByClassName('album_text')[0]
+let album_text=document.getElementsByClassName('album_text')[0];
+let dyshow=true;
+let colshow=false;
+let arrfun=[
+    function(){
+        dyshow=true;
+        colshow=false;
+    },
+    function(){
+        dyshow=false;
+        colshow=false;
+        lookmore.style.display='none';
+        lookend.style.display='block';
+    },
+    function(){
+        dyshow=false;
+        colshow=true;
+    },
+]
 function changeclass(i){
     conli[i].classList.add('havebethis');
     textmessage[i].style.display='block';
+    lookmore.style.display='block';
+    lookend.style.display='none';
+    arrfun[i]()
     for(let n=0;n<3;n++){
         if(n!=i){
             conli[n].classList.remove('havebethis');
@@ -28,6 +49,7 @@ function changeclass(i){
         };
     };
 }
+
 axios({
     url: '/api/getmymessage',
     method: 'get',
@@ -49,7 +71,6 @@ axios({
         }
         return axios({url: '/api/getmynumber',method: 'get',})
     }else{
-        // alert("未登录")
         return 
     }
   }).then(data1 => {
@@ -178,12 +199,12 @@ function album_show() {
 function addab(){
     for(let i of album_input){
         if(isnull(i.value)){
-            alert("请填写完整内容！");
+            hintFn('warning' ,"请填写完整内容！")
             return 
         }
     }
     if(album_input[1].value.length>8){
-        alert("请填写8个字符一下的专辑名称！");
+        hintFn('warning' ,"请填写8个字符一下的专辑名称！")
         return 
     }
     axios({
@@ -197,14 +218,14 @@ function addab(){
       }).then(data => {
         console.log(data.data);
         if(data.data.err==0){   
-            alert("添加成功！");
+            hintFn('warning' ,"添加成功！")
             getmyalbum()
         }else{
             return 
         }
       })
       .catch(function (error) {
-        alert(error);
+        hintFn('warning' ,error)
         console.log(error);
       });
 }
@@ -238,7 +259,7 @@ function showmydynamic(){
                           <span class="dyusername">${arr[i].user_name}</span>
                           <span class="dyuserid">${arr[i].user_id}</span>
                       </a>
-                      <span class="dytime">${arr[i].create_time}</span>
+                      <span class="dytime">${contrasttime(arr[i].create_time)}</span>
                   </div>
                   <a href="dynamicDetails?id=${arr[i].img_id}" class="dytexta">
                       <div class="imgde">
@@ -252,13 +273,60 @@ function showmydynamic(){
               `
           }
       }else{
-          // alert("未登录")
       }
     })
     .catch(function (error) {
       console.log(error);
     });
 }
+let colnowpage=1;
+let colallpage=1;
+function showmycollect(){
+    axios({
+      url: '/api/getmycollect',
+      method: 'get',
+      params:{
+          size:5,
+          begin:colnowpage,
+      }
+    }).then(data => { 
+        console.log(data.data);
+      if(data.data.err==0){
+        colallpage=data.data.msg.all_page;
+        let arr=data.data.msg.list;
+          for(let i in arr){
+              let arrimg='';
+              for(let n of arr[i].urls){
+                  arrimg+=`<img src="${n}" alt="">`
+              }
+              collect_body.innerHTML+=`
+                <div class="colnamicmax">
+                    <div class="user_cord">
+                        <a href="userhomepage?id=${arr[i].users.id}" class="dyusera">
+                            <img src="${arr[i].users.img_url}" class="dyuserhead" alt="">
+                            <span class="dyusername">${arr[i].users.name}</span>
+                        </a>
+                        <span class="dytime">${contrasttime(arr[i].images.create_time)}</span>
+                    </div>
+                    <a href="album?id=${arr[i].album.id}" class="abmax">
+                        来自专辑 <span>${arr[i].album.a_name}</span> 的动态：
+                    </a>
+                    <a href="dynamicDetails?id=${arr[i].images.al_id}" class="dytexta">
+                        <div class="imgde">${arr[i].images.describes}</div>
+                        <div class="imgmax">${arrimg}</div>
+                    </a>
+                </div>
+              `
+          }
+      }else{
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+getmyalbum()
+showmycollect()
 showmydynamic()
 window.onscroll = function () {
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -266,15 +334,28 @@ window.onscroll = function () {
     let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
     let that = this;
     if (scrollHeight <= scrollTop + windowHeight) {
-        if(dyallpage>dynowpage){
-            dynowpage++;
-            lookmore.style.display='block';
-            lookend.style.display='none';
-            setTimeout(function(){showmydynamic()},1500)
-            // showmydynamic()
-        }else{
-            lookmore.style.display='none';
-            lookend.style.display='block';
+        if(dyshow){
+            if(dyallpage>dynowpage){
+                dynowpage++;
+                lookmore.style.display='block';
+                lookend.style.display='none';
+                setTimeout(function(){showmydynamic()},1500)
+                // showmydynamic()
+            }else{
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            }
+        }
+        if(colshow){
+            if(colallpage>colnowpage){
+                colnowpage++;
+                lookmore.style.display='block';
+                lookend.style.display='none';
+                setTimeout(function(){showmycollect()},1500)
+            }else{
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            }
         }
     }
 };
@@ -294,12 +375,3 @@ album_text.onkeydown=function(){
   var num = len;
   abdenumber.innerText=num;
 };
-function open1(){
-    hintFn('success' ,'登录成功')
-}
-function open2(){
-    hintFn('wrong' ,'登录错误')
-}
-function open3(){
-    hintFn('warning' ,'报错')
-}

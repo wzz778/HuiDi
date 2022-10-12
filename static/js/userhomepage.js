@@ -18,6 +18,8 @@ let userid = window.location.search.split("=")[1];
 let mymessageback=document.getElementById('mymessageback')
 let myalbumbox=document.getElementsByClassName('myalbumbox')[0];
 let mydetext=document.getElementById('mydetext')
+let dyshow=true;
+let colshow=false;
 axios({
     url: '/api/isuser',
     method: 'get',
@@ -32,17 +34,35 @@ axios({
         return
        }
     }else{
-        // alert("未登录")
         return 
     }
   })
   .catch(function (error) {
     console.log(error);
   });
+let arrfun=[
+    function(){
+        dyshow=true;
+        colshow=false;
+    },
+    function(){
+        dyshow=false;
+        colshow=false;
+        lookmore.style.display='none';
+        lookend.style.display='block';
+    },
+    function(){
+        dyshow=false;
+        colshow=true;
+    },
+]
 function changeclass(i){
     conli[i].classList.add('havebethis');
     textmessage[i].style.display='block';
-    for(let n=0;n<4;n++){
+    lookmore.style.display='block';
+    lookend.style.display='none';
+    arrfun[i]()
+    for(let n=0;n<3;n++){
         if(n!=i){
             conli[n].classList.remove('havebethis');
             textmessage[n].style.display='none';
@@ -74,8 +94,6 @@ axios({
             id:userid
         }})
     }else{
-        // alert("未登录")
-        
     }
   }).then(data1 => {
     let number=data1.data.msg;
@@ -184,7 +202,6 @@ function getmyalbum(){
         console.log(error);
       });
 }
-getmyalbum()
 function tofollow(){
     axios({
         url: '/api/addfollow',
@@ -203,7 +220,7 @@ function tofollow(){
                 followbutton[0].style.display='block'
             }
         }else{
-            alert(data.data.msg)
+            hintFn('wrong' ,data.data.msg)
         }
       })
       .catch(function (error) {
@@ -228,7 +245,7 @@ function outfollow(){
                 followbutton[1].style.display='block'
             }
         }else{
-            alert(data.data.msg)
+            hintFn('warning' ,data.data.msg)
         }
       })
       .catch(function (error) {
@@ -291,7 +308,7 @@ function showmydynamic(){
                           <span class="dyusername">${arr[i].user_name}</span>
                           <span class="dyuserid">${arr[i].user_id}</span>
                       </a>
-                      <span class="dytime">${arr[i].create_time}</span>
+                      <span class="dytime">${contrasttime(arr[i].create_time)}</span>
                   </div>
                   <a href="dynamicDetails?id=${arr[i].img_id}" class="dytexta">
                       <div class="imgde">
@@ -312,68 +329,46 @@ function showmydynamic(){
       console.log(error);
     });
 }
-showmydynamic()
-window.onscroll = function () {
-    let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-    let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-    let that = this;
-    if (scrollHeight - 1<= scrollTop + windowHeight) {
-        if(dyallpage>dynowpage){
-            dynowpage++;
-            lookmore.style.display='block';
-            lookend.style.display='none';
-            setTimeout(function(){showmydynamic()},1500)
-            // showmydynamic()
-        }else{
-            lookmore.style.display='none';
-            lookend.style.display='block';
-        }
-    }
-};
-let connowpage=1;
-let conallpage=1;
+let colnowpage=1;
+let colallpage=1;
 function showmycollect(){
     axios({
       url: '/api/getusercollect',
       method: 'get',
       params:{
           size:5,
-          begin:connowpage,
+          begin:colnowpage,
           id:userid
       }
     }).then(data => { 
         console.log(data.data);
       if(data.data.err==0){
-        conallpage=data.data.msg.all_page;
+        colallpage=data.data.msg.all_page;
         let arr=data.data.msg.list;
-        // //   class_body1.innerHTML=``
-        //   for(let i in arr){
-        //       let arrimg='';
-        //       for(let n of arr[i].img_url){
-        //           arrimg+=`<img src="${n}" alt="">`
-        //       }
-        //       collect_body.innerHTML+=`
-        //       <div class="dynamicmax">
-        //           <div class="user_cord">
-        //               <a href="userhomepage?id=${arr[i].user_id}" class="dyusera">
-        //                   <img src="${arr[i].user_img_url}" class="dyuserhead" alt="">
-        //                   <span class="dyusername">${arr[i].user_name}</span>
-        //                   <span class="dyuserid">${arr[i].user_id}</span>
-        //               </a>
-        //               <span class="dytime">${arr[i].create_time}</span>
-        //           </div>
-        //           <a href="dynamicDetails?id=${arr[i].img_id}" class="dytexta">
-        //               <div class="imgde">
-        //               ${arr[i].describes}
-        //               </div>
-        //               <div class="imgmax">
-        //               ${arrimg}
-        //               </div>
-        //           </a>
-        //       </div>
-        //       `
-        //   }
+          for(let i in arr){
+              let arrimg='';
+              for(let n of arr[i].urls){
+                  arrimg+=`<img src="${n}" alt="">`
+              }
+              collect_body.innerHTML+=`
+                <div class="colnamicmax">
+                    <div class="user_cord">
+                        <a href="userhomepage?id=${arr[i].users.id}" class="dyusera">
+                            <img src="${arr[i].users.img_url}" class="dyuserhead" alt="">
+                            <span class="dyusername">${arr[i].users.name}</span>
+                        </a>
+                        <span class="dytime">${contrasttime(arr[i].images.create_time)}</span>
+                    </div>
+                    <a href="album?id=${arr[i].album.id}" class="abmax">
+                        来自专辑 <span>${arr[i].album.a_name}</span> 的动态：
+                    </a>
+                    <a href="dynamicDetails?id=${arr[i].images.al_id}" class="dytexta">
+                        <div class="imgde">${arr[i].images.describes}</div>
+                        <div class="imgmax">${arrimg}</div>
+                    </a>
+                </div>
+              `
+          }
       }else{
           // alert("未登录")
       }
@@ -382,4 +377,37 @@ function showmycollect(){
       console.log(error);
     });
 }
+getmyalbum()
 showmycollect()
+showmydynamic()
+window.onscroll = function () {
+    let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+    let that = this;
+    if (scrollHeight <= scrollTop + windowHeight) {
+        // console.log(dyshow);
+        if(dyshow){
+            if(dyallpage>dynowpage){
+                dynowpage++;
+                lookmore.style.display='block';
+                lookend.style.display='none';
+                setTimeout(function(){showmydynamic()},1500)
+            }else{
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            }
+        }
+        if(colshow){
+            if(colallpage>colnowpage){
+                colnowpage++;
+                lookmore.style.display='block';
+                lookend.style.display='none';
+                setTimeout(function(){showmycollect()},1500)
+            }else{
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            }
+        }
+    }
+};

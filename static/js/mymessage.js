@@ -63,7 +63,7 @@ function getallmessage(){
                                 </div>
                                 <div class="message-con">
                                     <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
-                                    <span class="message-time">${ms[i].create_time}</span>
+                                    <span class="message-time">${contrasttime(ms[i].create_time)}</span>
                                 </div>
                             </div>
                         `
@@ -83,7 +83,7 @@ function getallmessage(){
                             </div>
                             <div class="message-con">
                                 <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
-                                <span class="message-time">${ms[i].create_time}</span>
+                                <span class="message-time">${contrasttime(ms[i].create_time)}</span>
                             </div>
                         </div>
                         `
@@ -178,7 +178,7 @@ function getallmessagebytype(){
                                 </div>
                                 <div class="message-con">
                                     <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
-                                    <span class="message-time">${ms[i].create_time}</span>
+                                    <span class="message-time">${contrasttime(ms[i].create_time)}</span>
                                 </div>
                             </div>
                         `
@@ -198,7 +198,7 @@ function getallmessagebytype(){
                             </div>
                             <div class="message-con">
                                 <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
-                                <span class="message-time">${ms[i].create_time}</span>
+                                <span class="message-time">${contrasttime(ms[i].create_time)}</span>
                             </div>
                         </div>
                         `

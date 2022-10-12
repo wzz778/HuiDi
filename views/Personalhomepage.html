@@ -1,6 +1,7 @@
 {{extend './layout.html'}}
 {{block 'title'}}个人主页{{/block}}
 {{block 'head'}}
+<link rel="stylesheet" href="/public/css/Universal.css">
 <link rel="stylesheet" href="public/css/Personalhomepage.css">
 {{/block}}
 {{block 'body'}}
@@ -44,7 +45,7 @@
     </div>
     <div id="body">
         <div class="rebody wrap">
-            <div class="mymessage">
+            <div class="mymessage" >
                 <div id="mymessageback"></div>
                 <!-- <img src="/public/img/userHead.jpg" alt=""> -->
                 <div id="mymessagetext">
@@ -106,19 +107,6 @@
                                     </a>
                                 </div> -->
                             </div>
-                            <div id="lookmore">
-                                正在努力加载更多
-                                <div class="loading">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                            <div id="lookend" style="display: none;">
-                                已经是全部内容了哦
-                                <i class="fa fa-sun-o" aria-hidden="true"></i>
-                            </div>
                         </div>
                         <div class="textmessage" style="display: none;">
                             <div class="class_header">
@@ -159,14 +147,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="textmessage">
+                        <div class="textmessage" style="display: none;">
                             <div class="class_header">
                                 <h4>我的收藏</h4>
                             </div>
                             <div class="class_body"></div>
                         </div>
+                        <div id="lookmore">
+                            正在努力加载更多
+                            <div class="loading">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div id="lookend">
+                            已经是全部内容了哦
+                            <i class="fa fa-sun-o" aria-hidden="true"></i>
+                        </div>
                     </div>
-
                 </div>
                 <div class="mytextmessageright">
                     <div class="numberboard">

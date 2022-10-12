@@ -28,7 +28,7 @@ axios({
             sexinput[1].checked=true;
         }
     }else{
-        alert("未登录")
+        hintFn('wrong' ,"未登录")
     }
   })
   .catch(function (error) {
@@ -37,7 +37,7 @@ axios({
 function openimg(){
     var reader= new FileReader();
     if(!checkFile(headfile.files[0])){
-        alert('请上传图片类型的头像！');
+        hintFn('warning' ,'请上传图片类型的头像！')
         return 
     }
     reader.readAsDataURL(headfile.files[0]);
@@ -48,7 +48,7 @@ function openimg(){
 function openbackimg(){
     var reader= new FileReader();
     if(!checkFile(backfile.files[0])){
-        alert('请上传图片类型的背景！');
+        hintFn('warning' ,'请上传图片类型的背景！')
         return 
     }
     reader.readAsDataURL(backfile.files[0]);
@@ -59,11 +59,11 @@ function openbackimg(){
 function keepmessage(){
     let newfile=new FormData();
     if(isnull(kuanginput.value)&&isnull(describe.value)){
-        alert("请输入完整内容");
+        hintFn('warning' ,"请输入完整内容")
         return
     }
     if(judgeStr(kuanginput.value).length>6){
-        alert("请输入6个字符以内的用户名！");
+        hintFn('warning' ,"请输入6个字符以内的用户名！")
         return
     }
     let sex=sexinput[0].checked?'男':"女";
@@ -84,12 +84,12 @@ function keepmessage(){
     .then((result) => {
         console.log(result.data);
         if(result.data.err==0&&result.data.msg.msg=='OK'){  
-            alert('保存成功')
+            hintFn('success' ,'保存成功')
             setTimeout(function () {
                 window.location.assign("/Personalhomepage");
-            }, 300)
+            }, 1000)
         }else{
-            alert("保存保存！")
+            hintFn('wrong' ,"保存失败！")
         }
     })
     .catch((err)=>{

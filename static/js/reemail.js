@@ -2,7 +2,7 @@ let mypassword=document.getElementById('mypassword');
 let mymessage=document.getElementsByClassName('mymessage');
 function checkpassword(){
     if(isnull(mypassword.value)){
-        alert("请输入密码!");
+        hintFn('warning' ,"请输入密码!")
         return 
     }
     axios({
@@ -14,17 +14,16 @@ function checkpassword(){
       }).then(data => {
         // console.log(data.data);
         if(data.data.err==0){   
-            alert("成功！");
+            hintFn('success' ,"成功！")
             // sessionStorage.setItem('havecheck', 1);
             mymessage[0].style.display='none';
             mymessage[1].style.display='block';
         }else{
-            alert("失败！");
+            hintFn('wrong' ,data.data.msg)
         }
       })
       .catch(function (error) {
-        alert("失败！");
-        console.log(error);
+        hintFn('wrong' ,"失败")
       });
 }
 let mymail=document.getElementById('mymail')
@@ -51,7 +50,7 @@ function opendjs(){
 function getcode(){
     let mail=mymail.value;
     if(isnull(mail)){
-        alert('请输入您要修改的邮箱');
+        hintFn('warning' ,'请输入您要修改的邮箱')
         return
     }else{
         axios({
@@ -63,10 +62,10 @@ function getcode(){
           }).then(data => {
             console.log(data.data);
             if(data.data.err==0){
-                alert('发送成功');
+                hintFn('success' ,'发送成功')
                 opendjs()
             }else{
-                alert(data.data.msg);
+                hintFn('warning' ,data.data.msg)
             }
           }).catch(function (error) {
             
@@ -92,7 +91,7 @@ function checkcode(){
               }).then(data => {
                 console.log(data.data);
                 if(data.data.err==0){
-                    alert('验证成功');
+                    hintFn('warning' ,'验证成功')
                     resolve()
                     // sessionStorage.setItem('mymail',mail);
                     // sessionStorage.removeItem('Applicationid');
@@ -106,12 +105,12 @@ function checkcode(){
         }
     
     }).then(data2=>{
-        alert("验证成功！")
+        hintFn('success' ,"验证成功！")
         setTimeout(function () {
             window.location.assign("/Personalhomepage");
         }, 300)
       })
       .catch(function (error) {
-          alert(error)    
+        hintFn('wrong' ,"验证失败！")
       });
 }

@@ -482,7 +482,28 @@ router.get('/api/getusercollect', (req, res) => {
         method:'get',  
         params:{
             size:req.query.size,
-            u_id:1,
+            u_id:req.query.id,
+            begin:req.query.begin
+        }
+    }).then(response=>{ 
+        if(response.data.msg=='OK'){
+            res.send({ err: 0, msg:response.data.data});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        console.log(error.response);
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
+//显示本人的收藏
+router.get('/api/getmycollect', (req, res) => {   
+    axios({
+        url:'/picture/showCollect',
+        method:'get',  
+        params:{
+            size:req.query.size,
+            u_id:req.session.userid,
             begin:req.query.begin
         }
     }).then(response=>{ 

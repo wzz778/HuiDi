@@ -994,7 +994,6 @@ router.post('/superAdmin/updateUserStatus', (req, res) => {
         }
     })
         .then(result => {
-            console.log('举报接口通过作品id查用户', result.data)
             console.log(result.data.data.users.id)
             return axios({
                 method: 'PUT',
@@ -1010,7 +1009,6 @@ router.post('/superAdmin/updateUserStatus', (req, res) => {
             })
         })
         .then(result => {
-            console.log('修改用户状态', result.data)
             res.send({ err: 0, msg: result.data })
         })
         .catch(err => {
@@ -1021,7 +1019,22 @@ router.post('/superAdmin/updateUserStatus', (req, res) => {
 // 下架作品
 router.post('/theShelves', (req, res) => {
     let { id } = req.body
-    console.log('进=======',id)
-    res.send({ id: id })
+    axios({
+        method: 'PUT',
+        url: '/superAdmin/updatePass',
+        params: {
+            id: id,
+            message: '举报受理'
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
 })
 module.exports = router

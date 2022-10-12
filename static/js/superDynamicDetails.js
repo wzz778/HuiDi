@@ -65,7 +65,7 @@ function sureReportFn() {
     }
     Promise.all(sendArr)
         .then(result => {
-            console.log(result)
+            reportAccept[0].classList.add('none')
         })
         .catch(err => {
             console.log(err)
@@ -74,8 +74,6 @@ function sureReportFn() {
 // 修改时间样式
 function changeDateSty(tempDate) {
     let tempArr = tempDate.split('T')
-    console.log(tempArr)
     let tempStr = `${tempArr[0]} ${tempArr[1]}:00`
-    console.log(tempStr)
     return tempStr
 }

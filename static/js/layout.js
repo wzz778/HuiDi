@@ -17,6 +17,32 @@ let searchinput=document.getElementById('searchinput')
 let dydenumber=document.getElementById('dydenumber')
 let dyde=document.getElementById('dyde')
 let searchva=document.getElementsByClassName('searchva');
+function contrasttime(time){
+    let data=new Date(time.replace(/-/g,"/"));
+    let t1=new Date();//获取当前时间
+    let times=t1.getTime()-data.getTime();//时间差的毫秒数
+    let days=parseInt(times/(24*1000*3600));//计算相差的天数
+    if(days>0){
+        if(days<2){
+            return `${days}天前`
+        }else{
+            return time;
+        }
+    }
+    let leave=times%(24*3600*1000);//计算天数后剩余的毫秒数
+    let h=parseInt(leave/(3600*1000));//计算小时数
+    if(h>0){
+        return `${h}小时前`
+    }
+     //计算分钟数
+    let h_leave=leave%(3600*1000);
+    let min=parseInt(h_leave/(60*1000));//计算秒数
+    if(min>0){
+        return `${min}分钟前`
+    }else{
+        return `1分钟前`
+    }
+}
 //检查输入为空
 function isnull(val) {
     var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
@@ -182,7 +208,7 @@ var readFile=function(obj){
     for(var i=0;i<fileList.length;i++){
         var reader= new FileReader();
         if(!checkFile(fileList[i])){
-            alert("请上传图片文件！");
+            hintFn('warning' ,'请上传图片文件')
             return
         }
         reader.readAsDataURL(fileList[i]);
@@ -206,14 +232,14 @@ function look(){
         }
     }
     if(isnull(publish_text.value)){
-        alert('请填写你对图片的描述！')
+        hintFn('warning' ,'请填写你对图片的描述！')
         return
     }
     allfileList.append('al_id', al_id)
     allfileList.append('describes',judgeStr(publish_text.value))
     // console.log(Array.from(allfileList));
     if(Array.from(allfileList).length<3){
-        alert('请选择你要上传的图片！')
+        hintFn('warning' ,'请选择你要上传的图片！')
         allfileList.delete('al_id')
         allfileList.delete('describes')
         return
@@ -226,12 +252,12 @@ function look(){
     .then((result) => {
         // console.log(result.data);
         if(result.data.err==0&&result.data.msg.msg=='OK'){
-            alert("上传成功！")
+            hintFn('success' ,"上传成功！")
             setTimeout(function () {
                 window.location.assign("/Personalhomepage");
             }, 500)
         }else{
-            alert("上传失败！")
+            hintFn('wrong' ,"上传失败！")
         }
     })
     .catch((err)=>{
@@ -271,19 +297,19 @@ function outlogin(){
         method: 'get',
       }).then(data => {
         if(data.data.err==0){
-            alert('退出成功');
+            hintFn('success' ,'退出成功')
             window.location.assign("/login");
         }else{
-            alert('退出失败')
+            hintFn('wrong' ,'退出失败')
         }
       }).catch(function (error) {
-        alert('退出失败')
+        hintFn('wrong' ,'退出失败')
       });
 }
 function tofind(type){
     if(isnull(searchinput.value)){
         fadesearch()
-        alert('请输入搜索内容！');
+        hintFn('warning' ,'请输入搜索内容！')
         return 
     }
     let thisvalue={
@@ -328,7 +354,7 @@ axios({
         header_class.innerHTML=``;
         for(let i of result.data.msg){
             header_class.innerHTML+=`
-                <a href="search?message=${i.type.name}&type=图片">${i.type.name}</a>
+                <a href="/Classification?id=${i.type.id}">${i.type.name}</a>
             `;
         }
     }else{

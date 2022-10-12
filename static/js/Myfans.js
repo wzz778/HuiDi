@@ -21,7 +21,7 @@ function tofollow(id,event){
                 followbutton[0].style.display='block'
             }
         }else{
-            alert(data.data.msg)
+            hintFn('warning' ,data.data.msg)
         }
       })
       .catch(function (error) {
@@ -48,7 +48,7 @@ function outfollow(id,event){
                 followbutton[1].style.display='block'
             }
         }else{
-            alert(data.data.msg)
+            hintFn('warning' ,data.data.msg)
         }
       })
       .catch(function (error) {
@@ -112,7 +112,7 @@ function getfan(){
                             <div class="message-con">
                                 ${button}</br>
                                 <a href="" class="send_message">私信</a>
-                                <span class="message-time">${ms[i].end_time}</span>
+                                <span class="message-time">${contrasttime(ms[i].end_time)}</span>
                             </div>
                         </div>
                     `

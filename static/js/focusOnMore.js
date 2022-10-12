@@ -41,7 +41,7 @@ function focusOnFn(event) {
                 return
             }
             // 取消关注
-            sendFn('/admin/deleteFocus', { focusId: parentElement.lastElementChild.innerHTML, uId: result.userInfo.id })
+            sendFn('/admin/deleteFocus', { focusId: event.parentElement.lastElementChild.innerHTML, uId: result.userInfo.id })
                 .then(result => {
                     event.innerHTML = '关注'
                     event.classList.remove('focusSty')
@@ -50,7 +50,8 @@ function focusOnFn(event) {
                     hintFn('warning', '网络错误，请重试')
                 })
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             hintFn('warning', '请先登录')
         })
 }

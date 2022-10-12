@@ -1,0 +1,185 @@
+{{extend './layout.html'}}
+{{block 'title'}}动态详情页{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/iconfont/iconfont.css">
+<link rel="stylesheet" href="/public/css/Universal.css">
+<link rel="stylesheet" href="/public/css/dynamicDetails.css">
+<link rel="stylesheet" href="/public/css/superDynamicDetails.css">
+{{/block}}
+{{block 'bodytop'}}
+<!-- 举报弹窗 -->
+<div class="reportHint none">
+    <div class="reportHintItem">
+        <div class="reportHintTop clearFloat">
+            <span>举报</span>
+            <button class="floatRight" onclick="cancelFn(this)">
+                <i class="iconfont">&#xe643;</i>
+            </button>
+        </div>
+        <div class="reportHintContent">
+            <select id="reportReason">
+                <option value="">请选择举报原因</option>
+                <option value="抄袭/未授权转载">抄袭/未授权转载</option>
+                <option value="淫秽低俗">淫秽低俗</option>
+                <option value="广告">广告</option>
+                <option value="言语辱骂">言语辱骂</option>
+                <option value="0">其他</option>
+            </select>
+        </div>
+        <div class="reportHintContent none">
+            <textarea id="otherReason" placeholder="说点什么吧"></textarea>
+        </div>
+        <div class="reportHintBottom">
+            <div class="none" id="sendReportInfo"></div>
+            <button onclick="sendReportFn(this)">确定</button>
+            <div class="none" id="reportId"></div>
+        </div>
+    </div>
+</div>
+<!-- 举报受理的弹窗 -->
+<div class="reportAccept none">
+    <div class="">
+        <div class="reportAcceptItem">
+            是否下架该作品:
+            <select id="shelves">
+                <option value="">请选择...</option>
+                <option value="是">是</option>
+                <option value="否">否</option>
+            </select>
+        </div>
+        <div class="reportAcceptItem">
+            是否封号该作者:
+            <select id="titles">
+                <option value="">请选择...</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+            </select>
+        </div>
+        <div class="reportAcceptItem none">
+            将该作者封号至:
+            <input type="datetime-local" id="dateChoice">
+        </div>
+        <div class="reportAcceptOperator">
+            <button onclick="sureReportFn()">确定</button>
+            <button onclick="cancelShowFn(this)">取消</button>
+        </div>
+    </div>
+</div>
+<div class="addShufflingFigure">
+    <div class="">
+        <span onclick="popupShowFn()">增加轮播图</span>
+    </div>
+    <div class="">
+        <a href="/mangereport">返回管理页</a>
+    </div>
+</div>
+{{/block}}
+{{block 'body'}}
+<div class="middle">
+    <!--  -->
+    <div class="content clearFloat">
+        <!-- 左边内容 -->
+        <div class="contentLeft floatLeft">
+            <div class="clearFloat userInfoTop">
+                <div class="userInfo floatLeft" id="userInfo">
+
+                </div>
+                <button class="focusOn floatRight" id="foucs">关注</button>
+            </div>
+            <!-- 单独的内容 -->
+            <div class="detailsWorks" id="detailsWorks">
+
+            </div>
+            <div class="operatorItem" id="operatorItem">
+                <div class="">
+                    <button class="operatorItemBtn" onclick="likeFn(this)">
+                        <i class="iconfont">&#xec7f;</i>
+                        <span>1</span>
+                    </button>
+                </div>
+                <div class="">
+                    <button class="operatorItemBtn" onclick="showCommentBoxFn()">
+                        <i class="iconfont">&#xe614;</i>
+                        <span>评论</span>
+                    </button>
+                </div>
+                <div class="">
+                    <button class="operatorItemBtn clickOperator" onclick="collectFn(this)">
+                        <i class="iconfont">&#xebae;</i>
+                        <span>1</span>
+                    </button>
+                </div>
+                <div class="">
+                    <button class="operatorItemBtn" onclick='reportFn(this,0)'>
+                        <i class="iconfont">&#xe601;</i>
+                        <span>举报</span>
+                    </button>
+                </div>
+            </div>
+            <!-- 评论 -->
+            <div class="Comment CommentStyChange">
+                <span>回复</span>
+                <textarea id="CommentInfo" placeholder="说些什么吧"></textarea>
+                <!-- 添加图片 -->
+                <div class="">
+                    <div class="addImg clearFloat">
+                        <span class="addImgSty">
+                            <input type="file" id="imgFile" style="cursor: pointer;">
+                            <span class="floatLeft addImgBtn">
+                                <i class="iconfont">&#xe70a;</i>
+                                <span id="clickChangeText">添加图片</span>
+                            </span>
+                        </span>
+                        <span class="floatRight">
+                            <button class="sendSty" onclick="sendCommentFn()">发送</button>
+                        </span>
+                        <span class="floatRight">
+                            <button class="cancelSty" onclick="closeCommentBoxFn(this)">取消</button>
+                        </span>
+
+                    </div>
+                    <div class="showImg none">
+                        <img id="showImgUrl" src="" alt="">
+                        <span class="showImgOperator">
+                            <button onclick="delShowImg()">删除</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 右边内容 -->
+        <div class="contentRight floatLeft">
+            <a href="javascript:;" id="albumInfo">
+            </a>
+        </div>
+    </div>
+</div>
+<!-- 所有评论 -->
+<div class="middle">
+    <div class="allComments">
+        <div class="allCommentsTop">
+            <span></span>
+            <span>所有评论</span>
+        </div>
+        <div class="allCommentsContent">
+
+        </div>
+        <div class="middleAnimation" id="animation">
+            <div class="pulse-container">
+                <div class="pulse-bubble pulse-bubble-1"></div>
+                <div class="pulse-bubble pulse-bubble-2"></div>
+                <div class="pulse-bubble pulse-bubble-3"></div>
+            </div>
+        </div>
+        <div class="noContent none">
+            还没有评论，你来说点什么吧
+        </div>
+    </div>
+</div>
+{{/block}}
+{{block 'bottom'}}
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+<script src="/public/iconfont/iconfont.js"></script>
+<script src="/public/js/dynamicDetails.js"></script>
+<script src="/public/js/superDynamicDetails.js"></script>
+{{/block}}

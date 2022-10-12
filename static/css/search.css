@@ -139,6 +139,12 @@
     /* min-height: 100px; */
     position: relative;
     overflow: hidden;
+    width: 100%;
+}
+
+.middleContentSty>a {
+    display: inline-block;
+    width: 100%;
 }
 
 .middleContentSty>a>img {
@@ -388,6 +394,6 @@
     font-size: 5px !important;
 }
 
-.searchContent>span:hover>button{
+.searchContent>span:hover>button {
     display: inline-block !important;
 }

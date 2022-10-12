@@ -206,6 +206,7 @@ getHotTicket()
 function getFocusOn() {
     judgeLogin()
         .then(result => {
+            console.log('result', result);
             // 登录了去访问关注接口
             sendFn('/admin/getFocusDynamic', { beginIndex: nowPageFocusOn })
                 .then(result => {
@@ -296,6 +297,7 @@ function getFocusOn() {
                 })
         })
         .catch(err => {
+            navFn(0, 1)
             // 未登录
             window.location.href = '/login'
         })

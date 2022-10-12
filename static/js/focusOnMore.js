@@ -114,7 +114,8 @@ sendFn('/picture/showRecommendType', {})
     })
 // 获取关注的信息
 function getFocusOnInfo(ele) {
-    sendFn('/picture/FindUsersRecommendationCategories', { type: `${ele.innerHTML}达人`, nowPage: ele.getAttribute('nowPage') })
+    let message = ele.innerHTML == '全部' ? '' : `${ele.innerHTML}达人`
+    sendFn('/picture/FindUsersRecommendationCategories', { type: message, nowPage: ele.getAttribute('nowPage') })
         .then(result => {
             console.log('获取信息', result)
             animation.classList.remove('none')

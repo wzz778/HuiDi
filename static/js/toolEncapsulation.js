@@ -28,13 +28,13 @@ function judgeFileImg(fileTemp, size) {
     resultObj.result = true
     return resultObj
 }
-let tipsback=document.getElementById('tipsback');
+let tipsback = document.getElementById('tipsback');
 // 提示文本信息(默认是错误)
 function hintFn(hintType, hintText) {
     let tempType = document.getElementsByClassName(hintType) || document.getElementsByClassName('wrong')
     tempType[0].classList.add('animatedSty')
     tempType[0].classList.remove('none')
-    tipsback.style.display='block';
+    tipsback.style.display = 'block';
     let tempTextEle = `${hintType}Text`
     let hintTextEle = document.getElementById(tempTextEle) || document.getElementById('wrongText')
     hintTextEle.innerHTML = hintText || '操作失败'
@@ -42,7 +42,7 @@ function hintFn(hintType, hintText) {
     setTimeout(() => {
         tempType[0].classList.remove('animatedSty')
         tempType[0].classList.add('none')
-        tipsback.style.display='none';
+        tipsback.style.display = 'none';
     }, 2000)
 }
 
@@ -72,7 +72,6 @@ function judgeLogin() {
         })
             .then(result => {
                 if (result.data.msg) {
-                    // console.log('封装的函数',result.data)
                     // 登录了
                     resolve(result.data)
                 } else {

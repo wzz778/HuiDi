@@ -47,7 +47,6 @@ function sureReportFn() {
         hintFn('warning', '请选择正确时间')
         return
     }
-    console.log(dateChoice.value)
     // 修改时间样式
     if (shelves.value == '否' && titles.value == '0') {
         reportAccept[0].classList.add('none')

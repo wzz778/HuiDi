@@ -111,6 +111,7 @@ function sendCommentFn() {
             formData.append('reportId', 0)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
+                    console.log('发布主评论', result)
                     userObj.commentId = result.msg[0].id
                     sendArrNone.push(result.msg[0].id)
                     // 将评论的id传过来
@@ -169,11 +170,6 @@ function addComment(userObj) {
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
-                        <span class="dividingLine"></span>
-                        <span class="likeSty">
-                            <i class="iconfont">&#xec7f;</i>
-                            <span>0</span>
-                        </span>
                     </span>
                 </div>
                 <div class="commentsContent">
@@ -203,6 +199,7 @@ function delCommentFn(event) {
             return sendFn('/admin/deleteComment', { id: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId, userId: JSON.parse(event.parentElement.firstElementChild.innerHTML).userId })
         })
         .then(result => {
+            console.log('删除评论', result)
             if (result.err == 0) {
                 event.parentElement.parentElement.parentElement.parentElement.remove()
                 // 判断是否还有评论
@@ -213,6 +210,7 @@ function delCommentFn(event) {
                     animation.classList.add('none')
                     return
                 }
+                return
             }
             // 不能删除他人的评论
             hintFn('warning', '您不能删除他人评论')
@@ -327,9 +325,10 @@ function addCommentSonComment(event, commentObj) {
             return sendFn('/admin/publicComment', commentObj)
         })
         .then(result => {
+            console.log('回复评论', result)
             let tempObj = {
                 userId: commentObj.id,
-                commentId: commentObj.superId,
+                commentId: result.msg[0].id,
                 userName: commentObj.sendName,
                 userImg: commentObj.sendSrc
             }
@@ -358,15 +357,6 @@ function addCommentSonComment(event, commentObj) {
                         <div class="replyCommneBottom">
                             <div class="none">${JSON.stringify(tempObj)}</div>
                             <span class="sendDate">${myDate.getFullYear()}-${dataCompletion(myDate.getMonth() + 1)}-${dataCompletion(myDate.getDate())} ${dataCompletion(myDate.getHours())}:${dataCompletion(myDate.getMinutes())}:${dataCompletion(myDate.getSeconds())}</span>
-                            <!-- 举报按钮 -->
-                            <button>
-                                <i class="iconfont">&#xe69b;</i>
-                            </button>
-                            <!-- 点赞 -->
-                            <button>
-                                <i class="iconfont">&#xec7f;</i>
-                                <span>1</span>
-                            </button>
                             <button onclick="replayCommentShowFn(this)">回复</button>
                             <button onclick="delReplyCommentFn(this)">删除</button>
                             <button onclick='reportFn(this)'>举报</button>
@@ -486,6 +476,10 @@ function getAllComment() {
                 if (result.msg.list[i].commentList) {
                     // 遍历二级评论
                     for (let j = 0; j < result.msg.list[i].commentList.length; j++) {
+                        let commentSonDel = ''
+                        if (result.msg.login && result.msg.login == result.msg.list[i].commentList[j].comment.ob.u_id.id) {
+                            commentSonDel = `<button onclick="delReplyCommentFn(this)">删除</button>`
+                        }
                         let tempObj = {
                             userId: result.msg.list[i].commentList[j].comment.ob.u_id.id,
                             userImg: result.msg.list[i].commentList[j].comment.ob.u_id.img_url,
@@ -516,13 +510,8 @@ function getAllComment() {
                         <div class="replyCommneBottom">
                             <div class="none">${JSON.stringify({ commentId: result.msg.list[i].commentList[j].comment.id, userId: result.msg.list[i].commentList[j].comment.ob.u_id.id })}</div>
                             <span class="replyCommnetDate">${result.msg.list[i].commentList[j].comment.create_time}</span>
-                            <!-- 点赞 -->
-                            <button>
-                                <i class="iconfont">&#xec7f;</i>
-                                <span>1</span>
-                            </button>
                             <button onclick="replayCommentShowFn(this)">回复</button>
-                            <button onclick="delReplyCommentFn(this)">删除</button>
+                            ${commentSonDel}
                             <button onclick='reportFn(this)'>举报</button>
                         </div>
                     </div>
@@ -533,6 +522,10 @@ function getAllComment() {
                 let imgStr = ''
                 if (result.msg.list[i].comment.img_url) {
                     imgStr = `<img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].comment.img_url}" onload="operatorImgFn(this)">`
+                }
+                let commentDel = ``
+                if (result.msg.login && result.msg.login == result.msg.list[i].comment.ob.u_id.id) {
+                    commentDel = `<button class="operatorBtn" onclick="delCommentFn(this)">删除</button>`
                 }
                 let userObj = {
                     name: result.msg.list[i].comment.ob.u_id.name,
@@ -554,15 +547,10 @@ function getAllComment() {
                     <span class="floatRight commentsOperator">
                         <span class="onmouseShow">
                             <div class="none">${JSON.stringify({ commentId: result.msg.list[i].comment.id, userId: result.msg.list[i].comment.ob.u_id.id })}</div>
-                            <button class="operatorBtn" onclick="delCommentFn(this)">删除</button>
+                            ${commentDel}
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
-                        <span class="dividingLine"></span>
-                        <span class="likeSty">
-                            <i class="iconfont">&#xec7f;</i>
-                            <span>0</span>
-                        </span>
                     </span>
                 </div>
                 <!-- 内容 -->

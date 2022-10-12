@@ -25,17 +25,6 @@
                     暂无记录
                 </div>
             </div>
-            <!-- 热门搜索 -->
-            <div class="hortSearch">
-                <div class="searchHistoryTop">热门搜索</div>
-                <!-- 存放历史记录 -->
-                <div class="searchHortContent">
-                    <a href="javascript:;">欧美情头</a>
-                    <a href="javascript:;">拼贴壁纸</a>
-                    <a href="javascript:;">高级感背</a>
-                    <a href="javascript:;">赵露思</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -71,21 +60,24 @@
     <div class="content clearFloat">
         <div class="searchHistory floatLeft">
             <div class="searchHistoryItem">
-                <div class="searchHistoryTop">历史记录</div>
+                <div class="searchHistoryTop clearFloat">
+                    <span>历史记录</span>
+                    <button onclick="delAllSearch()">清空</button>
+                </div>
                 <!-- 存放历史记录 -->
-                <div class="searchHistoryContent">
+                <div class="searchHistoryContent none" id="searchNoContent">
                     暂无记录
+                </div>
+                <div class="searchContent" id="searchContent">
+
                 </div>
             </div>
             <!-- 热门搜索 -->
             <div class="hortSearch">
                 <div class="searchHistoryTop">热门搜索</div>
                 <!-- 存放历史记录 -->
-                <div class="searchHortContent">
-                    <a href="javascript:;">欧美情头</a>
-                    <a href="javascript:;">拼贴壁纸</a>
-                    <a href="javascript:;">高级感背</a>
-                    <a href="javascript:;">赵露思</a>
+                <div class="searchHortContent" id="carouselRightAll">
+                   
                 </div>
             </div>
         </div>

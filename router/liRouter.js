@@ -41,6 +41,11 @@ router.get('/404', (req, res) => {
     res.render('404.html')
 })
 
+// 管理员看的专辑页面
+router.get('/superAlbum', (req, res) => {
+    res.render('superAlbum.html')
+})
+
 // 封装的查看多少点赞数量，以及是否点赞
 function getLikeSumFn(url, type, obj) {
     return new Promise((resolve, resject) => {
@@ -255,12 +260,16 @@ router.post('/picture/showComment', (req, res) => {
     })
         .then(result => {
             if (result.data.msg == 'OK') {
+                if (req.session.token) {
+                    result.data.data.login = req.session.user.id
+                }
                 res.send({ err: 0, msg: result.data.data })
                 return
             }
             req.send({ err: -1, msg: result.data })
         })
         .catch(err => {
+            console.log('错误', err)
             res.send({ err: -1, msg: err })
         })
 })
@@ -503,6 +512,7 @@ router.post('/picture/showAllPicture', (req, res) => {
         }
     })
         .then(result => {
+            console.log('获取所有', result)
             if (result.data.msg == 'OK') {
                 let sendArr = []
                 for (let i = 0; i < result.data.data.list.length; i++) {
@@ -613,6 +623,7 @@ router.post('/admin/getFocusDynamic', (req, res) => {
         }
     })
         .then(result => {
+            console.log('关注', result.data)
             if (result.data.msg == 'OK') {
                 let sendArr = []
                 for (let i = 0; i < result.data.data.list.length; i++) {
@@ -733,19 +744,21 @@ router.post('/picture/showAlbumById', (req, res) => {
 })
 // 推荐关注
 router.post('/picture/recommendFocus', (req, res) => {
-    let { size } = req.body
+    let { size, beginIndex } = req.body
     axios({
         method: 'GET',
         url: '/picture/recommendFocus',
         params: {
-            size: size
+            size: size,
+            begin_index: beginIndex
         }
     })
         .then(result => {
+            console.log('推荐关注', result.data)
             let sendArr = []
-            for (let i = 0; i < result.data.data.length; i++) {
-                if (result.data.data[i]) {
-                    sendArr[i] = judgeFocus(req, result.data.data[i])
+            for (let i = 0; i < result.data.data.list.length; i++) {
+                if (result.data.data.list[i]) {
+                    sendArr[i] = judgeFocus(req, result.data.data.list[i])
                 }
             }
             Promise.all(sendArr)
@@ -845,4 +858,130 @@ router.post('/picture/getInfo/talentShow', (req, res) => {
             res.send({ err: -1, msg: err })
         })
 })
+// 显示分类
+router.post('/picture/showAllType', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/showAllType',
+    })
+        .then(result => {
+            for (let i = 0; i < result.data.data.length; i++) {
+                if (result.data.data[i].type.id == id) {
+                    res.send({ err: 0, msg: result.data.data[i] })
+                    return
+                }
+            }
+            res.send({ err: -1, msg: '没有该一级类别' })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 添加轮播图
+router.post('/superAdmin/addCarousel', mult, (req, res) => {
+    let { alId } = req.body
+    let formdata = new FormData()
+    for (let v in req.files) {
+        formdata.append('file', fs.createReadStream(req.files[v].path))
+    }
+    formdata.append('al_id', alId)
+    axios({
+        method: 'POST',
+        url: '/superAdmin/addCarousel',
+        data: formdata,
+        headers: {
+            token: req.session.token,
+            formdata: formdata.getHeaders(),
+            maxBodyLength: 1000000000,
+        }
+    })
+        .then(result => {
+            console.log('上传图片', result.data)
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            console.log('上传图片', err)
+            res.send({ err: -1, msg: err })
+        })
+})
+// 修改状态
+router.post('/superAdmin/updateAlbumStatus', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'PUT',
+        url: '/superAdmin/updateAlbumStatus',
+        params: {
+            id: id,
+            status: 3
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 显示热门内容
+router.post('/picture/ShowHotContent', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/picture/ShowHotContent',
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 推荐用户类别
+router.post('/picture/showRecommendType', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/picture/showRecommendType',
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取领域内认证用户
+router.post('/picture/FindUsersRecommendationCategories', (req, res) => {
+    let { nowPage, type } = req.body
+    axios({
+        method: 'GET',
+        url: '/picture/FindUsersRecommendationCategories',
+        params: {
+            begin_index: nowPage,
+            type: type,
+            size: 10
+        }
+    })
+        .then(result => {
+            let sendArr = []
+            for (let i = 0; i < result.data.data.list.length; i++) {
+                if (result.data.data.list[i]) {
+                    sendArr[i] = judgeFocus(req, result.data.data.list[i])
+                }
+            }
+            Promise.all(sendArr)
+                .then(() => {
+                    res.send({ err: 0, msg: result.data.data })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
 module.exports = router

@@ -1,0 +1,79 @@
+.Popup {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+}
+
+.Popup>div {
+    width: 400px;
+    min-height: 180px;
+    max-height: 330px;
+    background-color: white;
+    margin: 100px auto;
+    padding: 20px;
+}
+
+.uploadFile {
+    position: relative;
+}
+
+.uploadFileSty {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+#file {
+    position: absolute;
+    top: 0px;
+    margin-left: 0px;
+    display: block;
+    width: 400px;
+    height: 102px;
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.uploadFileSty {
+    color: #056DE8;
+}
+
+.uploadFileOperator {
+    text-align: center;
+}
+
+.uploadFileOperator>button {
+    color: white;
+    background-color: #1D9C73;
+}
+
+#cancelSty {
+    background-color: #FF5E52;
+}
+
+#showImg {
+    width: 300px;
+    margin: 10px 50px;
+    max-height: 170px;
+}
+
+.addShufflingFigure {
+    position: fixed;
+    right: 50px;
+    top: 100px;
+}
+
+.addShufflingFigure>div {
+    margin-top: 10px;
+    color: #056DE8;
+    cursor: pointer;
+}
+
+.addShufflingFigure>div>a {
+    color: #056DE8;
+}

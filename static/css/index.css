@@ -188,6 +188,7 @@
 .carouselRightAll {
     padding-right: 30px;
     margin-top: 10px;
+    height: 153px;
 }
 
 .carouselRightAll>a {
@@ -198,6 +199,11 @@
     padding: 4px;
     border-radius: 28px;
     border: 1px solid #cdcdcd;
+    width: 85px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
     color: #777;
 }
 
@@ -229,11 +235,14 @@
 }
 
 .carouselRightFeaturedItem>a>span:nth-child(2) {
+    display: inline-block;
     border-radius: 0px 28px 28px 0px;
     border: 1px solid #056DE8;
     padding: 4px 12px;
     position: relative;
     left: -4px;
+    width: 90px;
+    text-align: center;
 }
 
 .logoItem>a {
@@ -465,5 +474,5 @@
 
 .focusOnSty {
     color: #056de8;
-    background-color: rgba(5,109,232,.1);
+    background-color: rgba(5, 109, 232, .1);
 }

@@ -39,7 +39,23 @@
 {{/block}}
 {{block 'body'}}
 <div class="report-header">
-
+    <div class="search">
+        <div class="layer-form-item">
+            <label class="layer-form-label">举报类型：</label>
+            <div class="layer-input-block">
+                <div class="layer-unselect layer-form-select ">
+                    <div class="layer-select-title">
+                        <input type="text" name=""  placeholder="评论举报" class="layer-input layer-click" readonly>
+                        <i class="layer-edge"></i>
+                    </div>
+                    <dl class="layer-list">
+                        <dd class="layer-select-tips layer-this startTimes" value="">评论举报</dd>
+                        <dd class="layer-select-tips startTimes" value="">内容举报</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="card-body">
     <ul class="card-body-list">
@@ -69,27 +85,10 @@
             </li>
         </ul> -->
     </div>
-</div>
-<div class="page-change">
-    <div class="page-background">
-        <span class="page-size">共 1 条</span>
-        <div style="display: inline-block;vertical-align: 9px;margin-right: 10px;">
-            <select class="pageSize">
-                <option value="5">5条/页</option>
-                <option value="10">10条/页</option>
-                <option value="20">20条/页</option>
-                <option value="50">50条/页</option>
-            </select>
-        </div>
-        <button class="page-left"><img src="public/iconfont/arrow5.png" alt="" class="page_icon"></button>
-        <span class="page-current">1</span>
-        <button class="page-right"><img src="public/iconfont/arrow3.png" alt="" class="page_icon"></button>
-        <span class="page-goto">
-            前往
-            <input type="text" class="page-input" value="1">
-            页
-        </span>
+    <div class="pageings">
+        <ul id="pagination"></ul>
     </div>
+</div>
 </div>
 {{/block}}
 {{block 'footer'}}

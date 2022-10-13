@@ -1,0 +1,27 @@
+.page-input{
+    margin: 0px 5px;
+    padding: 0 3px;
+    width: 70px;
+    height: 36px;
+    outline: none;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid #dedede;
+    line-height: 36px;
+    display: inline-block;
+    vertical-align: 5px;
+}
+.page-button{
+    margin-left: 5px;
+    display: inline-block;
+    width: 60px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    transition: all .3s;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+}

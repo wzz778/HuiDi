@@ -6,7 +6,8 @@ let cancel = document.getElementsByClassName('cancel');
 let hidden = document.getElementsByClassName('hidden');
 let warn_text = document.getElementsByClassName('warn-text');
 let classifier_input = document.getElementsByClassName('classifier-input');
-let detail = document.getElementsByClassName('detail');
+let detail = document.getElementsByClassName('details');
+let pageings = document.getElementsByClassName('pageings');
 
 classifier_input[0].oninput = function(){
     this.value = this.value.replace(/\s*/g,"");
@@ -24,10 +25,10 @@ function renders(begin_index,size){
         }
     }).then(result =>{
         console.log(result.data);
-        page_current[0].maxLength = result.data.msg.all_page
-        page_current[0].all_size = result.data.msg.all_count
-        page_current[0].cur_index = result.data.msg.cur_index;
-        page_current[0].size = result.data.msg.size;
+        pageings[0].maxLength = result.data.msg.all_page
+        pageings[0].all_size = result.data.msg.all_count
+        pageings[0].cur_index = result.data.msg.cur_index;
+        pageings[0].size = result.data.msg.size;
         let all = '';
         for(let i=0;i<result.data.msg.list.length;i++){
             if(result.data.msg.list[i].list.length == 0){
@@ -41,7 +42,7 @@ function renders(begin_index,size){
                         </li>
                         <li class="card-list-mail audit-change">${result.data.msg.list[i].images.create_time}</li>
                         <li class="card-list-other audit-change">
-                            <button class="btn detail">
+                            <button class="btn details">
                                 <img src="public/iconfont/detail1.png" alt="" class="forbid">
                                 详情
                             </button>
@@ -66,7 +67,7 @@ function renders(begin_index,size){
                         </li>
                         <li class="card-list-mail audit-change">${result.data.msg.list[i].images.create_time}</li>
                         <li class="card-list-other audit-change">
-                            <button class="btn detail">
+                            <button class="btn details">
                                 <img src="public/iconfont/detail1.png" alt="" class="forbid">
                                 详情
                             </button>
@@ -84,7 +85,7 @@ function renders(begin_index,size){
             
         }
         card_body_main[0].innerHTML = all;
-        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size,-1)
+        generatePagination(result.data.msg.all_page,result.data.msg.size,result.data.msg.cur_index,result.data.msg.all_count,renders,-1);
         for(let j=0;j<result.data.msg.list.length;j++){
             pass[j].onclick = function(){
                 pass[0].ids = result.data.msg.list[j].images.id;
@@ -95,6 +96,10 @@ function renders(begin_index,size){
                 pass[1].ids = result.data.msg.list[j].images.id;
                 hidden[0].style.display = 'block'
             }
+            detail[j].addEventListener('click',function(){
+                console.log(1);
+                window.location.href = 'detail?id=' + result.data.msg.list[j].images.id;
+            })
         }
     })
 }
@@ -114,7 +119,7 @@ confirm[0].onclick = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            renders(page_current[0].cur_index,page_current[0].size,-1);
+            renders(pageings[0].cur_index,pageings[0].size,-1);
             hidden[0].style.display = 'none'
         })
     }
@@ -132,6 +137,6 @@ confirm[1].onclick = function(){
     }).then(result =>{
         console.log(result.data);
         hidden[1].style.display = 'none'
-        renders(page_current[0].cur_index,page_current[0].size,-1);
+        renders(pageings[0].cur_index,pageings[0].size,-1);
     })
 }

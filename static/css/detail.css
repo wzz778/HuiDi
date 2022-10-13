@@ -58,7 +58,7 @@
     padding-left: 15px;
     box-sizing: border-box;
 }
-.download{
+.returnBack{
     position: absolute;
     padding: 5px 10px;
     font-size: 12px;
@@ -76,6 +76,26 @@
     background-color: rgb(231 76 60);
     border-color: rgb(231 76 60);
     right: 20px;
+    top: 10px;
+}
+.pass{
+    position: absolute;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    display: inline-block;
+    font-weight: 400;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: white;
+    background-color: rgb(13,202,183);
+    border-color: rgb(13,202,183);
+    right: 82px;
     top: 10px;
 }
 .returns{
@@ -204,14 +224,14 @@ a:hover{
     object-fit: cover;
 }
 .content-main{
-    border: 1px solid rgb(204 204 204);
+    /* border: 1px solid rgb(204 204 204); */
     border-radius: 4px;
 }
 .content-title{
     padding: 8px;
 }
 .cancel{
-    background-color: rgb(135,222,117);
+    background-color: rgb(231 76 60);
     float: right;
     margin-right: 35px;
     cursor: pointer;
@@ -223,4 +243,61 @@ a:hover{
     margin-left: 35px;
     cursor: pointer;
     margin-bottom: 25px;
+}
+
+
+.warn{
+    width: 500px;
+    height: 170px;
+}
+.pop-main{
+    font-weight: 900;
+}
+.warning{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: -9px;
+    margin-left: 10px;
+}
+.warn-text{
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 32px;
+}
+.pop-header{
+    display: block;
+    padding: 10px;
+    line-height: 36px;
+    font-size: 18px;
+    color: black;
+    font-weight: 700;
+}
+.button{
+    position: relative;
+    bottom: -30px;
+}
+.confirm{
+    background-color: rgb(135 222 117);
+    margin-left: 35px;
+    cursor: pointer;
+}
+.classifier-input {
+    display: inline-block;
+    width: 450px;
+    height: 42px;
+    outline: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid rgb(204 204 204);
+    line-height: 1.42857143;
+}
+.returnBacks{
+    height: 200px;
+}
+.hint{
+    font-size: 18px;
+    padding: 20px;
+    color: black;
+    border-radius: 4px;
 }

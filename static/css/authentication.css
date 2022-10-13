@@ -1,0 +1,249 @@
+.card-header{
+    margin-bottom: 10px;
+}
+.btn{
+    width: 118px;
+    height: 40px;
+    border-radius: 4px;
+    border: 0;
+    color: rgb(255 255 255);
+    font-size: 17px;
+    line-height: 40px;
+}
+.btn-new{
+    display: inline-block;
+    cursor: pointer;
+    height: 30px;
+    width: 71px;
+    line-height: 32px;
+    background-color: rgb(135 222 117);   
+    font-size: 10px;
+}
+.classify-list{
+    height: 49px;
+    border-bottom: 1px solid rgb(223 230 236);
+    line-height: 49px;
+}
+.secondLevel{
+    display: none;
+}
+.classify-list-next{
+    height: 49px;
+    border-bottom: 1px solid rgb(223 230 236);
+    line-height: 49px;
+    transition: all .5s;
+}
+.classify-name{
+    display: inline-block;
+    width: 160px;
+    text-align: left;
+    margin-left: 22px;
+}
+.classify-next-name{
+    display: inline-block;
+    width: 160px;
+    text-align: left;
+    margin-left: 45px;
+}
+.arrow{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+    vertical-align: -2px;
+    cursor: pointer;
+    transition: all .25s;
+    transform: rotate(0) ;
+}
+.func{
+    float: right;
+    margin-right: 15px;
+}
+.btn-update{
+    display: inline-block;
+    cursor: pointer;
+    height: 29px;
+    width: 71px;
+    line-height: 29px;
+    background-color: rgb(243,156,18);
+    font-size: 10px;
+}
+.update{
+    display: inline-block;
+    cursor: pointer;
+    height: 29px;
+    width: 71px;
+    line-height: 29px;
+    background-color: rgb(243,156,18);
+    font-size: 10px;
+}
+.btn-new{
+    display: inline-block;
+    cursor: pointer;
+    height: 29px;
+    width: 71px;
+    line-height: 29px;
+    background-color: rgb(135,222,117);
+    font-size: 10px;
+}
+.new{
+    display: inline-block;
+    cursor: pointer;
+    height: 29px;
+    width: 71px;
+    line-height: 29px;
+    background-color: rgb(135,222,117);
+    font-size: 10px;
+}
+.btn-delete{
+    display: inline-block;
+    cursor: pointer;
+    height: 29px;
+    width: 71px;
+    line-height: 29px;
+    background-color: rgb(231,76,60);
+    font-size: 10px;
+}
+.delete{
+    display: inline-block;
+    cursor: pointer;
+    height: 29px;
+    width: 71px;
+    line-height: 29px;
+    background-color: rgb(231,76,60);
+    font-size: 10px;
+}
+.hidden{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128,0.5);
+    z-index: 999999;
+    display: none;
+}
+.pop-up{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+}
+.hint{
+    font-size: 18px;
+    padding: 8px;
+    color: black;
+    border-radius: 4px;
+}
+.classifier{
+    padding: 8px;
+    color: black;
+    font-size: 14px;
+}
+.classifier-input{
+    display: inline-block;
+    width: 450px;
+    height: 42px;
+    outline: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid rgb(204 204 204);
+    line-height: 1.42857143;
+}
+.classifier-title   {
+    display: inline-block;
+    line-height: 58px;
+    margin-right: 5px;
+}
+.btn-confirm{
+    background-color: rgb(135 222 117);
+    margin-left: 35px;
+    cursor: pointer;
+}
+.btn-cancel{
+    background-color: rgb(231 76 60);
+    float: right;
+    margin-right: 35px;
+    cursor: pointer;
+}
+.warn{
+    width: 500px;
+    height: 170px;
+}
+.pop-header{
+    display: block;
+    padding: 10px;
+    line-height: 36px;
+    font-size: 18px;
+    color: black;
+    font-weight: 700;
+}
+.warning{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: -9px;
+    margin-left: 10px;
+}
+.warn-text{
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 32px;
+}
+.button{
+    position: relative;
+    bottom: -30px;
+}
+
+.confirm{
+    background-color: rgb(135 222 117);
+    margin-left: 35px;
+    cursor: pointer;
+}
+.cancel{
+    background-color: rgb(231 76 60);
+    float: right;
+    margin-right: 35px;
+    cursor: pointer;
+}
+
+
+
+
+.warns{
+    width: 480px;
+    height: 320px;
+    padding: 15px;
+}
+.warnings{
+    display: block;
+    width: 200px;
+    height: 200px;
+    vertical-align: -9px;
+    padding: 5px;
+    /* margin-left: 10px; */
+    margin: 0 auto;
+}
+.warn-texts{
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 32px;
+}
+.delay{
+    transition: all 0.5s ease;
+}
+.confirmes{
+    background-color: rgb(135 222 117);
+    margin-left: 35px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}

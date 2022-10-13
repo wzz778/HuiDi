@@ -13,7 +13,7 @@
         <div class="pull-left">
             <div class="logo">
                 <a href="homepage.html">
-                    <img src="public/img/be42c240.jpg" alt="">
+                    <img src="public/img/huidilogo.png" alt="">
                 </a>
             </div>
             <div class="hamburger">
@@ -32,8 +32,13 @@
                         <div class="dropdown-content-body">
                            <ul>
                                 <li>
-                                    <a href="">
+                                    <a href="/">
                                         返回首页
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/login">
+                                        退出登录
                                     </a>
                                 </li>
                            </ul>
@@ -112,6 +117,17 @@
                         </div>
                         {{/block}}
                     </li>
+                    <li class="change">
+                        {{block 'authentication'}}
+                        <a href="authentication" class="changes">
+                            <i><img src="public/iconfont/authentication.png" alt="" class="sign"></i>
+                            认证范围管理
+                        </a>
+                        <div class="signing">
+
+                        </div>
+                        {{/block}}
+                    </li>
                 </ul>
             </div>
         </div>
@@ -129,6 +145,7 @@
     </div>
 </div>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="public/js/backstage.js"></script>
 {{block 'footer'}}{{/block}}
 </html>

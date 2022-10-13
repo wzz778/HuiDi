@@ -7,14 +7,14 @@ const router = express.Router();
 // 设置全局的拦截
 router.all('*', (req, res, next) => {
     console.log('管理员的', jwt.decode(req.session.token))
-    // if(!req.session.token){
-    //     res.render('login.html')
-    //     return
-    // }
-    // if(jwt.decode(req.session.token).power.indexOf('/superAdmin/')==-1){
-    //     res.render('404.html')
-    //     return
-    // }   
+    if(!req.session.token){
+        res.render('login.html')
+        return
+    }
+    if(jwt.decode(req.session.token).power.indexOf('/superAdmin/')==-1){
+        res.render('404.html')
+        return
+    }   
     return next()
 })
 
@@ -55,9 +55,20 @@ router.get('/collection', (req, res) => {
 router.get('/role', (req, res) => {
     res.render('role.html');
 })
+// 认证范围管理
+router.get('/authentication', (req, res) => {
+    res.render('authentication.html');
+})
 
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 
+
+
+// 获取管理员的信息
+router.get('/superAdmin/gainId',(req,res) =>{
+    let user = req.session.user;
+    res.send({err:0,msg:user});
+})
 
 //显示所有用户
 router.get('/superAdmin/showAllUser', (req, res) => {
@@ -144,8 +155,8 @@ router.get('/superAdmin/deleteRole', (req, res) => {
 })
 
 //添加角色信息
-router.post('/superAdmin/manageRole', (req, res) => {
-    let { list, role } = req.body;
+router.get('/superAdmin/manageRole', (req, res) => {
+    let { list, role_name , orders} = req.query;
     console.log('数组', list)
     let urlStr = ``
     let tempStr = `http://152.136.99.236:8080/superAdmin/manageRole?`
@@ -153,11 +164,19 @@ router.post('/superAdmin/manageRole', (req, res) => {
         urlStr += `list=${list[i]}&`
     }
     tempStr += urlStr
-    tempStr += `role=${role}`
-    console.log('url', tempStr)
+    tempStr += `role_name=${role_name}`
+    tempStr += `orders=${orders}`
+    // console.log('url', tempStr)
+    // list = JSON.stringify(list);
+    console.log(list);
     axios({
         method: 'POST',
         url: tempStr,
+        // params:{
+        //     list:list,
+        //     role_name:role_name,
+        //     orders:orders
+        // },
         headers: {
             token: req.session.token
         }
@@ -190,6 +209,34 @@ router.get('/superAdmin/showAllNoPass', (req, res) => {
     })
 })
 
+
+//显示单个未审核的内容
+router.get('/superAdmin/showAllNoPasss', (req, res) => {
+    let { begin_index,size ,id} = req.query;
+    axios({
+        method: 'GET',
+        url: '/superAdmin/showAllNoPass',
+        params: {
+            begin_index:begin_index,
+            size:size,
+            id:id
+        },
+        headers: {
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+
+
+
+
+
 //显示角色内容即可用接口
 router.get('/superAdmin/showRole', (req, res) => {
     let {begin_index,size} = req.query
@@ -211,7 +258,14 @@ router.get('/superAdmin/showRole', (req, res) => {
         for (let i = 0; i < result.data.data.list.length; i++) {
             let temp = [];
             for (let j = 0; j < result.data.data.list[i].list.length; j++) {
-                temp.push(result.data.data.list[i].list[j].permiss_name)
+                let arr = result.data.data.list[i].list[j].permiss_name.split('/');
+                if( arr.length == 1){
+                    temp.push(arr[0])
+                }else{
+                    temp.push(arr[1])
+                }
+                console.log(arr);
+                // temp.push(result.data.data.list[i].list[j].permiss_name)
                 temps[i] = temp
             }
         }
@@ -380,6 +434,7 @@ router.get('/superAdmin/deleteType', (req, res) => {
 //显示专辑
 router.get('/superAdmin/showAlbum', (req, res) => {
     let {begin_index,size,status} = req.query
+    // status = JSON.stringify(status);
     axios({
         method: 'GET',
         url: '/superAdmin/showAlbum',
@@ -515,13 +570,14 @@ router.get('/superAdmin/updateAlbumStatuss',(req,res)=>{
 
 // 受理举报
 router.get('/superAdmin/acceptReport',(req,res)=>{
-    let {begin_index,size} = req.query
+    let {begin_index,size,type} = req.query
     axios({
-        method:'PUT',
+        method:'GET',
         url:'/superAdmin/acceptReport',
         params:{
             begin_index:begin_index,
-            size:size
+            size:size,
+            type:type
         },
         headers:{
             token:req.session.token
@@ -551,6 +607,104 @@ router.get('/superAdmin/showRandomAlbum',(req,res)=>{
 })
 
 
+// 增添认证信息的内容
+router.get('/superAdmin/addCertificationInfo',(req,res)=>{
+    let {area_name} = req.query;
+    axios({
+        method:'POST',
+        url:'/superAdmin/addCertificationInfo',
+        params:{
+            area_name:area_name
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
 
+//删除认证领域具体内容
+router.get('/superAdmin/deleteCertificationArea',(req,res)=>{
+    let {ids} = req.query;
+    axios({
+        method:'DELETE',
+        url:'/superAdmin/deleteCertificationArea',
+        params:{
+            ids:ids
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+//修改认证领域的内容
+router.get('/superAdmin/updateCertificationArea',(req,res)=>{
+    let {area_name , id} = req.query;
+    axios({
+        method:'PUT',
+        url:'/superAdmin/updateCertificationArea',
+        params:{
+            area_name:area_name,
+            id:id
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+
+//认证用户信息
+router.get('/superAdmin/certificationUser',(req,res)=>{
+    let {certification , id} = req.query;
+    axios({
+        method:'POST',
+        url:'/superAdmin/certificationUser',
+        params:{
+            certification:certification,
+            id:id
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+
+//显示能给用户认证领域的具体内容
+router.get('/superAdmin/showCertificationArea',(req,res)=>{
+    axios({
+        method:'GET',
+        url:'/superAdmin/showCertificationArea',
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
 
 module.exports = router;

@@ -333,7 +333,7 @@ router.get('/api/getmymessage', (req, res) => {
     }
 })
 //获取用户信息
-router.get('/api/getusermessage', (req, res) => {   
+router.get('/api/getusermessage', (req, res) => {
     console.log(req.query );
         axios({
             url:'/picture/showUser',
@@ -578,6 +578,31 @@ router.post('/api/remymessage', multipartMiddleware,(req, res) => {
         res.send({ err: -1, msg: err})
     })
 })  
+//修改用户状态
+router.post('/api/remystatus',(req, res) => {
+    let formdata = new FormData()
+    formdata.append('status',req.body.status)
+    formdata.append('id',req.session.userid)
+    axios({
+        method: 'POST',
+        url: '/admin/updateUserPicture',
+        data:formdata,
+        // headers: formdata.getHeaders(),
+        headers:{
+            token:req.session.token,
+            formdata:formdata.getHeaders(),//传递formdata数据
+            maxBodyLength:1000000000
+        }
+    })
+    .then((result) => {
+        // console.log(result.data)
+        res.send({ err: 0, msg: result.data })
+    })
+    .catch((err) => {
+        // console.log(err)
+        res.send({ err: -1, msg: err})
+    })
+}) 
 //发布动态
 router.post('/api/Releasedynamics', multipartMiddleware,(req, res) => {
     let formdata = new FormData()
@@ -858,6 +883,32 @@ router.get('/api/getUserIsMessage', (req, res) => {
         res.send({ err: -1, msg:'未登录'})
     }
 })
+//检查是否有没读的聊天
+router.get('/api/getUserIsChat', (req, res) => {   
+    if(req.session.userid){
+        axios({
+            url:'/admin/getUnreadMessages',
+            method:'get',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                u_id:req.session.userid
+            }
+        }).then(response=>{ 
+            if(response.data.msg=='OK'){
+                res.send({ err: 0, msg:response.data.data});
+            }else{
+                res.send({ err: -1, msg:response.data.msg});
+            }
+        }).catch(function (error) {
+            console.log(error.response);
+            res.send({ err: -1, msg: '网络错误' })
+        });
+    }else{
+        res.send({ err: -1, msg:'未登录'})
+    }
+})
 function oneaddtitle(onelist){
     return new Promise((resolve,reject)=>{
         axios({
@@ -972,6 +1023,29 @@ router.get('/api/lookmymessagebytype', (req, res) => {
         res.send({ err: -1, msg: '获取失败' })
     })
 })
+//删除信息
+router.post('/api/deletemymessage', (req, res) => {
+    axios({
+        method: 'DELETE',
+        url: '/admin/deleteDynamic',
+        headers:{
+            token:req.session.token,
+        },
+        params:{
+            ids:req.body.toString()
+        },
+    }).then((result) => {
+        if (result.data.msg == 'OK') {  
+            res.send({ err: 0, msg: result.data })
+        } else {
+            res.send({ err: -1, msg: result.data })
+        }
+    }).catch((err) => {
+
+        res.send({ err: -1, msg: err })
+    })
+})
+
 //获取文章类型
 router.get('/api/lookalltype', (req, res) => {   
     axios({
@@ -986,6 +1060,30 @@ router.get('/api/lookalltype', (req, res) => {
     }).catch(function (error) {
         res.send({ err: -1, msg: '网络错误' })
     });
+})
+//观看两者的关注
+router.get('/api/lookallchat', (req, res) => {   
+    console.log();
+        axios({
+            method:'GET',
+            url:'admin/getWebSocketInfo',
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                from_id:req.query.fromid,
+                send_id:req.query.toid,
+                size:req.query.size,
+                begin_index:req.query.page,
+            }
+        }) 
+        .then(result=>{
+            res.send({ err: 0, msg:result.data.data})
+        })
+        .catch(err=>{
+            console.log(err);
+            res.send({ err: -1, msg: '获取失败' })
+        })
 })
 module.exports=router;
 

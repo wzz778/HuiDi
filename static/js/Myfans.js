@@ -107,6 +107,7 @@ function getfan(){
                                 </div>
                                 <div class="message-card-bon">
                                     <img src="${sex}" alt="">
+                                    <div><span>描述：</span>${ms[i].describes}</div>
                                 </div>
                             </div>
                             <div class="message-con">

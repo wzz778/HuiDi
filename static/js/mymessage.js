@@ -2,10 +2,10 @@ let message_body=document.getElementsByClassName('messagebody')[0]
 let pagecon=document.getElementsByClassName('main-right-bon')[0]
 let pagearrow=pagecon.getElementsByTagName('a');
 let fansnumber=document.getElementById('fansnumber');
-let sortred=document.getElementsByClassName('sortred')
 let nowpage=1;
 let allpage=1;
 console.log(thistype);
+let sortred=document.getElementsByClassName('sortred')
   //观看是否有消息
   axios({
     url: '/api/getUserIsMessage',
@@ -19,6 +19,74 @@ console.log(thistype);
   }).catch(function (error) {
     
   });
+  axios({
+    url: '/api/getUserIsChat',
+    method: 'get',
+  }).then(data => {
+    if(data.data.err==0){
+        if(data.data.msg){
+            sortred[1].style.display='block'
+        }
+    }
+  }).catch(function (error) {
+    
+  });
+function del_one_me(event){ 
+    let thisid=event.parentNode.children[3].innerHTML;
+    let arrid=new Array()
+    arrid.push(thisid)
+    axios({
+        method:'post',
+        url:"/api/deletemymessage",
+        data:arrid
+    }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            if(thistype=='全部'){
+                getallmessage()
+            }else{
+                getallmessagebytype()
+            }
+            hintFn('success', "删除成功！")
+        }else{
+            hintFn('wrong', "删除失败！")
+        }
+    }).catch(err=>{
+
+    })
+}
+function del_all(){ 
+    let arrid=new Array()
+    let me_id=document.getElementsByClassName('me_id');
+    for(let i of me_id){
+        arrid.push(i.innerHTML)
+    }
+    axios({
+        method:'post',
+        url:"/api/deletemymessage",
+        data:arrid
+    }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            if(allpage>1){
+                allpage--;
+            }
+            if(nowpage>1){
+                nowpage--;
+            }
+            if(thistype=='全部'){
+                getallmessage()
+            }else{
+                getallmessagebytype()
+            }
+            hintFn('success', "删除成功！")
+        }else{
+            hintFn('wrong', "删除失败！")
+        }
+    }).catch(err=>{
+
+    })
+}
 function getallmessage(){
     axios({
         method:'get',
@@ -49,7 +117,7 @@ function getallmessage(){
                             <div class="alike-a">
                                 ${red}
                                 <a href="userhomepage?id=${ms[i].ob.id}">
-                                    <img src="public/img/userHead.jpg" class="message-img" alt="">
+                                    <img src="${ms[i].ob.img_url}" class="message-img" alt="">
                                 </a>
                                 <div class="message-card">
                                     <div class="message-card-top">
@@ -62,8 +130,9 @@ function getallmessage(){
                                     </div>
                                 </div>
                                 <div class="message-con">
-                                    <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
+                                    <button class="message-delete" onclick="del_one_me(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
                                     <span class="message-time">${contrasttime(ms[i].create_time)}</span>
+                                    <span class="me_id">${ms[i].id}</span>
                                 </div>
                             </div>
                         `
@@ -72,7 +141,7 @@ function getallmessage(){
                         <div class="alike-a">
                             ${red}
                             <a href="userhomepage?id=${ms[i].ob.id}">
-                                <img src="public/img/userHead.jpg" class="message-img" alt="">
+                                <img src="${ms[i].ob.img_url}" class="message-img" alt="">
                             </a>
                             <div class="message-card">
                                 <div class="message-card-tops">
@@ -82,8 +151,9 @@ function getallmessage(){
                                 </div>
                             </div>
                             <div class="message-con">
-                                <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
+                                <button class="message-delete" onclick="del_one_me(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
                                 <span class="message-time">${contrasttime(ms[i].create_time)}</span>
+                                <span class="me_id">${ms[i].id}</span>
                             </div>
                         </div>
                         `
@@ -162,9 +232,9 @@ function getallmessagebytype(){
                     if(thistype!="关注"){
                         message_body.innerHTML += `
                             <div class="alike-a">
-                                ${red}
+                                ${red}  
                                 <a href="userhomepage?id=${ms[i].ob.id}">
-                                    <img src="public/img/userHead.jpg" class="message-img" alt="">
+                                    <img src="${ms[i].ob.img_url}" class="message-img" alt="">
                                 </a>
                                 <div class="message-card">
                                     <div class="message-card-top">
@@ -177,8 +247,9 @@ function getallmessagebytype(){
                                     </div>
                                 </div>
                                 <div class="message-con">
-                                    <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
+                                    <button class="message-delete" onclick="del_one_me(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
                                     <span class="message-time">${contrasttime(ms[i].create_time)}</span>
+                                    <span class="me_id">${ms[i].id}</span>
                                 </div>
                             </div>
                         `
@@ -187,7 +258,7 @@ function getallmessagebytype(){
                         <div class="alike-a">
                             ${red}
                             <a href="userhomepage?id=${ms[i].ob.id}">
-                                <img src="public/img/userHead.jpg" class="message-img" alt="">
+                                <img src="${ms[i].ob.img_url}" class="message-img" alt="">
                             </a>
                             <div class="message-card">
                                 <div class="message-card-tops">
@@ -197,8 +268,9 @@ function getallmessagebytype(){
                                 </div>
                             </div>
                             <div class="message-con">
-                                <button class="message-delete" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
+                                <button class="message-delete" onclick="del_one_me(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></button></br>
                                 <span class="message-time">${contrasttime(ms[i].create_time)}</span>
+                                <span class="me_id">${ms[i].id}</span>
                             </div>
                         </div>
                         `

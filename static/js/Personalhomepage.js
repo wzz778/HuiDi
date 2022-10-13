@@ -54,7 +54,7 @@ axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         mydetext.innerHTML=me.describes;
@@ -90,7 +90,7 @@ function getmyalbum(){
             begin:1
         },
       }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){
             let allarr=data.data.msg.list;
             class_body2.innerHTML=``;
@@ -216,7 +216,7 @@ function addab(){
             describes:judgeStr(album_input[2].value)
         }
       }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){   
             hintFn('warning' ,"添加成功！")
             getmyalbum()
@@ -240,7 +240,7 @@ function showmydynamic(){
           begin:dynowpage
       }
     }).then(data => {
-      console.log(data.data);
+    //   console.log(data.data);
       if(data.data.err==0){
           let arr=data.data.msg.list;
           dynumber.innerText=data.data.msg.all_count
@@ -290,7 +290,7 @@ function showmycollect(){
           begin:colnowpage,
       }
     }).then(data => { 
-        console.log(data.data);
+        // console.log(data.data);
       if(data.data.err==0){
         colallpage=data.data.msg.all_page;
         let arr=data.data.msg.list;
@@ -333,28 +333,31 @@ window.onscroll = function () {
     let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
     let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
     let that = this;
-    if (scrollHeight <= scrollTop + windowHeight) {
+    if (scrollHeight -1<= scrollTop + windowHeight) {
         if(dyshow){
             if(dyallpage>dynowpage){
                 dynowpage++;
                 lookmore.style.display='block';
                 lookend.style.display='none';
-                setTimeout(function(){showmydynamic()},1500)
+                setTimeout(function(){showmydynamic()},1000)
                 // showmydynamic()
             }else{
-                lookmore.style.display='none';
-                lookend.style.display='block';
+                setTimeout(function(){
+                    lookmore.style.display='none';
+                    lookend.style.display='block';
+                },1500)
             }
-        }
-        if(colshow){
+        }else if(colshow){
             if(colallpage>colnowpage){
                 colnowpage++;
                 lookmore.style.display='block';
                 lookend.style.display='none';
-                setTimeout(function(){showmycollect()},1500)
+                setTimeout(function(){showmycollect()},1000)
             }else{
-                lookmore.style.display='none';
-                lookend.style.display='block';
+                setTimeout(function(){
+                    lookmore.style.display='none';
+                    lookend.style.display='block';
+                },1500) 
             }
         }
     }

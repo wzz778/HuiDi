@@ -70,6 +70,15 @@
   height: 30px;
   font-size: 17px;
   border-bottom: 1.5px #e5e5e5 solid;
+  display: flex;
+}
+#main #main-right .main-right-top .clearall{
+  padding: 10px 0 0 50px;
+  color: #669fe6;
+  font-size: 15px;
+}
+#main #main-right .main-right-top .clearall:hover{
+  color: #4491ef;
 }
 #main #main-right .main-right-bon {
   width: 400px;
@@ -256,7 +265,7 @@
 
 #main #main-right .alike-a .message-con span {
   display: block;
-  width: 170px;
+  width: 150px;
   font-size: 14px;
   color: #525252;
 }
@@ -299,4 +308,7 @@
 }
 .message-time{
   text-align: center;
+}
+#main #main-right .alike-a .message-con .me_id{
+  display: none;
 }

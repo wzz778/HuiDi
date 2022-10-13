@@ -27,17 +27,43 @@ function tologin(){
       }).then(data => {
         console.log(data.data);
         if(data.data.err==0){
-          hintFn('success' ,'登录成功')
-            // alert('登录成功');
-            if(data.data.msg.power==2){
-              setTimeout(function () {
-                  window.location.assign("/");
+          if(data.data.msg.status==1){
+              if(Date.parse(new Date()) > Date.parse(data.data.msg.end_time)){
+                axios({
+                  url: '/api/remystatus',
+                  method: 'post',
+                  data:newfile
+                })
+                hintFn('success' ,'登录成功')
+                let newfile=new FormData();
+                newfile.append("status",0)
+                if(data.data.msg.power==2){
+                  setTimeout(function () {
+                      window.location.assign("/");
+                  }, 1000)
+                }else{
+                  setTimeout(function () {
+                    window.location.assign("/homepage");
+                }, 1000)}
+              }else{
+                hintFn('wrong' ,'你登录的账号处于封号状态！');
+                axios({
+                  url: '/api/outlogin',
+                  method: 'get',
+                })
+              }
+          }else{
+            hintFn('success' ,'登录成功')
+              if(data.data.msg.power==2){
+                setTimeout(function () {
+                    window.location.assign("/");
+                }, 1000)
+              }else{
+                setTimeout(function () {
+                  window.location.assign("/homepage");
               }, 1000)
-            }else{
-              setTimeout(function () {
-                window.location.assign("/homepage");
-            }, 1000)
-            }
+          }
+        }
         }else{
             alert(data.data.msg);
         }

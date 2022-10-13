@@ -175,6 +175,18 @@ axios({
   }).catch(function (error) {
     
   });
+  axios({
+    url: '/api/getUserIsChat',
+    method: 'get',
+  }).then(data => {
+    if(data.data.err==0){
+        if(data.data.msg){
+            mymessagedian.style.display='block'
+        }
+    }
+  }).catch(function (error) {
+    
+  });
   //检查文件是否是图片
 function checkFile(img) {
     let file = img;

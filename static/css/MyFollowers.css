@@ -202,8 +202,9 @@
 }
 
 #main #main-right .alike-a .message-card .message-card-bon {
-  width: 80px;
+  width: 400px;
   height: 30px;
+  display: flex;
 }
 
 #main #main-right .alike-a .message-card .message-card-bon img{
@@ -213,6 +214,25 @@
   top: -10px;
 }
 
+#main #main-right .alike-a .message-card .message-card-bon div{
+  /* width: 30px;
+  height: 30px;
+  position: relative;
+  top: -10px; */
+  display: block;
+  width: 350px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#main #main-right .alike-a .message-card .message-card-bon span{
+  font-size: 16px;
+  color: #58a6ff; 
+}
 #main #main-right .alike-a .message-con {
   width: 250px;
   height: 70px;

@@ -341,7 +341,7 @@ function showmycollect(){
           id:userid
       }
     }).then(data => { 
-        console.log(data.data);
+        // console.log(data.data);
       if(data.data.err==0){
         colallpage=data.data.msg.all_page;
         let arr=data.data.msg.list;
@@ -394,8 +394,10 @@ window.onscroll = function () {
                 lookend.style.display='none';
                 setTimeout(function(){showmydynamic()},1500)
             }else{
-                lookmore.style.display='none';
-                lookend.style.display='block';
+                setTimeout(function(){
+                    lookmore.style.display='none';
+                    lookend.style.display='block';
+                },1500)     
             }
         }
         if(colshow){
@@ -405,8 +407,10 @@ window.onscroll = function () {
                 lookend.style.display='none';
                 setTimeout(function(){showmycollect()},1500)
             }else{
-                lookmore.style.display='none';
-                lookend.style.display='block';
+                setTimeout(function(){
+                    lookmore.style.display='none';
+                    lookend.style.display='block';
+                },1500) 
             }
         }
     }

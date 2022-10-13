@@ -426,8 +426,8 @@ a{
   }
   
   #publish #publish_main .publish_send {
-    height: 23px;
-    width: 300px;
+    height: 30px;
+    width: 200px;
     padding-left: 10px;
     outline: none;
     border: 1.5px solid gainsboro;

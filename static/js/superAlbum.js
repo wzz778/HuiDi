@@ -40,14 +40,12 @@ function uploadFile(event) {
     formdata.append('alId', window.location.search.split("=")[1])
     sendFn('/superAdmin/addCarousel', formdata)
         .then(result => {
-            console.log('添加结果', result)
             if (result.msg.data == 'success') {
                 return sendFn('/superAdmin/updateAlbumStatus', { id: window.location.search.split("=")[1] })
             }
             hintFn('wrong', '上传文件错误，请重试')
         })
         .then(result => {
-            console.log('更改状态', result)
             Popup[0].classList.add('none')
             hintFn('success', '添加成功')
             event.setAttribute('onclick', 'uploadFile(this)')

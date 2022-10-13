@@ -87,6 +87,12 @@ function sendCommentFn() {
     // 判断是否登录
     judgeLogin()
         .then(result => {
+            // 判断是否能发布评论
+            if (new Date() < Date.parse(result.userInfo.end_time)) {
+                // 被封号不能发布评论
+                hintFn('warning', `改账号被封${result.userInfo.end_time}`)
+                return
+            }
             let userObj = result.userInfo
             let tempStr = judgeStr(CommentInfo.value)
             // 判断值是否为空
@@ -111,7 +117,6 @@ function sendCommentFn() {
             formData.append('reportId', 0)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
-                    console.log('发布主评论', result)
                     userObj.commentId = result.msg[0].id
                     sendArrNone.push(result.msg[0].id)
                     // 将评论的id传过来
@@ -138,7 +143,6 @@ function addComment(userObj) {
     noContent[0].classList.add('none')
     animation.classList.remove('none')
     allCommentsContent[0].classList.remove('none')
-    console.log(noContent[0].classList)
     let myDate = new Date()
     let imgStr = ''
     if (showImgUrl.src.indexOf('/dynamicDetails?id=') == -1) {
@@ -199,7 +203,6 @@ function delCommentFn(event) {
             return sendFn('/admin/deleteComment', { id: JSON.parse(event.parentElement.firstElementChild.innerHTML).commentId, userId: JSON.parse(event.parentElement.firstElementChild.innerHTML).userId })
         })
         .then(result => {
-            console.log('删除评论', result)
             if (result.err == 0) {
                 event.parentElement.parentElement.parentElement.parentElement.remove()
                 // 判断是否还有评论
@@ -261,6 +264,11 @@ function replyCommentFirstFn(event) {
     // 判断是否登录
     judgeLogin()
         .then((result) => {
+            if (new Date() < Date.parse(result.userInfo.end_time)) {
+                // 被封号不能发布评论
+                hintFn('warning', `改账号被封${result.userInfo.end_time}`)
+                return
+            }
             let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
             if (tempStr.length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
@@ -290,6 +298,11 @@ function replyCommentFirstFn(event) {
 function replyCommentSonFn(event) {
     judgeLogin()
         .then((result) => {
+            if (new Date() < Date.parse(result.userInfo.end_time)) {
+                // 被封号不能发布评论
+                hintFn('warning', `改账号被封${result.userInfo.end_time}`)
+                return
+            }
             let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
             if (tempStr.length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
@@ -321,11 +334,15 @@ function addCommentSonComment(event, commentObj) {
     // 判断是否登录
     judgeLogin()
         .then(() => {
+            if (new Date() < Date.parse(result.userInfo.end_time)) {
+                // 被封号不能发布评论
+                hintFn('warning', `改账号被封${result.userInfo.end_time}`)
+                return
+            }
             // 发布评论
             return sendFn('/admin/publicComment', commentObj)
         })
         .then(result => {
-            console.log('回复评论', result)
             let tempObj = {
                 userId: commentObj.id,
                 commentId: result.msg[0].id,

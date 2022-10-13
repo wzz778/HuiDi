@@ -41,7 +41,7 @@ function focusOnFn(event) {
                 return
             }
             // 取消关注
-            sendFn('/admin/deleteFocus', { focusId: parentElement.lastElementChild.innerHTML, uId: result.userInfo.id })
+            sendFn('/admin/deleteFocus', { focusId: event.parentElement.lastElementChild.innerHTML, uId: result.userInfo.id })
                 .then(result => {
                     event.innerHTML = '关注'
                     event.classList.remove('focusSty')
@@ -50,7 +50,8 @@ function focusOnFn(event) {
                     hintFn('warning', '网络错误，请重试')
                 })
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             hintFn('warning', '请先登录')
         })
 }
@@ -113,9 +114,9 @@ sendFn('/picture/showRecommendType', {})
     })
 // 获取关注的信息
 function getFocusOnInfo(ele) {
-    sendFn('/picture/FindUsersRecommendationCategories', { type: `${ele.innerHTML}达人`, nowPage: ele.getAttribute('nowPage') })
+    let message = ele.innerHTML == '全部' ? '' : `${ele.innerHTML}达人`
+    sendFn('/picture/FindUsersRecommendationCategories', { type: message, nowPage: ele.getAttribute('nowPage') })
         .then(result => {
-            console.log('获取信息', result)
             animation.classList.remove('none')
             noContent.classList.add('none')
             content.classList.remove('none')

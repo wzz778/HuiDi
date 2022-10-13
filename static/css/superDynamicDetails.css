@@ -1,0 +1,56 @@
+.reportAccept {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.reportAccept>div {
+    width: 484px;
+    background-color: white;
+    margin: 200px auto;
+    padding: 0px 20px 30px 20px;
+    padding: 20px;
+}
+
+.reportAcceptItem {
+    margin-bottom: 20px;
+    margin-left: 70px;
+}
+
+.reportAcceptOperator {
+    text-align: center;
+}
+
+.reportAcceptOperator>button {
+    background-color: #056DE8;
+    color: white;
+}
+
+.reportAcceptOperator>button:nth-child(2) {
+    background-color: #FF5E52;
+}
+
+#dateChoice {
+    padding: 5px;
+    display: inline-block;
+    width: 188px;
+}
+
+.addShufflingFigure {
+    position: fixed;
+    right: 50px;
+    top: 100px;
+}
+
+.addShufflingFigure>div {
+    margin-top: 10px;
+    color: #056DE8;
+    cursor: pointer;
+}
+
+.addShufflingFigure>div>a {
+    color: #056DE8;
+}

@@ -45,6 +45,10 @@ router.get('/404', (req, res) => {
 router.get('/superAlbum', (req, res) => {
     res.render('superAlbum.html')
 })
+// 管理员受理举报作品
+router.get('/superDynamicDetails', (req, res) => {
+    res.render('superDynamicDetails.html')
+})
 
 // 封装的查看多少点赞数量，以及是否点赞
 function getLikeSumFn(url, type, obj) {
@@ -512,7 +516,6 @@ router.post('/picture/showAllPicture', (req, res) => {
         }
     })
         .then(result => {
-            console.log('获取所有', result)
             if (result.data.msg == 'OK') {
                 let sendArr = []
                 for (let i = 0; i < result.data.data.list.length; i++) {
@@ -623,7 +626,6 @@ router.post('/admin/getFocusDynamic', (req, res) => {
         }
     })
         .then(result => {
-            console.log('关注', result.data)
             if (result.data.msg == 'OK') {
                 let sendArr = []
                 for (let i = 0; i < result.data.data.list.length; i++) {
@@ -754,7 +756,6 @@ router.post('/picture/recommendFocus', (req, res) => {
         }
     })
         .then(result => {
-            console.log('推荐关注', result.data)
             let sendArr = []
             for (let i = 0; i < result.data.data.list.length; i++) {
                 if (result.data.data.list[i]) {
@@ -897,11 +898,9 @@ router.post('/superAdmin/addCarousel', mult, (req, res) => {
         }
     })
         .then(result => {
-            console.log('上传图片', result.data)
             res.send({ err: 0, msg: result.data })
         })
         .catch(err => {
-            console.log('上传图片', err)
             res.send({ err: -1, msg: err })
         })
 })
@@ -983,5 +982,59 @@ router.post('/picture/FindUsersRecommendationCategories', (req, res) => {
             res.send({ err: -1, msg: err })
         })
 })
-
+// 举报修改用户状态(传一个作品id和结束时间)
+router.post('/superAdmin/updateUserStatus', (req, res) => {
+    let { id, endTime } = req.body
+    // 查询是那个用户的作品
+    axios({
+        method: 'GET',
+        url: '/picture/showInfoMessage',
+        params: {
+            id: id
+        }
+    })
+        .then(result => {
+            console.log(result.data.data.users.id)
+            return axios({
+                method: 'PUT',
+                url: '/superAdmin/updateUserStatus',
+                params: {
+                    id: result.data.data.users.id,
+                    end_time: endTime,
+                    status: 1
+                },
+                headers: {
+                    token: req.session.token
+                }
+            })
+        })
+        .then(result => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({ err: -1, msg: err })
+        })
+})
+// 下架作品
+router.post('/theShelves', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'PUT',
+        url: '/superAdmin/updatePass',
+        params: {
+            id: id,
+            message: '举报受理'
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
 module.exports = router

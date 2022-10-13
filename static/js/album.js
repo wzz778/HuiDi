@@ -38,7 +38,6 @@ let allPages = 0
 function getAlbumInfo() {
     sendFn('/picture/showAlbumById', { alId: window.location.search.split("=")[1], beginIndex: nowPage })
         .then(result => {
-            console.log(result)
             allPages = result.msg.image.all_page
             let userAlbumInfoStr = `
         <h1>${result.msg.album.a_name}</h1>
@@ -159,7 +158,6 @@ function likeFn(event) {
     judgeLogin()
         .then(result => {
             // 登录了,判断是点赞还是取消点赞
-            console.log(event.getAttribute('info'))
             if (event.getAttribute('info') == 'true') {
                 // 点赞
                 sendFn('/admin/pointLike', { reflectId: event.parentElement.lastElementChild.innerHTML })

@@ -70,18 +70,23 @@
 }
 
 .defaultSty {
-    background-color: #C71D23;
+    background-color: #056DE8;
     color: white;
     width: 55px;
     text-align: center;
 }
 
 .focusSty {
-    background-color: #946061;
+    background-color: rgba(5,109,232,.15);
+    color: #056de8;
 }
 
 .noContent {
     height: 200px;
     line-height: 200px;
     text-align: center;
+}
+
+.middleAnimation {
+    width: 685px;
 }

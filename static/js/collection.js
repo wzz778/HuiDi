@@ -6,6 +6,10 @@ let cancel = document.getElementsByClassName('cancel');
 let confirm = document.getElementsByClassName('confirm');
 let warn_text = document.getElementsByClassName('warn-text');
 let classifier_input = document.getElementsByClassName('classifier-input');
+let pageings = document.getElementsByClassName('pageings');
+let confirmes = document.getElementsByClassName('confirmes');
+let warn_texts = document.getElementsByClassName('warn-texts');
+let warnings = document.getElementsByClassName('warnings');
 // let reject = document.getElementsByClassName('reject');
 
 classifier_input[0].oninput = function(){
@@ -13,6 +17,7 @@ classifier_input[0].oninput = function(){
 }
 
 function renders(begin_index,size,numbers){
+    // let arr = [numbers]
     axios({
         method:'GET',
         url:'/superAdmin/showAlbum',
@@ -23,17 +28,17 @@ function renders(begin_index,size,numbers){
         }
     }).then(result =>{
         console.log(result.data);
-        page_current[0].maxNumber = result.data.msg.all_page
-        page_current[0].all_size = result.data.msg.all_count
-        page_current[0].cur_index = result.data.msg.cur_index
-        page_current[0].size = result.data.msg.size
-        page_current[0].number = numbers
+        pageings[0].maxNumber = result.data.msg.all_page
+        pageings[0].all_size = result.data.msg.all_count
+        pageings[0].cur_index = result.data.msg.cur_index
+        pageings[0].size = result.data.msg.size
+        pageings[0].number = numbers
         let st = '李四'
         let all = ''
         for(let i=0;i<result.data.msg.list.length;i++){
             let status = '';
             if(result.data.msg.list[i].status == 0){
-                status = '未审核'
+                status = '未审核' 
             }else if(result.data.msg.list[i].status == 1){
                 status = '审核通过'
             }else if(result.data.msg.list[i].status == 2){
@@ -124,17 +129,30 @@ function renders(begin_index,size,numbers){
             
         }
         card_body_main[0].innerHTML = all;
-        renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,page_current[0].number);
+        generatePagination(result.data.msg.all_page,size,result.data.msg.cur_index,result.data.msg.all_count,renders,numbers);
+        // renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,page_current[0].number);
         for(let j=0;j<result.data.msg.list.length;j++){
-
-            pass[j].onclick = function(){
-                warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
-                confirm[1].ids = result.data.msg.list[j].id
-                hidden[1].style.display = 'block'
-            }
-            reject[j].onclick = function(){
-                confirm[0].ids = result.data.msg.list[j].id
-                hidden[0].style.display = 'block'
+            if(result.data.msg.list[j].status == 1){
+                reject[j].onclick = function(){
+                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                }
+                pass[j].onclick = function(){
+                    warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
+                    confirm[1].numbers = 0;
+                    confirm[1].ids = result.data.msg.list[j].id
+                    hidden[1].style.display = 'block'
+                }
+            }else{
+                reject[j].onclick = function(){
+                    confirm[0].ids = result.data.msg.list[j].id
+                    hidden[0].style.display = 'block'
+                }
+                pass[j].onclick = function(){
+                    warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
+                    confirm[1].numbers = 0;
+                    confirm[1].ids = result.data.msg.list[j].id
+                    hidden[1].style.display = 'block'
+                }
             }
         }
     })
@@ -142,8 +160,206 @@ function renders(begin_index,size,numbers){
 renders(1,5,0);
 
 
+function rendering(begin_index,size,numbers){
+    let arr = [1,3,4];
+    axios({
+        method:'GET',
+        url:'/superAdmin/showAlbum',
+        params:{
+            begin_index:begin_index,
+            size:size,
+            status:'1,3,4'
+        }
+    }).then(result =>{
+        console.log(result.data);
+        pageings[0].maxNumber = result.data.msg.all_page
+        pageings[0].all_size = result.data.msg.all_count
+        pageings[0].cur_index = result.data.msg.cur_index
+        pageings[0].size = result.data.msg.size
+        pageings[0].number = numbers
+        let st = '李四'
+        let all = ''
+        for(let i=0;i<result.data.msg.list.length;i++){
+            let status = '';
+            if(result.data.msg.list[i].status == 0){
+                status = '未审核' 
+            }else if(result.data.msg.list[i].status == 2){
+                status = '未通过'
+            }else{
+                status = '审核通过'
+            }
+            if(result.data.msg.list[i].describes == null){
+                let describes = '无'
+                if(result.data.msg.list[i].status == 1){
+                    all +=`<ul class="card-body-list">
+                        <li class="card-list-number">${i+1}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                        <li class="card-list-status">${status}</li>
+                        <li class="card-list-mail">${describes}</li>
+                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                        <li class="card-list-other">
+                                <button class="btn pass ">
+                                    <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
+                                    显示
+                                </button>
+                                <button class="btn reject ">
+                                    <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
+                                    添加
+                                </button>
+                        </li>
+                    </ul>`
+                }else if(result.data.msg.list[i].status == 3){
+                    all +=`<ul class="card-body-list">
+                        <li class="card-list-number">${i+1}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                        <li class="card-list-status">${status}</li>
+                        <li class="card-list-mail">${describes}</li>
+                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                        <li class="card-list-other">
+                                <button class="btn pass">
+                                    <img src="public/iconfont/see.png" alt="" class="forbid ">
+                                    显示
+                                </button>
+                                <button class="btn reject ">
+                                    <img src="public/iconfont/add.png" alt="" class="forbid">
+                                    已添加
+                                </button>
+                        </li>
+                    </ul>`
+                }else if(result.data.msg.list[i].status == 4){
+                    all +=`<ul class="card-body-list">
+                        <li class="card-list-number">${i+1}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                        <li class="card-list-status">${status}</li>
+                        <li class="card-list-mail">${describes}</li>
+                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                        <li class="card-list-other">
+                                <button class="btn pass">
+                                    <img src="public/iconfont/see.png" alt="" class="forbid ">
+                                    已显示
+                                </button>
+                                <button class="btn reject ">
+                                    <img src="public/iconfont/add.png" alt="" class="forbid">
+                                    已添加
+                                </button>
+                        </li>
+                    </ul>`
+                }
+            }else{
+                if(result.data.msg.list[i].status == 1){
+                    all +=`<ul class="card-body-list">
+                        <li class="card-list-number">${i+1}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                        <li class="card-list-status">${status}</li>
+                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                        <li class="card-list-other">
+                                <button class="btn pass ">
+                                    <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
+                                    显示
+                                </button>
+                                <button class="btn reject ">
+                                    <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
+                                    添加
+                                </button>
+                        </li>
+                    </ul>`
+                }else if(result.data.msg.list[i].status == 3){
+                    all +=`<ul class="card-body-list">
+                        <li class="card-list-number">${i+1}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                        <li class="card-list-status">${status}</li>
+                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                        <li class="card-list-other">
+                                <button class="btn pass">
+                                    <img src="public/iconfont/see.png" alt="" class="forbid">
+                                    显示
+                                </button>
+                                <button class="btn reject">
+                                    <img src="public/iconfont/add.png" alt="" class="forbid">
+                                    已添加
+                                </button>
+                        </li>
+                    </ul>`
+                }else if(result.data.msg.list[i].status == 4){
+                    all +=`<ul class="card-body-list">
+                        <li class="card-list-number">${i+1}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                        <li class="card-list-status">${status}</li>
+                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                        <li class="card-list-other">
+                                <button class="btn pass">
+                                    <img src="public/iconfont/see.png" alt="" class="forbid ">
+                                    已显示
+                                </button>
+                                <button class="btn reject ">
+                                    <img src="public/iconfont/add.png" alt="" class="forbid">
+                                    已添加
+                                </button>
+                        </li>
+                    </ul>`
+                }
+            }
+            
+        }
+        card_body_main[0].innerHTML = all;
+        generatePagination(result.data.msg.all_page,size,result.data.msg.cur_index,result.data.msg.all_count,rendering,numbers);
+        // renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,page_current[0].number);
+        for(let j=0;j<result.data.msg.list.length;j++){
+            if(result.data.msg.list[j].status == 1){
+                reject[j].onclick = function(){
+                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                }
+                pass[j].onclick = function(){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '该专辑未添加轮播图，还无法显示在首页'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                    // warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
+                    // confirm[1].ids = result.data.msg.list[j].id
+                    // hidden[1].style.display = 'block'
+                }
+            }else if(result.data.msg.list[j].status == 3){
+                reject[j].onclick = function(){
+                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                }
+                pass[j].onclick = function(){
+                    warn_text[0].innerHTML = '确定选中该专辑的图片作为轮播图嘛？'
+                    confirm[1].numbers = 1;
+                    confirm[1].ids = result.data.msg.list[j].id
+                    hidden[1].style.display = 'block'
+                }
+            }else if(result.data.msg.list[j].status == 4){
+                reject[j].onclick = function(){
+                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                }
+                pass[j].onclick = function(){
+                    warn_text[0].innerHTML = '确定取消该专辑的图片作为轮播图嘛？'
+                    confirm[1].numbers = 2;
+                    confirm[1].ids = result.data.msg.list[j].id
+                    hidden[1].style.display = 'block'
+                }
+            }
+        }
+    })
+}
+
+
+
+
+
+
+
 cancel[0].onclick = function(){
     hidden[0].style.display = 'none'
+    classifier_input[0].value = '';
 }
 confirm[0].onclick = function(){
     if(classifier_input[0].value != ''){
@@ -158,26 +374,76 @@ confirm[0].onclick = function(){
         }).then(result =>{
             console.log(result.data);
             hidden[0].style.display = 'none'
-            renders(page_current[0].cur_index,page_current[0].size,page_current[0].number)
+            renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
+            classifier_input[0].value = '';
         })
     }
 }
 cancel[1].onclick = function(){
     hidden[1].style.display = 'none'
+    classifier_input[0].value = '';
 }
 confirm[1].onclick = function(){
-    axios({
-        method:'GET',
-        url:'/superAdmin/updateAlbumStatus',
-        params:{
-            id:confirm[1].ids,
-            status:1
-        }
-    }).then(result =>{
-        console.log(result.data);
-        hidden[1].style.display = 'none'
-        renders(page_current[0].cur_index,page_current[0].size,page_current[0].number)
-    })
+    if(confirm[1].numbers == 0){
+        axios({
+            method:'GET',
+            url:'/superAdmin/updateAlbumStatus',
+            params:{
+                id:confirm[1].ids,
+                status:1
+            }
+        }).then(result =>{
+            console.log(result.data);
+            if(result.data.msg == 'success'){
+                hidden[2].style.display = 'block'
+                warn_texts[0].innerHTML = '审核通过'
+                warnings[0].src = 'public/iconfont/success.png'
+                hidden[1].style.display = 'none'
+                renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
+                classifier_input[0].value = '';
+            }
+        })
+    }else if(confirm[1].numbers == 1){
+        axios({
+            method:'GET',
+            url:'/superAdmin/updateAlbumStatus',
+            params:{
+                id:confirm[1].ids,
+                status:4
+            }
+        }).then(result =>{
+            console.log(result.data);
+            if(result.data.msg == 'success'){
+                hidden[1].style.display = 'none'
+                hidden[2].style.display = 'block'
+                warn_texts[0].innerHTML = '以显示在首页轮播图'
+                warnings[0].src = 'public/iconfont/success.png'
+                
+                renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
+                classifier_input[0].value = '';
+            }
+        })
+    }else if(confirm[1].numbers == 2){
+        axios({
+            method:'GET',
+            url:'/superAdmin/updateAlbumStatus',
+            params:{
+                id:confirm[1].ids,
+                status:3
+            }
+        }).then(result =>{
+            console.log(result.data);
+            if(result.data.msg == 'success'){
+                hidden[1].style.display = 'none'
+                hidden[2].style.display = 'block'
+                warn_texts[0].innerHTML = '已取消该专辑的图片作为轮播图'
+                warnings[0].src = 'public/iconfont/success.png'
+                
+                renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
+                classifier_input[0].value = '';
+            }
+        })
+    }
 }
 
 
@@ -209,9 +475,9 @@ function ds(){
             flag = true;
             let news = startTimes[index].innerHTML;
             if(news == '未审核'){
-                renders(page_current[0].cur_index,page_current[0].size,0);
+                renders(pageings[0].cur_index,pageings[0].size,0);
             }else{
-                renders(page_current[0].cur_index,page_current[0].size,1);
+                rendering(pageings[0].cur_index,pageings[0].size,-1);
             }
             layer_click[0].value =startTimes[index].innerHTML;
         }
@@ -224,3 +490,9 @@ function renew(index){
     startTimes[index].classList.add('layer-this');
 }
 ds();
+
+
+
+confirmes[0].onclick = function(){
+    hidden[2].style.display = 'none'
+}

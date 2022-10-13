@@ -5,21 +5,40 @@
 {{/block}}
 {{block 'pop'}}
 <div class="hidden">
-    <div class="pop-up">
-        <img src="public/iconfont/warn2.png" alt="" class="hidden-img">
-        <span class="hidden-title">是否对他发出警告</span>
-        <button class="btn clear">确定</button>
-        <button class="btn cancel">取消</button>
+    <div class="pop-up warn">
+        <div >
+            <span class="pop-header">系统提示</span>
+            <img src="public/iconfont/warn2.png" alt="" class="warning">
+            <span class="warn-text">确定通过嘛</span>
+        </div>
+        <div class="button">
+            <button class="btn confirm">确定</button>
+            <button class="btn cancel">取消</button>
+        </div>
     </div>
 </div>
-
-
+<div class="hidden">
+    <div class="pop-up returnBacks">
+        <div class="hint">
+            驳回处理
+        </div>
+        <div style="padding-left:20px ;color: black;font-size: 17px;">
+            驳回理由：
+            <input type="text" class="classifier-input">
+        </div>
+        <div style="position: relative;bottom:-50px">
+            <button class="btn confirm">确定</button>
+            <button class="btn cancel">取消</button>
+        </div>
+    </div>
+</div>
 {{/block}}
 {{block 'body'}}
     <a class="returns">返回页面</a>
-    <a class="download">发出警告</a>
+    <a class="pass">通过</a>
+    <a class="returnBack">驳回</a>
     <div>
-        <div class="application-details"><span>举报详情</span></div>
+        <div class="application-details"><span>内容详情</span></div>
         <div class="history-details">
             <div class="application-message">
 
@@ -35,43 +54,43 @@
             </div>
             </div>
                 <div class="application-message">
-                    <ul class="messages">
+                    <!-- <ul class="messages">
                     <li>
-                        举报人：
+                        作者：
                         <span class="name">xxxx</span>
                     </li>
-                        <li>
-                            被举报人：
-                            <span class="name">xxxxx</span>
-                        </li>
-                        <li>
-                            性别：
-                            <span class="sex">男</span>
-                        </li>
-                        <li>
-                            邮箱：
-                            <span>3400164864@qq.com</span>
-                        </li>
+                    <li>
+                        性别：
+                        <span class="sex">男</span>
+                    </li>
+                    <li>
+                        邮箱：
+                        <span>3400164864@qq.com</span>
+                    </li>
+                    <li>
+                        作品创建时间：
+                        <span class="name">xxxxx</span>
+                    </li>
                     </ul>
                     <div class="parctice-content">
-                        <span class="content-title">举报内容：</span>
+                        <span class="content-title">内容详情：</span>
                         <div class="content-main">
                             <span class="content-title">哈哈哈哈哈哈哈</span>
+                            <div class="imgings">
+
+                            </div>
                             <img src="public/img/01.jpg" alt="" class="content-img">
                             <img src="public/img/01.jpg" alt="" class="content-img">
                             <img src="public/img/01.jpg" alt="" class="content-img">
                             <img src="public/img/01.jpg" alt="" class="content-img">
                         </div>
-                    </div>
-                    <div>
-                        <h2>举报理由</h2>
-                        <textarea name="" id="" cols="30" rows="10"></textarea>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
 {{/block}}
 {{block 'footer'}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="public/js/detail.js"></script>
 {{/block}}

@@ -39,7 +39,6 @@ function getSearchInfo() {
             message: decodeURI(window.location.search).split("=")[1].split('&')[0],
             type: decodeURI(window.location.search).split("=")[2]
         }).then(result => {
-            console.log(result)
             pictureAllPages = result.msg.page.all_page
             if (result.msg.info.length == 0) {
                 content.classList.add('none')
@@ -136,7 +135,6 @@ function getSearchInfo() {
             type: decodeURI(window.location.search).split("=")[2]
         })
             .then(result => {
-                console.log(result)
                 albumAllPages = result.msg.data.all_page
                 if (result.msg.data.list.length == 0) {
                     content.classList.add('none')
@@ -172,7 +170,6 @@ function getSearchInfo() {
             type: decodeURI(window.location.search).split("=")[2]
         })
             .then(result => {
-                console.log(result)
                 talentShowAllPages = result.msg.all_page
                 if (result.msg.list.length == 0) {
                     content.classList.add('none')
@@ -398,7 +395,6 @@ window.onmousewheel = function (event) {
 
 // 历史记录
 function getSearchHistory() {
-    console.log(window.localStorage.getItem('hdsearch_history'))
     if (!window.localStorage.getItem('hdsearch_history')) {
         searchNoContent.classList.remove('none')
         searchContent.classList.add('none')
@@ -446,7 +442,6 @@ function delAllSearch() {
 function getcarouselAll() { 
     sendFn('/picture/ShowHotContent', {})
         .then(result => {
-            console.log('热门内容', result)
             let tempStr = ''
             let len = result.msg.length > 8 ? 8 : result.msg.length
             for (let i = 0; i < len; i++) {

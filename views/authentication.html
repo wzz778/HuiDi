@@ -1,12 +1,12 @@
 {{extend './backstage.html'}}
 {{block 'title'}}分类管理{{/block}}
 {{block 'header'}}
-<link rel="stylesheet" href="public/css/classify.css">
+<link rel="stylesheet" href="public/css/authentication.css">
 {{/block}}
-{{block 'classify'}}
-<a href="classify" class="changes active-sign">
-    <i><img src="public/iconfont/classify.png" alt="" class="sign"></i>
-    分类管理
+{{block 'authentication'}}
+<a href="authentication" class="changes active-sign">
+    <i><img src="public/iconfont/authentication.png" alt="" class="sign"></i>
+    认证范围管理
 </a>
 <div class="signing active-signing">
 
@@ -17,11 +17,11 @@
     <div class="pop-up">
         <div class="pop-main">
             <div class="hint">
-                新增分类
+                新增认证范围
             </div>
             <div class="classifier">
-                <span class="'classifier-title">类别名称：</span>
-                <input type="text" class="classifier-input" placeholder="请输入新的类别名称" maxlength="5">
+                <span class="'classifier-title">认证名称：</span>
+                <input type="text" class="classifier-input" placeholder="请输入新的认证名称" maxlength="5">
             </div>
         </div>
         <div style="position: relative;top:50px;">
@@ -40,6 +40,18 @@
         <div class="button">
             <button class="btn confirm">确定</button>
             <button class="btn cancel">取消</button>
+        </div>
+    </div>
+</div>
+<div class="hidden delay">
+    <div class="pop-up warns">
+        <div >
+            <!-- <span class="pop-header">系统提示</span> -->
+            <img src="public/iconfont/warn2.png" alt="" class="warnings">
+            <span class="warn-texts">确定通过嘛</span>
+        </div>
+        <div class="button">
+            <button class="btn confirmes">确定</button>
         </div>
     </div>
 </div>
@@ -82,5 +94,5 @@
 {{/block}}
 {{block 'footer'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="public/js/classify.js"></script>
+<script src="public/js/authentication.js"></script>
 {{/block}}

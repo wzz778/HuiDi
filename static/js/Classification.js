@@ -18,7 +18,6 @@ let nowPage = 1
 let allPage = 0
 sendFn('/picture/showAllType', { id: window.location.search.split("=")[1] })
     .then(result => {
-        console.log(result)
         titleClassify.innerHTML = result.msg.type.name
         title.innerHTML = result.msg.type.name
         if (result.msg.list == 0) {
@@ -52,7 +51,6 @@ function getSearchInfo() {
         type: '图片'
     })
         .then(result => {
-            console.log('搜索内容', result)
             allPage = result.msg.page.all_page
             content.classList.remove('none')
             noContent.classList.add('none')

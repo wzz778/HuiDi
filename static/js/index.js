@@ -115,7 +115,6 @@ let allPageHotFocusOn = 0
 function getHotTicket() {
     sendFn('/picture/showAllPicture', { beginIndex: nowPageHotTicket })
         .then(result => {
-            console.log('每日精选', result)
             allPageHotTicket = result.msg.all_page
             let tempStr = ''
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -209,7 +208,6 @@ function getFocusOn() {
             // 登录了去访问关注接口
             sendFn('/admin/getFocusDynamic', { beginIndex: nowPageFocusOn })
                 .then(result => {
-                    console.log('关注动态', result)
                     allPageHotFocusOn = result.msg.all_page
                     let tempStr = ''
                     for (let i = 0; i < result.msg.list.length; i++) {
@@ -296,6 +294,7 @@ function getFocusOn() {
                 })
         })
         .catch(err => {
+            navFn(0, 1)
             // 未登录
             window.location.href = '/login'
         })
@@ -404,7 +403,6 @@ function collectFn(event) {
             }
             sendFn('/admin/deleteCollect', { id: event.parentElement.lastElementChild.innerHTML })
                 .then(result => {
-                    console.log(result)
                     event.classList.remove('likeSty')
                     event.lastElementChild.innerHTML--
                 })
@@ -458,7 +456,6 @@ function sendReportFn(event) {
     }
     sendFn('/admin/addReport', obj)
         .then(result => {
-            console.log(result)
             reportHint[0].classList.add('none')
             hintFn('success', '举报成功')
         })
@@ -491,7 +488,6 @@ let focusAllPages = 0
 function getFocusInfo() {
     sendFn('/picture/recommendFocus', { size: 5, beginIndex: focusNowPage })
         .then(result => {
-            console.log('推荐关注', result)
             focusAllPages = result.msg.all_page
             let tempStr = ``
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -562,7 +558,6 @@ function focusOnFn(event) {
                 // 关注
                 sendFn('/li/admin/addFocus', { focusId: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
-                        console.log('关注', result)
                         event.setAttribute('focusInfo', false)
                         event.classList.add('focusOnSty')
                         event.innerHTML = '已关注'
@@ -575,7 +570,6 @@ function focusOnFn(event) {
             // 取消关注
             sendFn('/li/admin/deleteFocus', { focusId: event.parentElement.lastElementChild.innerHTML })
                 .then(result => {
-                    console.log('取消关注', result)
                     event.setAttribute('focusInfo', true)
                     event.classList.remove('focusOnSty')
                     event.innerHTML = '关注'
@@ -593,7 +587,6 @@ function focusOnFn(event) {
 function getcarouselAll() {
     sendFn('/picture/ShowHotContent', {})
         .then(result => {
-            console.log('热门内容', result)
             let tempStr = ''
             carouselOne.innerHTML = `
             <a href="/search?message=${result.msg[0]}&type=图片">

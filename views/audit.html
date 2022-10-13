@@ -84,31 +84,12 @@
         </li>
     </ul> -->
 </div>
-<div class="page-change">
-    <div class="page-background">
-        <span class="page-size">共 1 条</span>
-        <div style="display: inline-block;vertical-align: 9px;margin-right: 10px;">
-            <select class="pageSize">
-                <option value="5">5条/页</option>
-                <option value="10">10条/页</option>
-                <option value="20">20条/页</option>
-                <option value="50">50条/页</option>
-            </select>
-        </div>
-        <button class="page-left"><img src="public/iconfont/arrow5.png" alt="" class="page_icon"></button>
-        <span class="page-current">1</span>
-        <button class="page-right"><img src="public/iconfont/arrow3.png" alt=""  class="page_icon"></button>
-        <span class="page-goto">
-            前往
-            <input type="text" class="page-input" value="1">
-            页
-        </span>
-    </div>
+<div class="pageings">
+    <ul id="pagination"></ul>
 </div>
 {{/block}}
 {{block 'footer'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 <script src="public/js/communal.js"></script>
 <script src="public/js/audit.js"></script>
 {{/block}}

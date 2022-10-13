@@ -19,10 +19,20 @@ let updates = document.getElementsByClassName('update');
 let deletes = document.getElementsByClassName('delete');
 let news = document.getElementsByClassName('new');
 let card_body_main = document.getElementsByClassName('card-body-main');
+let pageings = document.getElementsByClassName('pageings');
+let confirmes = document.getElementsByClassName('confirmes');
+let warn_texts = document.getElementsByClassName('warn-texts');
+let warnings = document.getElementsByClassName('warnings');
+
+let flag1 = true;
+
 
 
 //渲染页面
 function renders(begin_index,size){
+    if(checkbox_all[0].checked == true){
+        checkbox_all[0].click();
+    }
     axios({
         method:'GET',
         url:'/superAdmin/showRole',
@@ -33,10 +43,10 @@ function renders(begin_index,size){
     }).then(result =>{
         console.log(result.data);
         let all =  result.data;
-        page_current[0].maxLength = result.data.msg.all_page
-        page_current[0].all_size = result.data.msg.all_count
-        page_current[0].cur_index = result.data.msg.cur_index;
-        page_current[0].size = result.data.msg.size;
+        pageings[0].maxLength = result.data.msg.all_page
+        pageings[0].all_size = result.data.msg.all_count
+        pageings[0].cur_index = result.data.msg.cur_index;
+        pageings[0].size = result.data.msg.size;
         let All = ''
         for(let i=0;i<all.msg.list.length;i++){
             let str = all.temps[i].join(",")
@@ -45,7 +55,7 @@ function renders(begin_index,size){
             <li class="card-list-number">${i+1}</li>
             <li class="card-list-name">${all.msg.list[i].role.role_name}</li>
             <li class="card-list-sex">${str}</li>
-            <li class="card-list-status">${all.msg.list[i].role.id}</li>
+            <li class="card-list-status">${all.msg.list[i].role.orders}</li>
             <li class="card-list-other">
                 <button class="btn update">
                     修改
@@ -60,7 +70,7 @@ function renders(begin_index,size){
         </ul>`
         }
         card_body_main[0].innerHTML = All;
-        renderPaging(renders,page_current[0].maxLength,page_current[0].all_size,-1)
+        generatePagination(result.data.msg.all_page,result.data.msg.size,result.data.msg.cur_index,result.data.msg.all_count,renders,-1);
         for(let j=0;j<all.msg.list.length;j++){
             checkbox_all[0].numbers = 0;
             card_list_checkbox[j].ids = all.msg.list[j].role.id;
@@ -121,7 +131,16 @@ function renders(begin_index,size){
                                 All += `<option value="${result.data.msg.list[i].id}">${result.data.msg.list[i].permiss_name}</option>`
                             }
                             hidden_input[1].innerHTML = All;
-                        
+                            hidden_input[0].addEventListener('input',function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            })
+                            
+                            hidden_input[1].oninput = function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            }
+                            hidden_input[2].oninput = function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            }
                 })
             }
             deletes[j].onclick = function(){
@@ -146,8 +165,16 @@ function renders(begin_index,size){
                             <div class="pop-main">
                                 权限字符：
                                 <input type="text" class="hidden-input">
-                            </div>`
+                            </div>
+                            `
                             pop_change[0].innerHTML = all;
+                            hidden_input[0].addEventListener('input',function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            })
+                            
+                            hidden_input[1].oninput = function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            }
             }
         }
     })
@@ -159,7 +186,7 @@ renders(1,5);
 btn_new[0].onclick = function(){
     hidden[0].style.display = 'block';
     btn_new[0].numbers = 0;
-    pop_up[0].style.height = '250px';
+    pop_up[0].style.height = '300px';
     let all = `<div class="hint">
                 添加角色
                 </div>
@@ -170,8 +197,22 @@ btn_new[0].onclick = function(){
                 <div class="pop-main">
                     权限字符：
                     <input type="text" class="hidden-input">
+                </div>
+                <div class="pop-main">
+                    显示顺序：
+                    <input type="text" class="hidden-input">
                 </div>`
                 pop_change[0].innerHTML = all;
+                hidden_input[0].addEventListener('input',function(){
+                    this.value = this.value.replace(/\s*/g,"");
+                })
+                
+                hidden_input[1].oninput = function(){
+                    this.value = this.value.replace(/\s*/g,"");
+                }
+                hidden_input[2].oninput = function(){
+                    if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}
+                }
 }
 //修改
 btn_update[0].onclick = function(){
@@ -215,7 +256,16 @@ btn_update[0].onclick = function(){
                                 All += `<option value="${result.data.msg.list[i].id}">${result.data.msg.list[i].permiss_name}</option>`
                             }
                             hidden_input[1].innerHTML = All;
-                        
+                            hidden_input[0].addEventListener('input',function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            })
+                            
+                            hidden_input[1].oninput = function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            }
+                            hidden_input[2].oninput = function(){
+                                this.value = this.value.replace(/\s*/g,"");
+                            }
                 })
             }
         }
@@ -229,7 +279,7 @@ btn_delete[0].onclick = function(){
         hidden[1].style.display = 'block';
         for(let i=0;i<checkbox.length;i++){
             if(checkbox[i].checked == true){
-                warn_text[0].innerHTML = '确定删除角色名称为：' + card_list_checkbox[j].names + '嘛？' 
+                warn_text[0].innerHTML = '确定删除角色名称为：' + card_list_checkbox[i].names + '嘛？' 
             }
         }
     }else if(checkbox_all[0].numbers >1){
@@ -242,16 +292,27 @@ btn_delete[0].onclick = function(){
 //确认
 confirms[0].onclick = function(){
     if(btn_new[0].numbers == 0){
-        let arr = new Array(hidden_input[1].value.split(','))
+
+        let arr = [1]
+        arr[0] = hidden_input[1].value;
         axios({
-            method:'POST',
+            method:'GET',
             url:'/superAdmin/manageRole',
-            data:{
+            params:{
                 list:arr,
-                role:hidden_input[0].value,
+                role_name:hidden_input[0].value,
+                orders:hidden_input[2].value
             }
         }).then((result)=>{
             console.log(result);
+            if(result.data.msg == 'success'){
+                hidden[0].style.display = 'none';
+                hidden[1].style.display = 'none';
+                warn_texts[0].innerHTML = '添加成功'
+                warnings[0].src = 'public/iconfont/success.png'
+                hidden[2].style.display = 'block'
+                renders(pageings[0].cur_index,pageings[0].size,-1);
+            }
         })
     }else if(btn_new[0].numbers == 1){
         console.log(hidden_input[0].ids);
@@ -275,7 +336,14 @@ confirms[0].onclick = function(){
                 }
             }).then(result =>{
                 console.log(result.data);
-                renders(page_current[0].cur_index,page_current[0].size,-1);
+                if(result.data.msg == 'success'){
+                    hidden[0].style.display = 'none';
+                    hidden[1].style.display = 'none';
+                    warn_texts[0].innerHTML = '修改成功'
+                    warnings[0].src = 'public/iconfont/success.png'
+                    hidden[2].style.display = 'block'
+                    renders(pageings[0].cur_index,pageings[0].size,-1);
+                }
             })
         })
     }else if(btn_new[0].numbers == 2){
@@ -288,10 +356,17 @@ confirms[0].onclick = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            renders(page_current[0].cur_index,page_current[0].size,-1);
+            if(result.data.msg == 'success'){
+                hidden[0].style.display = 'none';
+                hidden[1].style.display = 'none';
+                warn_texts[0].innerHTML = '添加成功'
+                warnings[0].src = 'public/iconfont/success.png'
+                hidden[2].style.display = 'block'
+                renders(pageings[0].cur_index,pageings[0].size,-1);
+            }
         })
     }
-    hidden[0].style.display = 'none';
+    
 }
 //取消
 cancel[0].onclick = function(){
@@ -307,11 +382,17 @@ confirms[1].onclick = function(){
                     method:'GET',
                     url:'/superAdmin/deleteRole',
                     params:{
-                        id:card_list_checkbox[j].ids
+                        id:card_list_checkbox[i].ids
                     }
                 }).then(result =>{
                     console.log(result.data);
-                    renders(page_current[0].cur_index,page_current[0].size,-1);
+                    if(result.data.msg == 'success'){
+                        hidden[1].style.display = 'none';
+                        warn_texts[0].innerHTML = '删除成功'
+                        warnings[0].src = 'public/iconfont/success.png'
+                        hidden[2].style.display = 'block'
+                        renders(pageings[0].cur_index,pageings[0].size,-1);
+                    }
                 })
             }
         }
@@ -324,12 +405,54 @@ confirms[1].onclick = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            renders(page_current[0].cur_index,page_current[0].size,-1);
+            if(result.data.msg == 'success'){
+                hidden[1].style.display = 'none';
+                warn_texts[0].innerHTML = '删除成功'
+                warnings[0].src = 'public/iconfont/success.png'
+                hidden[2].style.display = 'block'
+                renders(pageings[0].cur_index,pageings[0].size,-1);
+            }
         })
     }
-    hidden[1].style.display = 'none';
 }
 //取消
 cancel[1].onclick = function(){
     hidden[1].style.display = 'none';
+}
+
+
+
+confirmes[0].onclick = function(){
+    hidden[2].style.display = 'none'
+}
+
+
+// hidden_input[0].addEventListener('input',function(){
+//     this.value = this.value.replace(/\s*/g,"");
+// })
+
+// hidden_input[1].oninput = function(){
+//     this.value = this.value.replace(/\s*/g,"");
+// }
+// hidden_input[2].oninput = function(){
+//     if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}
+// }
+
+checkbox_all[0].onclick = function(){
+    console.log(checkbox_all[0].checked);
+    if(checkbox_all[0].checked == true){
+        for(let i=0;i<checkbox.length;i++){
+            if(checkbox[i].checked == true){
+                
+            }else{
+                checkbox[i].click();
+            }
+        }
+    }else{
+        for(let i=0;i<checkbox.length;i++){
+            if(checkbox[i].checked == true){
+                checkbox[i].click();
+            }
+        }
+    }
 }

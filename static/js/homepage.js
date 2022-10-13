@@ -5,12 +5,61 @@ let forbiding = document.getElementsByClassName('forbiding');
 let cancel = document.getElementsByClassName('cancel');
 let confirms  = document.getElementsByClassName('confirm')
 let hidden = document.getElementsByClassName('hidden');
+let hiddens = document.getElementsByClassName('hiddens');
 let seal = document.getElementsByClassName('seal');
 let main = document.getElementsByClassName('main');
 let card_body = document.getElementsByClassName('card-body');
 let card_body_main = document.getElementsByClassName('card-body-main');
 let warn_text = document.getElementsByClassName('warn-text');
+let pagings = document.getElementsByClassName('pagings');
+let confirmes = document.getElementsByClassName('confirmes');
+let warn_texts = document.getElementsByClassName('warn-texts');
+let layer_click = document.getElementsByClassName('layer-click');
+let layer_list = document.getElementsByClassName('layer-list');
+let startTimes = document.getElementsByClassName('startTimes');
+let warnings = document.getElementsByClassName('warnings');
 
+let authentications = document.getElementsByClassName('authentications');
+
+
+
+function authentication(){
+    axios({
+        method:'GET',
+        url:'/superAdmin/showCertificationArea',
+    }).then(result =>{
+        console.log(result.data.msg);
+        let all = `<dd class="layer-select-tips layer-this authentications" value="">请选择</dd>`
+        for(let i=0;i<result.data.msg.length;i++){
+            all += `<dd class="layer-select-tips  authentications" value="">${result.data.msg[i].area_name}</dd>`
+        }
+
+        layer_list[1].innerHTML = all;
+        let index = 0;
+    for(let i=0;i<authentications.length;i++){
+        authentications[i].numbers = i;
+        authentications[i].onclick = function(){
+
+            index = this.numbers;
+            // renews(index);
+            layer_list[1].style.display = 'none';
+            authentication_flag = true;
+            for(let i=0;i<authentications.length;i++){
+                authentications[i].classList.remove('layer-this');
+            }
+            authentications[index].classList.add('layer-this');
+            // let arr = startTimes[index].innerHTML.split('天');
+            // console.log(arr);
+            // if(arr == '请选择'){
+            //     arr[0] = '';
+            // }
+            layer_click[1].value =authentications[index].innerHTML;
+        }
+    }
+    })
+}
+
+authentication();
 
 
 function renders(begin,size){
@@ -26,18 +75,19 @@ function renders(begin,size){
         let all = result.data.msg.records;
         let All = '';
         for(let i=0;i<all.length;i++){
-            if(all[i].status == 1){
+            if(all[i].status == 1 && all[i].certification == null){
                 All += `
             <ul class="card-body-list">
-                <li class="card-list-number">${i}</li>
+                <li class="card-list-number">${i+1}</li>
                 <li class="card-list-name">${all[i].name}</li>
                 <li class="card-list-sex">${all[i].sex}</li>
                 <li class="card-list-status">封号</li>
+                <li class="card-list-status">无认证</li>
                 <li class="card-list-mail">${all[i].mail}</li>
                 <li class="card-list-other">
                     <button class="btn forbiding">
                         <img src="public/iconfont/warn.png" alt="" class="forbid">
-                        禁言
+                        认证
                     </button>
                     <button class="btn seal">
                         <img src="public/iconfont/forbid.png" alt="" class="forbid">
@@ -46,18 +96,19 @@ function renders(begin,size){
                 </li>
             </ul>
             `
-            }else{
+            }else if(all[i].status == 0 && all[i].certification != null){
                 All += `
             <ul class="card-body-list">
-                <li class="card-list-number">${i}</li>
+                <li class="card-list-number">${i+1}</li>
                 <li class="card-list-name">${all[i].name}</li>
                 <li class="card-list-sex">${all[i].sex}</li>
                 <li class="card-list-status">正常</li>
+                <li class="card-list-status">${all[i].certification}</li>
                 <li class="card-list-mail">${all[i].mail}</li>
                 <li class="card-list-other">
                     <button class="btn forbiding">
                         <img src="public/iconfont/warn.png" alt="" class="forbid">
-                        禁言
+                        已认证
                     </button>
                     <button class="btn seal">
                         <img src="public/iconfont/forbid.png" alt="" class="forbid">
@@ -66,16 +117,58 @@ function renders(begin,size){
                 </li>
             </ul>
             `
+            }else if(all[i].status == 0 && all[i].certification == null){
+                All += `
+            <ul class="card-body-list">
+                <li class="card-list-number">${i+1}</li>
+                <li class="card-list-name">${all[i].name}</li>
+                <li class="card-list-sex">${all[i].sex}</li>
+                <li class="card-list-status">正常</li>
+                <li class="card-list-status">无认证</li>
+                <li class="card-list-mail">${all[i].mail}</li>
+                <li class="card-list-other">
+                    <button class="btn forbiding">
+                        <img src="public/iconfont/warn.png" alt="" class="forbid">
+                        认证
+                    </button>
+                    <button class="btn seal">
+                        <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                        封号
+                    </button>
+                </li>
+            </ul>
+            `
+            }else if(all[i].status == 1 && all[i].certification != null){
+                All += `
+            <ul class="card-body-list">
+                <li class="card-list-number">${i+1}</li>
+                <li class="card-list-name">${all[i].name}</li>
+                <li class="card-list-sex">${all[i].sex}</li>
+                <li class="card-list-status">封号</li>
+                <li class="card-list-status">>${all[i].certification}</li>
+                <li class="card-list-mail">${all[i].mail}</li>
+                <li class="card-list-other">
+                    <button class="btn forbiding">
+                        <img src="public/iconfont/warn.png" alt="" class="forbid">
+                        已认证
+                    </button>
+                    <button class="btn seal">
+                        <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                        已封号
+                    </button>
+                </li>
+            </ul>
+            `
             }
             
         }
         card_body_main[0].innerHTML = All;
-        page_current[0].maxNumber = result.data.msg.pages;
-        page_current[0].all_size = result.data.msg.total;
-        page_current[0].cur_index = result.data.msg.current;
-        page_current[0].size = result.data.msg.size;
-        console.log(page_current[0].maxNumber);
-        renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,-1);
+        pagings[0].maxNumber = result.data.msg.pages;
+        pagings[0].all_size = result.data.msg.total;
+        pagings[0].cur_index = result.data.msg.current;
+        pagings[0].size = result.data.msg.size;
+        console.log(pagings[0].maxNumber);
+        generatePagination(result.data.msg.pages, size, begin,result.data.msg.total,renders);
         for(let j=0;j<all.length;j++){
             seal[j].ids = all[j].id;
             if(result.data.msg.records[j].status == 1){
@@ -86,14 +179,24 @@ function renders(begin,size){
                 }
             }else{
                 seal[j].onclick = function(){
+                    startTimes[0].click();
                     confirms[0].ids  = all[j].id;
                     hidden[0].style.display = 'block';
                 }
             }
-            
-            forbiding[j].onclick = function(){
-                let timing = getEndDate(30);
-                console.log(timing);
+            if(result.data.msg.records[j].certification != null){
+                forbiding[j].onclick = function(){
+                    warnings[0].src = 'public/iconfont/RZ.png'
+                    warn_texts[0].innerHTML = '用户名为' + all[j].name + '的用户已认证过'
+                    hidden[2].style.display = 'block';
+                }
+            }else{
+                forbiding[j].onclick = function(){
+                    console.log(1);
+                    authentications[0].click();
+                    hiddens[0].style.display = 'block';
+                    confirms[2].ids  = all[j].id;
+                }
             }
         }
     })
@@ -104,6 +207,11 @@ renders(1,5);
 cancel[0].onclick  = function(){
     hidden[0].style.display = 'none';
 }
+cancel[2].onclick  = function(){
+    hiddens[0].style.display = 'none';
+}
+
+
 confirms[0].onclick  = function(){
     let arr = layer_click[0].value.split('天');
     console.log(arr);
@@ -124,8 +232,13 @@ confirms[0].onclick  = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            hidden[0].style.display = 'none';
-            renders(page_current[0].cur_index,page_current[0].size,-1)
+            if(result.data.msg == 'success'){
+                hidden[0].style.display = 'none';
+                warnings[0].src = 'public/iconfont/success.png'
+                warn_texts[0].innerHTML = '封号成功'
+                hidden[2].style.display = 'block';
+            }
+            renders(pagings[0].cur_index,pagings[0].size,-1)
         })
     }
     console.log(arr[0]);
@@ -144,8 +257,32 @@ confirms[1].onclick = function(){
             }
     }).then(result =>{
         console.log(result.data);
-        hidden[1].style.display = 'none';
-        renders(page_current[0].cur_index,page_current[0].size,-1)
+        if(result.data.msg == 'success'){
+            hidden[1].style.display = 'none';
+            warnings[0].src = 'public/iconfont/success.png'
+            warn_texts[0].innerHTML = '封号解除'
+            hidden[2].style.display = 'block';
+        }
+        renders(pagings[0].cur_index,pagings[0].size,-1)
+    })
+}
+
+
+confirms[2].onclick = function(){
+    // let timing = getEndDate(0);
+    let area_name = layer_click[1].value + '达人'
+    console.log(area_name);
+    axios({
+        method:'GET',
+            url:'/superAdmin/certificationUser',
+            params:{
+                certification:area_name,
+                id:confirms[2].ids
+            }
+    }).then(result =>{
+        console.log(result.data);
+        hiddens[0].style.display = 'none';
+        renders(pagings[0].cur_index,pagings[0].size,-1)
     })
 }
 
@@ -180,9 +317,7 @@ function getEndDate(num){
 
 
 // 下拉框的效果
-let layer_click = document.getElementsByClassName('layer-click');
-let layer_list = document.getElementsByClassName('layer-list');
-let startTimes = document.getElementsByClassName('startTimes');
+
 let flag = true;
 layer_click[0].onclick = function(){
     if(flag == true){
@@ -193,6 +328,19 @@ layer_click[0].onclick = function(){
         flag = true;
     }
 }
+
+let authentication_flag = true;
+layer_click[1].onclick = function(){
+    if(authentication_flag == true){
+        layer_list[1].style.display = 'block';
+        authentication_flag = false;
+    }else{
+        layer_list[1].style.display = 'none';
+        authentication_flag = true;
+    }
+}
+
+
 function ds(){
     let index = 0;
     for(let i=0;i<startTimes.length;i++){
@@ -218,4 +366,16 @@ function renew(index){
     }
     startTimes[index].classList.add('layer-this');
 }
+
+function renews(index){
+    for(let i=0;i<authentications.length;i++){
+        authentications[i].classList.remove('layer-this');
+    }
+    authentications[index].classList.add('layer-this');
+}
 ds();
+
+
+confirmes[0].onclick = function(){
+    hidden[2].style.display = 'none'
+}

@@ -10,11 +10,14 @@
 .card-list-mail{
     width: 160px;
 }
+.card-list-other{
+    width: 250px;
+}
 .audit-change{
     height: 160px;
     line-height: 160px;
 }
-.detail{
+.details{
     display: inline-block;
     cursor: pointer;
     height: 30px;

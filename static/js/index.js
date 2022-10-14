@@ -565,8 +565,7 @@ getFocusInfo()
 
 function focusChangeFn() {
     if (focusNowPage >= focusAllPages) {
-        hintFn('warning', '没有更多内容了')
-        return
+        focusNowPage = 0
     }
     focusNowPage++
     getFocusInfo()

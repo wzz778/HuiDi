@@ -333,7 +333,7 @@ function replyCommentSonFn(event) {
 function addCommentSonComment(event, commentObj) {
     // 判断是否登录
     judgeLogin()
-        .then(() => {
+        .then((result) => {
             if (new Date() < Date.parse(result.userInfo.end_time)) {
                 // 被封号不能发布评论
                 hintFn('warning', `改账号被封${result.userInfo.end_time}`)

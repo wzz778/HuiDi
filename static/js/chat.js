@@ -143,8 +143,8 @@ function getallchat() {
     url: '/api/lookallchat',
     method: 'get',
     params: {
-      fromid: fromid,
-      toid: toid,
+      toid: fromid,
+      fromid: toid,
       page: nowpage,
       size: 10
     }

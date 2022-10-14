@@ -112,18 +112,19 @@
                 </select>
                 <!-- <input type="text" class="publish_send" placeholder="邮箱/电话号"> -->
             </div>
-            <!-- <div class="publish_link">
-                <button>+ 新建</button>
-                <input type="text" class="" placeholder="邮箱/电话号">
-            </div> -->
+            <div class="publish_link" style="margin-top: 5px;">
+                <button id='fadebu' onclick="fadebut()"><i class="fa fa-plus" aria-hidden="true" style="font-size:14px;color:#999;margin:0 5px;"></i>新建专辑</button>
+                <div class="header_searchs">
+                    <input type="text" id="aname" placeholder="请输入您要添加的专辑名">   
+                    <button type="submit" onclick="adda()"><i class="fa fa-plus" aria-hidden="true" style="font-size:14px;color:#307ddb;"></i>添加专辑</button>
+                </div>
+            </div>
             <div class="publish_links">
                 <textarea type="text" maxlength="100" id="dyde" class="publish_text" placeholder="请填写您对图片的描述"></textarea>
                 <span id="dydenumbermax"><span id="dydenumber">0</span>/100</span>
             </div>
             <div style="font-weight: 600;" class="publish_link">
-                <i>*</i>
-                最多只能发4张图片!
-                <i>*</i>
+                最多能发6张图片,内存不可超过10M!
             </div>
             <button id="topublish" onclick="look()" class="havaland">发送动态</button>
         </div>

@@ -219,7 +219,7 @@ function addab(){
       }).then(data => {
         // console.log(data.data);
         if(data.data.err==0){   
-            hintFn('warning' ,"添加成功！")
+            hintFn('success' ,"添加成功！")
             getmyalbum()
         }else{
             return 
@@ -241,7 +241,7 @@ function showmydynamic(){
           begin:dynowpage
       }
     }).then(data => {
-    //   console.log(data.data);
+      console.log(data.data);
       if(data.data.err==0){
           let arr=data.data.msg.list;
           dynumber.innerText=data.data.msg.all_count

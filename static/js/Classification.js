@@ -16,6 +16,7 @@ let animation = document.getElementById('animation')
 let searchMessge = ''
 let nowPage = 1
 let allPage = 0
+let all = 0
 sendFn('/picture/showAllType', { id: window.location.search.split("=")[1] })
     .then(result => {
         titleClassify.innerHTML = result.msg.type.name
@@ -51,6 +52,7 @@ function getSearchInfo() {
         type: '图片'
     })
         .then(result => {
+            all = result.msg.page.all_count
             allPage = result.msg.page.all_page
             content.classList.remove('none')
             noContent.classList.add('none')
@@ -226,7 +228,9 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !ynpicture && nowPage >= allPage) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            hintFn('warning', '没有更多内容了')
+            if (content.getElementsByClassName('middleContentItem').length == all) {
+                hintFn('warning', '没有更多内容了')
+            }
         }
     }
     if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && ynpicture) {

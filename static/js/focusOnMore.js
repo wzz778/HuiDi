@@ -203,7 +203,7 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !yn && nowPage >= allPages) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            hintFn('warning', '没有更多内容了')
+            setTimeout(hintFn('warning', '没有更多内容了'),1000)
         }
     }
     if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yn) {

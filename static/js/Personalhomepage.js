@@ -18,6 +18,7 @@ let myalbumbox=document.getElementsByClassName('myalbumbox')[0];
 let mydetext=document.getElementById('mydetext')
 let abdenumber=document.getElementById('abdenumber')
 let album_text=document.getElementsByClassName('album_text')[0];
+let collect_body=document.getElementsByClassName('class_body')[2]
 let dyshow=true;
 let colshow=false;
 let arrfun=[

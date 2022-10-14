@@ -10,7 +10,10 @@ let lookend=document.getElementById('lookend');
 let sortred=document.getElementsByClassName('sortred')
 let userimg = '/public/img/userHead.jpg';
 let myimg = '/public/img/userHead.jpg';
+let sendchat=document.getElementById('sendchat');
+let isin=false;
 let fromid;
+function send(){}
   //观看是否有消息
   axios({
     url: '/api/getUserIsMessage',
@@ -57,9 +60,14 @@ function getprTime() {
   chattime = chattime[chattime.length - 1].innerHTML;
   return chattime
 }
+function getfirstTime() {
+  let chattime = document.getElementsByClassName('chattime');
+  chattime = chattime[0].innerHTML;
+  return chattime
+}
 function recontrasttime(time, nowtime) {
   let data = new Date(time.replace(/-/g, "/"));
-  let t1 = new Date(nowtime.replace(/-/g, "/"));//获取当前时间
+  let t1 = new Date(nowtime.replace(/-/g, "/"));
   let times = t1.getTime() - data.getTime();
   let days = parseInt(times / (24 * 1000 * 3600));
   if (days > 0) {
@@ -130,17 +138,6 @@ function tousermessage() {
 }
 let nowpage=1;
 let allpage=1;
-var helper = document.createElement('div');
-helper.classList.add('amessage');
-helper.innerHTML=`
-<div class="chattimebox"><span class="chattime">43</span></div>
-<div class="chat mychat">
-    <img src="" alt="">
-    <div class="chattext">343</div>
-</div>
-`
-messagebody.parentNode.aappend(helper,messagebody);
-// messagebody.parentNode.insertBefore(helper);
 function getallchat() {
   axios({
     url: '/api/lookallchat',
@@ -157,81 +154,57 @@ function getallchat() {
       let list = data.data.msg.list;
       let le = list.length;
       allpage=data.data.msg.all_page;
-      for (let i = le - 1; i > 0; i--) {
-        if (!recontrasttime(getprTime(),list[i].info_create_time)) {
+      for (let i =0; i <le; i++) {
+        let nowhtml = document.createElement('div');
+        nowhtml.className='amessage';
+        var firstamessage=messagebody.getElementsByClassName('amessage')[0];
+        if (!recontrasttime(list[i].info_create_time,getfirstTime())) {
           if (list[i].info_u_id == fromid) {
-            let helper = document.createElement('div');
-            helper.childNodes.add('amessage');
-            helper.innerHTML=`
+            nowhtml.innerHTML=`
               <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
               <div class="chat mychat">
-                  <img src="${ myimg }" alt="">
-                  <div class="chattext">${list[i].info_message}</div>
+                <img src="${ myimg }" alt="">
+                <div class="chattext">${list[i].info_message}</div>
               </div>
             `
-          //   let thisdiv= `
-          //   <div class="amessage">
-          //     <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
-          //     <div class="chat mychat">
-          //         <img src="${ myimg }" alt="">
-          //         <div class="chattext">${list[i].info_message}</div>
-          //     </div>
-          //   </div>
-          // `
-          messagebody.insertBefore(helper);
-            // messagebody.innerHTML += `
-            //   <div class="amessage">
-            //     <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
-            //     <div class="chat mychat">
-            //         <img src="${ myimg }" alt="">
-            //         <div class="chattext">${list[i].info_message}</div>
-            //     </div>
-            //   </div>
-            // `
           } else {
-            let thisdiv= `
-            <div class="amessage">
-              <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
-              <div class="chat mychat">
-                  <img src="${ myimg }" alt="">
-                  <div class="chattext">${list[i].info_message}</div>
-              </div>
+            nowhtml.innerHTML=`
+            <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
+            <div class="chat otherchat">
+              <img src="${ userimg }" alt="">
+              <div class="chattext">${list[i].info_message}</div>
             </div>
           `
-          messagebody.insertBefore(thisdiv);
-          //   messagebody.innerHTML += `
-          //   <div class="amessage">
-          //     <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
-          //     <div class="chat otherchat">
-          //         <img src="${ userimg }" alt="">
-          //         <div class="chattext">${list[i].info_message}</div>
-          //     </div>
-          //   </div>
-          // `
           }
         } else {
           if (list[i].info_u_id == fromid) {
-            messagebody.innerHTML += `
-              <div class="amessage">
-                <div class="chat mychat">
-                    <img src="${myimg }" alt="">
-                    <div class="chattext">${list[i].info_message}</div>
-                </div>
+            nowhtml.innerHTML=`
+              <div class="chat mychat">
+                <img src="${ myimg }" alt="">
+                <div class="chattext">${list[i].info_message}</div>
               </div>
             `
           } else {
-            messagebody.innerHTML += `
-            <div class="amessage">
+            nowhtml.innerHTML=`
               <div class="chat otherchat">
-                  <img src="${userimg}" alt="">
-                  <div class="chattext">${list[i].info_message}</div>
+                <img src="${ userimg }" alt="">
+                <div class="chattext">${list[i].info_message}</div>
               </div>
-            </div>
-          `
+            `
           }
         }
+        firstamessage.parentNode.insertBefore(nowhtml,firstamessage);
       }
-      messagebody.scrollTop = messagebody.scrollHeight;
+      if(nowpage!=allpage){
+          lookmore.style.display='block';
+          lookend.style.display='none';
+      }else{
+        lookmore.style.display='none';
+        lookend.style.display='block';
+      }
+      if(nowpage==1){
+        messagebody.scrollTop = messagebody.scrollHeight;
+      }
     } else {
 
     }
@@ -246,6 +219,9 @@ chattext.onkeyup = function () {
   }
   var num = len;
   chattextnumber.innerText = num;
+  if(event.keyCode==13){
+    send();
+  }
 };
 chattext.onkeydown = function () {
   var len = chattext.value.length;
@@ -255,24 +231,26 @@ chattext.onkeydown = function () {
   var num = len;
   chattextnumber.innerText = num;
 };
+var websocket = null;
 var creatws= function (userid) {
-  var websocket = null;
   if ('WebSocket' in window) {
     //用于创建WebSocket对象，webSocketTest对应的是java类的注解值
     websocket = new WebSocket(`ws://152.136.99.236:8080/websocket/${userid}`);
   } else {
-    alert("当前浏览器不支持");
+    hintFn("wrong","当前浏览器不支持")
   }
-  //        连接发生错误的时候回调方法；
+  //连接发生错误的时候回调方法；
   websocket.onerror = function () {
-    alert("连接错误");
+    hintFn("warning","连接错误")
+    // alert("连接错误");
   }
-  //       连接成功时建立回调方法
+  //连接成功时建立回调方法
   websocket.onopen = function () {
     //WebSocket已连接上，使用send()方法发送数据
-    alert("连接成功");
+    hintFn("success","连接成功")
+    // alert("连接成功");
   };
-  //      收到消息的回调方法
+  //  收到消息的回调方法
   websocket.onmessage = function (msg) {
     let data = JSON.parse(msg.data)
     console.log(msg.data);
@@ -288,73 +266,109 @@ var creatws= function (userid) {
     } else {
       if (!recontrasttime(getprTime(), getTime())) {
         messagebody.innerHTML += `
-      <div class="amessage">
-        <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
-        <div class="chat otherchat">
-            <img src="${userimg}" alt="">
-            <div class="chattext">${data.text}</div>
+        <div class="amessage">
+          <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
+          <div class="chat otherchat">
+              <img src="${userimg}" alt="">
+              <div class="chattext">${data.text}</div>
+          </div>
         </div>
-      </div>
     `
       } else {
         messagebody.innerHTML += `
-      <div class="amessage">
-        <div class="chat otherchat">
-            <img src="${userimg}" alt="">
-            <div class="chattext">${data.text}</div>
+        <div class="amessage">
+          <div class="chat otherchat">
+              <img src="${userimg}" alt="">
+              <div class="chattext">${data.text}</div>
+          </div>
         </div>
-      </div>
     `
       }
       if(nowpage==1){
         messagebody.scrollTop = messagebody.scrollHeight;
       }
     }
-    // console.log(JSON.parse(msg.data));
-    // setdivInnerHTML(msg.data);
   };
   //连接关闭的回调方法
   websocket.onclose = function () {
     closed();
-    alert("关闭成功");
+    isFinite('warning',"连接已关闭")
+    // alert("关闭成功");
   };
-
   function closed() {
     websocket.close();
-    alert("点击关闭");
+    sFinite('warning',"连接已关闭")
+    // alert("点击关闭");
   }
-
-  function send() {//注意引号内的内容应该是文本框的id而不能是name
+  sendchat.onclick=function(){
+    if(isnull(judgeStrs(chattext.value))){
+      hintFn('warning', "请输入你要输入的内容")
+      return
+    }
     let newob = {
       to: toid,
       from: fromid,
-      text: chattext.value,
+      text: judgeStrs(chattext.value),
     }
-    alert(JSON.stringify(newob))
-    websocket.send(JSON.stringify(newob)); //给后台发送数据
     if (!recontrasttime(getprTime(), getTime())) {
       messagebody.innerHTML += `
       <div class="amessage">
-        <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
-        <div class="chat mychat">
-            <img src="${myimg}" alt="">
-            <div class="chattext">${chattext.value}</div>
+      <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
+      <div class="chat mychat">
+      <img src="${myimg}" alt="">
+      <div class="chattext">${chattext.value}</div>
         </div>
-      </div>
-    `
-    } else {
-      messagebody.innerHTML += `
-      <div class="amessage">
-        <div class="chat mychat">
-            <img src="${myimg}" alt="">
-            <div class="chattext">${chattext.value}</div>
         </div>
-      </div>
-    `
-    }
+        `
+      } else {
+        messagebody.innerHTML += `
+        <div class="amessage">
+        <div class="chat mychat">
+        <img src="${myimg}" alt="">
+        <div class="chattext">${chattext.value}</div>
+        </div>
+        </div>
+        `
+      }
+      websocket.send(JSON.stringify(newob)); //给后台发送数据
     messagebody.scrollTop = messagebody.scrollHeight;
+    chattext.value=``
   }
 }
+// function send() {//注意引号内的内容应该是文本框的id而不能是name
+//   if(isnull(judgeStrs(chattext.value))){
+//     hintFn('warning', "请输入你要输入的内容")
+//     return
+//   }
+//   let newob = {
+//     to: toid,
+//     from: fromid,
+//     text: judgeStrs(chattext.value),
+//   }
+//   if (!recontrasttime(getprTime(), getTime())) {
+//     messagebody.innerHTML += `
+//     <div class="amessage">
+//     <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
+//     <div class="chat mychat">
+//     <img src="${myimg}" alt="">
+//     <div class="chattext">${chattext.value}</div>
+//       </div>
+//       </div>
+//       `
+//     } else {
+//       messagebody.innerHTML += `
+//       <div class="amessage">
+//       <div class="chat mychat">
+//       <img src="${myimg}" alt="">
+//       <div class="chattext">${chattext.value}</div>
+//       </div>
+//       </div>
+//       `
+//     websocket.send(JSON.stringify(newob)); //给后台发送数据
+//   }
+//   messagebody.scrollTop = messagebody.scrollHeight;
+//   chattext.value=``
+// }
 function beginall() {
   tousermessage().then(result1 => {
     return fromusermessage()
@@ -368,21 +382,11 @@ function beginall() {
 beginall()
 messagebody.onscroll = function () {
   let scrollTop = messagebody.scrollTop;
-  // let windowHeight = messagebody.clientHeight;
-  // let scrollHeight = messagebody.scrollHeight;
-  // console.log("-----------");
-  console.log(scrollTop);
-  // console.log(windowHeight);
-  // console.log(scrollHeight);
   if (scrollTop==0) {
       if(allpage>nowpage){
           nowpage++;
-          // lookmore.style.display='block';
-          // lookend.style.display='none';
           setTimeout(function(){getallchat()},1000)
       }else{
-          // lookmore.style.display='none';
-          // lookend.style.display='block';
       }
   }
 };

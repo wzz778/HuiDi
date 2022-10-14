@@ -14,6 +14,14 @@
 <body>
     {{block 'bodytop'}}{{/block}}
         <!-- 出错的提示信息 -->
+    <div id="onlandmax">
+        <div class="content">
+            <span class="point">加载中</span>
+            <div class="point1"></div>
+            <div class="point2"></div>
+            <div class="point3"></div>
+        </div>
+    </div>
     <div id="tipsback">
         <div class="wrong hintSty none">
             <span class="tipsi">
@@ -66,7 +74,8 @@
             <a href="mymessage"  class="message_button">消息<span id="mymessagedian"></span></a>
             <a href="login" id="toland" class="message_button">登录/注册</a>
             <div id="header_headdiv" style="display: none;">
-                <img src="public/img/userHead.jpg" alt="">
+                <div class="img" style="background-image:url(public/img/userHead.jpg);"></div>
+                <!-- <img src="public/img/userHead.jpg" alt=""> -->
                 <a href="Personalhomepage">用户昵称1111111111</a>
                 <div class="header_co" style="display: none;">
                     <a href="Personalhomepage"><i class="fa fa-user-circle-o" aria-hidden="true"></i>个人主页</a>

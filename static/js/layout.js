@@ -1,7 +1,8 @@
 let header=document.getElementById('header');
 let toland=document.getElementById('toland');
 let header_headdiv=document.getElementById('header_headdiv');
-let headerimg=header_headdiv.getElementsByTagName('img')[0];
+// let headerimg=header_headdiv.getElementsByTagName('img')[0];
+let headerimg=header_headdiv.getElementsByClassName('img')[0];
 let headera=header_headdiv.getElementsByTagName('a')[0];
 let header_button=document.getElementsByClassName('header_button')[0];
 let header_button_i=header_button.getElementsByTagName('i')[0];
@@ -17,6 +18,7 @@ let searchinput=document.getElementById('searchinput')
 let dydenumber=document.getElementById('dydenumber')
 let dyde=document.getElementById('dyde')
 let searchva=document.getElementsByClassName('searchva');
+let onlandmax=document.getElementById('onlandmax')
 function contrasttime(time){
     let data=new Date(time.replace(/-/g,"/"));
     let t1=new Date();//获取当前时间
@@ -148,7 +150,7 @@ axios({
     if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){
-            headerimg.src=me.img_url;
+            headerimg.style.backgroundImage=`url(${me.img_url})`;
         }
         headera.innerHTML=me.name;
         header_headdiv.style.display='flex'
@@ -179,6 +181,7 @@ axios({
     url: '/api/getUserIsChat',
     method: 'get',
   }).then(data => {
+    console.log(data.data);
     if(data.data.err==0){
         if(data.data.msg){
             mymessagedian.style.display='block'
@@ -256,6 +259,7 @@ function look(){
         allfileList.delete('describes')
         return
     }
+    openland()
     axios({
         method: 'POST',
         url: '/api/Releasedynamics',
@@ -263,6 +267,7 @@ function look(){
     })
     .then((result) => {
         // console.log(result.data);
+        closeland()
         if(result.data.err==0&&result.data.msg.msg=='OK'){
             hintFn('success' ,"上传成功！")
             setTimeout(function () {
@@ -391,3 +396,9 @@ dyde.onkeydown=function(){
   var num = len;
   dydenumber.innerText=num;
 };
+function openland(){
+    onlandmax.style.display='block'
+}
+function closeland(){
+    onlandmax.style.display='block'
+}

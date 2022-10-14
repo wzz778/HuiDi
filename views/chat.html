@@ -12,37 +12,30 @@
                     <a class="message-sort" style="color: white;background-color: #73b2ff ;" href="chatmessage"><div class="sortred"></div>聊天空间</a>
                 </div>
                 <div id="main-right">
-                    <button onclick="closed()">关闭ws</button>
+                    <!-- <button onclick="closed()">关闭ws</button> -->
                     <div class="main-right-top">
                         我与 <a href="" class="chatusername">用户名</a> 的聊天
                         <span class="online" style="color: rgb(0, 209, 0);display: none;">在线</span><span style="color: #333;" class="online">离线</span>
                         <a class="chatreturn" href='chatmessage'><i class="fa fa-reply-all" aria-hidden="true"></i>  返回观看去全部消息</a>
                     </div>
                     <div class="messagebody">
-                        <!-- <div id="lookmore">
+                        <div id="lookmore">
                             正在努力加载更多<i class="fa fa-sun-o" aria-hidden="true"></i>
                         </div>
                         <div id="lookend">
                             已经是全部内容了哦  ~~~
-                        </div> -->
-                        <!-- <div class="amessage"> -->
+                        </div>
+                        <div class="amessage" style="display: none;">
                             <div class="chattimebox" style="display: none;"><span class="chattime">2004-43-34 12:34:34</span></div>
-                            <!-- <div class="chat otherchat">
+                            <div class="chat otherchat">
                                 <img src="/public/img/loginback.png" alt="">
                                 <div class="chattext">我是聊天信息我是聊天信息我是聊天信息</div>
                             </div>
                         </div>
-                        <div class="amessage">
-                            <div class="chattimebox"><span class="chattime">2034-43-34 12:34:34</span></div>
-                            <div class="chat mychat">
-                                <img src="/public/img/loginback.png" alt="">
-                                <div class="chattext">我是聊天信息</div>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="main-right-bon">
                         <textarea type="text" maxlength="200" id="chattext" class="publish_text" placeholder="请填写您要发送的聊天内容！"></textarea>
-                        <button onclick="send()">发送</button>
+                        <button id="sendchat">发送</button>
                         <span id="chattextnumbermax"><span id="chattextnumber">0</span>/200</span>
                     </div>
                 </div>

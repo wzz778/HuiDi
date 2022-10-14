@@ -71,8 +71,3 @@ function tologin(){
         
       });
 }
-history.pushState(null, null, document.URL);
-window.addEventListener('popstate', function() {         // 监听回退按钮
-  alert('-----------')
-  // history.back()
-},false);

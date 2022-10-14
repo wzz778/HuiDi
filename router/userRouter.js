@@ -1063,7 +1063,6 @@ router.get('/api/lookalltype', (req, res) => {
 })
 //观看两者的关注
 router.get('/api/lookallchat', (req, res) => {   
-    console.log();
         axios({
             method:'GET',
             url:'admin/getWebSocketInfo',
@@ -1084,6 +1083,26 @@ router.get('/api/lookallchat', (req, res) => {
             console.log(err);
             res.send({ err: -1, msg: '获取失败' })
         })
+})
+//观看聊天人
+router.get('/api/lookallchatuser', (req, res) => {   
+    axios({
+        method:'GET',
+        url:'/admin/getOtherCommunication',
+        headers:{
+            token:req.session.token,
+        },
+        params:{
+            u_id:req.session.userid,
+        }
+    }) 
+    .then(result=>{
+        res.send({ err: 0, msg:result.data.data})
+    })
+    .catch(err=>{
+        console.log(err);
+        res.send({ err: -1, msg: '获取失败' })
+    })
 })
 module.exports=router;
 

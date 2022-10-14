@@ -5,6 +5,7 @@ let sexinput=document.getElementsByName('sex')
 let kuanginput=document.getElementsByClassName('kuanginput')[0]
 let describe=document.getElementsByClassName('describe')[0]
 let backfile=document.getElementById('backfile')
+let kepepbu=document.getElementById('kepepbu')
 axios({
     url: '/api/getmymessage',
     method: 'get',
@@ -57,6 +58,7 @@ function openbackimg(){
     }
 }  
 function keepmessage(){
+    openland()
     let newfile=new FormData();
     if(isnull(kuanginput.value)&&isnull(describe.value)){
         hintFn('warning' ,"请输入完整内容")
@@ -82,6 +84,7 @@ function keepmessage(){
         data:newfile,
     })
     .then((result) => {
+        closeland()
         console.log(result.data);
         if(result.data.err==0&&result.data.msg.msg=='OK'){  
             hintFn('success' ,'保存成功')
@@ -93,6 +96,7 @@ function keepmessage(){
         }
     })
     .catch((err)=>{
+        closeland()
         // console.log(err)
     })
 }

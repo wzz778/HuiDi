@@ -476,3 +476,9 @@
     color: #056de8;
     background-color: rgba(5, 109, 232, .1);
 }
+
+.noContent {
+    height: 300px;
+    text-align: center;
+    line-height: 300px;
+}

@@ -29,6 +29,8 @@ let focusOnContent = document.getElementById('focusOnContent')
 let carouselRightAll = document.getElementById('carouselRightAll')
 // 精选
 let carouselOne = document.getElementById('carouselOne')
+// 没有内容了
+let noContent = document.getElementById('noContent')
 // 定时器
 function beginSettimeout() {
     timerIndex = setInterval(() => {
@@ -93,6 +95,7 @@ function rightArrow() {
 let centerMiddle = document.getElementsByClassName('centerMiddle')
 let navOperatorChoice = document.getElementsByClassName('navOperatorChoice')
 function navFn(show, close) {
+    noContent.classList.add('none')
     animation.classList.remove('none')
     centerMiddle[close].classList.add('none')
     centerMiddle[show].classList.remove('none')
@@ -111,10 +114,12 @@ let nowPageHotTicket = 1
 let allPageHotTicket = 0
 let nowPageFocusOn = 1
 let allPageHotFocusOn = 0
+let all = 0
 // 获取热门内容
 function getHotTicket() {
     sendFn('/picture/showAllPicture', { beginIndex: nowPageHotTicket })
         .then(result => {
+            all = result.msg.all_count
             allPageHotTicket = result.msg.all_page
             let tempStr = ''
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -208,6 +213,13 @@ function getFocusOn() {
             // 登录了去访问关注接口
             sendFn('/admin/getFocusDynamic', { beginIndex: nowPageFocusOn })
                 .then(result => {
+                    if (result.msg.list.length == 0) {
+                        animation.classList.add('none')
+                        noContent.classList.remove('none')
+                        focusOn.classList.add('none')
+                        return
+                    }
+                    al = result.msg.all_count
                     allPageHotFocusOn = result.msg.all_page
                     let tempStr = ''
                     for (let i = 0; i < result.msg.list.length; i++) {
@@ -322,7 +334,10 @@ window.onmousewheel = function (event) {
         if (event.wheelDelta < 0 && !yn && nowPageHotTicket == allPageHotTicket) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
-                hintFn('warning', '没有更多内容了')
+                // 判断是否加载完了
+                if (hotTicket.getElementsByClassName('centerMiddleItem').length == all) {
+                    hintFn('warning', '没有更多内容了')
+                }
             }
         }
         if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yn) {
@@ -342,7 +357,9 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !ynFocus && nowPageFocusOn == allPageHotFocusOn) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            hintFn('warning', '没有更多内容了')
+            if (focusOn.getElementsByClassName('centerMiddleItem').length == all) {
+                hintFn('warning', '没有更多内容了')
+            }
         }
     }
     if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && ynFocus) {

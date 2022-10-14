@@ -19,6 +19,7 @@ let albumNowPage = 1
 let albumAllPages = 0
 let talentShowNowPage = 1
 let talentShowAllPages = 0
+let all = 0
 function getSearchInfo() {
     searchinput.value = decodeURI(window.location.search).split("=")[1].split('&')[0]
     // 将搜索类别报存到本地
@@ -39,6 +40,7 @@ function getSearchInfo() {
             message: decodeURI(window.location.search).split("=")[1].split('&')[0],
             type: decodeURI(window.location.search).split("=")[2]
         }).then(result => {
+            all = result.msg.page.all_count
             pictureAllPages = result.msg.page.all_page
             if (result.msg.info.length == 0) {
                 content.classList.add('none')
@@ -340,7 +342,9 @@ window.onmousewheel = function (event) {
         if (event.wheelDelta < 0 && !ynpicture && pictureNowPage >= pictureAllPages) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
-                hintFn('warning', '没有更多内容了')
+                if (content.getElementsByClassName('middleContentItem').length == all) {
+                    hintFn('warning', '没有更多内容了')
+                }
             }
         }
         if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && ynpicture) {
@@ -439,7 +443,7 @@ function delAllSearch() {
 }
 
 // 获取热内容
-function getcarouselAll() { 
+function getcarouselAll() {
     sendFn('/picture/ShowHotContent', {})
         .then(result => {
             let tempStr = ''

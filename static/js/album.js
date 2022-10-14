@@ -34,10 +34,12 @@ function choiceAlbumFn(event) {
 }
 let nowPage = 1
 let allPages = 0
+let all = 0
 // 获取专辑信息
 function getAlbumInfo() {
     sendFn('/picture/showAlbumById', { alId: window.location.search.split("=")[1], beginIndex: nowPage })
         .then(result => {
+            all = result.msg.image.all_count
             allPages = result.msg.image.all_page
             let userAlbumInfoStr = `
         <h1>${result.msg.album.a_name}</h1>
@@ -61,6 +63,7 @@ function getAlbumInfo() {
                 noContent.classList.remove('none')
                 animation.classList.add('none')
                 content.classList.add('none')
+                return
             }
             for (let i = 0; i < result.msg.image.list.length; i++) {
                 let tempAllImg = ''
@@ -246,7 +249,9 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !yn && nowPage == allPages) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            hintFn('warning', '没有更多内容了')
+            if (content.getElementsByClassName('contentItem').length == all) {
+                hintFn('warning', '没有更多内容了')
+            }
         }
     }
     if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yn) {

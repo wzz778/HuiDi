@@ -34,6 +34,8 @@ let foucs = document.getElementById('foucs')
 let sendReportInfo = document.getElementById('sendReportInfo')
 // 动画
 let animation = document.getElementById('animation')
+// 发布主评论按钮
+let sendComment = document.getElementById('sendComment')
 
 let sendArrNone = []
 
@@ -84,13 +86,14 @@ function delShowImg() {
 }
 // 发布主评论
 function sendCommentFn() {
+    sendComment.setAttribute('onclick', `hintFn('warning', '上传中')`)
     // 判断是否登录
     judgeLogin()
         .then(result => {
             // 判断是否能发布评论
             if (new Date() < Date.parse(result.userInfo.end_time)) {
                 // 被封号不能发布评论
-                hintFn('warning', `改账号被封${result.userInfo.end_time}`)
+                hintFn('warning', `该账号被封${result.userInfo.end_time}`)
                 return
             }
             let userObj = result.userInfo
@@ -117,11 +120,15 @@ function sendCommentFn() {
             formData.append('reportId', 0)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
-                    userObj.commentId = result.msg[0].id
-                    sendArrNone.push(result.msg[0].id)
+                    sendComment.setAttribute('onclick', 'sendCommentFn()')
+                    userObj.commentId = result.msg[result.msg.length - 1].id
+                    sendArrNone.push(result.msg[result.msg.length - 1].id)
                     // 将评论的id传过来
                     addComment(userObj)
                     showCommentBoxFn()
+                    // 清空图片
+                    showImgUrl.src=''
+                    imgFile.value = ''
                     CommentInfo.value = ''
                 })
                 .catch(err => {
@@ -146,6 +153,7 @@ function addComment(userObj) {
     let myDate = new Date()
     let imgStr = ''
     if (showImgUrl.src.indexOf('/dynamicDetails?id=') == -1) {
+        console.log('JJJJJJ')
         imgStr = `<img src="${showImgUrl.src}" alt="">`
     }
     let userObjInfo = {

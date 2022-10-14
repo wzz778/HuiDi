@@ -41,6 +41,9 @@ function getSearchInfo() {
             type: decodeURI(window.location.search).split("=")[2]
         }).then(result => {
             all = result.msg.page.all_count
+            if (all < 5) {
+                animation.classList.add('none')
+            }
             pictureAllPages = result.msg.page.all_page
             if (result.msg.info.length == 0) {
                 content.classList.add('none')

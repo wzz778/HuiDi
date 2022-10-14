@@ -477,6 +477,9 @@ let nowPage = 1
 function getAllComment() {
     sendFn('/picture/showComment', { id: window.location.search.split("=")[1], beginIndex: nowPage })
         .then(result => {
+            if (result.msg.all_count < 5) {
+                animation.classList.add('none')
+            }
             allPges = result.msg.all_page
             // 将数据渲染到页面中
             let tempStr = ''
@@ -484,6 +487,7 @@ function getAllComment() {
                 // 没有数据
                 noContent[0].classList.remove('none')
                 animation.classList.add('none')
+                return
             }
             for (let i = 0; i < result.msg.list.length; i++) {
                 if (sendArrNone.indexOf(result.msg.list[i].comment.id) != -1) {

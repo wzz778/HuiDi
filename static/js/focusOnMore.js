@@ -120,6 +120,9 @@ function getFocusOnInfo(ele) {
             animation.classList.remove('none')
             noContent.classList.add('none')
             content.classList.remove('none')
+            if (result.msg.all_count < 5) {
+                animation.classList.add('none')
+            }
             if (result.msg.list.length == 0) {
                 animation.classList.add('none')
                 noContent.classList.remove('none')
@@ -203,7 +206,7 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !yn && nowPage >= allPages) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            setTimeout(hintFn('warning', '没有更多内容了'),1000)
+            setTimeout(hintFn('warning', '没有更多内容了'), 1000)
         }
     }
     if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yn) {

@@ -120,6 +120,9 @@ function getHotTicket() {
     sendFn('/picture/showAllPicture', { beginIndex: nowPageHotTicket })
         .then(result => {
             all = result.msg.all_count
+            if (all < 5) {
+                animation.classList.add('none')
+            }
             allPageHotTicket = result.msg.all_page
             let tempStr = ''
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -219,7 +222,10 @@ function getFocusOn() {
                         focusOn.classList.add('none')
                         return
                     }
-                    al = result.msg.all_count
+                    all = result.msg.all_count
+                    if (all < 5) {
+                        animation.classList.add('none')
+                    }
                     allPageHotFocusOn = result.msg.all_page
                     let tempStr = ''
                     for (let i = 0; i < result.msg.list.length; i++) {

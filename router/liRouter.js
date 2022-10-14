@@ -259,7 +259,7 @@ router.post('/picture/showComment', (req, res) => {
         params: {
             reflect: id,
             begin_index: beginIndex,
-            size: 1
+            size: 5
         }
     })
         .then(result => {
@@ -512,7 +512,7 @@ router.post('/picture/showAllPicture', (req, res) => {
         url: '/picture/showAllPicture',
         params: {
             begin_index: beginIndex,
-            size: 1
+            size: 5
         }
     })
         .then(result => {
@@ -619,7 +619,7 @@ router.post('/admin/getFocusDynamic', (req, res) => {
         params: {
             begin_index: beginIndex,
             id: req.session.user.id,
-            size: 10
+            size: 5
         },
         headers: {
             token: req.session.token
@@ -721,7 +721,7 @@ router.post('/picture/showAlbumById', (req, res) => {
         params: {
             al_id: alId,
             begin_index: beginIndex,
-            size: 10
+            size: 5
         }
     })
         .then(result => {
@@ -783,7 +783,7 @@ router.post('/picture/getInfo/picture', (req, res) => {
         params: {
             begin_index: beginIndex,
             message: message,
-            size: 10,
+            size: 5,
             type: type
         }
     })
@@ -818,7 +818,7 @@ router.post('/picture/getInfo/album', (req, res) => {
         params: {
             begin_index: beginIndex,
             message: message,
-            size: 10,
+            size: 5,
             type: type
         }
     })
@@ -838,7 +838,7 @@ router.post('/picture/getInfo/talentShow', (req, res) => {
         params: {
             begin_index: beginIndex,
             message: message,
-            size: 10,
+            size: 5,
             type: type
         }
     })
@@ -960,7 +960,7 @@ router.post('/picture/FindUsersRecommendationCategories', (req, res) => {
         params: {
             begin_index: nowPage,
             type: type,
-            size: 10
+            size: 5
         }
     })
         .then(result => {

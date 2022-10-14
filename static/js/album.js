@@ -40,6 +40,10 @@ function getAlbumInfo() {
     sendFn('/picture/showAlbumById', { alId: window.location.search.split("=")[1], beginIndex: nowPage })
         .then(result => {
             all = result.msg.image.all_count
+            // 判断动画是否显示
+            if (all < 5) {
+                animation.classList.add('none')
+            }
             allPages = result.msg.image.all_page
             let userAlbumInfoStr = `
         <h1>${result.msg.album.a_name}</h1>

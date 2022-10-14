@@ -6,10 +6,20 @@ let content = document.getElementById('content')
 let animation = document.getElementById('animation')
 // 没有内容
 let noContent = document.getElementById('noContent')
+// 搜索内容
+let message = ''
+let all = 0
 
 // 点击去请求函数
 choiceFocus.addEventListener('click', (event) => {
     let allSpans = choiceFocus.getElementsByTagName('span')
+    if (message == '') {
+        message = '全部'
+    }
+    if (event.target.innerHTML.indexOf(message) != -1) {
+        return
+    }
+    content.innerHTML = ''
     // 清除所有样式
     for (let i = 0; i < allSpans.length; i++) {
         allSpans[i].classList.remove('clickSty')
@@ -114,12 +124,13 @@ sendFn('/picture/showRecommendType', {})
     })
 // 获取关注的信息
 function getFocusOnInfo(ele) {
-    let message = ele.innerHTML == '全部' ? '' : `${ele.innerHTML}达人`
+    message = ele.innerHTML == '全部' ? '' : `${ele.innerHTML}达人`
     sendFn('/picture/FindUsersRecommendationCategories', { type: message, nowPage: ele.getAttribute('nowPage') })
         .then(result => {
             animation.classList.remove('none')
             noContent.classList.add('none')
             content.classList.remove('none')
+            all = result.msg.all_count
             if (result.msg.all_count < 5) {
                 animation.classList.add('none')
             }
@@ -167,7 +178,7 @@ function getFocusOnInfo(ele) {
     </div>
             `
             }
-            content.innerHTML = tempStr
+            content.innerHTML += tempStr
         })
         .catch(err => {
             console.log(err)
@@ -206,7 +217,9 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !yn && nowPage >= allPages) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            setTimeout(hintFn('warning', '没有更多内容了'), 1000)
+            if(all==content.getElementsByClassName('item').length){
+                hintFn('warning', '没有更多内容了')
+            }
         }
     }
     if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yn) {

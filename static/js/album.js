@@ -87,7 +87,7 @@ function getAlbumInfo() {
                     </span>
                     `
                     likeOperatorStr = `
-                    <span class="myImgOperatorItem" onclick="likeFn(this)" info="false">已赞</span>
+                    <span class="myImgOperatorItem" onclick="likeFn(this)" info="false" status=${result.msg.image.list[i].images.status}>已赞</span>
                     `
                 } else {
                     // 没有点赞
@@ -98,7 +98,7 @@ function getAlbumInfo() {
                     </span>
                     `
                     likeOperatorStr = `
-                    <span class="myImgOperatorItem" onclick="likeFn(this)" info="true">点赞</span>
+                    <span class="myImgOperatorItem" onclick="likeFn(this)" info="true" status=${result.msg.image.list[i].images.status}>点赞</span>
                     `
                 }
                 let collectInfoStr = ''
@@ -111,7 +111,7 @@ function getAlbumInfo() {
                     </span>
                     `
                     collectOperatorStr = `
-                    <span class="myImgOperatorItem" onclick="collectFn(this)" info="false">已收藏</span>
+                    <span class="myImgOperatorItem" onclick="collectFn(this)" info="false" status=${result.msg.image.list[i].images.status}>已收藏</span>
                     `
                 } else {
                     collectInfoStr = `
@@ -121,16 +121,16 @@ function getAlbumInfo() {
                     </span>
                     `
                     collectOperatorStr = `
-                    <span class="myImgOperatorItem" onclick="collectFn(this)" info="true">收藏</span>
+                    <span class="myImgOperatorItem" onclick="collectFn(this)" info="true" status=${result.msg.image.list[i].images.status}>收藏</span>
                     `
                 }
                 contenStr += `
                 <div class="contentItem">
             <div class="">
                 <div class="myImg">
-                    <a href="/dynamicDetails?id=${result.msg.image.list[i].images.id}">
+                    <span href="/dynamicDetails?id=${result.msg.image.list[i].images.id}" onclick="jumpFn(this)" status=${result.msg.image.list[i].images.status}>
                        ${tempAllImg}
-                    </a>
+                    </span>
                     <div class="myImgOperator">
                         ${likeOperatorStr}
                         ${collectOperatorStr}
@@ -164,6 +164,10 @@ getAlbumInfo()
 function likeFn(event) {
     judgeLogin()
         .then(result => {
+            if (event.getAttribute('status') == 0 || event.getAttribute('status') == 2) {
+                hintFn('warning', '该动态未通过审核')
+                return
+            }
             // 登录了,判断是点赞还是取消点赞
             if (event.getAttribute('info') == 'true') {
                 // 点赞
@@ -200,6 +204,10 @@ function likeFn(event) {
 function collectFn(event) {
     judgeLogin()
         .then(result => {
+            if (event.getAttribute('status') == 0 || event.getAttribute('status') == 2) {
+                hintFn('warning', '该动态未通过审核')
+                return
+            }
             // 登录了,判断是收藏还是取消收藏
             if (event.getAttribute('info') == 'true') {
                 // 点赞
@@ -262,4 +270,12 @@ window.onmousewheel = function (event) {
         nowPage++
         getAlbumInfo()
     }
+}
+// 跳转
+function jumpFn(event) {
+    if (event.getAttribute('status') == 0 || event.getAttribute('status') == 2) {
+        hintFn('warning', '该动态未通过审核')
+        return
+    }
+    window.location.href = event.getAttribute('href')
 }

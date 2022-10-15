@@ -53,13 +53,13 @@ function getSearchInfo() {
     })
         .then(result => {
             all = result.msg.page.all_count
+            content.classList.remove('none')
+            noContent.classList.add('none')
+            animation.classList.remove('none')
             if(all<5){
                 animation.classList.add('none')
             }
             allPage = result.msg.page.all_page
-            content.classList.remove('none')
-            noContent.classList.add('none')
-            animation.classList.remove('none')
             if (result.msg.info.length == 0) {
                 content.classList.add('none')
                 noContent.classList.remove('none')

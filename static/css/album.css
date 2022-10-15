@@ -94,13 +94,14 @@
     display: inline-block;
     width: 235px;
     position: relative;
+    cursor: pointer;
 }
 
 .myImgTextItem {
     display: inline-block;
 }
 
-.myImg>a>img {
+.myImg>span>img {
     width: 100%;
 }
 

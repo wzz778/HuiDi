@@ -40,10 +40,6 @@ router.get('/focusOnMore', (req, res) => {
 router.get('/404', (req, res) => {
     res.render('404.html')
 })
-// 测试
-router.get('/text', (req, res) => {
-    res.render('text.html')
-})
 
 // 管理员看的专辑页面
 router.get('/superAlbum', (req, res) => {

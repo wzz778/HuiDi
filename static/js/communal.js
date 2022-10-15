@@ -82,7 +82,7 @@ function renderPaging(name,maxLength,all_size,numbers){
 
 
 function generatePagination(pages, pageSize, pageIndex,all_size,name,numbers) {
-
+    // pages = 100;
     /* 创建style标签并设置style样式 */
     let style = document.createElement('style');
     style.innerHTML = "#pagination{width:100%;margin-top:30px;display:flex;padding-left:0;}#pageTips{right:10px;font-size:15px;margin-right:15px;}ul li{list-style:none;user-select:none;}.list-items{margin-left:5px;display:inline-block;width:36px;height:36px;line-height:36px;text-align:center;background-color:#fff;color:#000;cursor:pointer;transition:all .3s;border:1px solid #dedede;border-radius:5px;}.list-items:hover{background-color:#e9ecef;border-color:#dee2e6; }.active,.active:hover{color:#fff;background-color:#C8261C;border-color:#C8261C;}#btnPrev{width:60px}#btnNext{width:60px}"

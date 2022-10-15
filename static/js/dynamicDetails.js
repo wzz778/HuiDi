@@ -99,7 +99,7 @@ function sendCommentFn() {
             let userObj = result.userInfo
             let tempStr = judgeStr(CommentInfo.value)
             // 判断值是否为空
-            if (imgFile.files.length == 0 && tempStr.length == 0) {
+            if (imgFile.files.length == 0 && tempStr.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
                 return
             }
@@ -127,7 +127,7 @@ function sendCommentFn() {
                     addComment(userObj)
                     showCommentBoxFn()
                     // 清空图片
-                    showImgUrl.src=''
+                    showImgUrl.src = ''
                     imgFile.value = ''
                     CommentInfo.value = ''
                 })
@@ -278,7 +278,7 @@ function replyCommentFirstFn(event) {
                 return
             }
             let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
-            if (tempStr.length == 0) {
+            if (tempStr.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
                 return
             }
@@ -312,7 +312,7 @@ function replyCommentSonFn(event) {
                 return
             }
             let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
-            if (tempStr.length == 0) {
+            if (tempStr.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
                 return
             }
@@ -805,6 +805,10 @@ function sendReportFn(event) {
     // 发送数据
     let obj = JSON.parse(sendReportInfo.innerHTML)
     if (reportReason.value == '0') {
+        if (otherReason.value.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+            hintFn('warning','不能输入纯空格')
+            return
+        }
         obj.message = judgeStr(otherReason.value)
     } else {
         obj.message = reportReason.value

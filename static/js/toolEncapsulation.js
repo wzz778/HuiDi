@@ -6,7 +6,7 @@ function judgeStr(str) {
     //     return false
     // }
     // 将字符串中的标签替换
-    str = str.replace(/(^\s*)|(\s*$)/g, "").replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;')
     return str
 }
 

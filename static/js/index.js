@@ -473,6 +473,10 @@ function sendReportFn(event) {
         types: 0
     }
     if (reportReason.value == '0') {
+        if(otherReason.value.replace(/(^\s*)|(\s*$)/g, "").length==0){
+            hintFn('warning','不能输入纯空格')
+            return
+        }
         obj.message = judgeStr(otherReason.value)
     } else {
         obj.message = reportReason.value

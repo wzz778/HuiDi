@@ -28,7 +28,6 @@ classifier_list[0].oninput = function(){
     this.value = this.value.replace(/\s*/g,"");
 }
 
-//新增第一级分类
 btn_new[0].onclick = function(){
     classifier_list[0].value = '';
     hidden[0].style.display = 'block';
@@ -51,10 +50,16 @@ btn_confirm[0].onclick = function(){
                 console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
+                    hidden[2].style.display = 'block'
                     warn_texts[0].innerHTML = '添加成功'
                     warnings[0].src = 'public/iconfont/success.png'
-                    hidden[2].style.display = 'block'
+                    
                     renders();
+                }else if(result.data.msg == null){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '认证范围重复，请重新输入一个新的认证氛围'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                    
                 }
                 
             })
@@ -76,6 +81,10 @@ btn_confirm[0].onclick = function(){
                     warnings[0].src = 'public/iconfont/success.png'
                     hidden[2].style.display = 'block'
                     renders();
+                }else if(result.data.msg == '插入重复数据'){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '认证范围重复，请重新输入一个新的认证氛围'
+                    warnings[0].src = 'public/iconfont/warn2.png'
                 }
             })
         }
@@ -120,6 +129,9 @@ function renders(){
                                         </div>`
                                         classifier_list[0].value = result.data.msg[j].area_name
                                         hidden[0].style.display = 'block';
+                                        classifier_list[0].oninput = function(){
+                                            this.value = this.value.replace(/\s*/g,"");
+                                        }
             }
             btn_delete[j].onclick = function(){
                 btn_update[0].ids = result.data.msg[j].id;

@@ -8,7 +8,9 @@ let warn_text = document.getElementsByClassName('warn-text');
 let classifier_input = document.getElementsByClassName('classifier-input');
 let detail = document.getElementsByClassName('details');
 let pageings = document.getElementsByClassName('pageings');
-
+let confirmes = document.getElementsByClassName('confirmes');
+let warn_texts = document.getElementsByClassName('warn-texts');
+let warnings = document.getElementsByClassName('warnings');
 classifier_input[0].oninput = function(){
     this.value = this.value.replace(/\s*/g,"");
 }
@@ -106,6 +108,7 @@ function renders(begin_index,size){
 renders(1,5);
 
 cancel[0].onclick = function(){
+    classifier_input[0].value = ''
     hidden[0].style.display = 'none'
 }
 confirm[0].onclick = function(){
@@ -119,12 +122,24 @@ confirm[0].onclick = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            renders(pageings[0].cur_index,pageings[0].size,-1);
-            hidden[0].style.display = 'none'
+            if(result.data.msg == 'success'){
+                hidden[0].style.display = 'none'
+                hidden[2].style.display = 'block'
+                warn_texts[0].innerHTML = '驳回成功'
+                warnings[0].src = 'public/iconfont/success.png'
+                renders(pageings[0].cur_index,pageings[0].size,-1);
+                classifier_input[0].value = ''
+            }
+            
         })
+    }else{
+        hidden[2].style.display = 'block'
+        warn_texts[0].innerHTML = '请把信息填写完整'
+        warnings[0].src = 'public/iconfont/warn2.png'
     }
 }
 cancel[1].onclick = function(){
+    classifier_input[0].value = ''
     hidden[1].style.display = 'none'
 }
 confirm[1].onclick = function(){
@@ -136,7 +151,20 @@ confirm[1].onclick = function(){
         }
     }).then(result =>{
         console.log(result.data);
+        if(result.data.msg == 'success'){
+            hidden[1].style.display = 'none'
+            hidden[2].style.display = 'block'
+            warn_texts[0].innerHTML = '审核通过'
+            warnings[0].src = 'public/iconfont/success.png'
+            renders(pageings[0].cur_index,pageings[0].size,-1);
+            classifier_input[0].value = ''
+        }
         hidden[1].style.display = 'none'
         renders(pageings[0].cur_index,pageings[0].size,-1);
     })
+}
+
+
+confirmes[0].onclick = function(){
+    hidden[2].style.display = 'none';
 }

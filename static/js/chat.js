@@ -4,40 +4,40 @@ let toid = window.location.search.split("=")[1];
 let messagebody = document.getElementsByClassName('messagebody')[0]
 let chatusername = document.getElementsByClassName('chatusername')[0];
 let useronline = document.getElementsByClassName('online');
-let lookmore=document.getElementById('lookmore');
-let lookend=document.getElementById('lookend');
-let sortred=document.getElementsByClassName('sortred')
+let lookmore = document.getElementById('lookmore');
+let lookend = document.getElementById('lookend');
+let sortred = document.getElementsByClassName('sortred')
 let userimg = '/public/img/userHead.jpg';
 let myimg = '/public/img/userHead.jpg';
-let sendchat=document.getElementById('sendchat');
-let isin=false;
+let sendchat = document.getElementById('sendchat');
+let isin = false;
 let fromid;
-function send(){}
-  //观看是否有消息
-  axios({
-    url: '/api/getUserIsMessage',
-    method: 'get',
-  }).then(data => {
-    if(data.data.err==0){
-        if(data.data.msg){
-            sortred[0].style.display='block'
-        }
+function send() { }
+//观看是否有消息
+axios({
+  url: '/api/getUserIsMessage',
+  method: 'get',
+}).then(data => {
+  if (data.data.err == 0) {
+    if (data.data.msg) {
+      sortred[0].style.display = 'block'
     }
-  }).catch(function (error) {
-    
-  });
-  axios({
-    url: '/api/getUserIsChat',
-    method: 'get',
-  }).then(data => {
-    if(data.data.err==0){
-        if(data.data.msg){
-            sortred[1].style.display='block'
-        }
+  }
+}).catch(function (error) {
+
+});
+axios({
+  url: '/api/getUserIsChat',
+  method: 'get',
+}).then(data => {
+  if (data.data.err == 0) {
+    if (data.data.msg) {
+      sortred[1].style.display = 'block'
     }
-  }).catch(function (error) {
-    
-  });
+  }
+}).catch(function (error) {
+
+});
 function getTime() {
   var result = 0;
   var time = new Date();
@@ -53,17 +53,17 @@ function getTime() {
   var dates = time.getDate();
   var result = year + '-' + month + '-' + dates + ' ' + h + ':' + m + ':' + s;
   return result;
-}
+}//获取当前时间
 function getprTime() {
   let chattime = document.getElementsByClassName('chattime');
   chattime = chattime[chattime.length - 1].innerHTML;
   return chattime
-}
+}//获取的最后一个时间框的时间
 function getfirstTime() {
   let chattime = document.getElementsByClassName('chattime');
   chattime = chattime[0].innerHTML;
   return chattime
-}
+}//获取的最后第一个时间框的时间
 function recontrasttime(time, nowtime) {
   let data = new Date(time.replace(/-/g, "/"));
   let t1 = new Date(nowtime.replace(/-/g, "/"));
@@ -85,7 +85,7 @@ function recontrasttime(time, nowtime) {
   } else {
     return false;
   }
-}
+}//比较以前和现在两者的时间，来判断是否添加时间框
 function fromusermessage() {
   return new Promise((resolve, reject) => {
     axios({
@@ -124,7 +124,7 @@ function tousermessage() {
           userimg = me.img_url;
         }
         chatusername.innerHTML = me.name;
-        chatusername.href=`userhomepage?id=${me.id}`;
+        chatusername.href = `userhomepage?id=${me.id}`;
         resolve()
       } else {
         reject(data.data.msg)
@@ -135,8 +135,8 @@ function tousermessage() {
       });
   })
 }
-let nowpage=1;
-let allpage=1;
+let nowpage = 1;
+let allpage = 1;
 function getallchat() {
   axios({
     url: '/api/lookallchat',
@@ -152,56 +152,56 @@ function getallchat() {
     if (data.data.err == 0) {
       let list = data.data.msg.list;
       let le = list.length;
-      allpage=data.data.msg.all_page;
-      for (let i =0; i <le; i++) {
+      allpage = data.data.msg.all_page;
+      for (let i = 0; i < le; i++) {
         let nowhtml = document.createElement('div');
-        nowhtml.className='amessage';
-        var firstamessage=messagebody.getElementsByClassName('amessage')[0];
-        if (!recontrasttime(list[i].info_create_time,getfirstTime())) {
+        nowhtml.className = 'amessage';
+        var firstamessage = messagebody.getElementsByClassName('amessage')[0];
+        if (!recontrasttime(list[i].info_create_time, getfirstTime())) {
           if (list[i].info_u_id == fromid) {
-            nowhtml.innerHTML=`
+            nowhtml.innerHTML = `
               <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
               <div class="chat mychat">
-                <img src="${ myimg }" alt="">
+                <img src="${myimg}" alt="">
                 <div class="chattext">${list[i].info_message}</div>
               </div>
             `
           } else {
-            nowhtml.innerHTML=`
+            nowhtml.innerHTML = `
             <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
             <div class="chat otherchat">
-              <img src="${ userimg }" alt="">
+              <img src="${userimg}" alt="">
               <div class="chattext">${list[i].info_message}</div>
             </div>
           `
           }
         } else {
           if (list[i].info_u_id == fromid) {
-            nowhtml.innerHTML=`
+            nowhtml.innerHTML = `
               <div class="chat mychat">
-                <img src="${ myimg }" alt="">
+                <img src="${myimg}" alt="">
                 <div class="chattext">${list[i].info_message}</div>
               </div>
             `
           } else {
-            nowhtml.innerHTML=`
+            nowhtml.innerHTML = `
               <div class="chat otherchat">
-                <img src="${ userimg }" alt="">
+                <img src="${userimg}" alt="">
                 <div class="chattext">${list[i].info_message}</div>
               </div>
             `
           }
         }
-        firstamessage.parentNode.insertBefore(nowhtml,firstamessage);
+        firstamessage.parentNode.insertBefore(nowhtml, firstamessage);
       }
-      if(nowpage!=allpage){
-          lookmore.style.display='block';
-          lookend.style.display='none';
-      }else{
-        lookmore.style.display='none';
-        lookend.style.display='block';
+      if (nowpage != allpage) {
+        lookmore.style.display = 'block';
+        lookend.style.display = 'none';
+      } else {
+        lookmore.style.display = 'none';
+        lookend.style.display = 'block';
       }
-      if(nowpage==1){
+      if (nowpage == 1) {
         messagebody.scrollTop = messagebody.scrollHeight;
       }
     } else {
@@ -218,7 +218,7 @@ chattext.onkeyup = function () {
   }
   var num = len;
   chattextnumber.innerText = num;
-  if(event.keyCode==13){
+  if (event.keyCode == 13) {
     send();
   }
 };
@@ -231,22 +231,22 @@ chattext.onkeydown = function () {
   chattextnumber.innerText = num;
 };
 var websocket = null;
-var creatws= function (userid) {
+var creatws = function (userid) {
   if ('WebSocket' in window) {
     //用于创建WebSocket对象，webSocketTest对应的是java类的注解值
     websocket = new WebSocket(`ws://152.136.99.236:8080/websocket/${userid}`);
   } else {
-    hintFn("wrong","当前浏览器不支持")
+    hintFn("wrong", "当前浏览器不支持")
   }
   //连接发生错误的时候回调方法；
   websocket.onerror = function () {
-    hintFn("warning","连接错误")
+    hintFn("warning", "连接错误")
     // alert("连接错误");
   }
   //连接成功时建立回调方法
   websocket.onopen = function () {
     //WebSocket已连接上，使用send()方法发送数据
-    hintFn("success","连接成功")
+    hintFn("success", "连接成功")
     // alert("连接成功");
   };
   //  收到消息的回调方法
@@ -282,8 +282,8 @@ var creatws= function (userid) {
           </div>
         </div>
     `
-      }
-      if(nowpage==1){
+      }//渲染数据
+      if (nowpage == 1) {
         messagebody.scrollTop = messagebody.scrollHeight;
       }
     }
@@ -291,16 +291,16 @@ var creatws= function (userid) {
   //连接关闭的回调方法
   websocket.onclose = function () {
     closed();
-    isFinite('warning',"连接已关闭")
+    isFinite('warning', "连接已关闭")
     // alert("关闭成功");
   };
   function closed() {
     websocket.close();
-    sFinite('warning',"连接已关闭")
+    sFinite('warning', "连接已关闭")
     // alert("点击关闭");
   }
-  sendchat.onclick=function(){
-    if(isnull(judgeStrs(chattext.value))){
+  sendchat.onclick = function () {
+    if (isnull(judgeStrs(chattext.value))) {
       hintFn('warning', "请输入你要输入的内容")
       return
     }
@@ -312,26 +312,26 @@ var creatws= function (userid) {
     if (!recontrasttime(getprTime(), getTime())) {
       messagebody.innerHTML += `
       <div class="amessage">
-      <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
-      <div class="chat mychat">
-      <img src="${myimg}" alt="">
-      <div class="chattext">${chattext.value}</div>
-        </div>
-        </div>
-        `
-      } else {
-        messagebody.innerHTML += `
-        <div class="amessage">
+        <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
         <div class="chat mychat">
-        <img src="${myimg}" alt="">
-        <div class="chattext">${chattext.value}</div>
+          <img src="${myimg}" alt="">
+          <div class="chattext">${chattext.value}</div>
         </div>
+      </div>
+        `
+    } else {
+      messagebody.innerHTML += `
+        <div class="amessage">
+          <div class="chat mychat">
+            <img src="${myimg}" alt="">
+            <div class="chattext">${chattext.value}</div>
+          </div>
         </div>
         `
-      }
-      websocket.send(JSON.stringify(newob)); //给后台发送数据
+    }
+    websocket.send(JSON.stringify(newob)); //给后台发送数据
     messagebody.scrollTop = messagebody.scrollHeight;
-    chattext.value=``
+    chattext.value = ``
   }
 }
 function beginall() {
@@ -347,11 +347,11 @@ function beginall() {
 beginall()
 messagebody.onscroll = function () {
   let scrollTop = messagebody.scrollTop;
-  if (scrollTop==0) {
-      if(allpage>nowpage){
-          nowpage++;
-          setTimeout(function(){getallchat()},1000)
-      }else{
-      }
+  if (scrollTop == 0) {
+    if (allpage > nowpage) {
+      nowpage++;
+      setTimeout(function () { getallchat() }, 1000)
+    } else {
+    }
   }
 };

@@ -73,7 +73,7 @@ function checkcode(){
                 sessionStorage.setItem('mymail',mail);
                 setTimeout(function () {
                     window.location.assign("/repassword2");
-                }, 300)
+                }, 1500)
             }else{
                 hintFn('warning' ,data.data.msg)
             }

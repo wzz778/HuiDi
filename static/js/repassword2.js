@@ -8,10 +8,12 @@ function isnull(val) {
     } else {
         return false;
     }
-  }
+}
 let mymail=document.getElementById('mymail');
 let password=document.getElementById('password');
 let repassword=document.getElementById('repassword');
+let classarr=['code','code2','code3','code4'];
+let checkCode=document.getElementById('checkCode');
 function createCode() {
 	code = "";
 	var codeLength = 4; //验证码的长度   
@@ -22,6 +24,9 @@ function createCode() {
 		var charIndex = Math.floor(Math.random() * 36); //取得随机数的索引   
 		code += random[charIndex]; //根据索引取得随机数加到code上   
 	}
+	let charIndex2=Math.floor(Math.random() * 3);
+	console.log(charIndex2);
+	checkCode.className= classarr[charIndex2];
 	checkCode.value = code; //把code值赋给验证码   
 }
 //校验验证码   
@@ -67,7 +72,7 @@ function validate() {
 				sessionStorage.removeItem('mymail');
 				setTimeout(function () {
 					window.location.assign("/login");
-				}, 300)
+				}, 1500)
             }else{
 				hintFn('warning' ,data.data.msg)
             }
@@ -82,5 +87,5 @@ if( sessionStorage.getItem('mymail')){
 	hintFn('warning' ,'请先验证您的邮箱')
 	setTimeout(function () {
 		window.location.assign("/register");
-	}, 300)
+	}, 1500)
 }

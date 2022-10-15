@@ -14,7 +14,7 @@ function checkpassword(){
       }).then(data => {
         // console.log(data.data);
         if(data.data.err==0){   
-            hintFn('success' ,"成功！")
+            hintFn('success' ,"验证成功！")
             // sessionStorage.setItem('havecheck', 1);
             mymessage[0].style.display='none';
             mymessage[1].style.display='block';
@@ -91,13 +91,7 @@ function checkcode(){
               }).then(data => {
                 console.log(data.data);
                 if(data.data.err==0){
-                    hintFn('warning' ,'验证成功')
-                    resolve()
-                    // sessionStorage.setItem('mymail',mail);
-                    // sessionStorage.removeItem('Applicationid');
-                    // setTimeout(function () {
-                    //     window.location.assign("/Personalhomepage");
-                    // }, 300)
+                    resolve(mail)
                 }else{
                     reject(data.data.msg);
                 }
@@ -105,10 +99,22 @@ function checkcode(){
         }
     
     }).then(data2=>{
-        hintFn('success' ,"验证成功！")
-        setTimeout(function () {
-            window.location.assign("/Personalhomepage");
-        }, 300)
+        axios({
+            url: '/api/remyemail',
+            method: 'post',
+            data: {
+              "email": data2,
+            }
+          }).then(data => {
+            if(data.data.err==0){
+                hintFn('success','修改成功')
+                setTimeout(function () {
+                    window.location.assign("/Personalhomepage");
+                }, 1500)
+            }else{
+                reject(data.data.msg);
+            }
+          })
       })
       .catch(function (error) {
         hintFn('wrong' ,"验证失败！")

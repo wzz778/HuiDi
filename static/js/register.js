@@ -48,7 +48,7 @@ function getcode(){
                 hintFn('warning' ,data.data.msg)
             }
           }).catch(function (error) {
-            
+            hintFn('warning' ,data.data.msg)
           });
     }
 }
@@ -76,12 +76,12 @@ function checkcode(){
                 sessionStorage.setItem('mymail',mail);
                 setTimeout(function () {
                     window.location.assign("/register2");
-                }, 300)
+                }, 1500)
             }else{
                 hintFn('warning' ,data.data.msg)
             }
           }).catch(function (error) {
-            
+            hintFn('warning' ,data.data.msg)
           });
     }
 }

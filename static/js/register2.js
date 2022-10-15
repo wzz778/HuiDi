@@ -72,13 +72,12 @@ function validate() {
 			  "username":name
             }
           }).then(data => {
-            console.log(data.data);
             if(data.data.err==0){
 				hintFn('success' ,'注册成功')
 				sessionStorage.removeItem('mymail');
 				setTimeout(function () {
 					window.location.assign("/login");
-				}, 300)
+				}, 1500)
             }else{
 				hintFn('warning' ,data.data.msg)
             }
@@ -93,5 +92,5 @@ if( sessionStorage.getItem('mymail')){
 	hintFn('warning' ,'请先验证您的邮箱')
 	setTimeout(function () {
 		window.location.assign("/register");
-	}, 300)
+	}, 1500)
 }

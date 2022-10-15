@@ -5,6 +5,7 @@ const router = express.Router();
 const FormData=require('form-data');
 const fs=require('fs');
 var multipart = require('connect-multiparty');
+const { log } = require('console');
 var multipartMiddleware = multipart();
 router.get('/layout',(req,res)=>{
         res.render('layout.html')
@@ -910,7 +911,7 @@ router.get('/api/getUserIsChat', (req, res) => {
     }
 })
 function oneaddtitle(onelist){
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve,reject)=>{ 
         axios({
             method:'GET',
             url:'/picture/showInfoMessage',
@@ -920,7 +921,11 @@ function oneaddtitle(onelist){
         }) 
         .then(result=>{
             if(result.data.msg=='OK'){
-                onelist.title=result.data.data.images.describes
+                if(result.data.data!=null){
+                    onelist.title=result.data.data.images.describes
+                }else{
+                    onelist.title="该作品已删除"
+                }
                 resolve()
             }else{
                 reject({ err: -1, msg:result.data.msg})
@@ -995,7 +1000,6 @@ router.get('/api/lookmymessagebytype', (req, res) => {
                 token:req.session.token,
             },
             params:{
-                // id:1,
                 id:req.session.userid,
                 type:req.query.type,
                 size:req.query.size,

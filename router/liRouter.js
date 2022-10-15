@@ -241,6 +241,7 @@ router.post('/admin/publicComment', mult, (req, res) => {
         }
     })
         .then(result => {
+            console.log('结果',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
                 return

@@ -6,6 +6,7 @@ let drop_down = document.getElementsByClassName('drop-down');
 let manage_name = document.getElementsByClassName('manage-name');
 let manage_img = document.getElementsByClassName('manage-img');
 let flag2 = true;
+let out = document.getElementsByClassName('out');
 dib[0].onclick = function(){
     if(flag2){
         drop_down[0].style.display = 'block';
@@ -28,3 +29,15 @@ function Login(){
     })
 }
 Login();
+
+
+out[0].onclick = function(){
+    axios({
+        method:'GET',
+        url:'/api/outlogin',
+    }).then(result =>{
+        if(result.data.err == 0){
+            window.location.href = '/login'
+        }
+    })
+}

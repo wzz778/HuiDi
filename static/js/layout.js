@@ -19,6 +19,9 @@ let dydenumber=document.getElementById('dydenumber')
 let dyde=document.getElementById('dyde')
 let searchva=document.getElementsByClassName('searchva');
 let onlandmax=document.getElementById('onlandmax')
+let fadebu=document.getElementById('fadebu');
+let header_searchs=document.getElementsByClassName('header_searchs')[0]
+let aname=document.getElementById('aname')
 function contrasttime(time){
     let data=new Date(time.replace(/-/g,"/"));
     let t1=new Date();//获取当前时间
@@ -400,5 +403,51 @@ function openland(){
     onlandmax.style.display='block'
 }
 function closeland(){
-    onlandmax.style.display='block'
+    onlandmax.style.display='none'
+}
+function fadebut(){
+    fadebu.style.display='none'
+    header_searchs.style.display='block'
+}
+header_searchs.onmouseout=function(){
+    window.onclick=function(){
+        fadebu.style.display='block'
+        header_searchs.style.display='none'
+        window.onclick=null
+    }
+}
+header_searchs.onmousemove=function(){
+    window.onclick=null
+}
+function adda(){
+    if(judgeStrs(aname.value).length==0){
+        hintFn('warning' ,"请填写完整内容！")
+        return
+    }
+    if(judgeStrs(aname.value).length>8){
+        hintFn('warning' ,"请填写8个字符一下的专辑名称！")
+        return
+    }
+    axios({
+        url: '/api/addalbum',
+        method: 'post',
+        data:{
+            album:judgeStrs(aname.value),
+            types:"未添加",
+            describes:"未添加"
+        }
+      }).then(data => {
+        // console.log(data.data);
+        if(data.data.err==0){   
+            aname.value=''
+            hintFn('success' ,"添加成功！")
+            getoption()
+        }else{
+            return 
+        }
+      })
+      .catch(function (error) {
+        hintFn('warning' ,error)
+        console.log(error);
+      });
 }

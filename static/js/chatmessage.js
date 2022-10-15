@@ -44,20 +44,20 @@ let message_body=document.getElementsByClassName('messagebody')[0]
             }else{
                 for(let i in ms){
                     let red=null;
-                    if(ms[i].date.lastInfo.info_status==1){
-                        red=`<div class="red" style='display:none;'>0</div>`
+                    if(ms[i].date.unreadMessages==0){
+                        red=`<div class="red" style='display:none;'></div>`
                     }else{
                         red=`<div class="red">${ms[i].date.unreadMessages}</div>`
                     }
                     message_body.innerHTML += `
                     <div class="alike-a">
                             ${red}
-                        <a href="Personalhomepage?id=${ms[i].users.id}">
+                        <a href="userhomepage?id=${ms[i].users.id}">
                             <img src="${ms[i].users.img_url}" class="message-img" alt="">
                         </a>
                         <div class="message-card">
                             <div class="message-card-top">
-                                <a href="Personalhomepage?id=${ms[i].users.id}" class="message-username">${ms[i].users.name}</a>
+                                <a href="userhomepage?id=${ms[i].users.id}" class="message-username">${ms[i].users.name}</a>
                                 <span class="message-tpye">给你发的消息：</span>
                                 <span class="message-userid" style="display: none;"></span>
                                 <a href="chat?id=${ms[i].users.id}" class="sendbutton">给 TA 发信息</a>

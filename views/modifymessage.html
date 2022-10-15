@@ -2,6 +2,8 @@
 {{block 'title'}}修改信息{{/block}}
 {{block 'head'}}
 <link rel="stylesheet" href="public/css/modifymessage.css">
+<link rel="stylesheet" href="public/css/cropper.min.css">
+<link rel="stylesheet" href="public/css/ImgCropping.css">
 {{/block}}
 {{block 'body'}}
     <div id="body">
@@ -15,8 +17,8 @@
             </div>
             <div class="mymessage">
                 <div id="mymessageback">
-                    <button>点击上传背景</button>
-                    <input  type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" id="backfile" name="backimage" size="50" onchange="openbackimg()">
+                    <img id="finalImg" src="/public/img/loginback.png">
+                    <button id="replaceImg">点击上传背景</button>
                 </div>
                 <!-- <img src="/public/img/userHead.jpg" alt=""> -->
                 <div id="mymessagetext">
@@ -47,7 +49,37 @@
             </div>
         </div>
     </div>
+    <div style="display: none" class="tailoring-container">
+        <div class="black-cloth" onclick="closeTailor(this)"></div>
+        <div class="tailoring-content">
+                <div class="tailoring-content-one">
+                    <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+                        <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)">
+                        选择图片
+                    </label>
+                    <div class="close-tailoring"  onclick="closeTailor(this)">×</div>
+                </div>
+                <div class="tailoring-content-two">
+                    <div class="tailoring-box-parcel">
+                        <img id="tailoringImg">
+                    </div>
+                    <div class="preview-box-parcel">
+                        <p>图片预览：</p>
+                        <div class="square previewImg"></div>
+                        <div class="circular previewImg"></div>
+                    </div>
+                </div>
+                <div class="tailoring-content-three">
+                    <button class="l-btn cropper-reset-btn">复位</button>
+                    <button class="l-btn cropper-rotate-btn">旋转</button>
+                    <button class="l-btn cropper-scaleX-btn">换向</button>
+                    <button class="l-btn sureCut" id="sureCut">确定</button>
+                </div>
+            </div>
+    </div>
 {{/block}}
 {{block 'bottom'}}
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="public/js/cropper.min.js"></script>
 <script src="public/js/modifymessage.js"></script>
 {{/block}}

@@ -457,7 +457,7 @@ router.get('/api/getmydynamic', (req, res) => {
 //显示用户动态
 router.get('/api/getuserdynamic', (req, res) => {   
     axios({
-        url:'/picture/getPersonInfo',
+        url:'/picture/getOtherInfo',
         method:'get',  
         params:{
             size:req.query.size,

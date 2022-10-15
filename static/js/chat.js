@@ -1,6 +1,5 @@
 let chattext = document.getElementById('chattext');
 let chattextnumber = document.getElementById('chattextnumber');
-// let fromid = window.location.search.split("=")[1].split("&")[0];
 let toid = window.location.search.split("=")[1];
 let messagebody = document.getElementsByClassName('messagebody')[0]
 let chatusername = document.getElementsByClassName('chatusername')[0];

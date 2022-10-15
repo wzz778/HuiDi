@@ -337,6 +337,11 @@ li {
     height: 60px;
     position: relative;
 }
+.class_body .dynamicmax .dystatus{
+    top: 5px;
+    right: -30px;
+    position: absolute;
+}
 .class_body .dynamicmax .dyusera{
     display: block;
     height: 60px;
@@ -455,6 +460,7 @@ li {
     width: 310px;
     height: 70px;
     text-align: center;
+    position: relative;
 }
 .class_body .Aalbummax .albumtext .albumname{
     margin-top: 10px;
@@ -467,6 +473,14 @@ li {
     width: 310px;
     height: 30px;
     font-size: 13px;
+}
+.class_body .Aalbummax .albumtext .albumstatus{
+    width: 200px;
+    text-align: right;
+    font-size: 14px;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
 }
 #album{
     width: 100%;

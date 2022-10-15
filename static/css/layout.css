@@ -83,8 +83,9 @@ a{
     background-color: white;
 }
 .huidilogo{
-  height: 60px;
+  height: 50px;
   margin-left: 5px;
+  padding-top:5px ;
 }
 .wrap{
     width: 1000px;
@@ -215,8 +216,6 @@ a{
   top: 57px;
   left:10px;
   width:110px;
-  padding-top: 5px;
-  height: 120px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgb(171, 171, 171);
 }
@@ -514,15 +513,6 @@ a{
   width: 90px;
   height: 90px;
 }
-/*外层div*/
-/* .input-file-box{
-  border: 1px solid gray;
-  width: 90px;
-  height: 90px;
-  position: relative;
-  text-align: center;
-  border-radius: 3px;
-} */
 /*文字描述*/
 .input-file-box > span{
   display: block;

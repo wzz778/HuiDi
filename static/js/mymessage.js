@@ -5,7 +5,6 @@ let fansnumber=document.getElementById('fansnumber');
 let clearall=document.getElementsByClassName('clearall')[0]
 let nowpage=1;
 let allpage=1;
-console.log(thistype);
 let sortred=document.getElementsByClassName('sortred')
   //观看是否有消息
   axios({

@@ -28,6 +28,7 @@ let confirm_header=document.getElementsByClassName('confirm_header')[0]
 let confirm_content=document.getElementsByClassName('confirm_content')[0]
 let confirm_footer=document.getElementsByClassName('confirm_footer')[0]
 let confirmtrue=document.getElementById('confirmtrue')
+let publish_button=document.getElementsByClassName('publish_button')[0]
 function contrasttime(time){
     let data=new Date(time.replace(/-/g,"/"));
     let t1=new Date();//获取当前时间
@@ -155,7 +156,7 @@ axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
-    // console.log(data.data);
+    console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){
@@ -163,12 +164,24 @@ axios({
         }
         headera.innerHTML=me.name;
         header_headdiv.style.display='flex'
+        if(me.power==1){
+            header_co.innerHTML+=`
+                <a href="homepage">跳转后台</a>
+            `
+        }
         toland.style.display='none'
-        
+        publish_button.onclick=function(){
+            publish_show() 
+        }
     }else{
         header_headdiv.style.display='none'
         toland.style.display='block'
-        
+        publish_button.onclick=function(){
+            hintFn('wrong','请先登录！')
+            setTimeout(function () {
+                window.location.assign("/login");
+            }, 1000)
+        }
     }
   }).catch(function (error) {
     

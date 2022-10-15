@@ -120,6 +120,9 @@ function getmyalbum(){
             for(let i in allarr){
                 // console.log(allarr[i]);
                 let arrimg=allarr[i].images;
+                if(allarr[i].album.status==0||allarr[i].album.status==2){
+                    return
+                }
                 if(JSON.stringify(arrimg)=="{}"){
                     albumbody.innerHTML+=`
                     <a href="album?id=${allarr[i].album.id}" class="Aalbummax">

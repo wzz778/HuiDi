@@ -50,7 +50,9 @@ function changeclass(i){
         };
     };
 }
-
+function onpass(){
+    hintFn('warning' ,"您要观看的文章还没通过！")
+}
 axios({
     url: '/api/getmymessage',
     method: 'get',
@@ -91,7 +93,6 @@ function getmyalbum(){
             begin:1
         },
       }).then(data => {
-        // console.log(data.data);
         if(data.data.err==0){
             let allarr=data.data.msg.list;
             class_body2.innerHTML=``;
@@ -99,6 +100,14 @@ function getmyalbum(){
             for(let i in allarr){
                 let arrimg=allarr[i].images;
                 // console.log(arrimg);
+                let albumstatusdiv=``
+                if(allarr[i].album.status==0){
+                    albumstatusdiv=`<div class="albumstatus" style="color:#444;">审核中</div>`
+                }else if(allarr[i].album.status==2){
+                    albumstatusdiv=`<div class="albumstatus" style="color:#FC1944;">审核未通过</div>`
+                }else{
+                    albumstatusdiv=`<div class="albumstatus" style="color:#056DE8;">审核通过</div>`
+                }
                 if(JSON.stringify(arrimg)=="{}"){
                     class_body2.innerHTML+=`
                     <a href="album?id=${allarr[i].album.id}" class="Aalbummax">
@@ -111,6 +120,7 @@ function getmyalbum(){
                             <div class="albumnumber">
                                 <span>0</span> 图片 | <span>0</span> 收藏
                             </div>
+                            ${albumstatusdiv}
                         </div>
                     </a>
                     `;
@@ -164,6 +174,7 @@ function getmyalbum(){
                         <div class="albumnumber">
                             <span>${imgnumber}</span> 图片 | <span>0</span> 收藏
                         </div>
+                        ${albumstatusdiv}
                     </div>
                 </a>
                 `;
@@ -241,6 +252,7 @@ function showmydynamic(){
           begin:dynowpage
       }
     }).then(data => {
+        console.log("动态：");
       console.log(data.data);
       if(data.data.err==0){
           let arr=data.data.msg.list;
@@ -249,6 +261,18 @@ function showmydynamic(){
         //   class_body1.innerHTML=``
           for(let i in arr){
               let arrimg='';
+              let imgstatus='';
+              let imga="";
+              if(arr[i].status==1){
+                imgstatus=`<span class="dystatus" style="color:#056DE8;">审核通过</span>`;
+                imga=`<a href="dynamicDetails?id=${arr[i].img_id}" class="dytexta">`
+              }else if(arr[i].status==0){
+                imgstatus=`<span class="dystatus" style="color:#444;">审核中</span>`;
+                imga=`<a href="javascript:;" onclick="onpass()" class="dytexta">`
+              }else{
+                imgstatus=`<span class="dystatus" style="color:#FC1944;;">审核未通过</span>`;
+                imga=`<a href="javascript:;" onclick="onpass()" class="dytexta">`
+              }
               for(let n of arr[i].img_url){
                   arrimg+=`<img src="${defaultImgUrl}" alt="" data-url="${n}" onload="operatorImgFn(this)">`
               }
@@ -261,8 +285,9 @@ function showmydynamic(){
                           <span class="dyuserid">${arr[i].user_id}</span>
                       </a>
                       <span class="dytime">${contrasttime(arr[i].create_time)}</span>
+                      ${imgstatus}
                   </div>
-                  <a href="dynamicDetails?id=${arr[i].img_id}" class="dytexta">
+                    ${imga}
                       <div class="imgde">
                       ${arr[i].describes}
                       </div>

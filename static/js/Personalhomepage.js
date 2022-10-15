@@ -199,7 +199,7 @@ function album_show() {
 }
 function addab(){
     for(let i of album_input){
-        if(isnull(i.value)){
+        if(isnull(judgeStr(i.value))){
             hintFn('warning' ,"请填写完整内容！")
             return 
         }

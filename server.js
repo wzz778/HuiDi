@@ -28,10 +28,12 @@ app.set("views", "views");
 const userRouter = require('./router/userRouter')
 const liRouter=require('./router/liRouter')
 const zllRouter = require('./router/zllRouter');
+const userloginRouter = require('./router/userloginRouter');
 // 配置路由
 app.use(liRouter)
 app.use(userRouter);
 app.use(zllRouter);
+app.use(userloginRouter);
 // 启动服务器
 app.listen(8099, () => {
   console.log('服务器已启动,端口号:8099')

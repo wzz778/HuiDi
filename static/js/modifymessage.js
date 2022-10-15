@@ -89,6 +89,10 @@ describe.onkeydown=function(){
         if (!file.files || !file.files[0]){
             return;
         }
+        if(!checkFile(file.files[0])){
+            hintFn('warning' ,'请上传图片类型的头像！')
+            return 
+        }
         var reader = new FileReader();
         reader.onload = function (evt) {
             var replaceSrc = evt.target.result;

@@ -15,11 +15,20 @@
     {{block 'bodytop'}}{{/block}}
         <!-- 出错的提示信息 -->
     <div id="onlandmax">
-        <div class="content">
+        <div class="content" id="onlandmax_content">
             <span class="point">加载中</span>
             <div class="point1"></div>
             <div class="point2"></div>
             <div class="point3"></div>
+        </div>
+        <div class="reconfirmmax">
+            <a href="javascript:;" onclick="closeconfirm()">×</a>
+            <div class="confirm_header">删除</div>
+            <div class="confirm_content">真的要删除 改条消息 吗？</div>
+            <div class="confirm_footer">
+                <button class="confirm__button confirm" id="confirmtrue">确认</button>
+                <button class="confirm__button cancel" onclick="closeconfirm()">取消</button>
+            </div>
         </div>
     </div>
     <div id="tipsback">
@@ -98,7 +107,7 @@
             <div class="publish_files">
                 <div id="img-box">
                     <div class="input-file-box">
-                        <span>点击上传图片</span>
+                        <span>上传图片</span>
                         <input type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" name="" id="uploadfile" multiple>
                     </div>
                 </div>

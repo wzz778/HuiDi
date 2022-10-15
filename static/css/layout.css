@@ -354,10 +354,10 @@ a{
   
   #publish #publish_main .publish_main_top {
     position: relative;
-    line-height: 30px;
+    line-height: 40px;
     font-size: 18px;
     color: #303133;
-    height: 30px;
+    height: 40px;
     width: 100%;
     width: 400px;
     left: -30px;
@@ -532,7 +532,6 @@ a{
   top: 0px;
   bottom: 0;
   left: 0;
-  right: 0;
   margin: auto;
   color: gray;
 }
@@ -551,10 +550,10 @@ a{
   top: 0px;
   z-index: 99999;
   display: none;
-/* display: block; */
   text-align: center;
 }
 #onlandmax .content {
+  display: none;
   margin: 20% auto;
   width: 200px;
   line-height: 30px;
@@ -581,7 +580,59 @@ a{
 #onlandmax .content .point2 {
   animation-delay: -0.1s;
 }
-
+#onlandmax .reconfirmmax{
+  display: none;
+  padding:15px;
+  width: 500px;
+  min-height: 100px;
+  margin: 30vh auto;
+  background-color: white;
+  border-radius: 5px;
+  position: relative;
+}
+#onlandmax .reconfirmmax a{
+  position: absolute;
+  top: 2px;
+  right: 15px;
+  font-size: 22px;
+}
+#onlandmax .reconfirmmax .confirm_header{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  width: 100%;
+  color: #212121;
+  font-size: 14px;
+  font-weight: 700;
+}
+#onlandmax .reconfirmmax .confirm_content{
+  font-size: 13px;
+  padding: 10px 0;
+  text-align: left;
+}
+#onlandmax .reconfirmmax .confirm_footer{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+#onlandmax .reconfirmmax .confirm_footer .confirm__button{
+  border: 1px solid #23ade5;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 32px;
+  outline: none;
+  width: 104px;
+}
+#onlandmax .reconfirmmax .confirm_footer .confirm{
+  background-color: #23ade5;
+  color: #fff;
+}
+#onlandmax .reconfirmmax .confirm_footer .cancel{
+  background-color: #fff;
+  color: #23ade5;
+  margin-left: 30px;
+}
 @keyframes action {
   0%, 80%, 100% {
       transform: scale(0);

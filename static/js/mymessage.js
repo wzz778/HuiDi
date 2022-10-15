@@ -2,6 +2,7 @@ let message_body=document.getElementsByClassName('messagebody')[0]
 let pagecon=document.getElementsByClassName('main-right-bon')[0]
 let pagearrow=pagecon.getElementsByTagName('a');
 let fansnumber=document.getElementById('fansnumber');
+let clearall=document.getElementsByClassName('clearall')[0]
 let nowpage=1;
 let allpage=1;
 console.log(thistype);
@@ -32,28 +33,35 @@ let sortred=document.getElementsByClassName('sortred')
     
   });
 function del_one_me(event){ 
-    let thisid=event.parentNode.children[3].innerHTML;
-    let arrid=new Array()
-    arrid.push(thisid)
-    axios({
-        method:'post',
-        url:"/api/deletemymessage",
-        data:arrid
-    }).then(data => {
-        console.log(data.data);
-        if(data.data.err==0){
-            if(thistype=='全部'){
-                getallmessage()
+    reconfirmmax.style.display='block'
+    onlandmax.style.display='block'
+    confirm_header.innerText="删除信息"
+    confirm_content.innerText="您确定要删除该条信息？"
+    confirmtrue.onclick=function(){
+        let thisid=event.parentNode.children[3].innerHTML;
+        let arrid=new Array()
+        arrid.push(thisid)
+        axios({
+            method:'post',
+            url:"/api/deletemymessage",
+            data:arrid
+        }).then(data => {
+            console.log(data.data);
+            if(data.data.err==0){
+                if(thistype=='全部'){
+                    getallmessage()
+                }else{
+                    getallmessagebytype()
+                }
+                hintFn('success', "删除成功！")
             }else{
-                getallmessagebytype()
+                hintFn('wrong', "删除失败！")
             }
-            hintFn('success', "删除成功！")
-        }else{
-            hintFn('wrong', "删除失败！")
-        }
-    }).catch(err=>{
-
-    })
+        }).catch(err=>{
+    
+        })
+        closeconfirm()
+    }
 }
 function del_all(){ 
     let arrid=new Array()
@@ -84,9 +92,12 @@ function del_all(){
             hintFn('wrong', "删除失败！")
         }
     }).catch(err=>{
-
+        
     })
 }
+clearall.onclick=function(){
+    reconfirm("删除信息","你确定要清空该页信息",del_all)
+};
 function getallmessage(){
     axios({
         method:'get',

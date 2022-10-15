@@ -41,7 +41,7 @@ function renders(begin_index,size){
             size:size
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         let all =  result.data;
         pageings[0].maxLength = result.data.msg.all_page
         pageings[0].all_size = result.data.msg.all_count
@@ -97,7 +97,7 @@ function renders(begin_index,size){
                 btn_new[0].numbers = 1;
                 pop_change[0].innerHTML = all;
                 pop_up[0].style.height = '300px';
-                console.log(card_list_checkbox[j].names);
+                // console.log(card_list_checkbox[j].names);
                 axios({
                     method:'GET',
                     url:'/superAdmin/showByRoleName',
@@ -105,7 +105,7 @@ function renders(begin_index,size){
                         role_name: card_list_checkbox[j].names
                     }
                 }).then(result =>{
-                    console.log(result.data);
+                    // console.log(result.data);
                     pop_up[0].style.height = '350px';
                     let all = `<div class="hint">
                             修改角色
@@ -231,7 +231,7 @@ btn_update[0].onclick = function(){
         pop_up[0].style.height = '350px';
         for(let i=0;i<checkbox.length;i++){
             if(checkbox[i].checked == true){
-                console.log(card_list_checkbox[i].names);
+             //   console.log(card_list_checkbox[i].names);
                 axios({
                     method:'GET',
                     url:'/superAdmin/showByRoleName',
@@ -239,7 +239,7 @@ btn_update[0].onclick = function(){
                         role_name: card_list_checkbox[i].names
                     }
                 }).then(result =>{
-                    console.log(result.data);
+                    // console.log(result.data);
                     let all = `<div class="hint">
                             修改角色
                             </div>
@@ -322,8 +322,8 @@ confirms[0].onclick = function(){
                     orders:hidden_input[2].value
                 }
             }).then((result)=>{
-                console.log(result);
-                console.log(hidden_input[0].value);
+                // console.log(result);
+                // console.log(hidden_input[0].value);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     hidden[2].style.display = 'block'
@@ -345,8 +345,8 @@ confirms[0].onclick = function(){
         
     }else if(btn_new[0].numbers == 1){
         if(hidden_input[0].value != '' && hidden_input[2].value != '' && hidden_input[3].value != ''){
-            console.log(hidden_input[0].ids);
-            console.log(hidden_input[0].value);
+            // console.log(hidden_input[0].ids);
+            // console.log(hidden_input[0].value);
             axios({
                 method:'GET',
                 url:'/superAdmin/updateRole',
@@ -356,7 +356,7 @@ confirms[0].onclick = function(){
                     orders:hidden_input[3].value,
                 }
             }).then(result =>{
-                console.log(result.data);
+                // console.log(result.data);
                 if(result.data.msg == 'success'){
                     axios({
                         method:'GET',
@@ -404,7 +404,7 @@ confirms[0].onclick = function(){
                     r_id:checkbox_all[0].r_ids
                 }
             }).then(result =>{
-                console.log(result.data);
+                // console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     hidden[1].style.display = 'none';
@@ -440,7 +440,7 @@ confirms[1].onclick = function(){
                         id:card_list_checkbox[i].ids
                     }
                 }).then(result =>{
-                    console.log(result.data);
+                    // console.log(result.data);
                     if(result.data.msg == 'success'){
                         hidden[1].style.display = 'none';
                         warn_texts[0].innerHTML = '删除成功'
@@ -462,7 +462,7 @@ confirms[1].onclick = function(){
                 id:btn_delete[0].ids
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[1].style.display = 'none';
                 warn_texts[0].innerHTML = '删除成功'

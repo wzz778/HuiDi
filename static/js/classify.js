@@ -49,7 +49,7 @@ btn_confirm[0].onclick = function(){
                     level:1,
                 }
             }).then(result =>{
-                console.log(result.data);
+                // console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     hidden[2].style.display = 'block'
@@ -79,7 +79,7 @@ btn_confirm[0].onclick = function(){
                     super_id:btn_new[0].super_id
                 }
             }).then(result =>{
-                console.log(result.data);
+                // console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     hidden[2].style.display = 'block'
@@ -108,7 +108,7 @@ btn_confirm[0].onclick = function(){
                     name:classifier_list[0].value
                 }
             }).then(result =>{
-                console.log(result.data);
+                // console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     hidden[2].style.display = 'block'
@@ -143,7 +143,7 @@ function renders(){
         method:'GET',
         url:'/superAdmin/showAllType',
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         let all = '';
         for(let i=0;i<result.data.msg.length;i++){
             all +=`<div class="classify-list">
@@ -200,7 +200,7 @@ function renders(){
                                                     this.value = this.value.replace(/\s*/g,"");
                                                 }
                         
-                        console.log(btn_new[0].ids);
+                        // console.log(btn_new[0].ids);
                     }
                     deletes[i].onclick = function(){
                         btn_new[0].ids = result.data.temps[z][i].id;
@@ -268,7 +268,7 @@ confirm[0].onclick = function(){
             id:btn_new[0].ids
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         if(result.data.msg == 'success'){
             hidden[1].style.display = 'none';
             hidden[2].style.display = 'block'

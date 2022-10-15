@@ -29,7 +29,7 @@ confirms[0].onclick = function(){
             id:id[1]
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         if(result.data.msg == 'success'){
             hidden[0].style.display = 'none';
         }
@@ -49,7 +49,7 @@ confirms[1].onclick = function(){
                 message:classifier_input[0].value
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[1].style.display = 'none';
             }
@@ -72,7 +72,7 @@ function renders(id){
             id:id
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         let all = '';
         if(result.data.msg.list[0].list.length == 0){
             all = `<ul class="messages">

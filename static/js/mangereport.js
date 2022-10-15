@@ -48,7 +48,6 @@ function renders(begin_index,size,numbers){
                 <li class="card-list-status">举报理由</li>
                 <li class="card-list-status">举报内容</li>
                 <li class="card-list-other">其他操作</li>`
-                if(result.data.msg.list[i].ob.user.status == 0){
                     if(result.data.msg.list[i].ob.comment == null){
                         let comment = '该评论已被删除'
                         all += `<ul class="card-body-list">
@@ -89,48 +88,7 @@ function renders(begin_index,size,numbers){
                             </li>
                         </ul>`
                     }
-                }else{
-                    if(result.data.msg.list[i].ob.comment == null){
-                        let comment = '该评论已被删除'
-                        all += `<ul class="card-body-list">
-                            <li class="card-list-number">${i+1}</li>
-                            <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
-                            <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
-                            <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
-                            <li class="card-list-status">${result.data.msg.list[i].message}</li>
-                            <li class="card-list-status">${comment}</li>
-                            <li class="card-list-other">
-                                <button class="btn forbiding">
-                                    <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                                    已封号
-                                </button>
-                                <button class="btn detail">
-                                    <img src="public/iconfont/detail1.png" alt="" class="forbid">
-                                    受理
-                                </button>
-                            </li>
-                        </ul>`
-                    }else{
-                        all += `<ul class="card-body-list">
-                            <li class="card-list-number">${i+1}</li>
-                            <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
-                            <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
-                            <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
-                            <li class="card-list-status">${result.data.msg.list[i].message}</li>
-                            <li class="card-list-status">${result.data.msg.list[i].ob.comment.content}</li>
-                            <li class="card-list-other">
-                                <button class="btn forbiding">
-                                    <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                                    已封号
-                                </button>
-                                <button class="btn detail">
-                                    <img src="public/iconfont/detail1.png" alt="" class="forbid">
-                                    受理
-                                </button>
-                            </li>
-                        </ul>`
-                    }
-                }
+                
                 
                 
                 
@@ -142,7 +100,8 @@ function renders(begin_index,size,numbers){
                 <li class="card-list-mail">邮箱</li>
                 <li class="card-list-status">举报理由</li>
                 <li class="card-list-other">其他操作</li>`
-                if(result.data.msg.list[i].ob.user.status == 0){
+
+
                     all += `<ul class="card-body-list">
                     <li class="card-list-number">${i+1}</li>
                     <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
@@ -160,25 +119,7 @@ function renders(begin_index,size,numbers){
                         </button>
                     </li>
                 </ul>`
-                }else{
-                    all += `<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
-                        <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
-                        <li class="card-list-status">${result.data.msg.list[i].message}</li>
-                        <li class="card-list-other">
-                            <button class="btn forbiding">
-                                <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                                已封号
-                            </button>
-                            <button class="btn detail">
-                                <img src="public/iconfont/detail1.png" alt="" class="forbid">
-                                详情
-                            </button>
-                        </li>
-                    </ul>`
-                }
+                
                 
             }
             
@@ -199,7 +140,7 @@ function renders(begin_index,size,numbers){
                 }
             }
             forbiding[i].onclick = function(){
-                confirms[0].ids = 
+                confirms[0].ids = result.data.msg.list[i].u_id
                 hidden[0].style.display = 'block'
             }
         }
@@ -299,7 +240,7 @@ confirms[0].onclick = function(){
                 status:1,
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[0].style.display = 'none';
                 warnings[0].src = 'public/iconfont/success.png'
@@ -327,7 +268,7 @@ confirms[1].onclick = function(){
             status:1
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         if(result.data.msg == 'success'){
             hidden[1].style.display = 'none';
             hidden[2].style.display = 'block';

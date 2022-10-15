@@ -22,7 +22,7 @@ function Login(){
         url:'/superAdmin/gainId',
 
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         manage_name[0].innerHTML = `${result.data.msg.name }  <i><img src="public/iconfont/arrow1.png" alt="" class="arrow"></i>`
         manage_img[0].src = result.data.msg.img_url;
     })

@@ -28,7 +28,7 @@ function authentication(){
         method:'GET',
         url:'/superAdmin/showCertificationArea',
     }).then(result =>{
-        console.log(result.data.msg);
+        // console.log(result.data.msg);
         let all = `<dd class="layer-select-tips layer-this authentications" value="">请选择</dd>`
         for(let i=0;i<result.data.msg.length;i++){
             all += `<dd class="layer-select-tips  authentications" value="">${result.data.msg[i].area_name}</dd>`
@@ -71,7 +71,7 @@ function renders(begin,size){
             size:size
         }
     }).then(result =>{
-        console.log(result.data.msg);
+        // console.log(result.data.msg);
         let all = result.data.msg.records;
         let All = '';
         for(let i=0;i<all.length;i++){
@@ -167,7 +167,7 @@ function renders(begin,size){
         pagings[0].all_size = result.data.msg.total;
         pagings[0].cur_index = result.data.msg.current;
         pagings[0].size = result.data.msg.size;
-        console.log(pagings[0].maxNumber);
+        // console.log(pagings[0].maxNumber);
         generatePagination(result.data.msg.pages, size, begin,result.data.msg.total,renders);
         for(let j=0;j<all.length;j++){
             seal[j].ids = all[j].id;
@@ -231,7 +231,7 @@ confirms[0].onclick  = function(){
                 status:1,
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[0].style.display = 'none';
                 warnings[0].src = 'public/iconfont/success.png'
@@ -256,7 +256,7 @@ confirms[1].onclick = function(){
                 status:0,
             }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         if(result.data.msg == 'success'){
             hidden[1].style.display = 'none';
             warnings[0].src = 'public/iconfont/success.png'
@@ -280,7 +280,7 @@ confirms[2].onclick = function(){
                 id:confirms[2].ids
             }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         hiddens[0].style.display = 'none';
         renders(pagings[0].cur_index,pagings[0].size,-1)
     })

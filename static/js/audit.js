@@ -26,7 +26,7 @@ function renders(begin_index,size){
             size:size
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         pageings[0].maxLength = result.data.msg.all_page
         pageings[0].all_size = result.data.msg.all_count
         pageings[0].cur_index = result.data.msg.cur_index;
@@ -121,7 +121,7 @@ confirm[0].onclick = function(){
                 massage:classifier_input[0].value
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[0].style.display = 'none'
                 hidden[2].style.display = 'block'
@@ -150,7 +150,7 @@ confirm[1].onclick = function(){
             id:pass[0].ids
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         if(result.data.msg == 'success'){
             hidden[1].style.display = 'none'
             hidden[2].style.display = 'block'

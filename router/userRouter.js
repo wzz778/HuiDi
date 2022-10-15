@@ -7,11 +7,11 @@ const fs=require('fs');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 router.get('/layout',(req,res)=>{
-    res.render('layout.html')
+        res.render('layout.html')
 })
-router.get('/Personalhomepage',(req,res)=>{
-    res.render('Personalhomepage.html')
-})
+// router.get('/Personalhomepage',(req,res)=>{
+//     res.render('Personalhomepage.html')
+// })
 router.get('/login',(req,res)=>{
     res.render('login.html')
 })
@@ -27,42 +27,42 @@ router.get('/repassword',(req,res)=>{
 router.get('/repassword2',(req,res)=>{
     res.render('repassword2.html')
 })
-router.get('/modifymessage',(req,res)=>{
-    res.render('modifymessage.html')
-})
-router.get('/reemail',(req,res)=>{
-    res.render('reemail.html')
-})
-router.get('/mymessage',(req,res)=>{
-    res.render('mymessage.html')
-})
+// router.get('/modifymessage',(req,res)=>{
+//     res.render('modifymessage.html')
+// })
+// router.get('/reemail',(req,res)=>{
+//     res.render('reemail.html')
+// })
+// router.get('/mymessage',(req,res)=>{
+//     res.render('mymessage.html')
+// })
 router.get('/userhomepage',(req,res)=>{
     res.render('userhomepage.html')
 })
-router.get('/MyFollowers',(req,res)=>{
-    res.render('MyFollowers.html')
-})
-router.get('/Myfans',(req,res)=>{
-    res.render('Myfans.html')
-})
-router.get('/chatmessage',(req,res)=>{
-    res.render('chatmessage.html')
-})
-router.get('/likemessage',(req,res)=>{
-    res.render('likemessage.html')
-})
-router.get('/collectmessage',(req,res)=>{
-    res.render('collectmessage.html')
-})
-router.get('/focusmessage',(req,res)=>{
-    res.render('focusmessage.html')
-})
-router.get('/commentmessage',(req,res)=>{
-    res.render('commentmessage.html')
-})
-router.get('/chat',(req,res)=>{
-    res.render('chat.html')
-})
+// router.get('/MyFollowers',(req,res)=>{
+//     res.render('MyFollowers.html')
+// })
+// router.get('/Myfans',(req,res)=>{
+//     res.render('Myfans.html')
+// })
+// router.get('/chatmessage',(req,res)=>{
+//     res.render('chatmessage.html')
+// })
+// router.get('/likemessage',(req,res)=>{
+//     res.render('likemessage.html')
+// })
+// router.get('/collectmessage',(req,res)=>{
+//     res.render('collectmessage.html')
+// })
+// router.get('/focusmessage',(req,res)=>{
+//     res.render('focusmessage.html')
+// })
+// router.get('/commentmessage',(req,res)=>{
+//     res.render('commentmessage.html')
+// })
+// router.get('/chat',(req,res)=>{
+//     res.render('chat.html')
+// })
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 function saveUserInfo(id){
     return new Promise((resolve,reject)=>{

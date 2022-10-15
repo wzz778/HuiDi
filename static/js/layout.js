@@ -19,9 +19,15 @@ let dydenumber=document.getElementById('dydenumber')
 let dyde=document.getElementById('dyde')
 let searchva=document.getElementsByClassName('searchva');
 let onlandmax=document.getElementById('onlandmax')
+let onlandmax_content=document.getElementById('onlandmax_content')
 let fadebu=document.getElementById('fadebu');
 let header_searchs=document.getElementsByClassName('header_searchs')[0]
 let aname=document.getElementById('aname')
+let reconfirmmax=document.getElementsByClassName('reconfirmmax')[0]
+let confirm_header=document.getElementsByClassName('confirm_header')[0]
+let confirm_content=document.getElementsByClassName('confirm_content')[0]
+let confirm_footer=document.getElementsByClassName('confirm_footer')[0]
+let confirmtrue=document.getElementById('confirmtrue')
 function contrasttime(time){
     let data=new Date(time.replace(/-/g,"/"));
     let t1=new Date();//获取当前时间
@@ -262,6 +268,12 @@ function look(){
         allfileList.delete('describes')
         return
     }
+    if(Array.from(allfileList).length>8){
+        hintFn('warning' ,'最多能发6张图片！')
+        allfileList.delete('al_id')
+        allfileList.delete('describes')
+        return
+    }
     openland()
     axios({
         method: 'POST',
@@ -400,9 +412,25 @@ dyde.onkeydown=function(){
   dydenumber.innerText=num;
 };
 function openland(){
+    onlandmax_content.style.display='block'
     onlandmax.style.display='block'
 }
 function closeland(){
+    onlandmax_content.style.display='none'
+    onlandmax.style.display='none'
+}
+function reconfirm(title,text,Function){
+    reconfirmmax.style.display='block'
+    onlandmax.style.display='block'
+    confirm_header.innerText=title
+    confirm_content.innerText=text
+    confirmtrue.onclick=function(){
+        Function()
+        closeconfirm()
+    }
+}       
+function closeconfirm(){    
+    reconfirmmax.style.display='none'
     onlandmax.style.display='none'
 }
 function fadebut(){
@@ -420,7 +448,7 @@ header_searchs.onmousemove=function(){
     window.onclick=null
 }
 function adda(){
-    if(judgeStrs(aname.value).length==0){
+    if(isnull(judgeStrs(aname.value))){
         hintFn('warning' ,"请填写完整内容！")
         return
     }

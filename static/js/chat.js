@@ -335,40 +335,6 @@ var creatws= function (userid) {
     chattext.value=``
   }
 }
-// function send() {//注意引号内的内容应该是文本框的id而不能是name
-//   if(isnull(judgeStrs(chattext.value))){
-//     hintFn('warning', "请输入你要输入的内容")
-//     return
-//   }
-//   let newob = {
-//     to: toid,
-//     from: fromid,
-//     text: judgeStrs(chattext.value),
-//   }
-//   if (!recontrasttime(getprTime(), getTime())) {
-//     messagebody.innerHTML += `
-//     <div class="amessage">
-//     <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
-//     <div class="chat mychat">
-//     <img src="${myimg}" alt="">
-//     <div class="chattext">${chattext.value}</div>
-//       </div>
-//       </div>
-//       `
-//     } else {
-//       messagebody.innerHTML += `
-//       <div class="amessage">
-//       <div class="chat mychat">
-//       <img src="${myimg}" alt="">
-//       <div class="chattext">${chattext.value}</div>
-//       </div>
-//       </div>
-//       `
-//     websocket.send(JSON.stringify(newob)); //给后台发送数据
-//   }
-//   messagebody.scrollTop = messagebody.scrollHeight;
-//   chattext.value=``
-// }
 function beginall() {
   tousermessage().then(result1 => {
     return fromusermessage()

@@ -239,3 +239,6 @@ li {
 .mymessage #mymessagetext #cordcon button:hover {
   background-color: #accdf6;
 }
+.mymessage i{
+   margin-right: 5px;
+}

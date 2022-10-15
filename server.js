@@ -28,9 +28,11 @@ app.set("views", "views");
 const userRouter = require('./router/userRouter')
 const liRouter=require('./router/liRouter')
 const zllRouter = require('./router/zllRouter');
+const userloginRouter = require('./router/userloginRouter');
 // 配置路由
 app.use(liRouter)
 app.use(userRouter);
+app.use(userloginRouter);
 app.use(zllRouter);
 // 启动服务器
 app.listen(8099, () => {

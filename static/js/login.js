@@ -65,9 +65,9 @@ function tologin(){
           }
         }
         }else{
-            alert(data.data.msg);
+          hintFn('wrong' ,'你登录的账号或密码有误！')
         }
       }).catch(function (error) {
-        
+        hintFn('wrong' ,'网络错误！')
       });
 }

@@ -47,7 +47,7 @@ btn_confirm[0].onclick = function(){
                     area_name:classifier_list[0].value,
                 }
             }).then(result =>{
-                console.log(result.data);
+                // console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     hidden[2].style.display = 'block'
@@ -74,7 +74,7 @@ btn_confirm[0].onclick = function(){
                     area_name:classifier_list[0].value
                 }
             }).then(result =>{
-                console.log(result.data);
+                // console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     warn_texts[0].innerHTML = '修改成功'
@@ -103,7 +103,7 @@ function renders(){
         method:'GET',
         url:'/superAdmin/showCertificationArea',
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         let all = '';
         for(let i=0;i<result.data.msg.length;i++){
             all +=`<div class="classify-list">
@@ -153,7 +153,7 @@ confirm[0].onclick = function(){
             ids:btn_update[0].ids
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         if(result.data.msg == 'success'){
             hidden[1].style.display = 'none'
             warn_texts[0].innerHTML = '删除成功'

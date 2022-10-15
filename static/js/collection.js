@@ -41,7 +41,7 @@ function renders(begin_index,size,numbers){
             status:numbers,
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         pageings[0].maxNumber = result.data.msg.all_page
         pageings[0].all_size = result.data.msg.all_count
         pageings[0].cur_index = result.data.msg.cur_index
@@ -184,7 +184,7 @@ function rendering(begin_index,size,numbers){
             status:'1,3,4'
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         pageings[0].maxNumber = result.data.msg.all_page
         pageings[0].all_size = result.data.msg.all_count
         pageings[0].cur_index = result.data.msg.cur_index
@@ -383,7 +383,7 @@ function showNumber(){
             status:'4'
         }
     }).then(result =>{
-        console.log(result.data);
+        // console.log(result.data);
         layer_click[0].numberStatus = result.data.msg.list.length;
     })
 }
@@ -408,7 +408,7 @@ confirm[0].onclick = function(){
                 message:classifier_input[0].value
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[0].style.display = 'none'
                 hidden[2].style.display = 'block'
@@ -438,7 +438,7 @@ confirm[1].onclick = function(){
                 status:1
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[2].style.display = 'block'
                 warn_texts[0].innerHTML = '审核通过'
@@ -457,7 +457,7 @@ confirm[1].onclick = function(){
                 status:4
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[1].style.display = 'none'
                 hidden[2].style.display = 'block'
@@ -477,7 +477,7 @@ confirm[1].onclick = function(){
                 status:3
             }
         }).then(result =>{
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[1].style.display = 'none'
                 hidden[2].style.display = 'block'

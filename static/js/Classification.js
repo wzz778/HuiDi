@@ -53,6 +53,9 @@ function getSearchInfo() {
     })
         .then(result => {
             all = result.msg.page.all_count
+            if(all<5){
+                animation.classList.add('none')
+            }
             allPage = result.msg.page.all_page
             content.classList.remove('none')
             noContent.classList.add('none')

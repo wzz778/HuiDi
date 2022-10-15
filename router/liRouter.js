@@ -40,6 +40,10 @@ router.get('/focusOnMore', (req, res) => {
 router.get('/404', (req, res) => {
     res.render('404.html')
 })
+// 测试
+router.get('/text', (req, res) => {
+    res.render('text.html')
+})
 
 // 管理员看的专辑页面
 router.get('/superAlbum', (req, res) => {
@@ -213,8 +217,6 @@ router.post('/judgeLogin', (req, res) => {
     }
     res.send({ err: -1, msg: false })
 })
-
-
 // 发布评论
 router.post('/admin/publicComment', mult, (req, res) => {
     let formdata = new FormData()
@@ -239,6 +241,7 @@ router.post('/admin/publicComment', mult, (req, res) => {
         }
     })
         .then(result => {
+            console.log('结果',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
                 return
@@ -259,7 +262,7 @@ router.post('/picture/showComment', (req, res) => {
         params: {
             reflect: id,
             begin_index: beginIndex,
-            size: 1
+            size: 5
         }
     })
         .then(result => {
@@ -512,7 +515,7 @@ router.post('/picture/showAllPicture', (req, res) => {
         url: '/picture/showAllPicture',
         params: {
             begin_index: beginIndex,
-            size: 1
+            size: 5
         }
     })
         .then(result => {
@@ -619,7 +622,7 @@ router.post('/admin/getFocusDynamic', (req, res) => {
         params: {
             begin_index: beginIndex,
             id: req.session.user.id,
-            size: 10
+            size: 5
         },
         headers: {
             token: req.session.token
@@ -721,7 +724,7 @@ router.post('/picture/showAlbumById', (req, res) => {
         params: {
             al_id: alId,
             begin_index: beginIndex,
-            size: 10
+            size: 5
         }
     })
         .then(result => {
@@ -783,7 +786,7 @@ router.post('/picture/getInfo/picture', (req, res) => {
         params: {
             begin_index: beginIndex,
             message: message,
-            size: 10,
+            size: 5,
             type: type
         }
     })
@@ -818,7 +821,7 @@ router.post('/picture/getInfo/album', (req, res) => {
         params: {
             begin_index: beginIndex,
             message: message,
-            size: 10,
+            size: 5,
             type: type
         }
     })
@@ -838,7 +841,7 @@ router.post('/picture/getInfo/talentShow', (req, res) => {
         params: {
             begin_index: beginIndex,
             message: message,
-            size: 10,
+            size: 5,
             type: type
         }
     })
@@ -960,7 +963,7 @@ router.post('/picture/FindUsersRecommendationCategories', (req, res) => {
         params: {
             begin_index: nowPage,
             type: type,
-            size: 10
+            size: 5
         }
     })
         .then(result => {

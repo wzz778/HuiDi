@@ -17,6 +17,9 @@ let warn_text = document.getElementsByClassName('warn-text');
 let secondLevel = document.getElementsByClassName('secondLevel');
 let update = document.getElementsByClassName('update');
 let deletes = document.getElementsByClassName('delete');
+let confirmes = document.getElementsByClassName('confirmes');
+let warn_texts = document.getElementsByClassName('warn-texts');
+let warnings = document.getElementsByClassName('warnings');
 // console.log(arrow.length);
 
 
@@ -31,7 +34,7 @@ btn_new[0].onclick = function(){
     hidden[0].style.display = 'block';
     btn_new[0].numbers = 0;
 }
-
+   
 
 // 新增第一级分类，修改，新增第二级分类
 btn_confirm[0].onclick = function(){
@@ -47,9 +50,23 @@ btn_confirm[0].onclick = function(){
                 }
             }).then(result =>{
                 console.log(result.data);
-                renders();
+                if(result.data.msg == 'success'){
+                    hidden[0].style.display = 'none';
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '添加成功'
+                    warnings[0].src = 'public/iconfont/success.png'
+                    renders();
+                    classifier_list[0].value = ''
+                }else if(result.data.msg == null){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '类型名称重复，请重新命名'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                }
             })
-            hidden[0].style.display = 'none';
+        }else{
+            hidden[2].style.display = 'block'
+            warn_texts[0].innerHTML = '请把信息填写完整'
+            warnings[0].src = 'public/iconfont/warn2.png'
         }
     }else if(btn_new[0].numbers == 1){
         if(classifier_list[0].value != ''){
@@ -63,9 +80,23 @@ btn_confirm[0].onclick = function(){
                 }
             }).then(result =>{
                 console.log(result.data);
-                renders();
+                if(result.data.msg == 'success'){
+                    hidden[0].style.display = 'none';
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '添加成功'
+                    warnings[0].src = 'public/iconfont/success.png'
+                    renders();
+                    classifier_list[0].value = ''
+                }else if(result.data.msg == null){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '类型名称重复，请重新命名'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                }
             })
-            hidden[0].style.display = 'none';
+        }else{
+            hidden[2].style.display = 'block'
+        warn_texts[0].innerHTML = '请把信息填写完整'
+        warnings[0].src = 'public/iconfont/warn2.png'
         }
     }else if(btn_new[0].numbers == 2){
         if(classifier_list[0].value != ''){
@@ -78,9 +109,23 @@ btn_confirm[0].onclick = function(){
                 }
             }).then(result =>{
                 console.log(result.data);
-                renders();
-                hidden[0].style.display = 'none';
+                if(result.data.msg == 'success'){
+                    hidden[0].style.display = 'none';
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '添加成功'
+                    warnings[0].src = 'public/iconfont/success.png'
+                    renders();
+                    classifier_list[0].value = ''
+                }else if(result.data.msg == '插入重复数据'){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '类型名称重复，请重新命名'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                } 
             })
+        }else{
+            hidden[2].style.display = 'block'
+            warn_texts[0].innerHTML = '请把信息填写完整'
+            warnings[0].src = 'public/iconfont/warn2.png'
         }
     }
 }
@@ -88,6 +133,7 @@ btn_confirm[0].onclick = function(){
 // 关闭弹框
 btn_cancel[0].onclick = function(){
     hidden[0].style.display = 'none';
+    classifier_list[0].value = ''
 }
 
 
@@ -150,6 +196,9 @@ function renders(){
                                                 </div>`
                                                 classifier_list[0].value = result.data.temps[z][i].name
                                                 hidden[0].style.display = 'block';
+                                                classifier_list[0].oninput = function(){
+                                                    this.value = this.value.replace(/\s*/g,"");
+                                                }
                         
                         console.log(btn_new[0].ids);
                     }
@@ -195,6 +244,9 @@ function renders(){
                                         </div>`
                                         classifier_list[0].value = result.data.msg[j].type.name
                                         hidden[0].style.display = 'block';
+                                        classifier_list[0].oninput = function(){
+                                            this.value = this.value.replace(/\s*/g,"");
+                                        }
             }
             btn_delete[j].onclick = function(){
                 btn_new[0].ids = result.data.msg[j].type.id;
@@ -217,10 +269,20 @@ confirm[0].onclick = function(){
         }
     }).then(result =>{
         console.log(result.data);
-        renders();
+        if(result.data.msg == 'success'){
+            hidden[1].style.display = 'none';
+            hidden[2].style.display = 'block'
+            warn_texts[0].innerHTML = '删除成功'
+            warnings[0].src = 'public/iconfont/success.png'
+            renders();
+        } 
     })
-    hidden[1].style.display = 'none'
 }
 cancel[0].onclick = function(){
     hidden[1].style.display = 'none'
+}
+
+
+confirmes[0].onclick = function(){
+    hidden[2].style.display = 'none'
 }

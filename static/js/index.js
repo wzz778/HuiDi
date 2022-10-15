@@ -120,6 +120,9 @@ function getHotTicket() {
     sendFn('/picture/showAllPicture', { beginIndex: nowPageHotTicket })
         .then(result => {
             all = result.msg.all_count
+            if (all < 5) {
+                animation.classList.add('none')
+            }
             allPageHotTicket = result.msg.all_page
             let tempStr = ''
             for (let i = 0; i < result.msg.list.length; i++) {
@@ -219,7 +222,10 @@ function getFocusOn() {
                         focusOn.classList.add('none')
                         return
                     }
-                    al = result.msg.all_count
+                    all = result.msg.all_count
+                    if (all < 5) {
+                        animation.classList.add('none')
+                    }
                     allPageHotFocusOn = result.msg.all_page
                     let tempStr = ''
                     for (let i = 0; i < result.msg.list.length; i++) {
@@ -467,6 +473,10 @@ function sendReportFn(event) {
         types: 0
     }
     if (reportReason.value == '0') {
+        if(otherReason.value.replace(/(^\s*)|(\s*$)/g, "").length==0){
+            hintFn('warning','不能输入纯空格')
+            return
+        }
         obj.message = judgeStr(otherReason.value)
     } else {
         obj.message = reportReason.value
@@ -559,8 +569,7 @@ getFocusInfo()
 
 function focusChangeFn() {
     if (focusNowPage >= focusAllPages) {
-        hintFn('warning', '没有更多内容了')
-        return
+        focusNowPage = 0
     }
     focusNowPage++
     getFocusInfo()

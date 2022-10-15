@@ -163,10 +163,12 @@ router.get('/superAdmin/manageRole', (req, res) => {
     for (let i = 0; i < list.length; i++) {
         urlStr += `list=${list[i]}&`
     }
+    
     tempStr += urlStr
+    tempStr += `orders=${orders}&`
     tempStr += `role_name=${role_name}`
-    tempStr += `orders=${orders}`
-    // console.log('url', tempStr)
+    
+    console.log('url', tempStr)
     // list = JSON.stringify(list);
     console.log(list);
     axios({
@@ -277,7 +279,7 @@ router.get('/superAdmin/showRole', (req, res) => {
 
 //更改角色信息
 router.get('/superAdmin/updateRole', (req, res) => {
-    let {id,role_name} = req.query;
+    let {id,role_name,orders} = req.query;
     console.log(id,role_name);
     axios({
         method: 'PUT',
@@ -285,6 +287,7 @@ router.get('/superAdmin/updateRole', (req, res) => {
         params:{
             id:id,
             role_name:role_name,
+            orders:orders
         },
         headers: {
             token:req.session.token
@@ -706,5 +709,31 @@ router.get('/superAdmin/showCertificationArea',(req,res)=>{
         res.send({ err: -1, msg: error })
     })
 })
+
+
+
+
+// 修改举报受理的状态
+router.get('/superAdmin/updateReportStatus',(req,res)=>{
+    let {id,status} = req.query;
+    axios({
+        method:'PUT',
+        url:'/superAdmin/updateReportStatus',
+        params:{
+            id:id,
+            status:status
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+
 
 module.exports = router;

@@ -34,6 +34,8 @@ let foucs = document.getElementById('foucs')
 let sendReportInfo = document.getElementById('sendReportInfo')
 // 动画
 let animation = document.getElementById('animation')
+// 发布主评论按钮
+let sendComment = document.getElementById('sendComment')
 
 let sendArrNone = []
 
@@ -90,13 +92,13 @@ function sendCommentFn() {
             // 判断是否能发布评论
             if (new Date() < Date.parse(result.userInfo.end_time)) {
                 // 被封号不能发布评论
-                hintFn('warning', `改账号被封${result.userInfo.end_time}`)
+                hintFn('warning', `该账号被封${result.userInfo.end_time}`)
                 return
             }
             let userObj = result.userInfo
             let tempStr = judgeStr(CommentInfo.value)
             // 判断值是否为空
-            if (imgFile.files.length == 0 && tempStr.length == 0) {
+            if (imgFile.files.length == 0 && tempStr.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
                 return
             }
@@ -115,16 +117,23 @@ function sendCommentFn() {
             formData.append('superId', 0)
             formData.append('reflectId', window.location.search.split("=")[1])
             formData.append('reportId', 0)
+            sendComment.setAttribute('onclick', `hintFn('warning', '上传中')`)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
-                    userObj.commentId = result.msg[0].id
-                    sendArrNone.push(result.msg[0].id)
+                    console.log(result)
+                    sendComment.setAttribute('onclick', 'sendCommentFn()')
+                    userObj.commentId = result.msg[result.msg.length - 1].id
+                    sendArrNone.push(result.msg[result.msg.length - 1].id)
                     // 将评论的id传过来
                     addComment(userObj)
                     showCommentBoxFn()
+                    // 清空图片
+                    showImgUrl.src = ''
+                    imgFile.value = ''
                     CommentInfo.value = ''
                 })
                 .catch(err => {
+                    console.log(err)
                     hintFn('warning', '操作失败')
                 })
         })
@@ -270,7 +279,7 @@ function replyCommentFirstFn(event) {
                 return
             }
             let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
-            if (tempStr.length == 0) {
+            if (tempStr.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
                 return
             }
@@ -304,7 +313,7 @@ function replyCommentSonFn(event) {
                 return
             }
             let tempStr = judgeStr(event.parentElement.parentElement.firstElementChild.value)
-            if (tempStr.length == 0) {
+            if (tempStr.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
                 hintFn('warning', '请输入评论内容，且评论不能为纯空格')
                 return
             }
@@ -477,13 +486,17 @@ let nowPage = 1
 function getAllComment() {
     sendFn('/picture/showComment', { id: window.location.search.split("=")[1], beginIndex: nowPage })
         .then(result => {
+            if (result.msg.all_count < 5) {
+                animation.classList.add('none')
+            }
             allPges = result.msg.all_page
             // 将数据渲染到页面中
             let tempStr = ''
-            if (result.msg.list.length == 0) {
+            if (result.msg.list.length == 0 && nowPage == 1) {
                 // 没有数据
                 noContent[0].classList.remove('none')
                 animation.classList.add('none')
+                return
             }
             for (let i = 0; i < result.msg.list.length; i++) {
                 if (sendArrNone.indexOf(result.msg.list[i].comment.id) != -1) {
@@ -793,6 +806,10 @@ function sendReportFn(event) {
     // 发送数据
     let obj = JSON.parse(sendReportInfo.innerHTML)
     if (reportReason.value == '0') {
+        if (otherReason.value.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+            hintFn('warning', '不能输入纯空格')
+            return
+        }
         obj.message = judgeStr(otherReason.value)
     } else {
         obj.message = reportReason.value
@@ -824,10 +841,11 @@ window.onmousewheel = function (event) {
         animation.classList.add('none')
     }
     // 提示没有内容了
-    if (event.wheelDelta < 0 && !yn && nowPage == allPges) {
+    if (event.wheelDelta < 0 && !yn && nowPage >= allPges) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
             hintFn('warning', '没有更多内容了')
+            return
         }
     }
     if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yn) {

@@ -70,7 +70,7 @@ function renders(begin_index,size){
         </ul>`
         }
         card_body_main[0].innerHTML = All;
-        generatePagination(result.data.msg.all_page,result.data.msg.size,result.data.msg.cur_index,result.data.msg.all_count,renders,-1);
+        generatePagination(pageings[0].maxLength,pageings[0].size,pageings[0].cur_index,pageings[0].all_size,renders,-1);
         for(let j=0;j<all.msg.list.length;j++){
             checkbox_all[0].numbers = 0;
             card_list_checkbox[j].ids = all.msg.list[j].role.id;
@@ -106,6 +106,7 @@ function renders(begin_index,size){
                     }
                 }).then(result =>{
                     console.log(result.data);
+                    pop_up[0].style.height = '350px';
                     let all = `<div class="hint">
                             修改角色
                             </div>
@@ -122,10 +123,15 @@ function renders(begin_index,size){
                             <div class="pop-main">
                                 修改字符：
                                 <input type="text" class="hidden-input">
+                            </div>
+                            <div class="pop-main">
+                                显示顺序：
+                                <input type="text" class="hidden-input">
                             </div>`
                             pop_change[0].innerHTML = all;
                             hidden_input[0].value = result.data.msg.role.role_name;
                             hidden_input[0].ids = result.data.msg.role.id;
+                            hidden_input[3].value = result.data.msg.role.orders
                             let All = '';
                             for(let i=0;i<result.data.msg.list.length;i++){
                                 All += `<option value="${result.data.msg.list[i].id}">${result.data.msg.list[i].permiss_name}</option>`
@@ -140,6 +146,9 @@ function renders(begin_index,size){
                             }
                             hidden_input[2].oninput = function(){
                                 this.value = this.value.replace(/\s*/g,"");
+                            }
+                            hidden_input[3].oninput = function(){
+                                if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}
                             }
                 })
             }
@@ -219,7 +228,7 @@ btn_update[0].onclick = function(){
     if(checkbox_all[0].numbers == 1){
         hidden[0].style.display = 'block';
         btn_new[0].numbers = 1;
-        pop_up[0].style.height = '300px';
+        pop_up[0].style.height = '350px';
         for(let i=0;i<checkbox.length;i++){
             if(checkbox[i].checked == true){
                 console.log(card_list_checkbox[i].names);
@@ -247,10 +256,15 @@ btn_update[0].onclick = function(){
                             <div class="pop-main">
                                 修改字符：
                                 <input type="text" class="hidden-input">
+                            </div>
+                            <div class="pop-main">
+                                显示顺序：
+                                <input type="text" class="hidden-input">
                             </div>`
                             pop_change[0].innerHTML = all;
                             hidden_input[0].value = result.data.msg.role.role_name;
                             hidden_input[0].ids = result.data.msg.role.id;
+                            hidden_input[3].value = result.data.msg.role.orders
                             let All = '';
                             for(let i=0;i<result.data.msg.list.length;i++){
                                 All += `<option value="${result.data.msg.list[i].id}">${result.data.msg.list[i].permiss_name}</option>`
@@ -265,6 +279,9 @@ btn_update[0].onclick = function(){
                             }
                             hidden_input[2].oninput = function(){
                                 this.value = this.value.replace(/\s*/g,"");
+                            }
+                            hidden_input[3].oninput = function(){
+                                if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}
                             }
                 })
             }
@@ -295,76 +312,114 @@ confirms[0].onclick = function(){
 
         let arr = [1]
         arr[0] = hidden_input[1].value;
-        axios({
-            method:'GET',
-            url:'/superAdmin/manageRole',
-            params:{
-                list:arr,
-                role_name:hidden_input[0].value,
-                orders:hidden_input[2].value
-            }
-        }).then((result)=>{
-            console.log(result);
-            if(result.data.msg == 'success'){
-                hidden[0].style.display = 'none';
-                hidden[1].style.display = 'none';
-                warn_texts[0].innerHTML = '添加成功'
-                warnings[0].src = 'public/iconfont/success.png'
-                hidden[2].style.display = 'block'
-                renders(pageings[0].cur_index,pageings[0].size,-1);
-            }
-        })
-    }else if(btn_new[0].numbers == 1){
-        console.log(hidden_input[0].ids);
-        console.log(hidden_input[0].value);
-        axios({
-            method:'GET',
-            url:'/superAdmin/updateRole',
-            params:{
-                id:hidden_input[0].ids,
-                role_name:hidden_input[0].value,
-            }
-        }).then(result =>{
-            console.log(result.data);
+        if(hidden_input[0].value != '' && hidden_input[1].value != '' && hidden_input[2].value != ''){
             axios({
                 method:'GET',
-                url:'/superAdmin/updateRolePermiss',
+                url:'/superAdmin/manageRole',
                 params:{
-                    id:hidden_input[1].options[hidden_input[1].selectedIndex].value,
-                    permiss_name:hidden_input[2].value,
-                    r_id:hidden_input[0].ids
+                    list:arr,
+                    role_name:hidden_input[0].value,
+                    orders:hidden_input[2].value
+                }
+            }).then((result)=>{
+                console.log(result);
+                console.log(hidden_input[0].value);
+                if(result.data.msg == 'success'){
+                    hidden[0].style.display = 'none';
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '添加成功'
+                    warnings[0].src = 'public/iconfont/success.png'
+                    
+                    renders(pageings[0].cur_index,pageings[0].size,-1);
+                }else if(result.data.msg == '插入重复数据'){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '已用该角色名，请重新输入一个新角色名'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                }
+            })
+        }else{
+            hidden[2].style.display = 'block'
+            warn_texts[0].innerHTML = '信息未填写完整，请填写完整之后再提交'
+            warnings[0].src = 'public/iconfont/warn2.png'
+        }
+        
+    }else if(btn_new[0].numbers == 1){
+        if(hidden_input[0].value != '' && hidden_input[2].value != '' && hidden_input[3].value != ''){
+            console.log(hidden_input[0].ids);
+            console.log(hidden_input[0].value);
+            axios({
+                method:'GET',
+                url:'/superAdmin/updateRole',
+                params:{
+                    id:hidden_input[0].ids,
+                    role_name:hidden_input[0].value,
+                    orders:hidden_input[3].value,
+                }
+            }).then(result =>{
+                console.log(result.data);
+                if(result.data.msg == 'success'){
+                    axios({
+                        method:'GET',
+                        url:'/superAdmin/updateRolePermiss',
+                        params:{
+                            id:hidden_input[1].options[hidden_input[1].selectedIndex].value,
+                            permiss_name:hidden_input[2].value,
+                            r_id:hidden_input[0].ids
+                        }
+                    }).then(result =>{
+                        console.log(result.data);
+                        if(result.data.msg == 'success'){
+                            hidden[0].style.display = 'none';
+                            hidden[1].style.display = 'none';
+                            warn_texts[0].innerHTML = '修改成功'
+                            warnings[0].src = 'public/iconfont/success.png'
+                            hidden[2].style.display = 'block'
+                            renders(pageings[0].cur_index,pageings[0].size,-1);
+                        }else if(result.data.msg == '插入重复数据'){
+                            hidden[2].style.display = 'block'
+                            warn_texts[0].innerHTML = '已用该角色名，请重新输入一个新角色名'
+                            warnings[0].src = 'public/iconfont/warn2.png'
+                        }
+                    })
+                }else if(result.data.msg == '插入重复数据'){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '已用该角色名，请重新输入一个新角色名'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                }
+                
+            })
+        }else{
+            hidden[2].style.display = 'block'
+            warn_texts[0].innerHTML = '信息未填写完整，请填写完整之后再提交'
+            warnings[0].src = 'public/iconfont/warn2.png'
+        }
+        
+    }else if(btn_new[0].numbers == 2){
+        if(hidden_input[1].value != ''){
+            axios({
+                method:'GET',
+                url:'/superAdmin/addRolePermission',
+                params:{
+                    permiss_name:hidden_input[1].value,
+                    r_id:checkbox_all[0].r_ids
                 }
             }).then(result =>{
                 console.log(result.data);
                 if(result.data.msg == 'success'){
                     hidden[0].style.display = 'none';
                     hidden[1].style.display = 'none';
-                    warn_texts[0].innerHTML = '修改成功'
+                    warn_texts[0].innerHTML = '添加成功'
                     warnings[0].src = 'public/iconfont/success.png'
                     hidden[2].style.display = 'block'
                     renders(pageings[0].cur_index,pageings[0].size,-1);
                 }
             })
-        })
-    }else if(btn_new[0].numbers == 2){
-        axios({
-            method:'GET',
-            url:'/superAdmin/addRolePermission',
-            params:{
-                permiss_name:hidden_input[1].value,
-                r_id:checkbox_all[0].r_ids
-            }
-        }).then(result =>{
-            console.log(result.data);
-            if(result.data.msg == 'success'){
-                hidden[0].style.display = 'none';
-                hidden[1].style.display = 'none';
-                warn_texts[0].innerHTML = '添加成功'
-                warnings[0].src = 'public/iconfont/success.png'
-                hidden[2].style.display = 'block'
-                renders(pageings[0].cur_index,pageings[0].size,-1);
-            }
-        })
+        }else{
+            hidden[2].style.display = 'block'
+            warn_texts[0].innerHTML = '信息未填写完整，请填写完整之后再提交'
+            warnings[0].src = 'public/iconfont/warn2.png'
+        }
+        
     }
     
 }
@@ -391,10 +446,13 @@ confirms[1].onclick = function(){
                         warn_texts[0].innerHTML = '删除成功'
                         warnings[0].src = 'public/iconfont/success.png'
                         hidden[2].style.display = 'block'
-                        renders(pageings[0].cur_index,pageings[0].size,-1);
                     }
                 })
             }
+        }
+        console.log( checkbox_all[0].numbers);
+        if(checkbox.length ==  checkbox_all[0].numbers){
+            renders(pageings[0].cur_index-1,pageings[0].size,-1);
         }
     }else {
         axios({

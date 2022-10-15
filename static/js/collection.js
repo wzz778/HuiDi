@@ -12,6 +12,20 @@ let warn_texts = document.getElementsByClassName('warn-texts');
 let warnings = document.getElementsByClassName('warnings');
 // let reject = document.getElementsByClassName('reject');
 
+
+let layer_click = document.getElementsByClassName('layer-click');
+let layer_list = document.getElementsByClassName('layer-list');
+let startTimes = document.getElementsByClassName('startTimes');
+let flag = true;
+
+
+
+
+
+
+
+
+
 classifier_input[0].oninput = function(){
     this.value = this.value.replace(/\s*/g,"");
 }
@@ -161,7 +175,6 @@ renders(1,5,0);
 
 
 function rendering(begin_index,size,numbers){
-    let arr = [1,3,4];
     axios({
         method:'GET',
         url:'/superAdmin/showAlbum',
@@ -331,10 +344,17 @@ function rendering(begin_index,size,numbers){
                     window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
                 }
                 pass[j].onclick = function(){
-                    warn_text[0].innerHTML = '确定选中该专辑的图片作为轮播图嘛？'
-                    confirm[1].numbers = 1;
-                    confirm[1].ids = result.data.msg.list[j].id
-                    hidden[1].style.display = 'block'
+                    if(layer_click[0].numberStatus == 3){
+                        hidden[2].style.display = 'block'
+                        warn_texts[0].innerHTML = '展示的已满，请取消其他的，再添加'
+                        warnings[0].src = 'public/iconfont/warn2.png'
+                    }else{
+                        hidden[1].style.display = 'block'
+                        warn_text[0].innerHTML = '确定选中该专辑的图片作为轮播图嘛？'
+                        confirm[1].numbers = 1;
+                        confirm[1].ids = result.data.msg.list[j].id
+                    }
+                    
                 }
             }else if(result.data.msg.list[j].status == 4){
                 reject[j].onclick = function(){
@@ -352,6 +372,22 @@ function rendering(begin_index,size,numbers){
 }
 
 
+
+function showNumber(){
+    axios({
+        method:'GET',
+        url:'/superAdmin/showAlbum',
+        params:{
+            begin_index:1,
+            size:3,
+            status:'4'
+        }
+    }).then(result =>{
+        console.log(result.data);
+        layer_click[0].numberStatus = result.data.msg.list.length;
+    })
+}
+showNumber();
 
 
 
@@ -373,10 +409,19 @@ confirm[0].onclick = function(){
             }
         }).then(result =>{
             console.log(result.data);
-            hidden[0].style.display = 'none'
-            renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
-            classifier_input[0].value = '';
+            if(result.data.msg == 'success'){
+                hidden[0].style.display = 'none'
+                hidden[2].style.display = 'block'
+                warn_texts[0].innerHTML = '驳回成功'
+                warnings[0].src = 'public/iconfont/success.png'
+                classifier_input[0].value = '';
+                renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
+            }
         })
+    }else{
+        hidden[2].style.display = 'block'
+        warn_texts[0].innerHTML = '请把信息填写完整'
+        warnings[0].src = 'public/iconfont/warn2.png'
     }
 }
 cancel[1].onclick = function(){
@@ -419,7 +464,7 @@ confirm[1].onclick = function(){
                 warn_texts[0].innerHTML = '以显示在首页轮播图'
                 warnings[0].src = 'public/iconfont/success.png'
                 
-                renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
+                rendering(pageings[0].cur_index,pageings[0].size,-1)
                 classifier_input[0].value = '';
             }
         })
@@ -439,7 +484,7 @@ confirm[1].onclick = function(){
                 warn_texts[0].innerHTML = '已取消该专辑的图片作为轮播图'
                 warnings[0].src = 'public/iconfont/success.png'
                 
-                renders(pageings[0].cur_index,pageings[0].size,pageings[0].number)
+                rendering(pageings[0].cur_index,pageings[0].size,-1)
                 classifier_input[0].value = '';
             }
         })
@@ -450,10 +495,7 @@ confirm[1].onclick = function(){
 
 
 // 下拉框的效果
-let layer_click = document.getElementsByClassName('layer-click');
-let layer_list = document.getElementsByClassName('layer-list');
-let startTimes = document.getElementsByClassName('startTimes');
-let flag = true;
+
 layer_click[0].onclick = function(){
     if(flag == true){
         layer_list[0].style.display = 'block';

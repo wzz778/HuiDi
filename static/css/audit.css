@@ -85,3 +85,37 @@
     position: relative;
     bottom: -30px;
 }
+
+
+
+.warns{
+    width: 480px;
+    height: 320px;
+    padding: 15px;
+}
+.warnings{
+    display: block;
+    width: 200px;
+    height: 200px;
+    vertical-align: -9px;
+    padding: 5px;
+    /* margin-left: 10px; */
+    margin: 0 auto;
+}
+.warn-texts{
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 32px;
+}
+.delay{
+    transition: all 0.5s ease;
+}
+.confirmes{
+    background-color: rgb(135 222 117);
+    margin-left: 35px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}

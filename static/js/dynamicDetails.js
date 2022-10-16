@@ -427,6 +427,9 @@ function collectFn(event) {
                 sendFn('/admin/deleteCollect', { id: window.location.search.split("=")[1] })
                     .then(result => {
                         event.classList.remove('clickOperator')
+                        if (event.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -458,6 +461,9 @@ function likeFn(event) {
                 sendFn('/admin/deleteLike', { reflectId: window.location.search.split("=")[1] })
                     .then(result => {
                         event.classList.remove('clickOperator')
+                        if (event.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.lastElementChild.innerHTML--
                     })
                     .catch(err => {

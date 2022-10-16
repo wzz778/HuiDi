@@ -239,6 +239,9 @@ function collectFn(event) {
                 sendFn('/admin/deleteCollect', { id: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.classList.remove('clickSty')
+                        if (event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -270,6 +273,9 @@ function likeFn(event) {
                 sendFn('/admin/deleteLike', { reflectId: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.classList.remove('clickSty')
+                        if (event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML--
                     })
                     .catch(err => {

@@ -221,8 +221,8 @@ function generatePagination(pages, pageSize, pageIndex,all_size,name,numbers) {
                 this.innerHTML = '...'
             })
             btnGoRight.addEventListener("click", function () {
-                if (pageIndex < totalPage - 5) {
-                    pageIndex += 5;
+                if (pageIndex < totalPage - 10) {
+                    pageIndex += 10;
                     pageHtml.innerHTML = '';
                     if(numbers == -1){
                         name(pageIndex,pageSize);

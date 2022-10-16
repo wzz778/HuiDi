@@ -346,7 +346,7 @@ window.onmousewheel = function (event) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
                 if (content.getElementsByClassName('middleContentItem').length == all) {
-                    hintFn('warning', '没有更多内容了')
+                    noContent.classList.remove('none')
                 }
             }
         }
@@ -368,7 +368,7 @@ window.onmousewheel = function (event) {
         if (event.wheelDelta < 0 && !ynalbum && albumNowPage >= albumAllPages) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
         if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && ynalbum) {
@@ -389,7 +389,7 @@ window.onmousewheel = function (event) {
         if (event.wheelDelta < 0 && !yntalentShow && talentShowNowPage >= talentShowAllPages) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
         if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yntalentShow) {
@@ -413,7 +413,7 @@ function getSearchHistory() {
     for (let i = 0; i < historyInfo.length; i++) {
         tempStr += `
     <span>
-        <a href="/search?message=${historyInfo[i].message}&type=${historyInfo[i].type}">${historyInfo[i].message}</a>
+        <a href="/search?message=${historyInfo[i].message}&type=${historyInfo[i].type}">${judgeStr(historyInfo[i].message)}</a>
         <button class="none" onclick="delSearchFn(this)" delIndex="${i}">
             <i class="iconfont">&#xe643;</i>
         </button>
@@ -433,7 +433,8 @@ function delSearchFn(event) {
         }
     }
     event.parentElement.remove()
-    window.localStorage.setItem('hdsearch_history', searchArr)
+    console.log(searchArr)
+    window.localStorage.setItem('hdsearch_history', JSON.stringify(searchArr))
     if (!window.localStorage.getItem('hdsearch_history')) {
         searchNoContent.classList.remove('none')
         searchContent.classList.add('none')

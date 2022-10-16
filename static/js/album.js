@@ -262,7 +262,7 @@ window.onmousewheel = function (event) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
             if (content.getElementsByClassName('contentItem').length == all) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
     }

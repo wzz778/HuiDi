@@ -342,7 +342,7 @@ window.onmousewheel = function (event) {
             if (scrollHeightOther <= scrollTop + windowHeight) {
                 // 判断是否加载完了
                 if (hotTicket.getElementsByClassName('centerMiddleItem').length == all) {
-                    hintFn('warning', '没有更多内容了')
+                    noContent.classList.remove('none')
                 }
             }
         }
@@ -364,7 +364,7 @@ window.onmousewheel = function (event) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
             if (focusOn.getElementsByClassName('centerMiddleItem').length == all) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
     }

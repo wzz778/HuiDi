@@ -13,6 +13,24 @@ let sendchat = document.getElementById('sendchat');
 let isin = false;
 let fromid;
 function send() { }
+axios({
+  url: '/api/eachfollow',
+  method: 'get',
+  params:{
+      userid:toid
+  }
+}).then(data => {
+  if(data.data.err==-1){
+    hintFn('warning',"俩着相互关注才能发私信！")
+      setTimeout(function () {
+          window.location.assign(`/`);
+      }, 1000)
+      return
+  }
+})
+.catch(function (error) {
+  console.log(error);
+});
 //观看是否有消息
 axios({
   url: '/api/getUserIsMessage',
@@ -246,7 +264,7 @@ var creatws = function (userid) {
   //连接成功时建立回调方法
   websocket.onopen = function () {
     //WebSocket已连接上，使用send()方法发送数据
-    hintFn("success", "连接成功")
+    // hintFn("success", "连接成功")
     // alert("连接成功");
   };
   //  收到消息的回调方法
@@ -315,7 +333,7 @@ var creatws = function (userid) {
         <div class="chattimebox"><span class="chattime">${getTime()}</span></div>
         <div class="chat mychat">
           <img src="${myimg}" alt="">
-          <div class="chattext">${chattext.value}</div>
+          <div class="chattext">${judgeStrs(chattext.value)}</div>
         </div>
       </div>
         `
@@ -324,7 +342,7 @@ var creatws = function (userid) {
         <div class="amessage">
           <div class="chat mychat">
             <img src="${myimg}" alt="">
-            <div class="chattext">${chattext.value}</div>
+            <div class="chattext">${judgeStrs(chattext.value)}</div>
           </div>
         </div>
         `

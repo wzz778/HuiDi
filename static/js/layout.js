@@ -29,6 +29,17 @@ let confirm_content=document.getElementsByClassName('confirm_content')[0]
 let confirm_footer=document.getElementsByClassName('confirm_footer')[0]
 let confirmtrue=document.getElementById('confirmtrue')
 let publish_button=document.getElementsByClassName('publish_button')[0]
+let img_box=document.getElementById("img-box")
+//防止连点
+function delay(func,time) {
+    if (func.timeoutId) {
+      window.clearTimeout(func.timeoutId);
+    }
+    func.timeoutId = window.setTimeout(function() {
+      func();
+      func.timeoutId = null;
+    }, time);
+  }
 function contrasttime(time){
     let data=new Date(time.replace(/-/g,"/"));
     let t1=new Date();//获取当前时间
@@ -143,8 +154,20 @@ function publish_down() {
     publish.style.display = "none";
     publish.style.opacity = "0";
     publish.classList.remove("fade");
-    // publish_send.value = null;
-    // publish_text.value = null;
+    img_box.innerHTML=`
+        <div class="input-file-box">
+            <span>上传图片</span>
+            <input type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" name="" id="uploadfile" multiple>
+        </div>
+    `
+    aname.value=``
+    dyde.value=``
+    var input=document.getElementById("uploadfile");
+    // 当用户上传时触发事件
+    input.onchange=function(){
+        readFile(this);
+    }
+    allfileList=new FormData()
 }
 function publish_show() {
     getoption()
@@ -156,7 +179,6 @@ axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
-    console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){
@@ -203,7 +225,7 @@ axios({
     url: '/api/getUserIsChat',
     method: 'get',
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     if(data.data.err==0){
         if(data.data.msg){
             mymessagedian.style.display='block'
@@ -252,15 +274,20 @@ var readFile=function(obj){
         // 当文件读取成功时执行的函数
         let thisfile=fileList[i]
         reader.onload=function(e){
+            if(Array.from(allfileList).length==5){
+                hintFn('warning' ,"最多能上传5张图片！")
+                return
+            }
             allfileList.append(`file${sortnum}`,thisfile)
             div=document.createElement('div');
             div.innerHTML=`<span style='display:none;'>${sortnum++}</span><div class="deletediv" onclick='opendetele(this)'>删除</div><img src="${this.result}" />`;
-            document.getElementById("img-box").appendChild(div);
+            img_box.appendChild(div);
         }
     }
     // console.log(fileList);
 }
 function look(){
+    // console.log(Array.from(allfileList));
     let option=select.getElementsByTagName('option');
     let al_id=0;
     for(let i in option){
@@ -272,21 +299,16 @@ function look(){
         hintFn('warning' ,'请填写你对图片的描述！')
         return
     }
+    if(Array.from(allfileList).length==0){
+        hintFn('warning' ,'请选择你要上传的图片！')
+        return
+    }
+    if(Array.from(allfileList).length>5){
+        hintFn('warning' ,'最多能发5张图片！')
+        return
+    }
     allfileList.append('al_id', al_id)
     allfileList.append('describes',judgeStr(publish_text.value))
-    // console.log(Array.from(allfileList));
-    if(Array.from(allfileList).length<3){
-        hintFn('warning' ,'请选择你要上传的图片！')
-        allfileList.delete('al_id')
-        allfileList.delete('describes')
-        return
-    }
-    if(Array.from(allfileList).length>8){
-        hintFn('warning' ,'最多能发6张图片！')
-        allfileList.delete('al_id')
-        allfileList.delete('describes')
-        return
-    }
     openland()
     axios({
         method: 'POST',
@@ -315,7 +337,7 @@ function opendetele(event){
     let thishtml=event.parentElement;
     let thisn=event.parentElement.getElementsByTagName('span')[0].innerHTML;
     allfileList.delete(`file${thisn}`);
-    document.getElementById("img-box").removeChild(thishtml);
+    img_box.removeChild(thishtml);
 }
 function getoption(){
     axios({
@@ -411,7 +433,7 @@ axios({
 dyde.onkeyup=function(){
     var len = dyde.value.length;
     if(len > 99){
-        dyde.value.substring(0,100);
+        dyde.value.substring(0,99);
     }
     var num = len;
     dydenumber.innerText=num;
@@ -419,7 +441,7 @@ dyde.onkeyup=function(){
 dyde.onkeydown=function(){
   var len = dyde.value.length;
   if(len > 99){
-    dyde.value=dyde.value.substring(0,100);
+    dyde.value=dyde.value.substring(0,99);
   }
   var num = len;
   dydenumber.innerText=num;
@@ -465,8 +487,8 @@ function adda(){
         hintFn('warning' ,"请填写完整内容！")
         return
     }
-    if(judgeStrs(aname.value).length>8){
-        hintFn('warning' ,"请填写8个字符一下的专辑名称！")
+    if(aname.value.length>8){
+        hintFn('warning' ,"请填写8个字符以下的专辑名称！")
         return
     }
     axios({
@@ -478,17 +500,20 @@ function adda(){
             describes:"未添加"
         }
       }).then(data => {
-        // console.log(data.data);
         if(data.data.err==0){   
             aname.value=''
             hintFn('success' ,"添加成功！")
             getoption()
         }else{
-            return 
+            if(data.data.msg.msg=="插入重复数据"){
+                hintFn('warning' ,"请莫添加相同名的专辑！")
+                return
+            }
+            hintFn('warning' ,"添加失败")
         }
       })
       .catch(function (error) {
-        hintFn('warning' ,error)
+        hintFn('warning' ,"添加失败")
         console.log(error);
       });
 }

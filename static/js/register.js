@@ -25,7 +25,6 @@ function opendjs(){
             getcodea.innerHTML=`${times--}s后可重新发送`
         }
     },1000);
-
 }
 function getcode(){
     let mail=mymail.value;

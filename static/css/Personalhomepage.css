@@ -170,31 +170,7 @@ li {
     /* position: absolute; */
     /* top: -57px; */
 }
-#cord-contentHead{
-    width: 380px;
-    height: 40px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    float: left;
-    font-weight: 800;
-    font-size: 26px;
-}
-.cord-contentBot{
-    width: 270px;
-    float: left;
-    padding-left: 100px;
-    height: 30px;
-    line-height: 30px;
-}
-.cord-contentde{
-    width: 600px;
-    float: left;
-    font-size: 12px;
-    color: #888;
-    height: 60px;
-    line-height:20px;
-}
-.mymessage #mymessagetext #cordcon img{
+.mymessage #mymessagetext #cordcon .cord-contentBot img{
     position: relative;
     left: -50px;
     top: 10px;
@@ -205,6 +181,48 @@ li {
     width: 30px;
     height: 30px;
 }
+#cord-contentHead{
+    width: 600px;
+    height: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    font-weight: 800;
+    font-size: 26px;
+}
+#cord-contentHead span{
+    font-size: 14px;
+}
+#cord-contentHead span i img{
+    position: relative;
+    top: 2px;
+    right: 3px;
+    height: 15px;
+}
+.cord-contentBot{
+    width: 160px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+.cord-contentde{
+    width: 600px;
+    float: left;
+    font-size: 12px;
+    color: #888;
+    height: 60px;
+    line-height:20px;
+    word-wrap: break-word;
+}
+.cord-contentBot .useremail a{
+    font-size: 14px;
+    color: #0461CF;
+    background-color: #E6F0FD;
+    border-radius: 3px;
+    padding: 6px 16px;
+    transition: .2s all;
+    margin-left: 10px;
+}
 .bluebutton{
     color: #0461CF;
     border: #0461CF 1px solid;
@@ -213,7 +231,7 @@ li {
 .bluebutton{
     background-color:#c1dafb;
 }
-.mymessage #mymessagetext a{
+.mymessage #mymessagetext .followbutton{
     position: absolute;
     bottom: 20px;
     right: 50px;
@@ -388,6 +406,7 @@ li {
     width: 630px;
     font-size: 14px;
     line-height: 20px;
+    word-wrap: break-word;
 }
 .imgmax{
     width: 650px;
@@ -420,10 +439,9 @@ li {
     line-height: 320px;
     transition: .3s all;
     background-image: url(/public/img/noContent.png);
-    background-size: 100% 100%;
-}
-.addalbum div:hover{
-   background-color: #e1efff;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    background-position: 50%;
 }
 .class_body .Aalbummax:hover{
     top: -10px;
@@ -532,11 +550,6 @@ li {
     right: 20px;
     transition: .2s;
   }
-  
-  #album #album_main .album_main_top a:hover {
-    background-color: #bed0e7;
-  }
-  
   #album #album_main .album_link {
     /* background-color: #a8a8a8; */
     width: 100%;

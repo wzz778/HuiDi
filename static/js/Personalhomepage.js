@@ -4,7 +4,7 @@ let conli=document.getElementsByClassName('conli');
 let cordimg=document.getElementById('cordimg')
 let seximg=document.getElementsByClassName('seximg')[0]
 let cord_contentHead=document.getElementById('cord-contentHead')
-let useremail=document.getElementsByClassName('useremail')
+// let useremail=document.getElementsByClassName('useremail')
 let mynumber=document.getElementsByClassName('mynumber')
 let class_body1=document.getElementsByClassName('class_body')[0]
 let class_body2=document.getElementsByClassName('albumbody')[0];
@@ -51,13 +51,12 @@ function changeclass(i){
     };
 }
 function onpass(){
-    hintFn('warning' ,"您要观看的文章还没通过！")
+    hintFn('warning' ,"您要观看的文章还没通过审核！")
 }
 axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
-    // console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         mydetext.innerHTML=me.describes;
@@ -67,8 +66,11 @@ axios({
         if(me.background!=null){
             mymessageback.style.backgroundImage=`url(${me.background})`;
         }
-        cord_contentHead.innerHTML=me.name;
-        useremail[0].innerHTML=me.mail;
+        if(me.certification!=null){
+            cord_contentHead.innerHTML=`${me.name}<span style="padding-left:25px;font-size: 16px;color:#b87100;"><i><img src="/public/iconfont/authentication.png" alt=""></i>认证领域：<span style="color:#669ddf;">${me.certification}</span></span>`;
+        }else{
+            cord_contentHead.innerHTML=me.name;
+        }
         if(me.sex!="男"){
             seximg.src=`/public/img/woman.png`;
         }
@@ -228,12 +230,16 @@ function addab(){
             describes:judgeStr(album_input[2].value)
         }
       }).then(data => {
-        // console.log(data.data);
         if(data.data.err==0){   
+            aname.value=''
             hintFn('success' ,"添加成功！")
             getmyalbum()
         }else{
-            return 
+            if(data.data.msg.msg=="插入重复数据"){
+                hintFn('warning' ,"请莫添加相同名的专辑！")
+                return
+            }
+            hintFn('warning' ,"添加失败")
         }
       })
       .catch(function (error) {
@@ -252,9 +258,14 @@ function showmydynamic(){
           begin:dynowpage
       }
     }).then(data => {
-        console.log("动态：");
-      console.log(data.data);
-      if(data.data.err==0){
+        if(data.data.err==0){
+          if(data.data.msg.all_count==dynowpage){
+              lookmore.style.display='none';
+              lookend.style.display='block';
+          }else{
+            lookmore.style.display='block';
+            lookend.style.display='none';
+          }
           let arr=data.data.msg.list;
           dynumber.innerText=data.data.msg.all_count
           dyallpage=data.data.msg.all_page;
@@ -318,6 +329,13 @@ function showmycollect(){
     }).then(data => { 
         // console.log(data.data);
       if(data.data.err==0){
+        if(data.data.msg.all_count==dynowpage){
+            lookmore.style.display='none';
+            lookend.style.display='block';
+        }else{
+          lookmore.style.display='block';
+          lookend.style.display='none';
+        }
         colallpage=data.data.msg.all_page;
         let arr=data.data.msg.list;
           for(let i in arr){
@@ -345,6 +363,7 @@ function showmycollect(){
               `
           }
       }else{
+        
       }
     })
     .catch(function (error) {
@@ -354,44 +373,42 @@ function showmycollect(){
 getmyalbum()
 showmycollect()
 showmydynamic()
+function onlandmore(){
+    if(dyshow){
+        if(dyallpage>dynowpage){
+            dynowpage++;
+            setTimeout(function(){showmydynamic()},500)
+        }else{
+            setTimeout(function(){
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            },600)
+        }
+    }else if(colshow){
+        if(colallpage>colnowpage){
+            colnowpage++;
+            setTimeout(function(){showmycollect()},500)
+        }else{
+            setTimeout(function(){
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            },600) 
+        }
+    }
+}
 window.onscroll = function () {
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
     let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
     let that = this;
-    if (scrollHeight -1<= scrollTop + windowHeight) {
-        if(dyshow){
-            if(dyallpage>dynowpage){
-                dynowpage++;
-                lookmore.style.display='block';
-                lookend.style.display='none';
-                setTimeout(function(){showmydynamic()},1000)
-                // showmydynamic()
-            }else{
-                setTimeout(function(){
-                    lookmore.style.display='none';
-                    lookend.style.display='block';
-                },1500)
-            }
-        }else if(colshow){
-            if(colallpage>colnowpage){
-                colnowpage++;
-                lookmore.style.display='block';
-                lookend.style.display='none';
-                setTimeout(function(){showmycollect()},1000)
-            }else{
-                setTimeout(function(){
-                    lookmore.style.display='none';
-                    lookend.style.display='block';
-                },1500) 
-            }
-        }
+    if (scrollHeight-1<= scrollTop + windowHeight) {
+        delay(onlandmore,1000)
     }
 };
 album_text.onkeyup=function(){
     var len = album_text.value.length;
     if(len > 99){
-        album_text.value.substring(0,100);
+        album_text.value.substring(0,99);
     }
     var num = len;
     abdenumber.innerText=num;
@@ -399,7 +416,7 @@ album_text.onkeyup=function(){
 album_text.onkeydown=function(){
   var len = album_text.value.length;
   if(len > 99){
-    album_text.value=album_text.value.substring(0,100);
+    album_text.value=album_text.value.substring(0,99);
   }
   var num = len;
   abdenumber.innerText=num;

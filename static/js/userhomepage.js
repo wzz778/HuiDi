@@ -85,8 +85,12 @@ axios({
         if(me.img_url!=null){
             cordimg.style.backgroundImage=`url(${me.img_url})`;
         }
-        cord_contentHead.innerHTML=me.name;
-        useremail[0].innerHTML=me.mail;
+        if(me.certification!=null){
+            cord_contentHead.innerHTML=`${me.name}<span style="padding-left:25px;font-size: 16px;color:#b87100;"><i><img src="/public/iconfont/authentication.png" alt=""></i>认证领域：<span style="color:#669ddf;">${me.certification}</span></span>`;
+        }else{
+            cord_contentHead.innerHTML=me.name;
+        }
+        useremail[0].innerHTML=`<a href="javascript:;" onclick="tochat()">给TA发私信</a>`;
         if(me.sex!="男"){
             seximg.src=`/public/img/woman.png`;
         }
@@ -281,6 +285,27 @@ function inspectfollow(){
       });
 }
 inspectfollow()
+function tochat(){
+    axios({
+        url: '/api/eachfollow',
+        method: 'get',
+        params:{
+            userid:userid
+        }
+    }).then(data => {
+        console.log(data.data);
+        if(data.data.err==0){
+            setTimeout(function () {
+                window.location.assign(`/chat?id=${userid}`);
+            }, 1000)
+        }else{
+            hintFn('warning',"俩着相互关注才能发私信！")
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
 let dynowpage=1;
 let dyallpage=1;
 function showmydynamic(){
@@ -294,6 +319,13 @@ function showmydynamic(){
       }
     }).then(data => { 
       if(data.data.err==0){
+        if(data.data.msg.all_count==dynowpage){
+            lookmore.style.display='none';
+            lookend.style.display='block';
+        }else{
+          lookmore.style.display='block';
+          lookend.style.display='none';
+        }
           dynumber.innerText=data.data.msg.all_count
           dyallpage=data.data.msg.all_page;
           let arr=data.data.msg.list;
@@ -346,6 +378,13 @@ function showmycollect(){
     }).then(data => { 
         // console.log(data.data);
       if(data.data.err==0){
+        if(data.data.msg.all_count==dynowpage){
+            lookmore.style.display='none';
+            lookend.style.display='block';
+        }else{
+          lookmore.style.display='block';
+          lookend.style.display='none';
+        }
         colallpage=data.data.msg.all_page;
         let arr=data.data.msg.list;
           for(let i in arr){
@@ -383,38 +422,35 @@ function showmycollect(){
 getmyalbum()
 showmycollect()
 showmydynamic()
+function onlandmore(){
+    if(dyshow){
+        if(dyallpage>dynowpage){
+            dynowpage++;
+            setTimeout(function(){showmydynamic()},500)
+        }else{
+            setTimeout(function(){
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            },600)
+        }
+    }else if(colshow){
+        if(colallpage>colnowpage){
+            colnowpage++;
+            setTimeout(function(){showmycollect()},500)
+        }else{
+            setTimeout(function(){
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            },600) 
+        }
+    }
+}
 window.onscroll = function () {
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
     let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
     let that = this;
-    if (scrollHeight <= scrollTop + windowHeight) {
-        // console.log(dyshow);
-        if(dyshow){
-            if(dyallpage>dynowpage){
-                dynowpage++;
-                lookmore.style.display='block';
-                lookend.style.display='none';
-                setTimeout(function(){showmydynamic()},1500)
-            }else{
-                setTimeout(function(){
-                    lookmore.style.display='none';
-                    lookend.style.display='block';
-                },1500)     
-            }
-        }
-        if(colshow){
-            if(colallpage>colnowpage){
-                colnowpage++;
-                lookmore.style.display='block';
-                lookend.style.display='none';
-                setTimeout(function(){showmycollect()},1500)
-            }else{
-                setTimeout(function(){
-                    lookmore.style.display='none';
-                    lookend.style.display='block';
-                },1500) 
-            }
-        }
+    if (scrollHeight-1<= scrollTop + windowHeight) {
+        delay(onlandmore,1000)
     }
 };

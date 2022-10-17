@@ -344,9 +344,8 @@ a{
     padding:20px 30px;
     width: 340px;
     min-height: 200px;
-    /* height: 330px; */    
     background-color: white;
-    margin: 20vh auto;
+    margin: 12vh auto;
     border-radius: 2px;
     position: relative;
   }
@@ -377,11 +376,6 @@ a{
     right: 20px;
     transition: .2s;
   }
-  
-  #publish #publish_main .publish_main_top a:hover {
-    background-color: #d1dded;
-  }
-  
   #publish #publish_main .publish_link {
     /* background-color: #a8a8a8; */
     width: 100%;
@@ -481,6 +475,7 @@ a{
   display: flex;
   padding: 5px;
   flex-wrap: wrap;
+  max-height: 222px;
 }
 #img-box div{
   border: 2px dashed gray;
@@ -656,6 +651,7 @@ a{
   background-color: #D9F1F9;
   border-left:1px solid #307ddb; 
   outline: none;
+  border-radius: 0 3px 3px 0;
 }
 .header_searchs .search_class{
   position: absolute;

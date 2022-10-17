@@ -50,7 +50,7 @@ let denumber=document.getElementById('denumber');
 describe.onkeyup=function(){
       var len = describe.value.length;
       if(len > 99){
-        describe.value.substring(0,100);
+        describe.value.substring(0,99);
       }
       var num = len;
     denumber.innerText=num;
@@ -58,7 +58,7 @@ describe.onkeyup=function(){
 describe.onkeydown=function(){
     var len = describe.value.length;
     if(len > 99){
-      describe.value=describe.value.substring(0,100);
+      describe.value=describe.value.substring(0,99);
     }
     var num = len;
       denumber.innerText=num;

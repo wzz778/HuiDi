@@ -10,9 +10,6 @@ var multipartMiddleware = multipart();
 router.get('/layout',(req,res)=>{
         res.render('layout.html')
 })
-// router.get('/Personalhomepage',(req,res)=>{
-//     res.render('Personalhomepage.html')
-// })
 router.get('/login',(req,res)=>{
     res.render('login.html')
 })
@@ -28,42 +25,9 @@ router.get('/repassword',(req,res)=>{
 router.get('/repassword2',(req,res)=>{
     res.render('repassword2.html')
 })
-// router.get('/modifymessage',(req,res)=>{
-//     res.render('modifymessage.html')
-// })
-// router.get('/reemail',(req,res)=>{
-//     res.render('reemail.html')
-// })
-// router.get('/mymessage',(req,res)=>{
-//     res.render('mymessage.html')
-// })
 router.get('/userhomepage',(req,res)=>{
     res.render('userhomepage.html')
 })
-// router.get('/MyFollowers',(req,res)=>{
-//     res.render('MyFollowers.html')
-// })
-// router.get('/Myfans',(req,res)=>{
-//     res.render('Myfans.html')
-// })
-// router.get('/chatmessage',(req,res)=>{
-//     res.render('chatmessage.html')
-// })
-// router.get('/likemessage',(req,res)=>{
-//     res.render('likemessage.html')
-// })
-// router.get('/collectmessage',(req,res)=>{
-//     res.render('collectmessage.html')
-// })
-// router.get('/focusmessage',(req,res)=>{
-//     res.render('focusmessage.html')
-// })
-// router.get('/commentmessage',(req,res)=>{
-//     res.render('commentmessage.html')
-// })
-// router.get('/chat',(req,res)=>{
-//     res.render('chat.html')
-// })
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 function saveUserInfo(id){
     return new Promise((resolve,reject)=>{
@@ -155,40 +119,6 @@ router.get('/api/isuser',(req,res)=>{
         res.send({ err: -1, msg: '未登录' })
     }
 })
-//登录
-// router.post('/api/login', (req, res) => {    
-//     axios({
-//         url:'/loginAndRegister/login',
-//         method:'post',
-//         params:req.body,    
-//     }).then(response=>{
-//         console.log(response.data);
-//         if(response.data.msg=='OK'){
-//             req.session.token=response.data.data.token;
-//             req.session.userid=jwt.decode(req.session.token).id;
-//             req.session.username=jwt.decode(req.session.token).username;
-//             console.log(req.session.token);
-//             console.log(jwt.decode(req.session.token));
-//             res.send({ err: 0, msg:"OK"});
-//             return     axios({
-//                 url:'/picture/showUser',
-//                 method:'get',
-//                 params:{id:req.session.userid},
-//             })
-//         }else{
-//             res.send({ err: -1, msg:response.data.msg});
-//         }
-//     }).then(user=>{
-//         req.session.user=user.data.data;
-//         console.log("__________________________");
-//         console.log(req.session.user)
-//         console.log("__________________________");
-//         // res.send(req.session.user)
-//     }).catch(function (error) {
-//         console.log(error);
-//         res.send({ err: -1, msg: '网络错误' })
-//     });
-// })
 //退出登录
 router.get('/api/outlogin', (req, res) => {
     try {
@@ -199,13 +129,27 @@ router.get('/api/outlogin', (req, res) => {
     }
         
 })
+var emailarr=new Array();
+function settime(){
+    setTimeout(function(){
+        emailarr=emailarr.slice(1) 
+        console.log(emailarr);
+    },59000);
+}
 //发送验证码(查重)
 router.post('/api/sendcode', (req, res) => {    
     var mailLimit = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
     var mailJudge = mailLimit.test(req.body.mail);
     if (mailJudge==false){
-        res.send({ err: -1, msg:'邮箱形式错误'});
+        res.send({ err: -1, msg:'邮箱格式错误'});
     }else{
+        // console.log(emailarr);
+        if(emailarr.includes(req.body.mail)){
+            res.send({ err: -1, msg:'请莫频繁发送验证码！'});
+            return
+        }
+        emailarr.push(req.body.mail)
+        settime()
         axios({
             url:'/loginAndRegister/sendMail',
             method:'post',
@@ -253,7 +197,12 @@ router.post('/api/checkcode', (req, res) => {
 router.post('/api/resendcode', (req, res) => {    
     var mailLimit = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
     var mailJudge = mailLimit.test(req.body.email);
-    console.log(req.body);
+    if(emailarr.includes(req.body.mail)){
+        res.send({ err: -1, msg:'请莫频繁发送验证码！'});
+        return
+    }
+    emailarr.push(req.body.mail)
+    settime()
     if (mailJudge==false){
         res.send({ err: -1, msg:'邮箱形式错误'});
     }else{
@@ -674,7 +623,7 @@ router.get('/api/deletefollow', (req, res) => {
                 token:req.session.token,
             },
             params:{
-                u_id:req.session.userid,
+                u_id:req.session.userid,    
                 focus_id:req.query.userid,
             },    
         }).then(response=>{ 
@@ -691,7 +640,7 @@ router.get('/api/deletefollow', (req, res) => {
         res.send({ err: -1, msg: '未登录' })
     }
 })
-//检查是否互相关注
+//检查是否关注对方
 router.get('/api/inspectfollow', (req, res) => {   
     if(req.session.userid){
         axios({
@@ -718,7 +667,80 @@ router.get('/api/inspectfollow', (req, res) => {
         res.send({ err: -1, msg: '未登录' })
     }
 })
-
+//检查是否关注对方p
+function inspectfollowme(req){
+    return new Promise((resolve,reject)=>{
+        axios({
+            url:'/admin/checkFocus',
+            method:'get',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                focus_id:req.session.userid,
+                u_id:req.query.userid,
+            },  
+        })
+        .then(result=>{ 
+            if(result.data.msg=='OK'){
+                if(result.data.data){
+                    resolve()
+                }else{
+                    reject()
+                }
+            }else{
+                reject()
+            }
+        })
+        .catch(err=>{
+            reject()
+        })
+    })
+}
+//检查对方是否关注自己p
+function inspectfollowuser(req){
+    return new Promise((resolve,reject)=>{
+        axios({
+            url:'/admin/checkFocus',
+            method:'get',  
+            headers:{
+                token:req.session.token,
+            },
+            params:{
+                focus_id:req.query.userid,
+                u_id:req.session.userid,
+            },  
+        })
+        .then(result=>{ 
+            if(result.data.msg=='OK'){
+                if(result.data.data){
+                    resolve()
+                }else{
+                    reject()
+                }
+            }else{
+                reject()
+            }
+        })
+        .catch(err=>{
+            reject()
+        })
+    })
+}
+//检查是否互相关注
+router.get('/api/eachfollow', (req, res) => {   
+    inspectfollowme(req)
+    .then(result1=>{
+        return inspectfollowuser(req)
+    })
+    .then(result=>{
+        res.send({ err: 0, msg:true});
+    })
+    .catch(err=>{
+        console.log(err)
+        res.send({ err: -1, msg: false })
+    })
+})
 function savefan(id,response,req){
     return new Promise((resolve,reject)=>{
         axios({

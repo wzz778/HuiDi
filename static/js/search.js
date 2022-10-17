@@ -444,8 +444,8 @@ function delSearchFn(event) {
             searchArr.push(historyInfo[i])
         }
     }
-    event.parentElement.remove()
     window.localStorage.setItem('hdsearch_history', JSON.stringify(searchArr))
+    getSearchHistory()
     if (JSON.parse(window.localStorage.getItem('hdsearch_history')).length == 0) {
         searchNoContent.classList.remove('none')
         searchContent.classList.add('none')

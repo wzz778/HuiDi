@@ -22,6 +22,13 @@ let talentShowAllPages = 0
 let all = 0
 function getSearchInfo() {
     searchinput.value = decodeURI(window.location.search).split("=")[1].split('&')[0]
+    if (!window.localStorage.getItem('hdsearch_history') || window.localStorage.getItem('hdsearch_history').indexOf(decodeURI(window.location.search).split("=")[1].split('&')[0]) == -1 || window.localStorage.getItem('hdsearch_history').indexOf(decodeURI(window.location.search).split("=")[2]) == -1) {
+        // 存到本地
+        let historyInfo = window.localStorage.getItem('hdsearch_history') != '' ? JSON.parse(window.localStorage.getItem('hdsearch_history')) : new Array()
+        historyInfo.push({ message: decodeURI(window.location.search).split("=")[1].split('&')[0], type: decodeURI(window.location.search).split("=")[2] })
+        window.localStorage.setItem('hdsearch_history', JSON.stringify(historyInfo))
+        getSearchHistory()
+    }
     // 将搜索类别报存到本地
     window.sessionStorage.setItem('searchType', decodeURI(window.location.search).split("=")[2])
     // 将搜索的链接替换
@@ -105,7 +112,7 @@ function getSearchInfo() {
                                 <div class="none">${result.msg.info[i].images.id}</div>
                             </div>
                         </div>
-                
+
                 <p class="textInfo">${result.msg.info[i].images.describes}</p>
                 <span class="likeInfo">
                     ${likeInfo}
@@ -408,13 +415,12 @@ window.onmousewheel = function (event) {
 
 // 历史记录
 function getSearchHistory() {
-    if (!window.localStorage.getItem('hdsearch_history')) {
+    if (window.localStorage.getItem('hdsearch_history') == '' || !JSON.parse(window.localStorage.getItem('hdsearch_history')) || JSON.parse(window.localStorage.getItem('hdsearch_history')).length == 0) {
         searchNoContent.classList.remove('none')
         searchContent.classList.add('none')
         return
     }
     let historyInfo = JSON.parse(window.localStorage.getItem('hdsearch_history'))
-
     let tempStr = ``
     for (let i = 0; i < historyInfo.length; i++) {
         tempStr += `
@@ -431,7 +437,7 @@ function getSearchHistory() {
 getSearchHistory()
 function delSearchFn(event) {
     // 将内容删除
-    let historyInfo = JSON.parse(window.localStorage.getItem('hdsearch_history'))
+    let historyInfo = window.localStorage.getItem('hdsearch_history') != '' ? JSON.parse(window.localStorage.getItem('hdsearch_history')) : new Array()
     let searchArr = []
     for (let i = 0; i < historyInfo.length; i++) {
         if (i != event.getAttribute('delIndex')) {
@@ -439,9 +445,8 @@ function delSearchFn(event) {
         }
     }
     event.parentElement.remove()
-    console.log(searchArr)
     window.localStorage.setItem('hdsearch_history', JSON.stringify(searchArr))
-    if (!window.localStorage.getItem('hdsearch_history')) {
+    if (JSON.parse(window.localStorage.getItem('hdsearch_history')).length == 0) {
         searchNoContent.classList.remove('none')
         searchContent.classList.add('none')
     }

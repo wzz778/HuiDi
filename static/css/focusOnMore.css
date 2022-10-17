@@ -90,3 +90,9 @@
 .middleAnimation {
     width: 685px;
 }
+
+.noContentSty {
+    position: relative;
+    top: -200px;
+    z-index: -1;
+}

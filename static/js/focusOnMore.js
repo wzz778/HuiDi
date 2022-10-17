@@ -27,6 +27,9 @@ choiceFocus.addEventListener('click', (event) => {
         allSpans[i].setAttribute('allPage', 0)
     }
     event.target.classList.add('clickSty')
+    animation.classList.remove('none')
+    noContent.classList.add('none')
+    content.classList.remove('none')
     getFocusOnInfo(event.target)
     event.preventDefault()
 })
@@ -127,16 +130,15 @@ function getFocusOnInfo(ele) {
     message = ele.innerHTML == '全部' ? '' : `${ele.innerHTML}达人`
     sendFn('/picture/FindUsersRecommendationCategories', { type: message, nowPage: ele.getAttribute('nowPage') })
         .then(result => {
-            animation.classList.remove('none')
-            noContent.classList.add('none')
-            content.classList.remove('none')
             all = result.msg.all_count
+            console.log(noContent.classList.value)
             if (result.msg.all_count < 5) {
                 animation.classList.add('none')
             }
             if (result.msg.list.length == 0) {
                 animation.classList.add('none')
                 noContent.classList.remove('none')
+                noContent.classList.add('noContentSty')
                 content.classList.add('none')
                 return
             }
@@ -214,11 +216,12 @@ window.onmousewheel = function (event) {
         animation.classList.add('none')
     }
     // 提示没有内容了
-    if (event.wheelDelta < 0 && !yn && nowPage >= allPages) {
+    if (event.wheelDelta < 0 && !yn && nowPage >= allPages && allPages != 0) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            if(all==content.getElementsByClassName('item').length){
-                hintFn('warning', '没有更多内容了')
+            if (all == content.getElementsByClassName('item').length) {
+                noContent.classList.remove('none')
+                noContent.classList.remove('noContentSty')
             }
         }
     }

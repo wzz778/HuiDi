@@ -342,7 +342,7 @@ window.onmousewheel = function (event) {
             if (scrollHeightOther <= scrollTop + windowHeight) {
                 // 判断是否加载完了
                 if (hotTicket.getElementsByClassName('centerMiddleItem').length == all) {
-                    hintFn('warning', '没有更多内容了')
+                    noContent.classList.remove('none')
                 }
             }
         }
@@ -364,7 +364,7 @@ window.onmousewheel = function (event) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
             if (focusOn.getElementsByClassName('centerMiddleItem').length == all) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
     }
@@ -396,6 +396,9 @@ function likeFn(event) {
             sendFn('/admin/deleteLike', { reflectId: event.parentElement.lastElementChild.innerHTML })
                 .then(result => {
                     event.classList.remove('likeSty')
+                    if (event.lastElementChild.innerHTML == 0) {
+                        return
+                    }
                     event.lastElementChild.innerHTML--
                 })
                 .catch(err => {
@@ -427,6 +430,9 @@ function collectFn(event) {
             sendFn('/admin/deleteCollect', { id: event.parentElement.lastElementChild.innerHTML })
                 .then(result => {
                     event.classList.remove('likeSty')
+                    if (event.lastElementChild.innerHTML == 0) {
+                        return
+                    }
                     event.lastElementChild.innerHTML--
                 })
                 .catch(err => {
@@ -473,8 +479,8 @@ function sendReportFn(event) {
         types: 0
     }
     if (reportReason.value == '0') {
-        if(otherReason.value.replace(/(^\s*)|(\s*$)/g, "").length==0){
-            hintFn('warning','不能输入纯空格')
+        if (otherReason.value.replace(/(^\s*)|(\s*$)/g, "").length == 0) {
+            hintFn('warning', '不能输入纯空格')
             return
         }
         obj.message = judgeStr(otherReason.value)

@@ -247,13 +247,13 @@
 
 .logoItem>a {
     display: inline-block;
-    width: 110px;
-    height: 86px;
+    margin-left: 25px;
+    /* width: 110px;
+    height: 86px; */
 }
 
 .logoItem>a>img {
-    width: 100%;
-    height: 100%;
+    height: 75px;
 }
 
 .logoItemText {

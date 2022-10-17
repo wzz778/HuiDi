@@ -427,6 +427,9 @@ function collectFn(event) {
                 sendFn('/admin/deleteCollect', { id: window.location.search.split("=")[1] })
                     .then(result => {
                         event.classList.remove('clickOperator')
+                        if (event.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -458,6 +461,9 @@ function likeFn(event) {
                 sendFn('/admin/deleteLike', { reflectId: window.location.search.split("=")[1] })
                     .then(result => {
                         event.classList.remove('clickOperator')
+                        if (event.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -495,6 +501,7 @@ function getAllComment() {
             if (result.msg.list.length == 0 && nowPage == 1) {
                 // 没有数据
                 noContent[0].classList.remove('none')
+                noContent[0].innerHTML = '还没有评论，你来说点什么吧'
                 animation.classList.add('none')
                 return
             }
@@ -844,7 +851,9 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !yn && nowPage >= allPges) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            hintFn('warning', '没有更多内容了')
+            // console.log(123)
+            noContent[0].classList.remove('none')
+            noContent[0].innerHTML = '没有更多内容了'
             return
         }
     }

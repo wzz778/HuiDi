@@ -56,7 +56,7 @@ function getSearchInfo() {
             content.classList.remove('none')
             noContent.classList.add('none')
             animation.classList.remove('none')
-            if(all<5){
+            if (all < 5) {
                 animation.classList.add('none')
             }
             allPage = result.msg.page.all_page
@@ -159,6 +159,9 @@ function collectFn(event) {
                 sendFn('/admin/deleteCollect', { id: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.classList.remove('clickSty')
+                        if (event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -190,6 +193,9 @@ function likeFn(event) {
                 sendFn('/admin/deleteLike', { reflectId: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.classList.remove('clickSty')
+                        if (event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -232,7 +238,7 @@ window.onmousewheel = function (event) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
             if (content.getElementsByClassName('middleContentItem').length == all) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
     }

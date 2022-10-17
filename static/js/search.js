@@ -22,6 +22,13 @@ let talentShowAllPages = 0
 let all = 0
 function getSearchInfo() {
     searchinput.value = decodeURI(window.location.search).split("=")[1].split('&')[0]
+    if (!window.localStorage.getItem('hdsearch_history') || window.localStorage.getItem('hdsearch_history').indexOf(decodeURI(window.location.search).split("=")[1].split('&')[0]) == -1 || window.localStorage.getItem('hdsearch_history').indexOf(decodeURI(window.location.search).split("=")[2]) == -1) {
+        // 存到本地
+        let historyInfo = window.localStorage.getItem('hdsearch_history') != '' ? JSON.parse(window.localStorage.getItem('hdsearch_history')) : new Array()
+        historyInfo.push({ message: decodeURI(window.location.search).split("=")[1].split('&')[0], type: decodeURI(window.location.search).split("=")[2] })
+        window.localStorage.setItem('hdsearch_history', JSON.stringify(historyInfo))
+        getSearchHistory()
+    }
     // 将搜索类别报存到本地
     window.sessionStorage.setItem('searchType', decodeURI(window.location.search).split("=")[2])
     // 将搜索的链接替换
@@ -105,7 +112,7 @@ function getSearchInfo() {
                                 <div class="none">${result.msg.info[i].images.id}</div>
                             </div>
                         </div>
-                
+
                 <p class="textInfo">${result.msg.info[i].images.describes}</p>
                 <span class="likeInfo">
                     ${likeInfo}
@@ -239,6 +246,9 @@ function collectFn(event) {
                 sendFn('/admin/deleteCollect', { id: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.classList.remove('clickSty')
+                        if (event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -270,6 +280,9 @@ function likeFn(event) {
                 sendFn('/admin/deleteLike', { reflectId: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.classList.remove('clickSty')
+                        if (event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML == 0) {
+                            return
+                        }
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML--
                     })
                     .catch(err => {
@@ -346,7 +359,7 @@ window.onmousewheel = function (event) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
                 if (content.getElementsByClassName('middleContentItem').length == all) {
-                    hintFn('warning', '没有更多内容了')
+                    noContent.classList.remove('none')
                 }
             }
         }
@@ -368,7 +381,7 @@ window.onmousewheel = function (event) {
         if (event.wheelDelta < 0 && !ynalbum && albumNowPage >= albumAllPages) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
         if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && ynalbum) {
@@ -389,7 +402,7 @@ window.onmousewheel = function (event) {
         if (event.wheelDelta < 0 && !yntalentShow && talentShowNowPage >= talentShowAllPages) {
             // 判断是否该提示没有数据了
             if (scrollHeightOther <= scrollTop + windowHeight) {
-                hintFn('warning', '没有更多内容了')
+                noContent.classList.remove('none')
             }
         }
         if (offsetHeight < viewHeight + scrollHeight && event.wheelDelta < 0 && yntalentShow) {
@@ -402,18 +415,17 @@ window.onmousewheel = function (event) {
 
 // 历史记录
 function getSearchHistory() {
-    if (!window.localStorage.getItem('hdsearch_history')) {
+    if (window.localStorage.getItem('hdsearch_history') == '' || !JSON.parse(window.localStorage.getItem('hdsearch_history')) || JSON.parse(window.localStorage.getItem('hdsearch_history')).length == 0) {
         searchNoContent.classList.remove('none')
         searchContent.classList.add('none')
         return
     }
     let historyInfo = JSON.parse(window.localStorage.getItem('hdsearch_history'))
-
     let tempStr = ``
     for (let i = 0; i < historyInfo.length; i++) {
         tempStr += `
     <span>
-        <a href="/search?message=${historyInfo[i].message}&type=${historyInfo[i].type}">${historyInfo[i].message}</a>
+        <a href="/search?message=${historyInfo[i].message}&type=${historyInfo[i].type}">${judgeStr(historyInfo[i].message)}</a>
         <button class="none" onclick="delSearchFn(this)" delIndex="${i}">
             <i class="iconfont">&#xe643;</i>
         </button>
@@ -425,16 +437,16 @@ function getSearchHistory() {
 getSearchHistory()
 function delSearchFn(event) {
     // 将内容删除
-    let historyInfo = JSON.parse(window.localStorage.getItem('hdsearch_history'))
+    let historyInfo = window.localStorage.getItem('hdsearch_history') != '' ? JSON.parse(window.localStorage.getItem('hdsearch_history')) : new Array()
     let searchArr = []
     for (let i = 0; i < historyInfo.length; i++) {
         if (i != event.getAttribute('delIndex')) {
             searchArr.push(historyInfo[i])
         }
     }
-    event.parentElement.remove()
-    window.localStorage.setItem('hdsearch_history', searchArr)
-    if (!window.localStorage.getItem('hdsearch_history')) {
+    window.localStorage.setItem('hdsearch_history', JSON.stringify(searchArr))
+    getSearchHistory()
+    if (JSON.parse(window.localStorage.getItem('hdsearch_history')).length == 0) {
         searchNoContent.classList.remove('none')
         searchContent.classList.add('none')
     }

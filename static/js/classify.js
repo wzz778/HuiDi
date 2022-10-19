@@ -165,6 +165,7 @@ function renders(){
         let All = ''
         for(let z =0;z<result.data.msg.length;z++){
             if(result.data.temps[z].length == 0){
+                secondLevel[z].classList.add('nothinges');
                 // console.log(1);
                 // All += `<div class="second-level">
                             
@@ -213,19 +214,25 @@ function renders(){
         }
         for(let j=0;j<result.data.msg.length;j++){
             arrow_right[j].flag = true;
-            arrow_right[j].onclick = function(){
-                // console.log(flag);
-                if(this.flag == true){
-                    let angle = 90;
-                    arrow_right[j].style.transform = "rotate("+angle +"deg)";
-                    secondLevel[j].style.display = 'block'
-                    this.flag = false;
-                }else{
-                    arrow_right[j].style.transform = 'rotate(0)';
-                    secondLevel[j].style.display = 'none';
-                    this.flag = true;
+            // console.log([j].hasChildNodes());
+            if(secondLevel[j].classList.contains('nothinges')){
+
+            }else{
+                arrow_right[j].onclick = function(){
+                    // console.log(flag);
+                    if(this.flag == true){
+                        let angle = 90;
+                        arrow_right[j].style.transform = "rotate("+angle +"deg)";
+                        secondLevel[j].style.display = 'block'
+                        this.flag = false;
+                    }else{
+                        arrow_right[j].style.transform = 'rotate(0)';
+                        secondLevel[j].style.display = 'none';
+                        this.flag = true;
+                    }
                 }
             }
+            
             news[j].onclick = function(){
                 classifier_list[0].value = '';
                 btn_new[0].numbers = 1;

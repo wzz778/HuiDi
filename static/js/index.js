@@ -31,18 +31,33 @@ let carouselRightAll = document.getElementById('carouselRightAll')
 let carouselOne = document.getElementById('carouselOne')
 // 没有内容了
 let noContent = document.getElementById('noContent')
+let temTwo = null
 // 定时器
+carousel[0].style.left = -760 + "px"
 function beginSettimeout() {
     timerIndex = setInterval(() => {
         carouselIndex++
         carouselIndex = carouselIndex % 3
-        carousel[0].style.left = (-carouselIndex * 760) + "px"
-        // 将所有点的样式清除
-        for (let i = 0; i < carouselPoints.length; i++) {
-            carouselPoints[i].classList.remove('clickCarouselPoints')
+        move(-carouselIndex * 760, -1)
+    }, 3000)
+}
+function move(num, operation) {
+    // carousel[0].style.left = (-carouselIndex * 760) + "px"
+    let tempI = 1
+    clearInterval(temTwo)
+    temTwo = setInterval(() => {
+        carousel[0].style.left = num + operation * (tempI * 20) + "px"
+        tempI++
+        if (tempI == 39) {
+            tempI = 1
+            clearInterval(temTwo)
         }
-        carouselPoints[carouselIndex].classList.add('clickCarouselPoints')
-    }, 1500)
+    }, 30)
+    // 将所有点的样式清除
+    for (let i = 0; i < carouselPoints.length; i++) {
+        carouselPoints[i].classList.remove('clickCarouselPoints')
+    }
+    carouselPoints[carouselIndex].classList.add('clickCarouselPoints')
 }
 beginSettimeout()
 
@@ -50,12 +65,12 @@ beginSettimeout()
 function clickJump(num) {
     carouselIndex = num
     carouselIndex = carouselIndex % 3
-    carousel[0].style.left = (-carouselIndex * 760) + "px"
+    carousel[0].style.left = -(carouselIndex + 1) * 760 + 'px'
+    clearInterval(timerIndex)
     for (let i = 0; i < carouselPoints.length; i++) {
         carouselPoints[i].classList.remove('clickCarouselPoints')
     }
     carouselPoints[carouselIndex].classList.add('clickCarouselPoints')
-    clearInterval(timerIndex)
 }
 
 function endSettimeout() {
@@ -73,22 +88,14 @@ function leftArrow() {
     }
     carouselIndex--
     carouselIndex = carouselIndex % 3
-    carousel[0].style.left = (-carouselIndex * 760) + "px"
-    for (let i = 0; i < carouselPoints.length; i++) {
-        carouselPoints[i].classList.remove('clickCarouselPoints')
-    }
-    carouselPoints[carouselIndex].classList.add('clickCarouselPoints')
+    move(-(carouselIndex + 2) * 760, 1)
 }
 // 点击右箭头
 function rightArrow() {
     clearInterval(timerIndex)
     carouselIndex++
     carouselIndex = carouselIndex % 3
-    carousel[0].style.left = (-carouselIndex * 760) + "px"
-    for (let i = 0; i < carouselPoints.length; i++) {
-        carouselPoints[i].classList.remove('clickCarouselPoints')
-    }
-    carouselPoints[carouselIndex].classList.add('clickCarouselPoints')
+    move(-carouselIndex * 760, - 1)
 }
 
 // 首页左边导航栏
@@ -500,6 +507,13 @@ function sendReportFn(event) {
 sendFn('/picture/showCarousel', {})
     .then(result => {
         let tempStr = ''
+        tempStr += `
+        <div class="carouselItem">
+                <a href="/album?id=${result.msg.list[2].al_id}">
+                    <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[2].img_url}" onload="operatorImgFn(this)">
+                </a>
+            </div>
+        `
         for (let i = 0; i < result.msg.list.length; i++) {
             tempStr += `
             <div class="carouselItem">
@@ -509,6 +523,13 @@ sendFn('/picture/showCarousel', {})
             </div>
             `
         }
+        tempStr += `
+        <div class="carouselItem">
+                <a href="/album?id=${result.msg.list[0].al_id}">
+                    <img class="userImg" src="${defaultImgUrl}" alt="" data-url="${result.msg.list[0].img_url}" onload="operatorImgFn(this)">
+                </a>
+            </div>
+        `
         carouselInfo.innerHTML = tempStr
     })
     .catch(err => {

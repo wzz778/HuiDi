@@ -29,7 +29,7 @@ axios({
   }
 })
 .catch(function (error) {
-  console.log(error);
+  // console.log(error);
 });
 //观看是否有消息
 axios({
@@ -166,7 +166,7 @@ function getallchat() {
       size: 10
     }
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     if (data.data.err == 0) {
       let list = data.data.msg.list;
       let le = list.length;
@@ -270,8 +270,6 @@ var creatws = function (userid) {
   //  收到消息的回调方法
   websocket.onmessage = function (msg) {
     let data = JSON.parse(msg.data)
-    console.log(msg.data);
-    console.log(data);
     if (data.users != undefined) {
       for (let i of data.users) {
         if (i.userId == toid) {
@@ -359,7 +357,7 @@ function beginall() {
     getallchat()
     creatws(resultid)
   }).catch(err => {
-    console.log(err);
+    // console.log(err);
   })
 }
 beginall()

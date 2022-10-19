@@ -26,7 +26,7 @@ function createCode() {
 		code += random[charIndex]; //根据索引取得随机数加到code上   
 	}
 	let charIndex2=Math.floor(Math.random() * 3);
-	console.log(charIndex2);
+	// console.log(charIndex2);
 	checkCode.className= classarr[charIndex2];
 	checkCode.value = code; //把code值赋给验证码   
 }

@@ -25,7 +25,7 @@ function tologin(){
           "password":pa
         }
       }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){
           if(data.data.msg.status==1){
               if(Date.parse(new Date()) > Date.parse(data.data.msg.end_time)){

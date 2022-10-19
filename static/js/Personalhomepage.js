@@ -19,6 +19,8 @@ let mydetext=document.getElementById('mydetext')
 let abdenumber=document.getElementById('abdenumber')
 let album_text=document.getElementsByClassName('album_text')[0];
 let collect_body=document.getElementsByClassName('class_body')[2]
+let albumlabelmax=document.getElementsByClassName('albumlabelmax')[0]
+let labelspanarr=document.getElementsByClassName('labelarr')[0]
 let dyshow=true;
 let colshow=false;
 let arrfun=[
@@ -60,6 +62,10 @@ axios({
     if(data.data.err==0){
         let me=data.data.msg;
         mydetext.innerHTML=me.describes;
+        let seximg=`<img src="/public/img/man.png" class="seximg" alt="">`
+        if(me.sex!="男"){
+            seximg=`<img src="/public/img/woman.png" class="seximg" alt="">`;
+        }
         if(me.img_url!=null){
             cordimg.style.backgroundImage=`url(${me.img_url})`;
         }
@@ -67,12 +73,9 @@ axios({
             mymessageback.style.backgroundImage=`url(${me.background})`;
         }
         if(me.certification!=null){
-            cord_contentHead.innerHTML=`${me.name}<span style="padding-left:25px;font-size: 16px;color:#b87100;"><i><img src="/public/iconfont/authentication.png" alt=""></i>认证领域：<span style="color:#669ddf;">${me.certification}</span></span>`;
+            cord_contentHead.innerHTML=`${me.name}${seximg}<span style="padding-left:15px;font-size: 16px;color:#b87100;"><i><img src="/public/iconfont/authentication.png" alt=""></i>认证领域：<span style="color:#669ddf;">${me.certification}</span></span>`;
         }else{
-            cord_contentHead.innerHTML=me.name;
-        }
-        if(me.sex!="男"){
-            seximg.src=`/public/img/woman.png`;
+            cord_contentHead.innerHTML=`${me.name}${seximg}`;
         }
         return axios({url: '/api/getmynumber',method: 'get',})
     }else{
@@ -84,7 +87,23 @@ axios({
     mynumber[1].innerHTML=number.粉丝数;
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
+  });
+  axios({
+    url: '/api/lookreallyalltype',
+    method: 'get',
+  }).then(data => { 
+    if(data.data.err==0){
+        let list=data.data.msg;
+        for(let i of list){
+            labelspanarr.innerHTML+=`<span class="albumlabel">${i}<a href="javascript:;" onclick="addonelabel(this)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a></span>`
+        }
+    }else{
+        return 
+    }
+  })
+  .catch(function (error) {
+    // console.log(error);
   });
 function getmyalbum(){
     axios({
@@ -196,7 +215,10 @@ function getmyalbum(){
       });
 }
 getmyalbum()
+let labelarr=new Set();
 function album_down() {
+    labelarr.clear()
+    albumlabelmax.innerHTML=``
     album.style.display = "none";
     album.style.opacity = "0";
     album.classList.remove("fade");
@@ -210,29 +232,82 @@ function album_show() {
     album.style.opacity = "1";
     album.classList.add("fade");
 }
-function addab(){
-    for(let i of album_input){
-        if(isnull(judgeStr(i.value))){
-            hintFn('warning' ,"请填写完整内容！")
-            return 
-        }
+function addlabel(){
+    let inputtext=album_input[1].value;
+    album_input[1].value=``
+    if(labelarr.size==3){
+        hintFn('warning','最多添加3个标签！');
+        return
     }
-    if(album_input[1].value.length>8){
+    if(inputtext.length>5){
+        hintFn('warning','请输入5个字符以内的标签！');
+        return
+    }else if(isnull(judgeStr(inputtext))){
+        hintFn('warning','请输入标签内容！');
+        return
+    }
+    if(labelarr.has(judgeStr(inputtext))){
+        hintFn('warning','请莫添加相同的标签！');
+        return
+    }
+    labelarr.add(judgeStr(inputtext));
+    albumlabelmax.innerHTML+=`
+    <span class="albumlabel">${judgeStr(inputtext)}<a href="javascript:;" onclick="deletelabel(this)"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></span>
+    `
+}
+function addonelabel(event){
+    let inputtext=event.parentElement.innerText;
+    if(labelarr.size==3){
+        hintFn('warning','最多添加3个标签！');
+        return
+    }
+    if(labelarr.has(judgeStr(inputtext))){
+        hintFn('warning','请莫添加相同的标签！');
+        return
+    }
+    labelarr.add(judgeStr(inputtext));
+    console.log(labelarr);
+    albumlabelmax.innerHTML+=`
+    <span class="albumlabel">${judgeStr(inputtext)}<a href="javascript:;" onclick="deletelabel(this)"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></span>
+    `
+}
+function deletelabel(event){
+    let thisspan=event.parentElement;
+    albumlabelmax.removeChild(thisspan)
+    labelarr.delete(thisspan.innerText)
+}
+function addab(){
+    if(isnull(judgeStr(album_input[0].value))||isnull(judgeStr(album_input[2].value))){
+        hintFn('warning' ,"请填写完整内容！")
+        return 
+    }
+    if(album_input[0].value.length>8){
         hintFn('warning' ,"请填写8个字符一下的专辑名称！")
         return 
     }
+    if(labelarr.size==0){
+        hintFn('warning','请添加专辑类型标签！');
+        return
+    }
+    let typearr=``;
+    for(let i of labelarr){
+        typearr+=`#${i}`;
+    }
+    console.log(`${judgeStr(album_input[2].value)}${typearr}`);
     axios({
         url: '/api/addalbum',
         method: 'post',
         data:{
             album:judgeStr(album_input[0].value),
-            types:judgeStr(album_input[1].value),
-            describes:judgeStr(album_input[2].value)
+            types:typearr,
+            describes:`${judgeStr(album_input[2].value)}${typearr}`
         }
       }).then(data => {
+        console.log(data.data);
         if(data.data.err==0){   
             aname.value=''
             hintFn('success' ,"添加成功！")
+            album_down()
             getmyalbum()
         }else{
             if(data.data.msg.msg=="插入重复数据"){
@@ -244,7 +319,7 @@ function addab(){
       })
       .catch(function (error) {
         hintFn('warning' ,error)
-        console.log(error);
+        // console.log(error);
       });
 }
 let dynowpage=1;
@@ -313,7 +388,7 @@ function showmydynamic(){
       }
     })
     .catch(function (error) {
-      console.log(error);
+    //   console.log(error);
     });
 }
 let colnowpage=1;
@@ -367,7 +442,7 @@ function showmycollect(){
       }
     })
     .catch(function (error) {
-      console.log(error);
+    //   console.log(error);
     });
 }
 getmyalbum()
@@ -407,16 +482,16 @@ window.onscroll = function () {
 };
 album_text.onkeyup=function(){
     var len = album_text.value.length;
-    if(len > 99){
-        album_text.value.substring(0,99);
+    if(len > 79){
+        album_text.value.substring(0,79);
     }
     var num = len;
     abdenumber.innerText=num;
 };
 album_text.onkeydown=function(){
   var len = album_text.value.length;
-  if(len > 99){
-    album_text.value=album_text.value.substring(0,99);
+  if(len > 79){
+    album_text.value=album_text.value.substring(0,79);
   }
   var num = len;
   abdenumber.innerText=num;

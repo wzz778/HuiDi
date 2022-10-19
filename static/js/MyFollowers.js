@@ -11,7 +11,7 @@ function tofollow(id,event){
             userid:id
         }
       }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){
             if(data.data.msg=='success'){
                 followbutton[0].style.display='none'
@@ -25,7 +25,7 @@ function tofollow(id,event){
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 function outfollow(id,event){
@@ -37,8 +37,7 @@ function outfollow(id,event){
             userid:id
         }
       }).then(data => {
-        console.log(data.data);
-        
+        // console.log(data.data);
         if(data.data.err==0){
             if(data.data.msg=='success'){
                 followbutton[1].style.display='none'
@@ -52,7 +51,7 @@ function outfollow(id,event){
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 let nowpage=1;

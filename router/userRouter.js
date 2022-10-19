@@ -1087,6 +1087,28 @@ router.get('/api/lookalltype', (req, res) => {
         res.send({ err: -1, msg: '网络错误' })
     });
 })
+//获取全部类型
+router.get('/api/lookreallyalltype', (req, res) => {   
+    axios({
+        url:'/picture/showAllType',
+        method:'get',  
+    }).then(response=>{ 
+        if(response.data.msg=='OK'){
+            let allarr=new Array();
+            for(let i of response.data.data){
+                allarr.push(i.type.name)
+                for(let j of i.list){
+                    allarr.push(j.name)
+                }
+            }
+            res.send({ err: 0, msg:allarr});
+        }else{
+            res.send({ err: -1, msg:response.data.msg});
+        }
+    }).catch(function (error) {
+        res.send({ err: -1, msg: '网络错误' })
+    });
+})
 //观看两者的关注
 router.get('/api/lookallchat', (req, res) => {   
         axios({

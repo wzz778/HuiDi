@@ -39,7 +39,7 @@ function getcode(){
               "email": mail,    
             }
           }).then(data => {
-            console.log(data.data);
+            // console.log(data.data);
             if(data.data.err==0){
                 hintFn('success' ,'发送成功')
                 opendjs()
@@ -67,7 +67,7 @@ function checkcode(){
               'code':code
             }
           }).then(data => {
-            console.log(data.data);
+            // console.log(data.data);
             if(data.data.err==0){
                 hintFn('success' ,'验证成功')
                 sessionStorage.setItem('mymail',mail);

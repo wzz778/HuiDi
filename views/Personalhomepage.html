@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="public/css/Personalhomepage.css">
 {{/block}}
 {{block 'body'}}
-    <div id="album">
+    <div id="album" >
         <div id="album_main">
             <div class="album_main_top">
                 添加专辑
@@ -19,26 +19,31 @@
             <div class="album_link">
                 <i>*</i>
                 专辑类型：
-                <input type="text" class="album_send album_input" placeholder="请填写你要建立专辑的类型">
+                <input type="text" class="album_send album_input" placeholder="添加自定义标签">
+                <button id="addlabel" onclick="addlabel()">添加</button>
             </div>
-            <!-- <div class="album_link">
-                <i>*</i>
-                图片专辑：
-                <select name="albumselect" class="albumselect" onchange="getoption()" >
-                    <option value="1">专辑1</option>
-                    <option value="1">专辑1</option>
-                    <option value="1">专辑3</option>
-                    <option value="1">专辑4</option>
-                </select>
-            </div> -->
+            <div class="albumlabelmax">
+                <!-- <span class="albumlabel">专辑类型一<a href="javascript:;" onclick="deletelabel(this)"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></span> -->
+            </div>
             <div class="album_links">   
-                <textarea type="text" maxlength="100" class="album_text album_input" placeholder="请填写您对专辑的描述"></textarea>
-                <span id="abdenumbermax"><span id="abdenumber">0</span>/100</span>
+                <textarea type="text" maxlength="80" class="album_text album_input" placeholder="请填写您对专辑的描述"></textarea>
+                <span id="abdenumbermax"><span id="abdenumber">0</span>/80</span>
             </div>
             <div style="font-weight: 600;" class="album_link">
                 <i>*</i>
-                <!-- 最多只能发4张图片! -->
+                1个专辑最多有3个标签类型
                 <i>*</i>
+            </div>
+            <div class="labelbox">
+                <div class="labelbox_top">常用标签</div>
+                <div class="labelarr">
+                    <span class="albumlabel">萌宠<a href="javascript:;" onclick="addonelabel(this)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a></span>
+                    <span class="albumlabel">头像<a href="javascript:;" onclick="addonelabel(this)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a></span>
+                    <span class="albumlabel">绘画<a href="javascript:;" onclick="addonelabel(this)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a></span>
+                    <span class="albumlabel">logo设计<a href="javascript:;" onclick="addonelabel(this)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a></span>
+                    <span class="albumlabel">景象<a href="javascript:;" onclick="addonelabel(this)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a></span>
+                    <span class="albumlabel">时尚穿搭<a href="javascript:;" onclick="addonelabel(this)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a></span>
+                </div>
             </div>
             <button id="toalbum" onclick="addab()" class="havaland">点击添加专辑</button>
         </div>
@@ -55,7 +60,7 @@
                             用户名好家伙<span><i><img src="/public/iconfont/authentication.png" alt=""></i>认证领域：<span>游戏达人</span></span>
                         </div>
                         <div class="cord-contentBot">
-                            <img src="/public/img/man.png" class="seximg" alt="">
+                            <!-- <img src="/public/img/man.png" class="seximg" alt=""> -->
                             <!-- 邮箱：<span class="useremail">1111111111@qq.com</span> -->
                         </div>
                         <div class="cord-contentde">
@@ -65,7 +70,7 @@
                             </span>
                         </div>
                     </div>
-                    <a href="modifymessage">编辑个人资料</a>
+                    <a class="changemymessage" href="modifymessage">编辑个人资料</a>
                 </div>
             </div>
             <div class="mytextmessage">

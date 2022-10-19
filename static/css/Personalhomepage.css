@@ -170,12 +170,24 @@ li {
     /* position: absolute; */
     /* top: -57px; */
 }
-.mymessage #mymessagetext #cordcon .cord-contentBot img{
+.mymessage #mymessagetext .changemymessage{
+    position: absolute;
+    right: 30px;
+    bottom: 10px;
+    font-size: 14px;
+    color: #0461CF;
+    background-color: #E6F0FD;
+    border-radius: 3px;
+    padding: 6px 16px;
+    transition: .2s all;
+    margin-left: 10px;
+}
+.mymessage #mymessagetext #cordcon #cord-contentHead .seximg{
     position: relative;
-    left: -50px;
-    top: 10px;
-    width: 30px;
-    height: 30px;
+    top: 4px;
+    padding-left: 10px;
+    width: 26px;
+    height: 26px;
 }
 .mymessage #mymessagetext #cordcon span{
     width: 30px;
@@ -200,7 +212,8 @@ li {
     height: 15px;
 }
 .cord-contentBot{
-    width: 160px;
+    width: 120px;
+    padding-left: 35px;
     float: left;
     height: 30px;
     line-height: 30px;
@@ -514,8 +527,8 @@ li {
   }
   
   #album #album_main {
-    padding:20px 30px;
-    width: 340px;
+    padding:30px;
+    width: 640px;
     min-height: 200px;
     /* height: 330px; */    
     background-color: white;
@@ -523,17 +536,48 @@ li {
     border-radius: 2px;
     position: relative;
   }
-  
+  #album #album_main .labelbox{
+    width: 300px;
+    height: 190px;
+    position: absolute;
+    top: 55px;
+    right: 30px;
+  }
+  #album #album_main .labelbox .labelbox_top{
+    width: 300px;
+    line-height: 25px;
+    font-size: 15px;
+    color: #303133;
+    height: 25px;
+    border-bottom: 1px solid #ebebeb;
+  }
+  #album #album_main .labelbox .labelarr{
+    width: 300px;
+    height: 150px;
+    font-size: 15px;
+    color: #303133;
+    display: flex;
+    align-content:flex-start;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+  #album #album_main .labelbox .labelarr .alabel{
+    width: 300px;
+    height: 150px;
+    padding-top: 5px;
+    font-size: 15px;
+    color: #303133;
+  }
   #album #album_main .album_main_top {
     position: relative;
-    line-height: 30px;
+    line-height: 10px;
     font-size: 18px;
     color: #303133;
-    height: 30px;
-    width: 100%;
-    width: 400px;
+    height: 20px;
+    width: 700px;
     left: -30px;
     text-align: center;
+    margin-bottom: 10px;
     border-bottom: 1px solid #ebebeb;
   }
   #album #album_main .album_main_top a {
@@ -551,35 +595,91 @@ li {
     transition: .2s;
   }
   #album #album_main .album_link {
-    /* background-color: #a8a8a8; */
-    width: 100%;
+    position: relative;
+    width: 340px;
     height: 30px;
     font-size: 14px;
     margin-top: 5px;
     line-height: 30px;
   }
   #album #album_main .album_link select{
+    position: relative;
     width: 230px;
     height: 30px;
     font-size: 14px;
     border-radius: 3px;
     cursor: pointer;
   }
+  #album #album_main .album_link #addlabel{
+    position: absolute;
+    right: 8px;
+    top: 0.3px;
+    height: 32px;
+    width: 70px;
+    cursor: pointer;
+    line-height: 18px;
+    font-size: 14px;
+    color: #307ddb;
+    background-color: #D9F1F9;
+    border-left: 1px solid #307ddb;
+    outline: none;
+    border-radius: 0 3px 3px 0;
+  }
+  #album #album_main .album_link #addlabel:hover{
+    background-color: #84b3ec;
+    color: #1171e6;
+  }
   #album #album_main .album_link i {
     color: #056DE8;
     padding-right: 5px;
   }
   #album #album_main .album_links {
-    width: 100%;
-    height: 110px;
+    width:340px;
+    height: 90px;
     position: relative;
   }
   #album #album_main .album_links #abdenumbermax{
     position: absolute;
-    bottom: 5px;
-    right: 10px;
+    bottom: 2px;
+    right: 15px;
     color: #888;
   }
+  #album #album_main  .albumlabelmax{
+    margin:10px 0;
+    width: 330px;
+    display: flex;
+    border-radius: 2px;
+    background-color: #f2f2f2;
+  }
+  #album #album_main  .albumlabel{
+    display: flex;
+    font-size: 12px;
+    background-color: #448be0;
+    color: white;
+    border: #056DE8 1px solid;
+    cursor: pointer;
+    transition: .1s all;
+    line-height: 25px;
+    height: 25px;
+    padding: 0 5px;
+    max-width: 90px;
+    margin:5px 10px 5px 0; 
+    border-radius: 3px;
+    }
+    #album #album_main  .albumlabel a{
+        line-height: 28px;
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+    #album #album_main  .albumlabel a i{
+        padding: 0 0 0 3px;
+        color: white;
+        font-size: 16px;   
+    }
+    #album #album_main  .albumlabel:hover{
+        background-color: #1d73db;
+    }
   #album #album_main button {
     bottom: 10px;
     right: 35px;
@@ -611,7 +711,6 @@ li {
   }
   
   #album #album_main .album_text {
-    margin-top: 15px;
     resize: none;
     height: 80px;
     padding: 5px;

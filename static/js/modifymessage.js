@@ -10,7 +10,7 @@ axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){
@@ -33,7 +33,7 @@ axios({
     }
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
 function openimg(){
     var reader= new FileReader();
@@ -209,7 +209,7 @@ describe.onkeydown=function(){
         })
         .then((result) => {
             closeland()
-            console.log(result.data);
+            // console.log(result.data);
             if(result.data.err==0&&result.data.msg.msg=='OK'){  
                 hintFn('success' ,'保存成功')
                 setTimeout(function () {

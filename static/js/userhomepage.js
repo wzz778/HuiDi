@@ -38,7 +38,7 @@ axios({
     }
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
 let arrfun=[
     function(){
@@ -79,6 +79,10 @@ axios({
     if(data.data.err==0){
         let me=data.data.msg;
         mydetext.innerHTML=me.describes;
+        let seximg=`<img src="/public/img/man.png" class="seximg" alt="">`
+        if(me.sex!="男"){
+            seximg=`<img src="/public/img/woman.png" class="seximg" alt="">`;
+        }
         if(me.background!=null){
             mymessageback.style.backgroundImage=`url(${me.background})`;
         }
@@ -86,14 +90,11 @@ axios({
             cordimg.style.backgroundImage=`url(${me.img_url})`;
         }
         if(me.certification!=null){
-            cord_contentHead.innerHTML=`${me.name}<span style="padding-left:25px;font-size: 16px;color:#b87100;"><i><img src="/public/iconfont/authentication.png" alt=""></i>认证领域：<span style="color:#669ddf;">${me.certification}</span></span>`;
+            cord_contentHead.innerHTML=`${me.name}${seximg}<span style="padding-left:15px;font-size: 16px;color:#b87100;"><i><img src="/public/iconfont/authentication.png" alt=""></i>认证领域：<span style="color:#669ddf;">${me.certification}</span></span>`;
         }else{
-            cord_contentHead.innerHTML=me.name;
+            cord_contentHead.innerHTML=`${me.name}${seximg}`;
         }
         useremail[0].innerHTML=`<a href="javascript:;" onclick="tochat()">给TA发私信</a>`;
-        if(me.sex!="男"){
-            seximg.src=`/public/img/woman.png`;
-        }
         return axios({url: '/api/getusernumber',method: 'get', params:{
             id:userid
         }})
@@ -105,7 +106,7 @@ axios({
     mynumber[1].innerHTML=number.粉丝数;
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
 function getmyalbum(){
     axios({
@@ -203,10 +204,10 @@ function getmyalbum(){
                 `;
             }
         }else{
-            console.log(data.data);
+            // console.log(data.data);
         }
       }).catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 function tofollow(){
@@ -231,7 +232,7 @@ function tofollow(){
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 function outfollow(){
@@ -256,7 +257,7 @@ function outfollow(){
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 function inspectfollow(){
@@ -281,7 +282,7 @@ function inspectfollow(){
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 inspectfollow()
@@ -293,7 +294,7 @@ function tochat(){
             userid:userid
         }
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){
             setTimeout(function () {
                 window.location.assign(`/chat?id=${userid}`);
@@ -303,7 +304,7 @@ function tochat(){
         }
     })
     .catch(function (error) {
-        console.log(error);
+        // console.log(error);
     });
 }
 let dynowpage=1;
@@ -361,7 +362,7 @@ function showmydynamic(){
       }
     })
     .catch(function (error) {
-      console.log(error);
+    //   console.log(error);
     });
 }
 let colnowpage=1;
@@ -416,7 +417,7 @@ function showmycollect(){
       }
     })
     .catch(function (error) {
-      console.log(error);
+    //   console.log(error);
     });
 }
 getmyalbum()

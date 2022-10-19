@@ -11,7 +11,7 @@ function tofollow(id,event){
             userid:id
         }
       }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){
             if(data.data.msg=='success'){
                 followbutton[0].style.display='none'
@@ -25,7 +25,7 @@ function tofollow(id,event){
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 function outfollow(id,event){
@@ -37,8 +37,6 @@ function outfollow(id,event){
             userid:id
         }
       }).then(data => {
-        console.log(data.data);
-        
         if(data.data.err==0){
             if(data.data.msg=='success'){
                 followbutton[1].style.display='none'
@@ -52,7 +50,7 @@ function outfollow(id,event){
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 let nowpage=1;
@@ -66,7 +64,7 @@ function getfan(){
             size:5
         }
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         message_body.innerHTML=``;
         if(data.data.err==0){
             fansnumber.innerText=`共${data.data.msg.all_count}条数据`
@@ -123,7 +121,7 @@ function getfan(){
     
         }
     }).catch(function (error) {
-        console.log(error);
+        // console.log(error);
     });
 }
 getfan()

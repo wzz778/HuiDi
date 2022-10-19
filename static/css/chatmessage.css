@@ -165,13 +165,13 @@
   }
   
   #main #main-right .alike-a .message-card {
-    width: 580px;
+    width: 650px;
     height: 70px;
     margin-left: 10px;
   }
   
   #main #main-right .alike-a .message-card .message-card-top {
-    width: 600px;
+    width: 500px;
     height: 40px;
     line-height: 40px;
     position: relative;
@@ -194,7 +194,7 @@
   #main #main-right .alike-a .message-card .message-card-top .sendbutton {
     position: absolute;
     top: 0;
-    right: -60px;
+    right: -160px;
     display: block;
     color: #525252;
     font-size: 14px;
@@ -210,7 +210,7 @@
     color:white;
   }
   #main #main-right .alike-a .message-card .message-card-bon {
-    width: 580px;
+    width: 500px;
     height: 30px;
     overflow: hidden;
     text-overflow: ellipsis;

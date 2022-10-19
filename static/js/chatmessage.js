@@ -30,7 +30,7 @@ let message_body=document.getElementsByClassName('messagebody')[0]
         method:'get',
         url:"/api/lookallchatuser",
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         // message_body.innerHTML=``;
         if(data.data.err==0){
             let ms=data.data.msg;
@@ -78,7 +78,7 @@ let message_body=document.getElementsByClassName('messagebody')[0]
     
         }
     }).catch(function (error) {
-        console.log(error);
+        // console.log(error);
     });
   }
   getallchatuser()

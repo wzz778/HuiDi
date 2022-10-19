@@ -45,7 +45,7 @@ function del_one_me(event){
             url:"/api/deletemymessage",
             data:arrid
         }).then(data => {
-            console.log(data.data);
+            // console.log(data.data);
             if(data.data.err==0){
                 if(thistype=='全部'){
                     getallmessage()
@@ -73,7 +73,7 @@ function del_all(){
         url:"/api/deletemymessage",
         data:arrid
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.err==0){
             if(allpage>1){
                 allpage--;
@@ -106,7 +106,7 @@ function getallmessage(){
             size:7
         }
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         message_body.innerHTML=``;
         if(data.data.err==0){
             fansnumber.innerText=`共${data.data.msg.all_count}条数据`
@@ -223,7 +223,7 @@ function getallmessagebytype(){
             type:thistype
         }
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         message_body.innerHTML=``;
         if(data.data.err==0){
             fansnumber.innerText=`共${data.data.msg.all_count}条数据`

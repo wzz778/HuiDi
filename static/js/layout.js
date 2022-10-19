@@ -40,6 +40,7 @@ function delay(func,time) {
       func.timeoutId = null;
     }, time);
   }
+//传参的防止连点
 function contrasttime(time){
     let data=new Date(time.replace(/-/g,"/"));
     let t1=new Date();//获取当前时间
@@ -140,13 +141,13 @@ function FourscrollBy() {
         if (document.documentElement.scrollTop <= 0) {
             clearInterval(four);
         } else {
-            window.scrollBy(0, -30);
+            window.scrollBy(0, -60);
         }
     } else {
         if (document.body.scrollTop <= 0) {
             clearInterval(four);
         } else {
-            window.scrollBy(0, -30);
+            window.scrollBy(0, -60);
         }
     }
 }
@@ -514,6 +515,6 @@ function adda(){
       })
       .catch(function (error) {
         hintFn('warning' ,"添加失败")
-        console.log(error);
+        // console.log(error);
       });
 }

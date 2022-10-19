@@ -91,7 +91,7 @@ function renders(begin_index,size){
         for(let j=0;j<result.data.msg.list.length;j++){
             pass[j].onclick = function(){
                 pass[0].ids = result.data.msg.list[j].images.id;
-                warn_text[0].innerHTML = '确定通过作评内容为：' + result.data.msg.list[j].images.describes + '嘛？'
+                warn_text[0].innerHTML = '确定通过该作品嘛？'
                 hidden[1].style.display = 'block'
             }
             reject[j].onclick = function(){

@@ -168,7 +168,7 @@ function renders(begin,size){
         pagings[0].cur_index = result.data.msg.current;
         pagings[0].size = result.data.msg.size;
         // console.log(pagings[0].maxNumber);
-        generatePagination(100, size, begin,result.data.msg.total,renders);
+        generatePagination(pagings[0].maxNumber, size, begin,result.data.msg.total,renders);
         for(let j=0;j<all.length;j++){
             seal[j].ids = all[j].id;
             if(result.data.msg.records[j].status == 1){

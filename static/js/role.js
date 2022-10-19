@@ -153,6 +153,9 @@ function renders(begin_index,size){
                 })
             }
             deletes[j].onclick = function(){
+                if(checkbox[j].checked){
+                    checkbox[j].click();
+                }
                 btn_delete[0].numbers = 1;
                 btn_delete[0].name = card_list_checkbox[j].names;
                 btn_delete[0].ids = all.msg.list[j].role.id;
@@ -431,8 +434,10 @@ cancel[0].onclick = function(){
 //确认
 confirms[1].onclick = function(){
     if(btn_delete[0].numbers == 0){
+        let index = 0;
         for(let i=0;i<checkbox.length;i++){
             if(checkbox[i].checked == true){
+                index ++;
                 axios({
                     method:'GET',
                     url:'/superAdmin/deleteRole',
@@ -446,14 +451,20 @@ confirms[1].onclick = function(){
                         warn_texts[0].innerHTML = '删除成功'
                         warnings[0].src = 'public/iconfont/success.png'
                         hidden[2].style.display = 'block'
+                        if(index == checkbox_all[0].numbers){
+                            if(checkbox.length ==  checkbox_all[0].numbers){
+                                renders(pageings[0].cur_index-1,pageings[0].size,-1);
+                            }else{
+                                renders(pageings[0].cur_index,pageings[0].size,-1);
+                            }
+                        }
                     }
+                    
                 })
             }
         }
         console.log( checkbox_all[0].numbers);
-        if(checkbox.length ==  checkbox_all[0].numbers){
-            renders(pageings[0].cur_index-1,pageings[0].size,-1);
-        }
+        
     }else {
         axios({
             method:'GET',
@@ -468,7 +479,14 @@ confirms[1].onclick = function(){
                 warn_texts[0].innerHTML = '删除成功'
                 warnings[0].src = 'public/iconfont/success.png'
                 hidden[2].style.display = 'block'
-                renders(pageings[0].cur_index,pageings[0].size,-1);
+                console.log(pageings[0].all_size);
+                console.log(pageings[0].size);
+                if(pageings[0].all_size % pageings[0].size == 1){
+                    renders(pageings[0].cur_index-1,pageings[0].size,-1);
+                }else{
+                    renders(pageings[0].cur_index,pageings[0].size,-1);
+                }
+                
             }
         })
     }

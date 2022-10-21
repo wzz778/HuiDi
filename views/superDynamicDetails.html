@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>动态详情页</title>
     <link rel="stylesheet" href="/public/iconfont/iconfont.css">
+    <link rel="stylesheet" href="public/css/layout.css">
     <link rel="stylesheet" href="/public/css/Universal.css">
     <link rel="stylesheet" href="/public/css/dynamicDetails.css">
     <link rel="stylesheet" href="/public/css/superDynamicDetails.css">
 </head>
+
 <body>
+    <div id="tipsback">
+        <div class="wrong hintSty none">
+            <span class="tipsi">
+                <i class="iconfont">&#xe606;</i>
+            </span>
+            <span id="wrongText" class="tiptext">
+                操作失败
+            </span>
+        </div>
+        <!-- 成功的提示信息 -->
+        <div class="success hintSty none">
+            <span class="tipsi">
+                <i class="iconfont">&#xe62a;</i>
+            </span>
+            <span id="successText" class="tiptext">
+                操作成功
+            </span>
+        </div>
+        <!-- 警告信息 -->
+        <div class="warning hintSty none">
+            <span class="tipsi">
+                <i class="iconfont">&#xe66a;</i>
+            </span>
+            <span id="warningText" class="tiptext">
+                信息不符
+            </span>
+        </div>
+    </div>
     <!-- 举报弹窗 -->
     <div class="reportHint none">
         <div class="reportHintItem">

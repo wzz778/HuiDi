@@ -74,6 +74,7 @@ function validate() {
           }).then(data => {
             if(data.data.err==0){
 				hintFn('success' ,'注册成功')
+				
 				sessionStorage.removeItem('mymail');
 				setTimeout(function () {
 					window.location.assign("/login");

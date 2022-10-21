@@ -110,7 +110,7 @@ function getfan(){
                             </div>
                             <div class="message-con">
                                 ${button}</br>
-                                <a href="${ms[i].id}" class="send_message">私信</a>
+                                <a href="chat?id=${ms[i].id}" class="send_message">私信</a>
                                 <span class="message-time">${contrasttime(ms[i].end_time)}</span>
                             </div>
                         </div>

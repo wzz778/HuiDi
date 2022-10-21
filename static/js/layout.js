@@ -347,6 +347,23 @@ function getoption(){
       }).then(data => {
         if(data.data.err==0){
             let msg=data.data.msg.list;
+            if(msg.length==0){
+                axios({
+                    url: '/api/addalbum',
+                    method: 'post',
+                    data:{
+                        album:"默认专辑",
+                        types:"未添加",
+                        describes:"未添加"
+                    }
+                  }).then(data => {
+                    if(data.data.err==0){   
+                    }else{
+                    }
+                  })
+                  .catch(function (error) {
+                  });
+            }
             select.innerHTML=``
             for(let i of msg){
                 select.innerHTML+=`<option value=${i.album.id}>${i.album.a_name}</option>`

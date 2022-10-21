@@ -170,7 +170,16 @@ function getallchat() {
     if (data.data.err == 0) {
       let list = data.data.msg.list;
       let le = list.length;
+      if(le==0){
+        lookmore.style.display = 'none';
+        lookend.style.display = 'block';
+        return
+      }
       allpage = data.data.msg.all_page;
+      if(nowpage==data.data.msg.all_page){
+        lookmore.style.display = 'none';
+        lookend.style.display = 'block';
+      }
       for (let i = 0; i < le; i++) {
         let nowhtml = document.createElement('div');
         nowhtml.className = 'amessage';

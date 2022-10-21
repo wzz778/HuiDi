@@ -320,16 +320,27 @@ function showmydynamic(){
       }
     }).then(data => { 
       if(data.data.err==0){
-        if(data.data.msg.all_count==dynowpage){
-            lookmore.style.display='none';
-            lookend.style.display='block';
-        }else{
-          lookmore.style.display='block';
-          lookend.style.display='none';
+        if(data.data.msg.all_count==0){
+            class_body1.innerHTML+=`
+            <div id="emptymeaage" style="padding-top: 150px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
+                什么都没有呢 . . .
+            </div>
+          `
+          lookmore.style.display='none';
+          lookend.style.display='block';
+            return
         }
           dynumber.innerText=data.data.msg.all_count
           dyallpage=data.data.msg.all_page;
           let arr=data.data.msg.list;
+          if(data.data.msg.all_count==dynowpage){
+              lookmore.style.display='none';
+              lookend.style.display='block';
+          }else{
+            lookmore.style.display='block';
+            lookend.style.display='none';
+          }
         //   class_body1.innerHTML=``
           for(let i in arr){
               let arrimg='';
@@ -379,9 +390,20 @@ function showmycollect(){
     }).then(data => { 
         // console.log(data.data);
       if(data.data.err==0){
-        if(data.data.msg.all_count==dynowpage){
-            lookmore.style.display='none';
-            lookend.style.display='block';
+        if(data.data.msg.all_count==0){
+            collect_body.innerHTML+=`
+            <div id="emptymeaage" style="padding-top: 150px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
+                什么都没有呢 . . .
+            </div>
+          `
+          lookmore.style.display='none';
+          lookend.style.display='block';
+            return
+        }
+        if(data.data.msg.all_count==colnowpage){
+            // lookmore.style.display='none';
+            // lookend.style.display='block';
         }else{
           lookmore.style.display='block';
           lookend.style.display='none';

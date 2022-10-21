@@ -75,7 +75,7 @@ function checkcode(){
                     window.location.assign("/repassword2");
                 }, 1500)
             }else{
-                hintFn('warning' ,data.data.msg)
+                hintFn('warning' ,"验证失败")
             }
           }).catch(function (error) {
             

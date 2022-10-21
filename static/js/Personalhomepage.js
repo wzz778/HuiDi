@@ -28,7 +28,7 @@ let arrfun=[
         dyshow=true;
         colshow=false;
     },
-    function(){
+    function(){ 
         dyshow=false;
         colshow=false;
         lookmore.style.display='none';
@@ -44,7 +44,7 @@ function changeclass(i){
     textmessage[i].style.display='block';
     lookmore.style.display='block';
     lookend.style.display='none';
-    arrfun[i]()
+    arrfun[i]() 
     for(let n=0;n<3;n++){
         if(n!=i){
             conli[n].classList.remove('havebethis');
@@ -303,8 +303,8 @@ function addab(){
             describes:`${judgeStr(album_input[2].value)}${typearr}`
         }
       }).then(data => {
-        console.log(data.data);
-        if(data.data.err==0){   
+        // console.log(data.data);
+        if(data.data.err==0){
             aname.value=''
             hintFn('success' ,"添加成功！")
             album_down()
@@ -325,6 +325,7 @@ function addab(){
 let dynowpage=1;
 let dyallpage=1;
 function showmydynamic(){
+    console.log("dy");
     axios({
       url: '/api/getmydynamic',
       method: 'get',
@@ -334,17 +335,27 @@ function showmydynamic(){
       }
     }).then(data => {
         if(data.data.err==0){
-          if(data.data.msg.all_count==dynowpage){
+            if(data.data.msg.all_count==0){
+                class_body1.innerHTML+=`
+                <div id="emptymeaage" style="padding-top: 150px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                    <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
+                    什么都没有呢 . . .
+                </div>
+              `
               lookmore.style.display='none';
               lookend.style.display='block';
-          }else{
-            lookmore.style.display='block';
-            lookend.style.display='none';
-          }
-          let arr=data.data.msg.list;
-          dynumber.innerText=data.data.msg.all_count
-          dyallpage=data.data.msg.all_page;
-        //   class_body1.innerHTML=``
+                return
+            }
+            let arr=data.data.msg.list;
+            dynumber.innerText=data.data.msg.all_count
+            dyallpage=data.data.msg.all_page;
+            if(data.data.msg.all_count==dynowpage){
+                lookmore.style.display='none';
+                lookend.style.display='block';
+            }else{
+              lookmore.style.display='block';
+              lookend.style.display='none';
+            }
           for(let i in arr){
               let arrimg='';
               let imgstatus='';
@@ -394,6 +405,7 @@ function showmydynamic(){
 let colnowpage=1;
 let colallpage=1;
 function showmycollect(){
+    console.log("col");
     axios({
       url: '/api/getmycollect',
       method: 'get',
@@ -404,13 +416,25 @@ function showmycollect(){
     }).then(data => { 
         // console.log(data.data);
       if(data.data.err==0){
-        if(data.data.msg.all_count==dynowpage){
-            lookmore.style.display='none';
-            lookend.style.display='block';
+        if(data.data.msg.all_count==0){
+            collect_body.innerHTML+=`
+            <div id="emptymeaage" style="padding-top: 150px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
+                什么都没有呢 . . .
+            </div>
+          `
+          lookmore.style.display='none';
+          lookend.style.display='block';
+            return
+        }
+        if(data.data.msg.all_count==colnowpage){
+            // lookmore.style.display='none';
+            // lookend.style.display='block';
         }else{
           lookmore.style.display='block';
           lookend.style.display='none';
         }
+        
         colallpage=data.data.msg.all_page;
         let arr=data.data.msg.list;
           for(let i in arr){
@@ -445,9 +469,24 @@ function showmycollect(){
     //   console.log(error);
     });
 }
-getmyalbum()
-showmycollect()
-showmydynamic()
+let beginall = new Promise(function(resolve ,reject){
+    getmyalbum()
+    resolve('成功')
+});
+beginall.then((res)=>{
+    showmycollect()
+    return 
+})
+beginall.then((res)=>{
+    showmydynamic()
+    return 
+})
+beginall.catch((err)=>{
+    console.log(err);
+})
+// getmyalbum()
+// showmycollect()
+// showmydynamic()
 function onlandmore(){
     if(dyshow){
         if(dyallpage>dynowpage){

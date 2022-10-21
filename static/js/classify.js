@@ -216,7 +216,11 @@ function renders(){
             arrow_right[j].flag = true;
             // console.log([j].hasChildNodes());
             if(secondLevel[j].classList.contains('nothinges')){
-
+                arrow_right[j].onclick = function(){
+                    hidden[2].style.display = 'block'
+                    warn_texts[0].innerHTML = '没有下一级内容'
+                    warnings[0].src = 'public/iconfont/warn2.png'
+                }
             }else{
                 arrow_right[j].onclick = function(){
                     // console.log(flag);

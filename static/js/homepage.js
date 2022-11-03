@@ -169,10 +169,12 @@ function renders(begin,size){
         pagings[0].size = result.data.msg.size;
         // console.log(pagings[0].maxNumber);
         generatePagination(pagings[0].maxNumber, size, begin,result.data.msg.total,renders);
+        // console.log(manage_name[0].innerText);
+        let names = manage_name[0].innerText.replace(/\s*/g,"");
         for(let j=0;j<all.length;j++){
             seal[j].ids = all[j].id;
             if(result.data.msg.records[j].status == 1){
-                if(manage_name = all[j].name)
+                // if(manage_name = all[j].name)
                 seal[j].onclick = function(){
                     confirms[1].ids = all[j].id;
                     warn_text[0].innerHTML = '确定解除用户名为：' + all[j].name + '的封号嘛？'
@@ -180,11 +182,18 @@ function renders(begin,size){
                 }
             }else{
                 seal[j].onclick = function(){
-                    if(manage_name = all[j].name){
+                    // console.log(all[j].name.length);
+                    // console.log(names.replace(/\s*/g,"").length);
+                    // console.log(all[j].name);
+                    // console.log(names.replace(/\s*/g,""));
+                    // alert(names==all[j].name)
+                    if( names == all[j].name){
+                        // console.log(1);
                         warnings[0].src = 'public/iconfont/warn2.png'
                         warn_texts[0].innerHTML = '不能对自己进行封号'
                         hidden[2].style.display = 'block';
                     }else{
+                        // console.log(1);
                         startTimes[0].click();
                         confirms[0].ids  = all[j].id;
                         hidden[0].style.display = 'block';
@@ -214,6 +223,9 @@ renders(1,5);
 
 cancel[0].onclick  = function(){
     hidden[0].style.display = 'none';
+}
+cancel[1].onclick  = function(){
+    hidden[1].style.display = 'none';
 }
 cancel[2].onclick  = function(){
     hiddens[0].style.display = 'none';

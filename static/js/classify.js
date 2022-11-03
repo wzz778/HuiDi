@@ -162,8 +162,9 @@ function renders(){
         
         }
         classifies[0].innerHTML =  all;
-        let All = ''
+        
         for(let z =0;z<result.data.msg.length;z++){
+            let All = ''
             if(result.data.temps[z].length == 0){
                 secondLevel[z].classList.add('nothinges');
                 // console.log(1);

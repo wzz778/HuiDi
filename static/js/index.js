@@ -388,14 +388,21 @@ function likeFn(event) {
         .then(result => {
             // 判断是点赞还是取消点赞
             if (event.classList.value.indexOf('likeSty') == -1) {
+                event.setAttribute('onclick', "hintFn('warning', '请勿连点')")
                 // 点赞
                 sendFn('/admin/pointLike', { reflectId: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         // 添加类名
                         event.classList.add('likeSty')
-                        event.lastElementChild.innerHTML++
+                        event.setAttribute('onclick', "likeFn(this)")
+                        if (result.msg == 'success') {
+                            event.lastElementChild.innerHTML++
+                            return
+                        }
+                        hintFn('warning', '请勿连点')
                     })
                     .catch(err => {
+                        event.setAttribute('onclick', "likeFn(this)")
                         hintFn('warning', '操作失败')
                     })
                 return
@@ -406,13 +413,18 @@ function likeFn(event) {
                     if (event.lastElementChild.innerHTML == 0) {
                         return
                     }
-                    event.lastElementChild.innerHTML--
+                    if (result.msg == 'success') {
+                        event.lastElementChild.innerHTML--
+                        return
+                    }
+                    event.setAttribute('onclick', "likeFn(this)")
                 })
                 .catch(err => {
                     hintFn('warning', '操作失败')
                 })
         })
         .catch(err => {
+            event.setAttribute('onclick', "likeFn(this)")
             hintFn('warning', '请先登录')
         })
 }

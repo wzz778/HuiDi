@@ -256,7 +256,7 @@ function collectFn(event) {
                             event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML--
                             return
                         }
-                        hintFn('warning', '请勿连点')
+                        hintFn('warning', '请勿连点,此行为可能造成封号')
                     })
                     .catch(err => {
                         hintFn('warning', '操作失败')
@@ -271,7 +271,7 @@ function collectFn(event) {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.lastElementChild.lastElementChild.innerHTML++
                         return
                     }
-                    hintFn('warning', '请勿连点')
+                    hintFn('warning', '请勿连点,此行为可能造成封号')
                 })
                 .catch(err => {
                     hintFn('warning', '操作失败')
@@ -302,7 +302,7 @@ function likeFn(event) {
                             event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML--
                             return
                         }
-                        hintFn('warning', '请勿连点')
+                        hintFn('warning', '请勿连点,此行为可能造成封号')
                     })
                     .catch(err => {
                         hintFn('warning', '操作失败')
@@ -317,7 +317,7 @@ function likeFn(event) {
                         event.parentElement.parentElement.nextElementSibling.nextElementSibling.firstElementChild.lastElementChild.innerHTML++
                         return
                     }
-                    hintFn('warning', '请勿连点')
+                    hintFn('warning', '请勿连点,此行为可能造成封号')
                 })
                 .catch(err => {
                     hintFn('warning', '操作失败')

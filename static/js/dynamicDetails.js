@@ -120,7 +120,6 @@ function sendCommentFn() {
             sendComment.setAttribute('onclick', `hintFn('warning', '上传中')`)
             sendFn('/admin/publicComment', formData)
                 .then(result => {
-                    console.log(result)
                     sendComment.setAttribute('onclick', 'sendCommentFn()')
                     userObj.commentId = result.msg[result.msg.length - 1].id
                     sendArrNone.push(result.msg[result.msg.length - 1].id)
@@ -538,7 +537,7 @@ function getAllComment() {
                     // 遍历二级评论
                     for (let j = 0; j < result.msg.list[i].commentList.length; j++) {
                         let commentSonDel = ''
-                        if (result.msg.login && result.msg.login == result.msg.list[i].commentList[j].comment.ob.u_id.id) {
+                        if ((result.msg.login && result.msg.login == result.msg.list[i].commentList[j].comment.ob.u_id.id) || result.isAdmin) {
                             commentSonDel = `<button onclick="delReplyCommentFn(this)">删除</button>`
                         }
                         let tempObj = {
@@ -585,7 +584,7 @@ function getAllComment() {
                     imgStr = `<img src="${defaultImgUrl}" alt="" data-url="${result.msg.list[i].comment.img_url}" onload="operatorImgFn(this)">`
                 }
                 let commentDel = ``
-                if (result.msg.login && result.msg.login == result.msg.list[i].comment.ob.u_id.id) {
+                if ((result.msg.login && result.msg.login == result.msg.list[i].comment.ob.u_id.id) || result.isAdmin) {
                     commentDel = `<button class="operatorBtn" onclick="delCommentFn(this)">删除</button>`
                 }
                 let userObj = {
@@ -875,7 +874,6 @@ window.onmousewheel = function (event) {
     if (event.wheelDelta < 0 && !yn && nowPage >= allPges) {
         // 判断是否该提示没有数据了
         if (scrollHeightOther <= scrollTop + windowHeight) {
-            // console.log(123)
             noContent[0].classList.remove('none')
             noContent[0].innerHTML = '没有更多内容了'
             return

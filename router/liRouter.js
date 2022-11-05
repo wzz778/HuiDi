@@ -237,7 +237,7 @@ router.post('/admin/publicComment', mult, (req, res) => {
         }
     })
         .then(result => {
-            console.log('结果',result.data)
+            console.log('结果', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
                 return
@@ -262,11 +262,15 @@ router.post('/picture/showComment', (req, res) => {
         }
     })
         .then(result => {
+            let isAdmin = false
+            if (req.session.user && req.session.user.power == 1) {
+                isAdmin = true
+            }
             if (result.data.msg == 'OK') {
                 if (req.session.token) {
                     result.data.data.login = req.session.user.id
                 }
-                res.send({ err: 0, msg: result.data.data })
+                res.send({ err: 0, msg: result.data.data, isAdmin: isAdmin })
                 return
             }
             req.send({ err: -1, msg: result.data })
@@ -279,7 +283,7 @@ router.post('/picture/showComment', (req, res) => {
 // 删除评论
 router.post('/admin/deleteComment', (req, res) => {
     let { id, userId } = req.body
-    if (userId != req.session.user.id) {
+    if (userId != req.session.user.id && req.session.user.power != 1) {
         res.send({ err: -1, msg: '不能删除他人评论' })
         return
     }

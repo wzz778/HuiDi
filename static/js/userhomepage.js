@@ -76,6 +76,7 @@ axios({
         id:userid
     }
   }).then(data => {
+    console.log(data);
     if(data.data.err==0){
         let me=data.data.msg;
         mydetext.innerHTML=me.describes;
@@ -427,7 +428,7 @@ function showmycollect(){
                     <a href="album?id=${arr[i].album.id}" class="abmax">
                         来自专辑 <span>${arr[i].album.a_name}</span> 的动态：
                     </a>
-                    <a href="dynamicDetails?id=${arr[i].images.al_id}" class="dytexta">
+                    <a href="dynamicDetails?id=${arr[i].images.id}" class="dytexta">
                         <div class="imgde">${arr[i].images.describes}</div>
                         <div class="imgmax">${arrimg}</div>
                     </a>

@@ -339,7 +339,7 @@ router.get('/api/getusernumber', (req, res) => {
         res.send({ err: -1, msg: '网络错误' })
     });
 })
-//获取个人的专辑名
+//获取个人的专辑
 router.get('/api/getmyalbumname', (req, res) => {   
     axios({
         url:'picture/showAlbum',
@@ -350,7 +350,6 @@ router.get('/api/getmyalbumname', (req, res) => {
             id:req.session.userid,
         }
     }).then(response=>{ 
-        console.log(response.data);
         if(response.data.msg=='OK'){
             res.send({ err: 0, msg:response.data.data});
         }else{
@@ -504,10 +503,8 @@ router.post('/api/remymessage', multipartMiddleware,(req, res) => {
     }
     formdata.append('sex',req.body.sex)
     formdata.append('describes',req.body.describes)
-    // formdata.append('name',req.body.username)
+    formdata.append('name',req.body.username)
     formdata.append('id',req.session.userid)
-    // req.session.userid
-    console.log(formdata);
     axios({
         method: 'POST',
         url: '/admin/updateUserPicture',
@@ -531,8 +528,9 @@ router.post('/api/remymessage', multipartMiddleware,(req, res) => {
 //修改用户状态
 router.post('/api/remystatus',(req, res) => {
     let formdata = new FormData()
-    formdata.append('status',req.body.status)
+    formdata.append('status',0)
     formdata.append('id',req.session.userid)
+    console.log(formdata);
     axios({
         method: 'POST',
         url: '/admin/updateUserPicture',
@@ -545,11 +543,11 @@ router.post('/api/remystatus',(req, res) => {
         }
     })
     .then((result) => {
-        // console.log(result.data)
+        console.log(result.data)
         res.send({ err: 0, msg: result.data })
     })
     .catch((err) => {
-        // console.log(err)
+        console.log(err) 
         res.send({ err: -1, msg: err})
     })
 }) 
@@ -1142,6 +1140,27 @@ router.get('/api/lookallchatuser', (req, res) => {
         },
         params:{
             u_id:req.session.userid,
+        }
+    }) 
+    .then(result=>{
+        res.send({ err: 0, msg:result.data.data})
+    })
+    .catch(err=>{
+        console.log(err);
+        res.send({ err: -1, msg: '获取失败' })
+    })
+})
+//观看未读的聊天人
+router.get('/api/lookallnowchatuser', (req, res) => {   
+    axios({
+        method:'GET',
+        url:'/admin/getUnReadMessage',
+        headers:{
+            token:req.session.token,
+        },
+        params:{
+            beginIndex:1,
+            size:10
         }
     }) 
     .then(result=>{

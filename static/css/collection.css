@@ -231,3 +231,12 @@
     display: block;
     margin: 0 auto;
 }
+
+.card-list-nothing{
+    list-style: none;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+}

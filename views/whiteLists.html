@@ -1,14 +1,14 @@
 {{extend './backstage.html'}}
-{{block 'title'}}用户管理{{/block}}
+{{block 'title'}}白名单{{/block}}
 {{block 'header'}}
 <link rel="shortcut icon" href="/public/img/huidilogoIcon.png" type="image/x-icon">
-<link rel="stylesheet" href="public/css/hompage.css">
+<link rel="stylesheet" href="public/css/whiteLists.css">
 <link rel="stylesheet" href="public/css/communal.css">
 {{/block}}
-{{block 'homepage'}}
-<a href="homepage" class="changes active-sign">
-    <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
-    用户管理
+{{block 'whiteLists'}}
+<a href="whiteLists" class="changes active-sign">
+    <i><img src="public/iconfont/whiteLists.png" alt="" class="sign"></i>
+    白名单
     
 </a>
 <div class="signing active-signing">
@@ -105,9 +105,11 @@
 {{/block}}
 {{block 'body'}}
 <div class="card-header">
+    <button class="btn btn-delete">删除</button>
 </div>
 <div class="card-body">
     <ul class="card-body-list">
+        <li class="card-list-checkbox"><input type="checkbox" class="checkbox-all"></li>
         <li class="card-list-number">序号</li>
         <li class="card-list-name">昵称</li>
         <li class="card-list-sex">性别</li>
@@ -148,6 +150,6 @@
 {{block 'footer'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="public/js/communal.js"></script>
-<script src="public/js/homepage.js"></script>
+<script src="public/js/whiteLists.js"></script>
 
 {{/block}}

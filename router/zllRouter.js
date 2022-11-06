@@ -60,6 +60,15 @@ router.get('/authentication', (req, res) => {
     res.render('authentication.html');
 })
 
+//黑名单
+router.get('/blackLists',(req,res)=>{
+    res.render('blackLists.html')
+})
+//白名单
+router.get('/whiteLists',(req,res)=>{
+    res.render('whiteLists.html')
+})
+
 axios.defaults.baseURL = 'http://152.136.99.236:8080/'
 
 
@@ -734,6 +743,85 @@ router.get('/superAdmin/updateReportStatus',(req,res)=>{
     })
 })
 
+// 黑名单人员
+router.get('/superAdmin/showSuspicious',(req,res)=>{
+    let {beginIndex , endIndex} = req.query;
+    axios({
+        method:'GET',
+        url:'/superAdmin/showSuspicious',
+        params:{
+            beginIndex,
+            endIndex,
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+// 添加白名单
+router.get('/superAdmin/addWhitelisting',(req,res)=>{
+    let {userId} = req.query;
+    axios({
+        method:'POST',
+        url:'/superAdmin/addWhitelisting',
+        params:{
+            userId
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+// 删除白名单用户
+router.get('/superAdmin/deleteWhitelisting',(req,res)=>{
+    let {userId} = req.query;
+    axios({
+        method:'DELETE',
+        url:'/superAdmin/deleteWhitelisting',
+        params:{
+            userId
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
+
+// 白名单
+router.get('/superAdmin/showWhitelisting',(req,res)=>{
+    let {beginIndex,endIndex} = req.query;
+    axios({
+        method:'GET',
+        url:'/superAdmin/showWhitelisting',
+        params:{
+            beginIndex,
+            endIndex
+        },
+        headers:{
+            token:req.session.token
+        }
+    }).then((result) => {
+        console.log(result.data);
+        res.send({ err: 0, msg: result.data.data })
+    }).catch((error) => {
+        res.send({ err: -1, msg: error })
+    })
+})
 
 
 module.exports = router;

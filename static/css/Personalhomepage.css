@@ -156,9 +156,9 @@ li {
     border-radius: 3px;
     border: 5px solid white;
     position: absolute;
-    background-repeat: no-repeat;
-    background-size: cover;
     background-image: url(/public/img/userHead.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     top: -57px;
 }
 .mymessage #mymessagetext #cordcon{

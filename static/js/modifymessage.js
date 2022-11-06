@@ -186,10 +186,12 @@ describe.onkeydown=function(){
         let newfile=new FormData();
         if(isnull(kuanginput.value)&&isnull(describe.value)){
             hintFn('warning' ,"请输入完整内容")
+            closeland()
             return
         }
         if(judgeStr(kuanginput.value).length>6){
             hintFn('warning' ,"请输入6个字符以内的用户名！")
+            closeland()
             return
         }
         let sex=sexinput[0].checked?'男':"女";
@@ -209,7 +211,7 @@ describe.onkeydown=function(){
         })
         .then((result) => {
             closeland()
-            // console.log(result.data);
+            console.log(result.data);
             if(result.data.err==0&&result.data.msg.msg=='OK'){  
                 hintFn('success' ,'保存成功')
                 setTimeout(function () {

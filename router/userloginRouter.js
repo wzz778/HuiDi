@@ -29,6 +29,9 @@ router.get('/Myfans',(req,res)=>{
 router.get('/chatmessage',(req,res)=>{
     res.render('chatmessage.html')
 })
+router.get('/nowchatmessage',(req,res)=>{
+    res.render('nowchatmessage.html')
+})
 router.get('/likemessage',(req,res)=>{
     res.render('likemessage.html')
 })

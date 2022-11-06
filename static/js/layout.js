@@ -41,6 +41,7 @@ function delay(func,time) {
     }, time);
   }
 //传参的防止连点
+
 function contrasttime(time){
     let data=new Date(time.replace(/-/g,"/"));
     let t1=new Date();//获取当前时间
@@ -142,7 +143,7 @@ function FourscrollBy() {
             clearInterval(four);
         } else {
             window.scrollBy(0, -60);
-        }
+        }  
     } else {
         if (document.body.scrollTop <= 0) {
             clearInterval(four);
@@ -180,6 +181,7 @@ axios({
     url: '/api/getmymessage',
     method: 'get',
   }).then(data => {
+    // console.log(data.data);
     if(data.data.err==0){
         let me=data.data.msg;
         if(me.img_url!=null){

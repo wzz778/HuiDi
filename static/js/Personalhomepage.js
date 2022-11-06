@@ -105,6 +105,7 @@ axios({
   .catch(function (error) {
     // console.log(error);
   });
+
 function getmyalbum(){
     axios({
         url: '/api/getmyalbumname',
@@ -325,7 +326,6 @@ function addab(){
 let dynowpage=1;
 let dyallpage=1;
 function showmydynamic(){
-    console.log("dy");
     axios({
       url: '/api/getmydynamic',
       method: 'get',
@@ -334,6 +334,7 @@ function showmydynamic(){
           begin:dynowpage
       }
     }).then(data => {
+        // console.log(data.data);
         if(data.data.err==0){
             if(data.data.msg.all_count==0){
                 class_body1.innerHTML+=`
@@ -405,7 +406,6 @@ function showmydynamic(){
 let colnowpage=1;
 let colallpage=1;
 function showmycollect(){
-    console.log("col");
     axios({
       url: '/api/getmycollect',
       method: 'get',
@@ -454,7 +454,7 @@ function showmycollect(){
                     <a href="album?id=${arr[i].album.id}" class="abmax">
                         来自专辑 <span>${arr[i].album.a_name}</span> 的动态：
                     </a>
-                    <a href="dynamicDetails?id=${arr[i].images.al_id}" class="dytexta">
+                    <a href="dynamicDetails?id=${arr[i].images.id}" class="dytexta">
                         <div class="imgde">${arr[i].images.describes}</div>
                         <div class="imgmax">${arrimg}</div>
                     </a>

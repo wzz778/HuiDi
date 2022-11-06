@@ -29,14 +29,13 @@ function tologin(){
         if(data.data.err==0){
           if(data.data.msg.status==1){
               if(Date.parse(new Date()) > Date.parse(data.data.msg.end_time)){
+                // let newfile=new FormData();
+                // newfile.append("status",0)
                 axios({
                   url: '/api/remystatus',
                   method: 'post',
-                  data:newfile
                 })
                 hintFn('success' ,'登录成功')
-                let newfile=new FormData();
-                newfile.append("status",0)
                 if(data.data.msg.power==2){
                   setTimeout(function () {
                       window.location.assign("/");

@@ -32,11 +32,7 @@ let sortred=document.getElementsByClassName('sortred')
     
   });
 function del_one_me(event){ 
-    reconfirmmax.style.display='block'
-    onlandmax.style.display='block'
-    confirm_header.innerText="删除信息"
-    confirm_content.innerText="您确定要删除该条信息？"
-    confirmtrue.onclick=function(){
+    reconfirm("删除信息","您确定要删除该条信息？",function(){
         let thisid=event.parentNode.children[3].innerHTML;
         let arrid=new Array()
         arrid.push(thisid)
@@ -60,7 +56,7 @@ function del_one_me(event){
     
         })
         closeconfirm()
-    }
+    })
 }
 function del_all(){ 
     let arrid=new Array()

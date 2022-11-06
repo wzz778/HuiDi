@@ -421,16 +421,23 @@ function collectFn(event) {
     // 判断是否登录
     judgeLogin()
         .then((result) => {
+            event.setAttribute('onclick', "hintFn('warning', '请勿连点')")
             // 判断是收藏还是取消收藏
             if (event.classList.value.indexOf('clickOperator') != -1) {
                 // 取消收藏
                 sendFn('/admin/deleteCollect', { id: window.location.search.split("=")[1] })
                     .then(result => {
-                        event.classList.remove('clickOperator')
+                        event.setAttribute('onclick', 'collectFn(this)')
                         if (event.lastElementChild.innerHTML == 0) {
+                            event.classList.remove('clickOperator')
                             return
                         }
-                        event.lastElementChild.innerHTML--
+                        if (result.msg == 'success') {
+                            event.classList.remove('clickOperator')
+                            event.lastElementChild.innerHTML--
+                            return
+                        }
+                        hintFn('warning', ',此行为可能造成封号')
                     })
                     .catch(err => {
                         hintFn('warning', '操作失败')
@@ -439,8 +446,13 @@ function collectFn(event) {
             }
             sendFn('/admin/addCollect', { imgId: window.location.search.split("=")[1], uId: result.userInfo.id })
                 .then(result => {
-                    event.classList.add('clickOperator')
-                    event.lastElementChild.innerHTML++
+                    event.setAttribute('onclick', 'collectFn(this)')
+                    if (result.msg == 'success') {
+                        event.classList.add('clickOperator')
+                        event.lastElementChild.innerHTML++
+                        return
+                    }
+                    hintFn('warning', '请勿连点')
                 })
                 .catch(err => {
                     hintFn('warning', '操作失败')
@@ -455,16 +467,23 @@ function likeFn(event) {
     // 判断是否登录
     judgeLogin()
         .then((result) => {
+            event.setAttribute('onclick', "hintFn('warning', '请勿连点')")
             // 判断是收藏还是取消收藏
             if (event.classList.value.indexOf('clickOperator') != -1) {
                 // 取消收藏
                 sendFn('/admin/deleteLike', { reflectId: window.location.search.split("=")[1] })
                     .then(result => {
-                        event.classList.remove('clickOperator')
+                        event.setAttribute('onclick', 'likeFn(this)')
                         if (event.lastElementChild.innerHTML == 0) {
+                            event.classList.remove('clickOperator')
                             return
                         }
-                        event.lastElementChild.innerHTML--
+                        if (result.msg == 'success') {
+                            event.classList.remove('clickOperator')
+                            event.lastElementChild.innerHTML--
+                            return
+                        }
+                        hintFn('warning', '请勿连点,此行为可能造成封号')
                     })
                     .catch(err => {
                         hintFn('warning', '操作失败')
@@ -473,8 +492,13 @@ function likeFn(event) {
             }
             sendFn('/admin/pointLike', { reflectId: window.location.search.split("=")[1] })
                 .then(result => {
-                    event.classList.add('clickOperator')
-                    event.lastElementChild.innerHTML++
+                    event.setAttribute('onclick', 'likeFn(this)')
+                    if (result.msg == 'success') {
+                        event.classList.add('clickOperator')
+                        event.lastElementChild.innerHTML++
+                        return
+                    }
+                    hintFn('warning', '请勿连点,此行为可能造成封号')
                 })
                 .catch(err => {
                     hintFn('warning', '操作失败')

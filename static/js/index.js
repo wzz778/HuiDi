@@ -393,13 +393,13 @@ function likeFn(event) {
                 sendFn('/admin/pointLike', { reflectId: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         // 添加类名
-                        event.classList.add('likeSty')
                         event.setAttribute('onclick', "likeFn(this)")
                         if (result.msg == 'success') {
+                            event.classList.add('likeSty')
                             event.lastElementChild.innerHTML++
                             return
                         }
-                        hintFn('warning', '请勿连点')
+                        hintFn('warning', '请勿连点,此行为可能造成封号')
                     })
                     .catch(err => {
                         event.setAttribute('onclick', "likeFn(this)")
@@ -409,11 +409,12 @@ function likeFn(event) {
             }
             sendFn('/admin/deleteLike', { reflectId: event.parentElement.lastElementChild.innerHTML })
                 .then(result => {
-                    event.classList.remove('likeSty')
                     if (event.lastElementChild.innerHTML == 0) {
+                        event.classList.remove('likeSty')
                         return
                     }
                     if (result.msg == 'success') {
+                        event.classList.remove('likeSty')
                         event.lastElementChild.innerHTML--
                         return
                     }
@@ -433,13 +434,19 @@ function collectFn(event) {
     // 判断是否登录
     judgeLogin()
         .then(result => {
+            event.setAttribute('onclick', "hintFn('warning', '请勿连点')")
             if (event.classList.value.indexOf('likeSty') == -1) {
                 // 收藏
                 sendFn('/admin/addCollect', { imgId: event.parentElement.lastElementChild.innerHTML })
                     .then(result => {
                         // 添加类名
-                        event.classList.add('likeSty')
-                        event.lastElementChild.innerHTML++
+                        event.setAttribute('onclick', "collectFn(this)")
+                        if (result.msg == 'success') {
+                            event.classList.add('likeSty')
+                            event.lastElementChild.innerHTML++
+                            return
+                        }
+                        hintFn('warning', '请勿连点,此行为可能造成封号')
                     })
                     .catch(err => {
                         hintFn('warning', '操作失败')
@@ -448,11 +455,17 @@ function collectFn(event) {
             }
             sendFn('/admin/deleteCollect', { id: event.parentElement.lastElementChild.innerHTML })
                 .then(result => {
-                    event.classList.remove('likeSty')
+                    event.setAttribute('onclick', "collectFn(this)")
                     if (event.lastElementChild.innerHTML == 0) {
+                        event.classList.remove('likeSty')
                         return
                     }
-                    event.lastElementChild.innerHTML--
+                    if (result.msg == 'success') {
+                        event.classList.remove('likeSty')
+                        event.lastElementChild.innerHTML--
+                        return
+                    }
+                    hintFn('warning', '请勿连点,此行为可能造成封号')
                 })
                 .catch(err => {
                     hintFn('warning', '操作失败')

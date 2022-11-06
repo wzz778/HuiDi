@@ -1,14 +1,14 @@
 {{extend './backstage.html'}}
-{{block 'title'}}用户管理{{/block}}
+{{block 'title'}}黑名单{{/block}}
 {{block 'header'}}
 <link rel="shortcut icon" href="/public/img/huidilogoIcon.png" type="image/x-icon">
-<link rel="stylesheet" href="public/css/hompage.css">
+<link rel="stylesheet" href="public/css/blackLists.css">
 <link rel="stylesheet" href="public/css/communal.css">
 {{/block}}
-{{block 'homepage'}}
-<a href="homepage" class="changes active-sign">
-    <i><img src="public/iconfont/users.png" alt="" class="sign"></i>
-    用户管理
+{{block 'blackLists'}}
+<a href="blackLists" class="changes active-sign">
+    <i><img src="public/iconfont/backLists.png" alt="" class="sign"></i>
+    黑名单
     
 </a>
 <div class="signing active-signing">
@@ -38,6 +38,7 @@
                         <dd class="layer-select-tips startTimes" value="2021">360天</dd>
                     </dl>
                 </div>
+
             </div>
         </div>
         <div style="position: relative;bottom:-10px">
@@ -113,6 +114,7 @@
         <li class="card-list-sex">性别</li>
         <li class="card-list-status">状态</li>
         <li class="card-list-status">认证名称</li>
+        <li class="card-list-time">违规操作次数</li>
         <li class="card-list-mail">邮箱</li>
         <li class="card-list-other">其他操作</li>
     </ul>
@@ -148,6 +150,6 @@
 {{block 'footer'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="public/js/communal.js"></script>
-<script src="public/js/homepage.js"></script>
+<script src="public/js/blackLists.js"></script>
 
 {{/block}}

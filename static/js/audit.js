@@ -26,7 +26,7 @@ function renders(begin_index,size){
             size:size
         }
     }).then(result =>{
-        // console.log(result.data);
+        console.log(result.data);
         pageings[0].maxLength = result.data.msg.all_page
         pageings[0].all_size = result.data.msg.all_count
         pageings[0].cur_index = result.data.msg.cur_index;
@@ -113,6 +113,7 @@ cancel[0].onclick = function(){
 }
 confirm[0].onclick = function(){
     if(classifier_input[0].value != ''){
+        console.log(pass[1].ids,);
         axios({
             method:'GET',
             url:'/superAdmin/updatePass',
@@ -121,15 +122,18 @@ confirm[0].onclick = function(){
                 massage:classifier_input[0].value
             }
         }).then(result =>{
-            // console.log(result.data);
-            if(result.data.msg == 'success'){
+            console.log(result);
                 hidden[0].style.display = 'none'
                 hidden[2].style.display = 'block'
                 warn_texts[0].innerHTML = '驳回成功'
                 warnings[0].src = 'public/iconfont/success.png'
-                renders(pageings[0].cur_index,pageings[0].size,-1);
+                if(pageings[0].maxLength == pageings[0].cur_index && pageings[0].size == 1){
+                    renders(pageings[0].cur_index-1,pageings[0].size,-1);
+                }else{
+                    renders(pageings[0].cur_index,pageings[0].size,-1);
+                }
+                
                 classifier_input[0].value = ''
-            }
             
         })
     }else{
@@ -156,11 +160,13 @@ confirm[1].onclick = function(){
             hidden[2].style.display = 'block'
             warn_texts[0].innerHTML = '审核通过'
             warnings[0].src = 'public/iconfont/success.png'
-            renders(pageings[0].cur_index,pageings[0].size,-1);
+            if(pageings[0].maxLength == pageings[0].cur_index && pageings[0].size == 1){
+                renders(pageings[0].cur_index-1,pageings[0].size,-1);
+            }else{
+                renders(pageings[0].cur_index,pageings[0].size,-1);
+            }
             classifier_input[0].value = ''
         }
-        hidden[1].style.display = 'none'
-        renders(pageings[0].cur_index,pageings[0].size,-1);
     })
 }
 

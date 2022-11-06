@@ -49,126 +49,133 @@ function renders(begin_index,size,numbers){
         pageings[0].number = numbers
         let st = '李四'
         let all = ''
-        for(let i=0;i<result.data.msg.list.length;i++){
-            let status = '';
-            if(result.data.msg.list[i].status == 0){
-                status = '未审核' 
-            }else if(result.data.msg.list[i].status == 1){
-                status = '审核通过'
-            }else if(result.data.msg.list[i].status == 2){
-                status = '未通过'
-            }
-            if(result.data.msg.list[i].describes == null){
-                let describes = '无'
-                if(result.data.msg.list[i].status == 1){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass ">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
-                                    显示
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
-                                    添加
-                                </button>
-                        </li>
-                    </ul>`
+        if(result.data.msg.list.length == 0){
+            all = `<li class="card-list-nothing">暂无最新内容</li>`
+            card_body_main[0].innerHTML = all;
+            generatePagination(1,0,1,0,renders,numbers);
+        }else{
+            for(let i=0;i<result.data.msg.list.length;i++){
+                let status = '';
+                if(result.data.msg.list[i].status == 0){
+                    status = '未审核' 
+                }else if(result.data.msg.list[i].status == 1){
+                    status = '审核通过'
+                }else if(result.data.msg.list[i].status == 2){
+                    status = '未通过'
+                }
+                if(result.data.msg.list[i].describes == null){
+                    let describes = '无'
+                    if(result.data.msg.list[i].status == 1){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass ">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
+                                        显示
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
+                                        添加
+                                    </button>
+                            </li>
+                        </ul>`
+                    }else{
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass">
+                                        <img src="public/iconfont/pass.png" alt="" class="forbid ">
+                                        通过
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                                        驳回
+                                    </button>
+                            </li>
+                        </ul>`
+                    }
                 }else{
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass">
-                                    <img src="public/iconfont/pass.png" alt="" class="forbid ">
-                                    通过
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                                    驳回
-                                </button>
-                        </li>
-                    </ul>`
+                    if(result.data.msg.list[i].status == 1){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass ">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
+                                        显示
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
+                                        添加
+                                    </button>
+                            </li>
+                        </ul>`
+                    }else{
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass">
+                                        <img src="public/iconfont/pass.png" alt="" class="forbid">
+                                        通过
+                                    </button>
+                                    <button class="btn reject">
+                                        <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                                        驳回
+                                    </button>
+                            </li>
+                        </ul>`
+                    }
                 }
-            }else{
-                if(result.data.msg.list[i].status == 1){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass ">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
-                                    显示
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
-                                    添加
-                                </button>
-                        </li>
-                    </ul>`
+                
+            }
+            card_body_main[0].innerHTML = all;
+            generatePagination(result.data.msg.all_page,size,result.data.msg.cur_index,result.data.msg.all_count,renders,numbers);
+            // renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,page_current[0].number);
+            for(let j=0;j<result.data.msg.list.length;j++){
+                if(result.data.msg.list[j].status == 1){
+                    reject[j].onclick = function(){
+                        window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                    }
+                    pass[j].onclick = function(){
+                        warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
+                        confirm[1].numbers = 0;
+                        confirm[1].ids = result.data.msg.list[j].id
+                        hidden[1].style.display = 'block'
+                    }
                 }else{
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass">
-                                    <img src="public/iconfont/pass.png" alt="" class="forbid">
-                                    通过
-                                </button>
-                                <button class="btn reject">
-                                    <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                                    驳回
-                                </button>
-                        </li>
-                    </ul>`
-                }
-            }
-            
-        }
-        card_body_main[0].innerHTML = all;
-        generatePagination(result.data.msg.all_page,size,result.data.msg.cur_index,result.data.msg.all_count,renders,numbers);
-        // renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,page_current[0].number);
-        for(let j=0;j<result.data.msg.list.length;j++){
-            if(result.data.msg.list[j].status == 1){
-                reject[j].onclick = function(){
-                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
-                }
-                pass[j].onclick = function(){
-                    warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
-                    confirm[1].numbers = 0;
-                    confirm[1].ids = result.data.msg.list[j].id
-                    hidden[1].style.display = 'block'
-                }
-            }else{
-                reject[j].onclick = function(){
-                    confirm[0].ids = result.data.msg.list[j].id
-                    hidden[0].style.display = 'block'
-                }
-                pass[j].onclick = function(){
-                    warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
-                    confirm[1].numbers = 0;
-                    confirm[1].ids = result.data.msg.list[j].id
-                    hidden[1].style.display = 'block'
+                    reject[j].onclick = function(){
+                        confirm[0].ids = result.data.msg.list[j].id
+                        hidden[0].style.display = 'block'
+                    }
+                    pass[j].onclick = function(){
+                        warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
+                        confirm[1].numbers = 0;
+                        confirm[1].ids = result.data.msg.list[j].id
+                        hidden[1].style.display = 'block'
+                    }
                 }
             }
         }
+        
     })
 }
 renders(1,5,0);
@@ -192,182 +199,189 @@ function rendering(begin_index,size,numbers){
         pageings[0].number = numbers
         let st = '李四'
         let all = ''
-        for(let i=0;i<result.data.msg.list.length;i++){
-            let status = '';
-            if(result.data.msg.list[i].status == 0){
-                status = '未审核' 
-            }else if(result.data.msg.list[i].status == 2){
-                status = '未通过'
-            }else{
-                status = '审核通过'
-            }
-            if(result.data.msg.list[i].describes == null){
-                let describes = '无'
-                if(result.data.msg.list[i].status == 1){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass ">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
-                                    显示
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
-                                    添加
-                                </button>
-                        </li>
-                    </ul>`
-                }else if(result.data.msg.list[i].status == 3){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid ">
-                                    显示
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid">
-                                    已添加
-                                </button>
-                        </li>
-                    </ul>`
-                }else if(result.data.msg.list[i].status == 4){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid ">
-                                    已显示
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid">
-                                    已添加
-                                </button>
-                        </li>
-                    </ul>`
+        if(result.data.msg.list.length == 0){
+            all = `<li class="card-list-nothing">暂无最新内容</li>`
+            card_body_main[0].innerHTML = all;
+            generatePagination(1,0,1,0,renders,numbers);
+        }else{
+            for(let i=0;i<result.data.msg.list.length;i++){
+                let status = '';
+                if(result.data.msg.list[i].status == 0){
+                    status = '未审核' 
+                }else if(result.data.msg.list[i].status == 2){
+                    status = '未通过'
+                }else{
+                    status = '审核通过'
                 }
-            }else{
-                if(result.data.msg.list[i].status == 1){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass ">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
-                                    显示
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
-                                    添加
-                                </button>
-                        </li>
-                    </ul>`
-                }else if(result.data.msg.list[i].status == 3){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid">
-                                    显示
-                                </button>
-                                <button class="btn reject">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid">
-                                    已添加
-                                </button>
-                        </li>
-                    </ul>`
-                }else if(result.data.msg.list[i].status == 4){
-                    all +=`<ul class="card-body-list">
-                        <li class="card-list-number">${i+1}</li>
-                        <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
-                        <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
-                        <li class="card-list-status">${status}</li>
-                        <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
-                        <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
-                        <li class="card-list-other">
-                                <button class="btn pass">
-                                    <img src="public/iconfont/see.png" alt="" class="forbid ">
-                                    已显示
-                                </button>
-                                <button class="btn reject ">
-                                    <img src="public/iconfont/add.png" alt="" class="forbid">
-                                    已添加
-                                </button>
-                        </li>
-                    </ul>`
-                }
-            }
-            
-        }
-        card_body_main[0].innerHTML = all;
-        generatePagination(result.data.msg.all_page,size,result.data.msg.cur_index,result.data.msg.all_count,rendering,numbers);
-        // renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,page_current[0].number);
-        for(let j=0;j<result.data.msg.list.length;j++){
-            if(result.data.msg.list[j].status == 1){
-                reject[j].onclick = function(){
-                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
-                }
-                pass[j].onclick = function(){
-                    hidden[2].style.display = 'block'
-                    warn_texts[0].innerHTML = '该专辑未添加轮播图，还无法显示在首页'
-                    warnings[0].src = 'public/iconfont/warn2.png'
-                    // warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
-                    // confirm[1].ids = result.data.msg.list[j].id
-                    // hidden[1].style.display = 'block'
-                }
-            }else if(result.data.msg.list[j].status == 3){
-                reject[j].onclick = function(){
-                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
-                }
-                pass[j].onclick = function(){
-                    if(layer_click[0].numberStatus == 3){
-                        hidden[2].style.display = 'block'
-                        warn_texts[0].innerHTML = '展示的已满，请取消其他的，再添加'
-                        warnings[0].src = 'public/iconfont/warn2.png'
-                    }else{
-                        hidden[1].style.display = 'block'
-                        warn_text[0].innerHTML = '确定选中该专辑的图片作为轮播图嘛？'
-                        confirm[1].numbers = 1;
-                        confirm[1].ids = result.data.msg.list[j].id
+                if(result.data.msg.list[i].describes == null){
+                    let describes = '无'
+                    if(result.data.msg.list[i].status == 1){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass ">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
+                                        显示
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
+                                        添加
+                                    </button>
+                            </li>
+                        </ul>`
+                    }else if(result.data.msg.list[i].status == 3){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid ">
+                                        显示
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid">
+                                        已添加
+                                    </button>
+                            </li>
+                        </ul>`
+                    }else if(result.data.msg.list[i].status == 4){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid ">
+                                        已显示
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid">
+                                        已添加
+                                    </button>
+                            </li>
+                        </ul>`
                     }
-                    
+                }else{
+                    if(result.data.msg.list[i].status == 1){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass ">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid chang-forbid">
+                                        显示
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid chang-forbid">
+                                        添加
+                                    </button>
+                            </li>
+                        </ul>`
+                    }else if(result.data.msg.list[i].status == 3){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid">
+                                        显示
+                                    </button>
+                                    <button class="btn reject">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid">
+                                        已添加
+                                    </button>
+                            </li>
+                        </ul>`
+                    }else if(result.data.msg.list[i].status == 4){
+                        all +=`<ul class="card-body-list">
+                            <li class="card-list-number">${i+1}</li>
+                            <li class="card-list-name">${result.data.msg.list[i].ob.name}</li>
+                            <li class="card-list-sex">${result.data.msg.list[i].a_name}</li>
+                            <li class="card-list-status">${status}</li>
+                            <li class="card-list-mail">${result.data.msg.list[i].describes}</li>
+                            <li class="card-list-timer">${result.data.msg.list[i].create_time}</li>
+                            <li class="card-list-other">
+                                    <button class="btn pass">
+                                        <img src="public/iconfont/see.png" alt="" class="forbid ">
+                                        已显示
+                                    </button>
+                                    <button class="btn reject ">
+                                        <img src="public/iconfont/add.png" alt="" class="forbid">
+                                        已添加
+                                    </button>
+                            </li>
+                        </ul>`
+                    }
                 }
-            }else if(result.data.msg.list[j].status == 4){
-                reject[j].onclick = function(){
-                    window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
-                }
-                pass[j].onclick = function(){
-                    warn_text[0].innerHTML = '确定取消该专辑的图片作为轮播图嘛？'
-                    confirm[1].numbers = 2;
-                    confirm[1].ids = result.data.msg.list[j].id
-                    hidden[1].style.display = 'block'
+                
+            }
+            card_body_main[0].innerHTML = all;
+            generatePagination(result.data.msg.all_page,size,result.data.msg.cur_index,result.data.msg.all_count,rendering,numbers);
+            // renderPaging(renders,page_current[0].maxNumber,page_current[0].all_size,page_current[0].number);
+            for(let j=0;j<result.data.msg.list.length;j++){
+                if(result.data.msg.list[j].status == 1){
+                    reject[j].onclick = function(){
+                        window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                    }
+                    pass[j].onclick = function(){
+                        hidden[2].style.display = 'block'
+                        warn_texts[0].innerHTML = '该专辑未添加轮播图，还无法显示在首页'
+                        warnings[0].src = 'public/iconfont/warn2.png'
+                        // warn_text[0].innerHTML = '确定通过专辑名为：' + result.data.msg.list[j].a_name + '嘛？'
+                        // confirm[1].ids = result.data.msg.list[j].id
+                        // hidden[1].style.display = 'block'
+                    }
+                }else if(result.data.msg.list[j].status == 3){
+                    reject[j].onclick = function(){
+                        window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                    }
+                    pass[j].onclick = function(){
+                        if(layer_click[0].numberStatus == 3){
+                            hidden[2].style.display = 'block'
+                            warn_texts[0].innerHTML = '展示的已满，请取消其他的，再添加'
+                            warnings[0].src = 'public/iconfont/warn2.png'
+                        }else{
+                            hidden[1].style.display = 'block'
+                            warn_text[0].innerHTML = '确定选中该专辑的图片作为轮播图嘛？'
+                            confirm[1].numbers = 1;
+                            confirm[1].ids = result.data.msg.list[j].id
+                        }
+                        
+                    }
+                }else if(result.data.msg.list[j].status == 4){
+                    reject[j].onclick = function(){
+                        window.location.href = 'superAlbum?id=' + result.data.msg.list[j].id;
+                    }
+                    pass[j].onclick = function(){
+                        warn_text[0].innerHTML = '确定取消该专辑的图片作为轮播图嘛？'
+                        confirm[1].numbers = 2;
+                        confirm[1].ids = result.data.msg.list[j].id
+                        hidden[1].style.display = 'block'
+                    }
                 }
             }
         }
+        
     })
 }
 

@@ -39,111 +39,126 @@ function renders(begin_index,size,numbers){
         pageings[0].cur_index = result.data.msg.cur_index
         pageings[0].size = result.data.msg.size
         let all = '';
-        for(let i=0;i<result.data.msg.list.length;i++){
-            if(result.data.msg.list[i].types == 1){
-                card_body_list[0].innerHTML = `<li class="card-list-number">序号</li>
-                <li class="card-list-name">举报人</li>
-                <li class="card-list-sex">性别</li>
-                <li class="card-list-mail">邮箱</li>
-                <li class="card-list-status">举报理由</li>
-                <li class="card-list-status">举报内容</li>
-                <li class="card-list-other">其他操作</li>`
-                    if(result.data.msg.list[i].ob.comment == null){
-                        let comment = '该评论已被删除'
+        if(result.data.msg.list.length == 0){
+            card_body_list[0].innerHTML = `<li class="card-list-number">序号</li>
+                    <li class="card-list-name">举报人</li>
+                    <li class="card-list-sex">性别</li>
+                    <li class="card-list-mail">邮箱</li>
+                    <li class="card-list-status">举报理由</li>
+                    <li class="card-list-status">举报内容</li>
+                    <li class="card-list-other">其他操作</li>`
+            all = `<li class="card-list-nothing">暂无最新内容</li>`
+            card_body_main[0].innerHTML = all;
+            generatePagination(1,0,1,0,renders,numbers);
+        }else{
+            all = '';
+            for(let i=0;i<result.data.msg.list.length;i++){
+                if(result.data.msg.list[i].types == 1){
+                    card_body_list[0].innerHTML = `<li class="card-list-number">序号</li>
+                    <li class="card-list-name">举报人</li>
+                    <li class="card-list-sex">性别</li>
+                    <li class="card-list-mail">邮箱</li>
+                    <li class="card-list-status">举报理由</li>
+                    <li class="card-list-status">举报内容</li>
+                    <li class="card-list-other">其他操作</li>`
+                        if(result.data.msg.list[i].ob.comment == null){
+                            let comment = '该评论已被删除'
+                            all += `<ul class="card-body-list">
+                                <li class="card-list-number">${i+1}</li>
+                                <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
+                                <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
+                                <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
+                                <li class="card-list-status">${result.data.msg.list[i].message}</li>
+                                <li class="card-list-status">${comment}</li>
+                                <li class="card-list-other">
+                                    <button class="btn forbiding">
+                                        <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                                        封号
+                                    </button>
+                                    <button class="btn detail">
+                                        <img src="public/iconfont/detail1.png" alt="" class="forbid">
+                                        受理
+                                    </button>
+                                </li>
+                            </ul>`
+                        }else{
+                            all += `<ul class="card-body-list">
+                                <li class="card-list-number">${i+1}</li>
+                                <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
+                                <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
+                                <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
+                                <li class="card-list-status">${result.data.msg.list[i].message}</li>
+                                <li class="card-list-status">${result.data.msg.list[i].ob.comment.content}</li>
+                                <li class="card-list-other">
+                                    <button class="btn forbiding">
+                                        <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                                        封号
+                                    </button>
+                                    <button class="btn detail">
+                                        <img src="public/iconfont/detail1.png" alt="" class="forbid">
+                                        受理
+                                    </button>
+                                </li>
+                            </ul>`
+                        }
+                    
+                    
+                    
+                    
+    
+                }else{
+                    card_body_list[0].innerHTML = `<li class="card-list-number">序号</li>
+                    <li class="card-list-name">举报人</li>
+                    <li class="card-list-sex">性别</li>
+                    <li class="card-list-mail">邮箱</li>
+                    <li class="card-list-status">举报理由</li>
+                    <li class="card-list-other">其他操作</li>`
+    
+    
                         all += `<ul class="card-body-list">
-                            <li class="card-list-number">${i+1}</li>
-                            <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
-                            <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
-                            <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
-                            <li class="card-list-status">${result.data.msg.list[i].message}</li>
-                            <li class="card-list-status">${comment}</li>
-                            <li class="card-list-other">
-                                <button class="btn forbiding">
-                                    <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                                    封号
-                                </button>
-                                <button class="btn detail">
-                                    <img src="public/iconfont/detail1.png" alt="" class="forbid">
-                                    受理
-                                </button>
-                            </li>
-                        </ul>`
-                    }else{
-                        all += `<ul class="card-body-list">
-                            <li class="card-list-number">${i+1}</li>
-                            <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
-                            <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
-                            <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
-                            <li class="card-list-status">${result.data.msg.list[i].message}</li>
-                            <li class="card-list-status">${result.data.msg.list[i].ob.comment.content}</li>
-                            <li class="card-list-other">
-                                <button class="btn forbiding">
-                                    <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                                    封号
-                                </button>
-                                <button class="btn detail">
-                                    <img src="public/iconfont/detail1.png" alt="" class="forbid">
-                                    受理
-                                </button>
-                            </li>
-                        </ul>`
+                        <li class="card-list-number">${i+1}</li>
+                        <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
+                        <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
+                        <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
+                        <li class="card-list-status">${result.data.msg.list[i].message}</li>
+                        <li class="card-list-other">
+                            <button class="btn forbiding">
+                                <img src="public/iconfont/forbid.png" alt="" class="forbid">
+                                封号
+                            </button>
+                            <button class="btn detail">
+                                <img src="public/iconfont/detail1.png" alt="" class="forbid">
+                                详情
+                            </button>
+                        </li>
+                    </ul>`
+                    
+                    
+                }
+                
+            }
+            card_body_main[0].innerHTML = all;
+            generatePagination(result.data.msg.all_page,result.data.msg.size,result.data.msg.cur_index,result.data.msg.all_count,renders,numbers);
+            // renderPaging(renders,page_current[0].maxLength,page_current[0].all_size,-1)
+            for(let i=0;i<result.data.msg.list.length;i++){
+                if(result.data.msg.list[i].types == 1){
+                    detail[i].onclick = function(){
+                        confirms[1].ids = result.data.msg.list[i].id;
+                        warn_text[0].innerHTML = '确定受理该举报嘛？'
+                        hidden[1].style.display = 'block';
                     }
-                
-                
-                
-                
-
-            }else{
-                card_body_list[0].innerHTML = `<li class="card-list-number">序号</li>
-                <li class="card-list-name">举报人</li>
-                <li class="card-list-sex">性别</li>
-                <li class="card-list-mail">邮箱</li>
-                <li class="card-list-status">举报理由</li>
-                <li class="card-list-other">其他操作</li>`
-
-
-                    all += `<ul class="card-body-list">
-                    <li class="card-list-number">${i+1}</li>
-                    <li class="card-list-name">${result.data.msg.list[i].ob.user.name}</li>
-                    <li class="card-list-sex">${result.data.msg.list[i].ob.user.sex}</li>
-                    <li class="card-list-mail">${result.data.msg.list[i].ob.user.mail}</li>
-                    <li class="card-list-status">${result.data.msg.list[i].message}</li>
-                    <li class="card-list-other">
-                        <button class="btn forbiding">
-                            <img src="public/iconfont/forbid.png" alt="" class="forbid">
-                            封号
-                        </button>
-                        <button class="btn detail">
-                            <img src="public/iconfont/detail1.png" alt="" class="forbid">
-                            详情
-                        </button>
-                    </li>
-                </ul>`
-                
-                
-            }
-            
-        }
-        card_body_main[0].innerHTML = all;
-        generatePagination(result.data.msg.all_page,result.data.msg.size,result.data.msg.cur_index,result.data.msg.all_count,renders,numbers);
-        // renderPaging(renders,page_current[0].maxLength,page_current[0].all_size,-1)
-        for(let i=0;i<result.data.msg.list.length;i++){
-            if(result.data.msg.list[i].types == 1){
-                detail[i].onclick = function(){
-                    confirms[1].ids = result.data.msg.list[i].id;
-                    warn_text[0].innerHTML = '确定受理该举报嘛？'
-                    hidden[1].style.display = 'block';
+                }else{
+                    detail[i].onclick = function(){
+                        window.location.href = '/superDynamicDetails?id=' + result.data.msg.list[i].report_id
+                    }
                 }
-            }else{
-                detail[i].onclick = function(){
-                    window.location.href = '/superDynamicDetails?id=' + result.data.msg.list[i].report_id
+                forbiding[i].onclick = function(){
+                    confirms[0].ids = result.data.msg.list[i].u_id
+                    hidden[0].style.display = 'block'
                 }
             }
-            forbiding[i].onclick = function(){
-                confirms[0].ids = result.data.msg.list[i].u_id
-                hidden[0].style.display = 'block'
-            }
         }
+        
     })
 }
 renders(1,5,1)

@@ -452,7 +452,7 @@ confirms[1].onclick = function(){
                         warnings[0].src = 'public/iconfont/success.png'
                         hidden[2].style.display = 'block'
                         if(index == checkbox_all[0].numbers){
-                            if(checkbox.length ==  checkbox_all[0].numbers){
+                            if(checkbox.length ==  checkbox_all[0].numbers && pageings[0].maxLength == pageings[0].cur_index){
                                 renders(pageings[0].cur_index-1,pageings[0].size,-1);
                             }else{
                                 renders(pageings[0].cur_index,pageings[0].size,-1);
@@ -481,7 +481,7 @@ confirms[1].onclick = function(){
                 hidden[2].style.display = 'block'
                 console.log(pageings[0].all_size);
                 console.log(pageings[0].size);
-                if(pageings[0].all_size % pageings[0].size == 1){
+                if(pageings[0].all_size % pageings[0].size == 1 && pageings[0].maxLength == pageings[0].cur_index){
                     renders(pageings[0].cur_index-1,pageings[0].size,-1);
                 }else{
                     renders(pageings[0].cur_index,pageings[0].size,-1);

@@ -71,7 +71,7 @@ function renders(begin,size){
             size:size
         }
     }).then(result =>{
-        // console.log(result.data.msg);
+        console.log(result.data.msg);
         let all = result.data.msg.records;
         let All = '';
         for(let i=0;i<all.length;i++){
@@ -145,7 +145,7 @@ function renders(begin,size){
                 <li class="card-list-name">${all[i].name}</li>
                 <li class="card-list-sex">${all[i].sex}</li>
                 <li class="card-list-status">封号</li>
-                <li class="card-list-status">>${all[i].certification}</li>
+                <li class="card-list-status">${all[i].certification}</li>
                 <li class="card-list-mail">${all[i].mail}</li>
                 <li class="card-list-other">
                     <button class="btn forbiding">

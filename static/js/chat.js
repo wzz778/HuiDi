@@ -12,25 +12,29 @@ let myimg = '/public/img/userHead.jpg';
 let sendchat = document.getElementById('sendchat');
 let isin = false;
 let fromid;
+let isfollow= true;
 function send() { }
-axios({
-  url: '/api/eachfollow',
-  method: 'get',
-  params:{
-      userid:toid
-  }
-}).then(data => {
-  if(data.data.err==-1){
-    hintFn('warning',"俩着相互关注才能发私信！")
-      setTimeout(function () {
-          window.location.assign(`/`);
-      }, 1000)
-      return
-  }
-})
-.catch(function (error) {
-  // console.log(error);
-});
+if(toid!=1000){
+  axios({
+    url: '/api/eachfollow',
+    method: 'get',
+    params:{
+        userid:toid
+    }
+  }).then(data => {
+    if(data.data.err==-1){
+      isfollow= false;
+      hintFn('warning',"用户没有互相关注！")
+        // setTimeout(function () {
+        //     window.location.assign(`/`);
+        // }, 1000)
+        return
+    }
+  })
+  .catch(function (error) {
+    // console.log(error);
+  });
+}
 //观看是否有消息
 axios({
   url: '/api/getUserIsMessage',
@@ -325,6 +329,10 @@ var creatws = function (userid) {
     // alert("点击关闭");
   }
   sendchat.onclick = function () {
+    if(isfollow==false){
+      hintFn('warning', "用户没有互相关注！")
+      return
+    }
     if (isnull(judgeStrs(chattext.value))) {
       hintFn('warning', "请输入你要输入的内容")
       return

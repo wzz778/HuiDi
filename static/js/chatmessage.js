@@ -85,12 +85,10 @@ let message_body=document.getElementsByClassName('messagebody')[0]
         method:'get',
         url:"/api/lookallnowchatuser",
     }).then(data => {
-        console.log(data.data);
         if(data.data.err==0){
             let ms=data.data.msg.list;
-
             if(ms.length==0){
-                message_body.innerHTML == `
+                message_body.innerHTML =`
                 <div id="emptymeaage" style="padding-top: 150px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
                     <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
                     什么都没有呢 . . .
@@ -125,7 +123,7 @@ let message_body=document.getElementsByClassName('messagebody')[0]
                 }
             }
         }else{
-    
+            
         }
     }).catch(function (error) {
         // console.log(error);

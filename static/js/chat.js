@@ -139,7 +139,6 @@ function tousermessage() {
         id: toid
       }
     }).then(data => {
-      // console.log(data.data);
       if (data.data.err == 0) {
         let me = data.data.msg;
         if (me.img_url != null) {
@@ -159,6 +158,7 @@ function tousermessage() {
 }
 let nowpage = 1;
 let allpage = 1;
+var firsttime='2022-10-10 12:00:00'
 function getallchat() {
   axios({
     url: '/api/lookallchat',
@@ -178,17 +178,20 @@ function getallchat() {
         lookmore.style.display = 'none';
         lookend.style.display = 'block';
         return
-      }
+      } 
       allpage = data.data.msg.all_page;
       if(nowpage==data.data.msg.all_page){
         lookmore.style.display = 'none';
         lookend.style.display = 'block';
       }
-      for (let i = 0; i < le; i++) {
+      let messagepage=document.createElement('div');
+      messagepage.className = 'messagepage';
+      let firstpage=document.getElementsByClassName('messagepage')[0]
+      for (let i = le-1; i >=0; i--) {
         let nowhtml = document.createElement('div');
         nowhtml.className = 'amessage';
-        var firstamessage = messagebody.getElementsByClassName('amessage')[0];
-        if (!recontrasttime(list[i].info_create_time, getfirstTime())) {
+        if (!recontrasttime(firsttime,list[i].info_create_time)) {
+          firsttime=list[i].info_create_time;
           if (list[i].info_u_id == fromid) {
             nowhtml.innerHTML = `
               <div class="chattimebox"><span class="chattime">${list[i].info_create_time}</span></div>
@@ -223,8 +226,12 @@ function getallchat() {
             `
           }
         }
-        firstamessage.parentNode.insertBefore(nowhtml, firstamessage);
+        // console.log(nowhtml);
+        messagepage.append(nowhtml)
       }
+      // console.log(firstpage);
+      firstpage.parentNode.insertBefore(messagepage, firstpage);
+      firsttime='2022-10-10 12:00:00'
       if (nowpage != allpage) {
         lookmore.style.display = 'block';
         lookend.style.display = 'none';
@@ -234,12 +241,14 @@ function getallchat() {
       }
       if (nowpage == 1) {
         messagebody.scrollTop = messagebody.scrollHeight;
+      }else{
+        messagebody.scrollTop=messagebody.scrollHeight-lastscrollHeight;
       }
     } else {
 
     }
   }).catch(function (error) {
-
+    console.log(error);
   });
 }
 chattext.onkeyup = function () {
@@ -325,10 +334,10 @@ var creatws = function (userid) {
   };
   function closed() {
     websocket.close();
-    sFinite('warning', "连接已关闭")
+    isFinite('warning', "连接已关闭")
     // alert("点击关闭");
   }
-  sendchat.onclick = function () {
+  function sendchatmessage(){
     if(isfollow==false){
       hintFn('warning', "用户没有互相关注！")
       return
@@ -366,6 +375,14 @@ var creatws = function (userid) {
     messagebody.scrollTop = messagebody.scrollHeight;
     chattext.value = ``
   }
+  chattext.addEventListener("keyup",function(event){
+      if(event.keyCode==13){
+        sendchatmessage()
+      }
+  });
+  sendchat.onclick = function () {
+    sendchatmessage()
+  }
 }
 function beginall() {
   tousermessage().then(result1 => {
@@ -378,9 +395,12 @@ function beginall() {
   })
 }
 beginall()
+let lastscrollHeight;
 messagebody.onscroll = function () {
   let scrollTop = messagebody.scrollTop;
+  let scrollHeight = messagebody.scrollHeight;
   if (scrollTop == 0) {
+    lastscrollHeight=scrollHeight;
     if (allpage > nowpage) {
       nowpage++;
       setTimeout(function () { getallchat() }, 1000)

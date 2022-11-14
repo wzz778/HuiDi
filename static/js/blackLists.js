@@ -206,7 +206,7 @@ function renders(begin,size){
                         }else{
                             // console.log(1);
                             startTimes[0].click();
-                            confirms[0].ids  = all[j].id;
+                            confirms[0].ids  = all[j].user.id;
                             hidden[0].style.display = 'block';
                         }
                         
@@ -256,7 +256,7 @@ confirms[0].onclick  = function(){
                 status:1,
             }
         }).then(result =>{
-            // console.log(result.data);
+            console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[0].style.display = 'none';
                 warnings[0].src = 'public/iconfont/success.png'

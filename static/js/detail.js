@@ -10,6 +10,9 @@ let application_message = document.getElementsByClassName('application-message')
 let classifier_input = document.getElementsByClassName('classifier-input');
 let imgings = document.getElementsByClassName('imgings');
 let returns = document.getElementsByClassName('returns');
+let warn_texts = document.getElementsByClassName('warn-texts');
+let warnings = document.getElementsByClassName('warnings');
+let confirmes  = document.getElementsByClassName('confirmes');
 console.log(id);
 
 
@@ -29,12 +32,19 @@ confirms[0].onclick = function(){
             id:id[1]
         }
     }).then(result =>{
-        // console.log(result.data);
+        console.log(result.data);
         if(result.data.msg == 'success'){
             hidden[0].style.display = 'none';
+            hidden[2].style.display = 'block';
+            warnings[0].src = 'public/iconfont/success.png'
+            warn_texts[0].innerHTML = '该作品通过了'
         }
     })
     
+}
+
+confirmes[0].onclick = function(){
+    hidden[2].style.display = 'none';
 }
 cancel[1].onclick = function(){
     hidden[1].style.display = 'none';
@@ -52,6 +62,9 @@ confirms[1].onclick = function(){
             // console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[1].style.display = 'none';
+                hidden[2].style.display = 'block';
+            warnings[0].src = 'public/iconfont/success.png'
+            warn_texts[0].innerHTML = '该作品已被驳回'
             }
         })
     }
@@ -143,5 +156,5 @@ function renders(id){
 }
 renders(id[1]);
 returns[0].onclick = function (){
-    window.history.go(-1);
+    window.location.replace(document.referrer); // 返回上一页并刷新
 }

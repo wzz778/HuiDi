@@ -383,25 +383,28 @@ function rendering(begin_index,size,numbers){
         }
         
     })
-}
 
-
-
-function showNumber(){
     axios({
         method:'GET',
         url:'/superAdmin/showAlbum',
         params:{
             begin_index:1,
-            size:3,
+            size:999999,
             status:'4'
         }
     }).then(result =>{
         // console.log(result.data);
         layer_click[0].numberStatus = result.data.msg.list.length;
     })
+
 }
-showNumber();
+
+
+
+// function showNumber(){
+    
+// }
+// showNumber();
 
 
 

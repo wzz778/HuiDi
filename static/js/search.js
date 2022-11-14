@@ -22,6 +22,9 @@ let talentShowAllPages = 0
 let all = 0
 function getSearchInfo() {
     searchinput.value = decodeURI(window.location.search).split("=")[1].split('&')[0]
+    if (!window.localStorage.getItem('hdsearch_history')) {
+        window.localStorage.setItem('hdsearch_history', '')
+    }
     if (!window.localStorage.getItem('hdsearch_history') || window.localStorage.getItem('hdsearch_history').indexOf(decodeURI(window.location.search).split("=")[1].split('&')[0]) == -1 || window.localStorage.getItem('hdsearch_history').indexOf(decodeURI(window.location.search).split("=")[2]) == -1) {
         // 存到本地
         let historyInfo = window.localStorage.getItem('hdsearch_history') != '' ? JSON.parse(window.localStorage.getItem('hdsearch_history')) : new Array()

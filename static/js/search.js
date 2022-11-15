@@ -51,6 +51,7 @@ function getSearchInfo() {
             type: decodeURI(window.location.search).split("=")[2]
         }).then(result => {
             all = result.msg.page.all_count
+            animation.classList.add('none')
             if (all < 5) {
                 animation.classList.add('none')
             }
@@ -137,7 +138,7 @@ function getSearchInfo() {
             </div>
                     `
             }
-            content.innerHTML = tempStr
+            content.innerHTML += tempStr
         })
         return
     }
@@ -365,6 +366,7 @@ function focusOnFn(event) {
 }
 
 window.onmousewheel = function (event) {
+    animation.classList.remove('none')
     // 视口的高度
     const viewHeight = document.documentElement.clientHeight
     // 滚动条高度
@@ -380,6 +382,7 @@ window.onmousewheel = function (event) {
         if (pictureNowPage >= pictureAllPages) {
             ynpicture = false
             animation.classList.add('none')
+            noContent.classList.remove('none')
         }
         // 提示没有内容了
         if (event.wheelDelta < 0 && !ynpicture && pictureNowPage >= pictureAllPages) {
@@ -403,6 +406,7 @@ window.onmousewheel = function (event) {
         if (albumNowPage >= albumAllPages) {
             ynalbum = false
             animation.classList.add('none')
+            noContent.classList.remove('none')
         }
         // 提示没有内容了
         if (event.wheelDelta < 0 && !ynalbum && albumNowPage >= albumAllPages) {
@@ -424,6 +428,7 @@ window.onmousewheel = function (event) {
         if (talentShowNowPage >= talentShowAllPages) {
             yntalentShow = false
             animation.classList.add('none')
+            noContent.classList.remove('none')
         }
         // 提示没有内容了
         if (event.wheelDelta < 0 && !yntalentShow && talentShowNowPage >= talentShowAllPages) {

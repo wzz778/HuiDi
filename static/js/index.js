@@ -41,14 +41,14 @@ function beginSettimeout() {
         move(-carouselIndex * 760, -1)
     }, 3000)
 }
-function move(num, operation) {
+function move(num, operation, tempNum) {
     // carousel[0].style.left = (-carouselIndex * 760) + "px"
     let tempI = 1
     clearInterval(temTwo)
     temTwo = setInterval(() => {
-        carousel[0].style.left = num + operation * (tempI * 20) + "px"
+        carousel[0].style.left = num + operation * (tempI * 30) + tempNum + "px"
         tempI++
-        if (tempI == 39) {
+        if (tempI == 26) {
             tempI = 1
             clearInterval(temTwo)
         }
@@ -88,14 +88,14 @@ function leftArrow() {
     }
     carouselIndex--
     carouselIndex = carouselIndex % 3
-    move(-(carouselIndex + 2) * 760, 1)
+    move(-(carouselIndex + 2) * 760, 1, 10)
 }
 // 点击右箭头
 function rightArrow() {
     clearInterval(timerIndex)
     carouselIndex++
     carouselIndex = carouselIndex % 3
-    move(-carouselIndex * 760, - 1)
+    move(-carouselIndex * 760, - 1, -10)
 }
 
 // 首页左边导航栏
@@ -362,7 +362,7 @@ window.onmousewheel = function (event) {
     // 请求关注动态
     let ynFocus = true
     // 没有数据了
-    if (nowPageFocusOn == allPageHotFocusOn) {
+    if (nowPageFocusOn >= allPageHotFocusOn) {
         ynFocus = false
         animation.classList.add('none')
     }

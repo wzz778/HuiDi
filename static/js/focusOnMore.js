@@ -135,6 +135,7 @@ function getFocusOnInfo(ele) {
             if (result.msg.all_count < 5) {
                 animation.classList.add('none')
             }
+            animation.classList.add('none')
             if (result.msg.list.length == 0) {
                 animation.classList.add('none')
                 noContent.classList.remove('none')
@@ -197,6 +198,7 @@ function getChoiceFn() {
 }
 
 window.onmousewheel = function (event) {
+    animation.classList.remove('none')
     // 视口的高度
     const viewHeight = document.documentElement.clientHeight
     // 滚动条高度
@@ -214,6 +216,7 @@ window.onmousewheel = function (event) {
     if (nowPage >= allPages) {
         yn = false
         animation.classList.add('none')
+        noContent.classList.remove('none')
     }
     // 提示没有内容了
     if (event.wheelDelta < 0 && !yn && nowPage >= allPages && allPages != 0) {

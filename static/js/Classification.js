@@ -59,6 +59,7 @@ function getSearchInfo() {
             if (all < 5) {
                 animation.classList.add('none')
             }
+            animation.classList.add('none')
             allPage = result.msg.page.all_page
             if (result.msg.info.length == 0) {
                 content.classList.add('none')
@@ -241,6 +242,7 @@ function likeFn(event) {
 }
 
 window.onmousewheel = function (event) {
+    animation.classList.remove('none')
     // 视口的高度
     const viewHeight = document.documentElement.clientHeight
     // 滚动条高度

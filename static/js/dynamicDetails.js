@@ -528,6 +528,7 @@ function getAllComment() {
             if (result.msg.all_count < 5) {
                 animation.classList.add('none')
             }
+            animation.classList.add('none')
             allPges = result.msg.all_page
             // 将数据渲染到页面中
             let tempStr = ''
@@ -900,6 +901,7 @@ function sendReportFn(event) {
 
 // 监听滚轮
 window.onmousewheel = function (event) {
+    animation.classList.remove('none')
     // 视口的高度
     const viewHeight = document.documentElement.clientHeight
     // 滚动条高度
@@ -910,9 +912,10 @@ window.onmousewheel = function (event) {
     let scrollHeightOther = document.documentElement.scrollHeight || document.body.scrollHeight //dom元素的高度，包含溢出不可见的内容
     let yn = true
     // 没有数据了
-    if (nowPage == allPges) {
+    if (nowPage >= allPges) {
         yn = false
         animation.classList.add('none')
+        noContent[0].classList.remove('none')
     }
     // 提示没有内容了
     if (event.wheelDelta < 0 && !yn && nowPage >= allPges) {

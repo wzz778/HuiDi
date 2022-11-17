@@ -141,7 +141,10 @@
   line-height: 25px;
   float: right;
 }
-
+.messagebody{
+  height: 500px;
+  overflow: hidden;
+}
 #main #main-right .alike-a {
   border-bottom: 1.5px #e5e5e5 solid;
   width: 800px;

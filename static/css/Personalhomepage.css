@@ -810,7 +810,7 @@ li {
 #lookend i {
     padding: 0 20px;
     color: #067ff1;
-    animation: rotate 3s linear infinite;
+    /* animation: rotate 3s linear infinite; */
   }
   .class_body .colnamicmax{
     border:#bdbdbd 1px solid ;

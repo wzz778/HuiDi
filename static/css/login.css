@@ -158,13 +158,13 @@ body{
 .code{
     font-family: Arial;
     font-style: italic;
-    color: blue;
+    color: #22A6F2;
     background-position: 0px 0px;
 }
 .code2{
     font-family: STHupo;
     font-style: italic;
-    color: red;
+    color: #DD5347;
     background-position: -100px -75px;
 }
 .code3{

@@ -182,6 +182,11 @@ function addComment(userObj) {
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
+                        <button class="reply operatorBtn" onclick="likeCommentsFn(this)">
+                            <div class="none">${JSON.stringify({ commentId: userObj.commentId, userId: userObj.id })}</div>
+                            <span>0</span>
+                            <span>点赞</span>
+                        </button>
                     </span>
                 </div>
                 <div class="commentsContent">
@@ -385,6 +390,11 @@ function addCommentSonComment(event, commentObj) {
                             <button onclick="replayCommentShowFn(this)">回复</button>
                             <button onclick="delReplyCommentFn(this)">删除</button>
                             <button onclick='reportFn(this)'>举报</button>
+                            <button class="reply operatorBtn" onclick="likeCommentsFn(this)">
+                                <div class="none">${JSON.stringify(tempObj)}</div>
+                                <span>0</span>
+                                <span>点赞</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -518,6 +528,7 @@ function getAllComment() {
             if (result.msg.all_count < 5) {
                 animation.classList.add('none')
             }
+            animation.classList.add('none')
             allPges = result.msg.all_page
             // 将数据渲染到页面中
             let tempStr = ''
@@ -536,6 +547,22 @@ function getAllComment() {
                 if (result.msg.list[i].commentList) {
                     // 遍历二级评论
                     for (let j = 0; j < result.msg.list[i].commentList.length; j++) {
+                        let commentLikeInfo = `
+                        <button class="reply operatorBtn" onclick="likeCommentsFn(this)">
+                            <div class="none">${JSON.stringify({ commentId: result.msg.list[i].commentList[j].comment.id, userId: result.msg.list[i].commentList[j].comment.ob.u_id.id })}</div>
+                            <span>${result.msg.list[i].commentList[j].comment.ob.likeCount}</span>
+                            <span>点赞</span>
+                        </button>
+                        `
+                        if (result.msg.list[i].commentList[j].comment.ob.userIsLiked) {
+                            commentLikeInfo = `
+                            <button class="reply operatorBtn clickOperator" onclick="likeCommentsFn(this)">
+                                <div class="none">${JSON.stringify({ commentId: result.msg.list[i].commentList[j].comment.id, userId: result.msg.list[i].commentList[j].comment.ob.u_id.id })}</div>
+                                <span>${result.msg.list[i].commentList[j].comment.ob.likeCount}</span>
+                                <span>点赞</span>
+                            </button>
+                            `
+                        }
                         let commentSonDel = ''
                         if ((result.msg.login && result.msg.login == result.msg.list[i].commentList[j].comment.ob.u_id.id) || result.isAdmin) {
                             commentSonDel = `<button onclick="delReplyCommentFn(this)">删除</button>`
@@ -573,6 +600,7 @@ function getAllComment() {
                             <button onclick="replayCommentShowFn(this)">回复</button>
                             ${commentSonDel}
                             <button onclick='reportFn(this)'>举报</button>
+                            ${commentLikeInfo}
                         </div>
                     </div>
                 </div>
@@ -593,6 +621,22 @@ function getAllComment() {
                     id: result.msg.list[i].comment.ob.u_id.id,
                     commentId: result.msg.list[i].comment.id
                 }
+                let commentLikeInfo = `
+                        <button class="reply operatorBtn" onclick="likeCommentsFn(this)">
+                            <div class="none">${JSON.stringify({ commentId: result.msg.list[i].comment.id, userId: result.msg.list[i].comment.ob.u_id.id })}</div>
+                            <span>${result.msg.list[i].comment.ob.likeCount}</span>
+                            <span>点赞</span>
+                        </button>
+                        `
+                if (result.msg.list[i].comment.ob.userIsLiked) {
+                    commentLikeInfo = `
+                            <button class="reply operatorBtn clickOperator" onclick="likeCommentsFn(this)">
+                                <div class="none">${JSON.stringify({ commentId: result.msg.list[i].comment.id, userId: result.msg.list[i].comment.ob.u_id.id })}</div>
+                                <span>${result.msg.list[i].comment.ob.likeCount}</span>
+                                <span>点赞</span>
+                            </button>
+                            `
+                }
                 tempStr += `
             <div class="allCommentsContentItem">
                 <div class="none">${JSON.stringify(userObj)}</div>
@@ -611,6 +655,7 @@ function getAllComment() {
                             <button class="operatorBtn" onclick='reportFn(this)'>举报</button>
                         </span>
                         <button class="reply operatorBtn" onclick="replyFn(this)">回复</button>
+                        ${commentLikeInfo}
                     </span>
                 </div>
                 <!-- 内容 -->
@@ -856,6 +901,7 @@ function sendReportFn(event) {
 
 // 监听滚轮
 window.onmousewheel = function (event) {
+    animation.classList.remove('none')
     // 视口的高度
     const viewHeight = document.documentElement.clientHeight
     // 滚动条高度
@@ -866,9 +912,10 @@ window.onmousewheel = function (event) {
     let scrollHeightOther = document.documentElement.scrollHeight || document.body.scrollHeight //dom元素的高度，包含溢出不可见的内容
     let yn = true
     // 没有数据了
-    if (nowPage == allPges) {
+    if (nowPage >= allPges) {
         yn = false
         animation.classList.add('none')
+        noContent[0].classList.remove('none')
     }
     // 提示没有内容了
     if (event.wheelDelta < 0 && !yn && nowPage >= allPges) {
@@ -883,4 +930,36 @@ window.onmousewheel = function (event) {
         nowPage++
         getAllComment()
     }
+}
+
+// 点赞评论
+function likeCommentsFn(event) {
+    // 判断是否登录
+    judgeLogin()
+        .then(() => {
+            event.setAttribute('onclick', "hintFn('warning','请勿连点')")
+            // 判断当前是点赞还是取消点赞
+            if (event.classList.value.indexOf('clickOperator') == -1) {
+                // 点赞
+                return sendFn('/admin/pointLikeOfComment', { id: JSON.parse(event.firstElementChild.innerHTML).commentId })
+            } else {
+                // 取消点赞
+                return sendFn('/admin/deleteLikeOfComment', { id: JSON.parse(event.firstElementChild.innerHTML).commentId })
+            }
+        })
+        .then(result => {
+            event.setAttribute('onclick', 'likeCommentsFn(this)')
+            // 判断是点赞还是取消点赞
+            if (result.type == 'like') {
+                event.classList.add('clickOperator')
+                event.firstElementChild.nextElementSibling.innerHTML++
+                return
+            }
+            event.classList.remove('clickOperator')
+            event.firstElementChild.nextElementSibling.innerHTML--
+        })
+        .catch(err => {
+            console.log(err);
+            hintFn('warning', '请先登录')
+        })
 }

@@ -469,7 +469,7 @@
 }
 
 .clickOperator {
-    color: #BD3F43;
+    color: #BD3F43 !important;
 }
 
 .focusOnSty {

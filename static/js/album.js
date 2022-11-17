@@ -69,6 +69,7 @@ function getAlbumInfo() {
                 content.classList.add('none')
                 return
             }
+            animation.classList.add('none')
             for (let i = 0; i < result.msg.image.list.length; i++) {
                 let tempAllImg = ''
                 for (let j = 0; j < result.msg.image.list[i].images.ob.length; j++) {
@@ -243,6 +244,7 @@ function collectFn(event) {
 
 // 监听滚轮
 window.onmousewheel = function (event) {
+    animation.classList.remove('none')
     // 视口的高度
     const viewHeight = document.documentElement.clientHeight
     // 滚动条高度
@@ -256,6 +258,7 @@ window.onmousewheel = function (event) {
     if (nowPage >= allPages) {
         yn = false
         animation.classList.add('none')
+        noContent.classList.remove('none')
     }
     // 提示没有内容了
     if (event.wheelDelta < 0 && !yn && nowPage == allPages) {

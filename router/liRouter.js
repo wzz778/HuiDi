@@ -997,7 +997,6 @@ router.post('/superAdmin/updateUserStatus', (req, res) => {
         }
     })
         .then(result => {
-            console.log(result.data.data.users.id)
             return axios({
                 method: 'PUT',
                 url: '/superAdmin/updateUserStatus',
@@ -1035,6 +1034,46 @@ router.post('/theShelves', (req, res) => {
     })
         .then(result => {
             res.send({ err: 0, msg: result.data })
+        })
+        .catch(err => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 点赞评论
+router.post('/admin/pointLikeOfComment', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'POST',
+        url: '/admin/pointLikeOfComment',
+        params: {
+            id
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data, type: 'like' })
+        })
+        .catch(err => {
+            res.send({ err: 0, msg: err })
+        })
+})
+// 取消点赞
+router.post('/admin/deleteLikeOfComment', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'DELETE',
+        url: '/admin/deleteLikeOfComment',
+        params: {
+            id
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then(result => {
+            res.send({ err: 0, msg: result.data, type: 'unLike' })
         })
         .catch(err => {
             res.send({ err: -1, msg: err })

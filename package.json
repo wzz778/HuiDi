@@ -48,5 +48,9 @@
       "./static",
       "./views"
     ]
+  },
+  "devDependencies": {
+    "less": "^3.13.1",
+    "less-loader": "^5.0.0"
   }
 }

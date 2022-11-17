@@ -251,7 +251,7 @@ confirms[0].onclick  = function(){
                 status:1,
             }
         }).then(result =>{
-            // console.log(result.data);
+            console.log(result.data);
             if(result.data.msg == 'success'){
                 hidden[0].style.display = 'none';
                 warnings[0].src = 'public/iconfont/success.png'

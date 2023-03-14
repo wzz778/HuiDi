@@ -926,6 +926,7 @@ router.post('/superAdmin/updateAlbumStatus', (req, res) => {
         })
         .catch(err => {
             res.send({ err: -1, msg: err })
+            // 
         })
 })
 // 显示热门内容
